@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- MAVEN COORDINATE BEGIN -->
+  <groupId>me.chongfeng</groupId>
+  <artifactId>javase-notes</artifactId>
+  <version>1.0.1</version>
+  <packaging>pom</packaging>
+  <!-- MAVEN COORDINATE END -->
+
+
+  <!--PROJECT INFO BEGIN-->
+  <name>javase-notes</name>
+  <description>javase 学习笔记</description>
+  <!--PROJECT INFO END-->
+
+
+  <!-- BASIC CONFIGURATION BEGIN -->
+  <modules>
+    <module>basics</module>
+    <module>jdk8</module>
+    <module>advanced</module>
+    <module>effective</module>
+  </modules>
+  <properties>
+    <!-- Plugin的属性 -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+      <!-- TEST begin -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+      </dependency>
+      <!-- TEST end -->
+    </dependencies>
+  </dependencyManagement>
+  <!-- BASIC CONFIGURATION END -->
+
+
+  <!-- BUILD CONFIGURATION BEGIN -->
+  <!-- BUILD CONFIGURATION END -->
+
+</project>
