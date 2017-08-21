@@ -5,7 +5,7 @@ package me.chongfeng.javase.jdk8.lambda;
  * Lambda 允许把函数作为一个方法的参数（函数作为参数传递进方法中）。
  * 使用 Lambda 表达式可以使代码变的更加简洁紧凑。
  *
- * @author victor zhang
+ * @author Zhang Peng
  */
 public class LmbdaDemo {
     public static void main(String args[]) {

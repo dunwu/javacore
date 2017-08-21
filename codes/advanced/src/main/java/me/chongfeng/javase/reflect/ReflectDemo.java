@@ -11,7 +11,7 @@ import java.lang.reflect.Parameter;
 public class ReflectDemo {
     /**
      * @description 展示获取Class的不同方式
-     * @author victor zhang
+     * @author Zhang Peng
      * @date 2016年8月5日
      */
     public static void testGetClassObject() throws Exception {
@@ -36,7 +36,7 @@ public class ReflectDemo {
     /**
      * @title testGetObjectByClass
      * @description 通过Class实例化对象
-     * @author victor zhang
+     * @author Zhang Peng
      * @date 2016年8月5日
      * @return void
      */
@@ -51,7 +51,7 @@ public class ReflectDemo {
     /**
      * @title testGetFieldsByClass
      * @description 获取类的所有的属性
-     * @author victor zhang
+     * @author Zhang Peng
      * @date 2016年8月5日
      * @return void
      * @throws Exception

@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 /**
  * 序列化、反序列化的范例
  *
- * @author victor zhang
+ * @author Zhang Peng
  * @date 2016年8月5日
  */
 public class SerializeDemo {

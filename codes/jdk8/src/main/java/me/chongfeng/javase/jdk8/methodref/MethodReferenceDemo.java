@@ -8,7 +8,7 @@ import java.util.List;
  * 方法引用可以使语言的构造更紧凑简洁，减少冗余代码。
  * 方法引用使用一对冒号(::)。
  *
- * @author victor zhang
+ * @author Zhang Peng
  */
 public class MethodReferenceDemo {
     public static void main(String args[]) {
