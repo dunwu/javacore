@@ -1,4 +1,6 @@
-# 概念
+# Java 枚举
+
+## 概念
 
  `enum` 的全称为 enumeration， 是 JDK 1.5  中引入的新特性。
 
@@ -14,9 +16,7 @@ enum Color { RED, GREEN, BLUE }
 
 **枚举的典型应用场景：**错误码、状态机等。
 
-
-
-## 枚举类型的本质
+### 枚举类型的本质
 
 尽管 `enum` 看起来像是一种新的数据类型，事实上，**enum是一种受限制的类，并且具有自己的方法**。
 
@@ -29,9 +29,7 @@ public abstract class Enum<E extends Enum<E>>
         implements Comparable<E>, Serializable { ... }
 ```
 
-
-
-# 枚举的方法
+## 枚举的方法
 
 在enum中，提供了一些基本方法：
 
@@ -99,9 +97,7 @@ green equals 1: false
 green == Color.BLUE: false
 ```
 
-
-
-# 枚举的特性
+## 枚举的特性
 
 枚举的特性，归结起来就是一句话：
 
@@ -109,15 +105,11 @@ green == Color.BLUE: false
 
 但是这句话需要拆分去理解，让我们细细道来。
 
-
-
-## 枚举可以添加方法
+### 枚举可以添加方法
 
 在概念章节提到了，**枚举值默认为从0开始的有序数值** 。那么问题来了：如何为枚举显示的赋值。
 
-
-
-### Java 不允许使用 = 为枚举常量赋值
+#### Java 不允许使用 = 为枚举常量赋值
 
 如果你接触过C/C++，你肯定会很自然的想到赋值符号 `=` 。在C/C++语言中的enum，可以用赋值符号`=`显示的为枚举常量赋值；但是 ，很遗憾，**Java 语法中却不允许使用赋值符号 `=` 为枚举常量赋值**。
 
@@ -132,9 +124,7 @@ typedef enum{
 } Number;
 ```
 
-
-
-### enum 可以添加普通方法、静态方法、抽象方法、构造方法
+#### enum 可以添加普通方法、静态方法、抽象方法、构造方法
 
 Java虽然不能直接为实例赋值，但是它有更优秀的解决方案：**为 enum 添加方法来间接实现显示赋值**。
 
@@ -212,9 +202,7 @@ public enum ErrorCodeEn {
 }
 ```
 
-
-
-## 枚举可以实现接口
+### 枚举可以实现接口
 
 **`enum` 可以像一般类一样实现接口。**
 
@@ -251,23 +239,19 @@ public enum ErrorCodeEn2 implements INumberEnum {
 }
 ```
 
-
-
-## 枚举不可以继承
+### 枚举不可以继承
 
 **enum 不可以继承另外一个类，当然，也不能继承另一个 enum 。**
 
 因为 `enum` 实际上都继承自 `java.lang.Enum` 类，而 Java 不支持多重继承，所以enum不能再继承其他类，当然也不能继承另一个 `enum`。
 
+## 枚举的应用场景
 
-
-# 枚举的应用场景
-
-## 组织常量
+### 组织常量
 
 在JDK1.5 之前，在Java中定义常量都是`public static final TYPE a;` 这样的形式。有了枚举，你可以将有关联关系的常量组织起来，使代码更加易读、安全，并且还可以使用枚举提供的方法。
 
-### 枚举声明的格式
+#### 枚举声明的格式
 
 **注：如果枚举中没有定义方法，也可以在最后一个实例后面加逗号、分号或什么都不加。**
 
@@ -279,9 +263,7 @@ enum Color { RED, GREEN, BLUE, }
 enum Color { RED, GREEN, BLUE; }
 ```
 
-
-
-## switch 状态机
+### switch 状态机
 
 我们经常使用switch语句来写状态机。JDK7以后，switch已经支持 `int`、`char`、`String`、`enum` 类型的参数。这几种类型的参数比较起来，使用枚举的switch代码更具有可读性。
 
@@ -307,9 +289,7 @@ public static String getTrafficInstruct(Signal signal) {
 }
 ```
 
-
-
-## 组织枚举
+### 组织枚举
 
 可以将类型相近的枚举通过接口或类组织起来。
 
@@ -381,9 +361,7 @@ public class Plant2 {
 }
 ```
 
-
-
-## 策略枚举
+### 策略枚举
 
 EffectiveJava中展示了一种策略枚举。这种枚举通过枚举嵌套枚举的方式，将枚举常量分类处理。
 
@@ -439,9 +417,7 @@ System.out.println("时薪100的人在周五工作8小时的收入：" + Payroll
 System.out.println("时薪100的人在周六工作8小时的收入：" + PayrollDay.SATURDAY.pay(8.0, 100));
 ```
 
-
-
-# EnumSet和EnumMap
+## EnumSet和EnumMap
 
 Java中提供了两个方便操作enum的工具类——EnumSet和EnumMap。
 
