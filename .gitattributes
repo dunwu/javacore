@@ -50,23 +50,23 @@
 *.bin binary
 *.exe binary
 
-# 图片
+# images
 *.png binary
 *.jpg binary
 *.ico binary
 *.gif binary
 
-# 音视频
+# medias
 *.mp3 binary
 *.swf binary
 
-# 字体
+# fonts
 *.eot binary
 *.svg binary
 *.ttf binary
 *.woff binary
 
-# other doc
+# others
 *.pdf binary
 *.doc binary
 *.docx binary
