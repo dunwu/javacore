@@ -1,2 +1,3 @@
-# JavaseNotes
-JavaseNotes 是我的 JavaSE 学习笔记
+# javase-notes
+
+JavaSE 学习笔记。

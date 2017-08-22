@@ -4,7 +4,7 @@
   "description": "JavaSE 学习笔记",
   "author": "Zhang Peng",
   "language": "zh-hans",
-  "root": ".",
+  "root": "./docs",
   "links": {
     "sidebar": {
       "javase-notes": "https://github.com/atlantis1024/javase-notes"
