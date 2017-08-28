@@ -4,6 +4,7 @@
 
 * [自述](README.md)
 * [基础](basics/README.md)
+  * [Java数据类型](basics/java-datatype.md)
   * [枚举](basics/enumeration.md)
   * [国际化](basics/locale.md)
 * [进阶](advanced/README.md)
