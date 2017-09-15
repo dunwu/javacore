@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <!-- MAVEN COORDINATE BEGIN -->
-  <groupId>me.chongfeng</groupId>
+  <groupId>io.github.atlantis1024</groupId>
   <artifactId>javase-notes</artifactId>
   <version>1.0.1</version>
   <packaging>pom</packaging>

@@ -4,7 +4,7 @@
 
 
   <!-- MAVEN COORDINATE BEGIN -->
-  <groupId>me.chongfeng</groupId>
+  <groupId>io.github.atlantis1024</groupId>
   <artifactId>javase-notes-effective</artifactId>
   <version>1.0.1</version>
   <packaging>jar</packaging>
