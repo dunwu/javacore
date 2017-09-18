@@ -4,7 +4,7 @@
 
 
   <!-- MAVEN COORDINATE BEGIN -->
-  <groupId>io.github.atlantis1024</groupId>
+  <groupId>io.github.zp1024</groupId>
   <artifactId>javase-notes-advanced</artifactId>
   <version>1.0.1</version>
   <packaging>jar</packaging>
