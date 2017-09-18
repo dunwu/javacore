@@ -4,7 +4,7 @@
   "scripts": {
     "clean": "rimraf _book",
     "prepare": "gitbook install",
-    "build": "gitbook build -g zp1024/javase-notes",
+    "build": "gitbook build ./ --log=debug --debug",
     "start": "gitbook serve"
   },
   "repository": {
@@ -12,7 +12,7 @@
     "url": "https://github.com/zp1024/javase-notes.git"
   },
   "keywords": [
-    "spring"
+    "javase"
   ],
   "author": "Zhang Peng <atlantis1024@163.com>",
   "license": "MIT",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/zp1024/javase-notes",
   "devDependencies": {
-    "gitbook-cli": "^0.3.4",
-    "rimraf": "^2.3.4"
+    "gitbook-cli": "^2.3.2",
+    "rimraf": "^2.6.1"
   }
 }
