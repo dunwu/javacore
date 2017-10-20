@@ -41,7 +41,7 @@
 >
 > 本文案例中使用的checkMatches、findAll方法请见附录。
 >
-> 本文涉及的所有案例代码，可以在 [我的github](https://github.com/zp1024/JavaSENotes/tree/master/src/test/java/org/zp/notes/javase/regex) 找到，如有需要，可以参考。
+> 本文涉及的所有案例代码，可以在 [我的github](https://github.com/dunwu/JavaSENotes/tree/master/src/test/java/org/zp/notes/javase/regex) 找到，如有需要，可以参考。
 
 
 

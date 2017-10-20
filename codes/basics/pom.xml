@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <!-- MAVEN COORDINATE BEGIN -->
-  <groupId>io.github.zp1024</groupId>
+  <groupId>io.github.dunwu</groupId>
   <artifactId>javase-notes-basics</artifactId>
   <version>1.0.1</version>
   <packaging>jar</packaging>
