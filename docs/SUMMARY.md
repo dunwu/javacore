@@ -13,6 +13,10 @@
   * [正则（二）](advanced/regex/regex_quickstart_02.md)
   * [正则（三）](advanced/regex/regex_quickstart_03.md)
 
+## Effective Java
+
+* [Effective Java 规则一览](effective/README.md)
+
 ------
 
 * [附录](spring/appendix/README.md)
