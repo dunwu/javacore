@@ -15,7 +15,8 @@
 
 ## Effective Java
 
-* [Effective Java 规则一览](effective/README.md)
+* [Effective Java](effective/README.md)
+  * [Chapter02 创建和销毁对象](effective/chapter02.md)
 
 ------
 
