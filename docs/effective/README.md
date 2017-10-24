@@ -1,6 +1,6 @@
 # Effective Java 规则一览
 
-## 第2章 创建、销毁对象
+## [第2章 创建、销毁对象](javase-notes/effective/chapter02.html)
 
 第1条：考虑用静态工厂方法代替构造器
 
