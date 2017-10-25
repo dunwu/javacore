@@ -17,6 +17,7 @@
 
 * [Effective Java](effective/README.md)
   * [Chapter02 创建和销毁对象](effective/chapter02.md)
+  * [Chapter03 对于所有对象都通用的方法](effective/chapter03.md)
 
 ------
 
