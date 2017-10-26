@@ -1,6 +1,6 @@
 # Effective Java 规则一览
 
-## [第2章 创建、销毁对象](javase-notes/effective/chapter02.html)
+## [第2章 创建、销毁对象](effective/chapter02.html)
 
 第1条：考虑用静态工厂方法代替构造器
 
@@ -16,7 +16,7 @@
 
 第7条：避免使用终结方法
 
-## 第3章 对于所有对象都通用的方法
+## [第3章 对于所有对象都通用的方法](effective/chapter03.html)
 
 第8条：覆盖equals时请遵守通用约定
 
@@ -28,7 +28,7 @@
 
 第12条：考虑实现Comparable接口
 
-## 第4章 类和接口
+## [第4章 类和接口](effective/chapter04.html)
 
 第13条：使类和成员的可访问性最小化
 

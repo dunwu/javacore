@@ -21,6 +21,6 @@
 
 ------
 
-* [附录](spring/appendix/README.md)
-  * [资源](spring/appendix/resources.md)
+* [附录](appendix/README.md)
+  * [资源](appendix/resources.md)
 
