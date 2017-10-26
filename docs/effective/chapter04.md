@@ -1,4 +1,4 @@
-# Chapter03 类和接口
+# Chapter04 类和接口
 
 > 类和接口的规则：
 >
@@ -154,14 +154,140 @@ public class ForwardingSet<E> implements Set<E> {
 
 需要注意，包装类有一个缺点：包装类不适合用在回调框架中；在回调框架中，对象把自身的引用传递给其他的对象，用于后续的回调。
 
-第17条：要么为继承而设计，并提供文档说明，要么就禁止继承
+## 第17条：要么为继承而设计，并提供文档说明，要么就禁止继承
 
-第18条：接口优于抽象类
+## 第18条：接口优于抽象类
 
-第19条：接口只用于定义类型
+已有的类可以很容易被更新，以实现新的接口。
 
-第20条：类层次优于标签类
+接口定义是混合类型的理想选择。
 
-第21条：用函数对象表示策略
+接口使得我们可以构造出非层次结构的类型框架。
 
-第22条：优先考虑静态成员类
+接口使得安全地增强一个类的功能成为可能。
+
+## 第19条：接口只用于定义类型
+
+**常量接口模式是对接口的不良使用。** 
+
+一个类需要使用哪些常量，这纯粹是实现细节，不应该对外暴露。
+
+### 示例
+
+**BAD**
+
+```java
+public interface PhysicalConstants {
+	static final double AVOGADROS_NUMBER = 6.02214199e23;
+	static final double BOLTZMANN_CONSTANT = 1.3806503e-23;
+	static final double ELECTRON_MASS = 9.10938188e-31;
+}
+```
+
+**GOOD**
+
+```java
+public class PhysicalConstants {
+	public static final double AVOGADROS_NUMBER = 6.02214199e23;
+	public static final double BOLTZMANN_CONSTANT = 1.3806503e-23;
+	public static final double ELECTRON_MASS = 9.10938188e-31;
+}
+```
+
+## 第20条：类层次优于标签类
+
+标签类是冗长的，低效且容易出错。
+
+它们有很多引用，可读性差，它们增加了内存占用以及更多的短缺。
+
+标签类只是类继承的模仿
+
+### 示例
+
+**BAD**
+
+```java
+class Figure {
+	enum Shape {
+		RECTANGLE, CIRCLE
+	};
+
+	// Tag field - the shape of this figure
+	final Shape shape;
+
+	// These fields are used only if shape is RECTANGLE
+	double length;
+	double width;
+
+	// This field is used only if shape is CIRCLE
+	double radius;
+
+	// Constructor for circle
+	Figure(double radius) {
+		shape = Shape.CIRCLE;
+		this.radius = radius;
+	}
+
+	// Constructor for rectangle
+	Figure(double length, double width) {
+		shape = Shape.RECTANGLE;
+		this.length = length;
+		this.width = width;
+	}
+
+	double area() {
+		switch (shape) {
+		case RECTANGLE:
+			return length * width;
+		case CIRCLE:
+			return Math.PI * (radius * radius);
+		default:
+			throw new AssertionError();
+		}
+	}
+}
+```
+
+**GOOD**
+
+```java
+abstract class Figure {
+	abstract double area();
+}
+
+class Circle extends Figure {
+	final double radius;
+
+	Circle(double radius) {
+		this.radius = radius;
+	}
+
+	double area() {
+		return Math.PI * (radius * radius);
+	}
+}
+
+class Rectangle extends Figure {
+	final double length;
+	final double width;
+
+	Rectangle(double length, double width) {
+		this.length = length;
+		this.width = width;
+	}
+
+	double area() {
+		return length * width;
+	}
+}
+
+class Square extends Rectangle {
+	Square(double side) {
+		super(side, side);
+	}
+}
+```
+
+## 第21条：用函数对象表示策略
+
+## 第22条：优先考虑静态成员类
