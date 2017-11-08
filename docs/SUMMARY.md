@@ -4,9 +4,9 @@
 
 * [自述](README.md)
 * [基础](basics/README.md)
-  * [Java数据类型](basics/java-datatype.md)
-  * [枚举](basics/enumeration.md)
-  * [国际化](basics/locale.md)
+  * [Java 数据类型](basics/java-datatype.md)
+  * [Java 枚举](basics/java-enum.md)
+  * [Java 国际化](basics/java-locale.md)
 * [进阶](advanced/README.md)
   * [注解](advanced/annotation.md)
   * [正则（一）](advanced/regex/regex_quickstart_01.md)

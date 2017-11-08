@@ -1,12 +1,20 @@
-# 背景知识
+---
+title: Java 国际化
+date: 2017/11/08
+categories:
+- javase
+tags:
+- javase
+- locale
+---
+
+## 背景知识
 
 通讯的发达，使得世界各地交流越来越紧密。许多的软件产品也要面向世界上不同国家的用户。其中，语言障碍显然是产品在不同语种用户中进行推广的一个重要问题。
 
 本文围绕国际化这一主题，先介绍国际标准的语言编码，然后讲解在Java应用中如何去实现国际化。
 
-
-
-## 语言编码、国家/地区编码
+### 语言编码、国家/地区编码
 
 做 web 开发的朋友可能多多少少接触过类似 **zh-cn**, **en-us** 这样的编码字样。
 
@@ -52,9 +60,7 @@
 
 **注：由表中可以看出语言、国家/地区编码一般都是英文单词的缩写。**
 
-
-
-## 字符编码
+### 字符编码
 
 在此处，引申一下字符编码的概念。
 
@@ -74,9 +80,7 @@
 
 为了解决这个问题，有出现了一些中间格式的字符编码：如 `UTF-8`、`UTF-16`、`UTF-32` 等（中国的程序员一般使用**UTF-8**编码）。
 
-
-
-# Java 中实现国际化
+## Java 中实现国际化
 
 国际化的实现原理很简单：
 
@@ -84,10 +88,9 @@
 2. 选择语种；
 3. 加载指定语种的模板。
 
-
 接下来，本文会按照步骤逐一讲解实现国际化的具体步骤
 
-## 定义不同语种的模板
+### 定义不同语种的模板
 
 **Java中将多语言文本存储在格式为 `properties` 的资源文件中。**
 
@@ -101,7 +104,7 @@
 
 注：`<资源名>.properties` 命名的国际化资源文件是**默认的资源文件**，即某个本地化类型在系统中找不到对应的资源文件，就采用这个默认的资源文件。
 
-### 定义properties文件
+#### 定义properties文件
 
 在`src/main/resources/locales` 路径下定义名为content的不同语种资源文件：
 
@@ -123,9 +126,7 @@ time = \u5f53\u524d\u65f6\u95f4\u662f\u0025\u0073\u3002
 
 虽然属性值各不相同，但属性名却是相同的，这样应用程序就可以通过Locale对象和属性名精确调用到某个具体的属性值了。
 
-
-
-### Unicode 转换工具
+#### Unicode 转换工具
 
 上一节中，我们定义的中文资源文件中的属性值都是以\u开头的四位16进制数。其实，这表示的是一个 Unicode  编码。
 
@@ -152,13 +153,11 @@ native2ascii [-reverse] [-encoding 编码] [输入文件 [输出文件]]
 native2ascii -encoding utf-8 d:\content_zh_CN.properties d:\content_zh_CN_new.properties
 ```
 
-
-
-## 选择语种
+### 选择语种
 
 定义了多语言资源文件，第二步就是根据本地语种选择模板文件了。
 
-### Locale
+#### Locale
 
 在 Java 中，一个 `java.util.Locale` 对象表示了特定的地理、政治和文化地区。需要 Locale 来执行其任务的操作称为语言环境敏感的操作，它使用 Locale 为用户量身定制本地信息。
 
@@ -181,11 +180,9 @@ Locale locale3 = new Locale("en", "US", "SiliconValley");
 Locale locale4 = Locale.SIMPLIFIED_CHINESE;
 ```
 
+### 加载指定语种的模板
 
-
-## 加载指定语种的模板
-
-### ResourceBoundle
+#### ResourceBoundle
 
 Java为我们提供了用于加载本地化资源文件的工具类：`java.util.ResourceBoundle`。
 
@@ -225,13 +222,11 @@ default：当前时间是08:00。
 
 注：在加载资源时，如果指定的本地化资源文件不存在，它会尝试按下面的顺序加载其他的资源：本地系统默认本地化对象对应的资源 ->  默认的资源。如果指定错误，Java会提示找不到资源文件。
 
-
-
-# 支持国际化的国际化工具类
+## 支持国际化的国际化工具类
 
 Java 中也提供了几个支持国际化的格式化工具类。例如：`NumberFormat`、`DateFormat`、`MessageFormat`
 
-## NumberFormat
+### NumberFormat
 
 `NumberFormat` 是所有数字格式类的基类。它提供格式化和解析数字的接口。它也提供了决定数字所属语言类型的方法。
 
@@ -243,9 +238,7 @@ public static void main(String[] args) {
 }
 ```
 
- 
-
-## DateFormat
+### DateFormat
 
 DateFormat 是日期、时间格式化类的抽象类。它支持基于语言习惯的日期、时间格式。
 
@@ -259,9 +252,7 @@ public static void main(String[] args) {
 }
 ```
 
-
-
-## MessageFormat
+### MessageFormat
 
 Messageformat 提供一种与语言无关的拼接消息的方式。通过这种拼接方式，将最终呈现返回给使用者。
 

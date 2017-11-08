@@ -1,4 +1,12 @@
-# Java 枚举
+---
+title: Java 枚举
+date: 2017/11/08
+categories:
+- javase
+tags:
+- javase
+- enum
+---
 
 ## 概念
 
