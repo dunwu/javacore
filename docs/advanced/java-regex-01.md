@@ -1,4 +1,14 @@
-# 导读
+---
+title: Java 正则（一）
+date: 2017/11/08
+categories:
+- javase
+tags:
+- javase
+- regex
+---
+
+## 导读
 
 **正则表达式是什么？有什么用？**
 ***正则表达式(Regular Expression)***是一种文本规则，可以用来**校验**、**查找**、**替换**与规则匹配的文本。
@@ -34,9 +44,7 @@
 
 >本文是**Java正则速成秘籍的招式篇**。主要介绍JDK对于正则表达式的支持。
 
-
-
-# 概述
+## 概述
 
 JDK中的`java.util.regex`包提供了对正则表达式的支持。
 
@@ -49,9 +57,7 @@ JDK中的`java.util.regex`包提供了对正则表达式的支持。
 
 ***注：***需要格外注意一点，在Java中使用反斜杠"\\"时必须写成 `"\\"`。所以本文的代码出现形如`String regex = "\\$\\{.*?\\}"` 其实就是"\\$\\{.*?\\}"，不要以为是画风不对哦。
 
-
-
-# Pattern类
+## Pattern类
 
 `Pattern`类没有公共构造方法。要创建一个`Pattern`对象，你必须首先调用其**静态方法**`compile`，加载正则规则字符串，然后返回一个Pattern对象。
 
@@ -65,9 +71,7 @@ Matcher m = p.matcher(content);
 ```
 
 
-
-
-# Matcher类
+## Matcher类
 
 `Matcher`类可以说是`java.util.regex`核心类中的必杀技！
 
@@ -79,7 +83,7 @@ Matcher m = p.matcher(content);
 
 下面我们来领略一下这三块的功能。
 
-## 校验文本是否与正则规则匹配
+### 校验文本是否与正则规则匹配
 
 为了检查文本是否与正则规则匹配，Matcher提供了以下几个返回值为`boolean`的方法。
 
@@ -92,7 +96,7 @@ Matcher m = p.matcher(content);
 
 如果你傻傻分不清上面的查找方法有什么区别，那么下面一个例子就可以让你秒懂。
 
-### 案例：lookingAt vs find vs matches
+#### 案例：lookingAt vs find vs matches
 
 ```java
 public static void main(String[] args) {
@@ -160,7 +164,7 @@ regex = “world” 表示的正则规则是以world开头的字符串，regex =
 
 
 
-## 查找匹配正则规则的文本位置
+### 查找匹配正则规则的文本位置
 
 为了查找文本匹配正则规则的位置，`Matcher`提供了以下方法：
 
@@ -173,9 +177,7 @@ regex = “world” 表示的正则规则是以world开头的字符串，regex =
 | 5      | **public String group()**返回前一个符合匹配条件的子序列。 |
 | 6      | **public String group(int group)**返回指定的符合匹配条件的子序列。 |
 
-
-
-### 案例：使用start()、end()、group() 查找所有匹配正则条件的子序列
+#### 案例：使用start()、end()、group() 查找所有匹配正则条件的子序列
 
 ```java
 public static void main(String[] args) {
@@ -210,9 +212,7 @@ start: 16, end: 21, group: world
 
 例子很直白，不言自明了吧。
 
-
-
-## 替换匹配正则规则的文本
+### 替换匹配正则规则的文本
 
 替换方法是替换输入字符串里文本的方法：
 
@@ -224,9 +224,7 @@ start: 16, end: 21, group: world
 | 4      | **public String replaceFirst(String replacement)** 替换模式与给定替换字符串匹配的输入序列的第一个子序列。 |
 | 5      | **public static String quoteReplacement(String s)**返回指定字符串的字面替换字符串。这个方法返回一个字符串，就像传递给Matcher类的appendReplacement 方法一个字面字符串一样工作。 |
 
-
-
-### 案例：replaceFirst vs replaceAll
+#### 案例：replaceFirst vs replaceAll
 
 ```java
 public static void main(String[] args) {
@@ -257,9 +255,7 @@ replaceFirst：替换第一个匹配正则规则的子序列。
 
 replaceAll：替换所有匹配正则规则的子序列。
 
-
-
-### 案例：appendReplacement、appendTail和replaceAll
+#### 案例：appendReplacement、appendTail和replaceAll
 
 ```java
 public static void main(String[] args) {
@@ -295,9 +291,7 @@ appendTail: I can not because I think I can not.
 
 如果你查看`replaceAll`的源码，会发现其内部就是使用`appendReplacement`和`appendTail`方法组合来实现的。
 
-
-
-### 案例：quoteReplacement和replaceAll，解决特殊字符替换问题
+#### 案例：quoteReplacement和replaceAll，解决特殊字符替换问题
 
 ```java
 public static void main(String[] args) {

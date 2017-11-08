@@ -8,10 +8,10 @@
   * [Java 枚举](basics/java-enum.md)
   * [Java 国际化](basics/java-locale.md)
 * [进阶](advanced/README.md)
-  * [注解](advanced/annotation.md)
-  * [正则（一）](advanced/regex/regex_quickstart_01.md)
-  * [正则（二）](advanced/regex/regex_quickstart_02.md)
-  * [正则（三）](advanced/regex/regex_quickstart_03.md)
+  * [Java 注解](advanced/java-annotation.md)
+  * [Java 正则（一）](advanced/java-regex-01.md)
+  * [Java 正则（二）](advanced/java-regex-02.md)
+  * [Java 正则（三）](advanced/java-regex-03.md)
 
 ## Effective Java
 

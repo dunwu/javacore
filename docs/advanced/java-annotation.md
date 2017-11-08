@@ -1,4 +1,12 @@
-# Java 注解
+---
+title: Java 注解
+date: 2017/11/08
+categories:
+- javase
+tags:
+- javase
+- annotation
+---
 
 ## 什么是注解（Annotation）
 
@@ -18,23 +26,23 @@ Annotation（注解）就是 Java 提供了一种元程序中的元素关联任�
 
 元数据的功能作用有很多，比如：你可能用过 Javadoc 的注释自动生成文档。这就是元数据功能的一种。总的来说，元数据可以用来创建文档，跟踪代码的依赖性，执行编译时格式检查，代替已有的配置文件。如果要对于元数据的作用进行分类，目前还没有明确的定义，不过我们可以根据它所起的作用，大致可分为三类：
 
-1.         编写文档：通过代码里标识的元数据生成文档
+1. 编写文档：通过代码里标识的元数据生成文档
 
-2.         代码分析：通过代码里标识的元数据对代码进行分析
+2. 代码分析：通过代码里标识的元数据对代码进行分析
 
-3.         编译检查：通过代码里标识的元数据让编译器能实现基本的编译检查
+3. 编译检查：通过代码里标识的元数据让编译器能实现基本的编译检查
 
 在 Java 中元数据以标签的形式存在于 Java 代码中，元数据标签的存在并不影响程序代码的编译和执行，它只是被用来生成其它的文件或针在运行时知道被运行代码的描述信息。
 
 综上所述：
 
-1.         元数据以标签的形式存在于Java代码中。
+1. 元数据以标签的形式存在于Java代码中。
 
-2.         元数据描述的信息是类型安全的，即元数据内部的字段都是有明确类型的。
+2. 元数据描述的信息是类型安全的，即元数据内部的字段都是有明确类型的。
 
-3.         元数据需要编译器之外的工具额外的处理用来生成其它的程序部件。
+3. 元数据需要编译器之外的工具额外的处理用来生成其它的程序部件。
 
-4.         元数据可以只存在于 Java 源代码级别，也可以存在于编译之后的Class文件内部。
+4. 元数据可以只存在于 Java 源代码级别，也可以存在于编译之后的Class文件内部。
 
 
 
@@ -52,23 +60,22 @@ Annotation（注解）就是 Java 提供了一种元程序中的元素关联任�
 
 根据注解参数的个数，我们可以将注解分为三类：
 
-1.    标记注解
+1. 标记注解
 
-      一个没有成员定义的注解类型被称为标记注解。这种注解类型仅使用自身的存在与否来为我们提供信息。比如后面的系统注解 `@Override` 。
+   一个没有成员定义的注解类型被称为标记注解。这种注解类型仅使用自身的存在与否来为我们提供信息。比如后面的系统注解 `@Override` 。
 
-2.    单值注解
+2. 单值注解
 
-3.    完整注解　　
-
+3. 完整注解　　
 
 
 根据注解使用方法和用途，我们可以将注解分为三类：
 
-1.         JDK内置系统注解
+1. JDK内置系统注解
 
-2.         元注解
+2. 元注解
 
-3.         自定义注解
+3. 自定义注解
 
 
 
@@ -78,12 +85,9 @@ Annotation（注解）就是 Java 提供了一种元程序中的元素关联任�
 
 JavaSE中内置三个标准注解，定义在 `java.lang` 中：
 
-- **@Override**：用于修饰此方法覆盖了父类的方法;
-
-- **@Deprecated**：用于修饰已经过时的方法;
-
-- **@SuppressWarnnings**：用于通知java编译器禁止特定的编译警告。
-
+1. **@Override**：用于修饰此方法覆盖了父类的方法;
+2. **@Deprecated**：用于修饰已经过时的方法;
+3. **@SuppressWarnnings**：用于通知java编译器禁止特定的编译警告。
 
 下面我们依次看看三个内置标准注解的作用和使用场景。
 
@@ -318,14 +322,13 @@ public @interface 注解名 {定义体}
 
 注解类型里面的参数该怎么设定:
 
-1.    只能用 public 或默认（default）这两个访问权修饰。
+- 只能用 public 或默认（default）这两个访问权修饰。
 
-      例如：`String value();` 这里把方法设为 default 默认类型。　
+  例如：`String value();` 这里把方法设为 default 默认类型。　
 
-2.    参数成员只能用基本类型 byte、char、short、int、long、float、double、boolean 八种基本数据类型和 String、Enum、Class、注解等数据类型，以及这一些类型的数组。例如：`String value();` 这里的参数成员就为 String。
+- 参数成员只能用基本类型 byte、char、short、int、long、float、double、boolean 八种基本数据类型和 String、Enum、Class、注解等数据类型，以及这一些类型的数组。例如：`String value();` 这里的参数成员就为 String。
 
-3.    如果只有一个参数成员，最好把参数名称设为"value"，后加小括号。例：下面的例子 FruitName 注解就只有一个参数成员。
-
+- 如果只有一个参数成员，最好把参数名称设为"value"，后加小括号。例：下面的例子 FruitName 注解就只有一个参数成员。
 
 简单的自定义注解和使用注解实例：
 
@@ -550,8 +553,8 @@ public class FruitRun {
 
 ## 资料
 
-[注解（Annotation）基本概念](http://www.cnblogs.com/peida/archive/2013/04/23/3036035.html) by peida
+- [注解（Annotation）基本概念](http://www.cnblogs.com/peida/archive/2013/04/23/3036035.html) by peida
 
-[注解（Annotation）自定义注解入门](http://www.cnblogs.com/peida/archive/2013/04/24/3036689.html) by peida
+- [注解（Annotation）自定义注解入门](http://www.cnblogs.com/peida/archive/2013/04/24/3036689.html) by peida
 
-[注解（Annotation）注解处理器](http://www.cnblogs.com/peida/archive/2013/04/26/3038503.html) by peida
+- [注解（Annotation）注解处理器](http://www.cnblogs.com/peida/archive/2013/04/26/3038503.html) by peida
