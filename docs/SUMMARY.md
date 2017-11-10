@@ -12,6 +12,10 @@
   * [Java 正则（一）](advanced/java-regex-01.md)
   * [Java 正则（二）](advanced/java-regex-02.md)
   * [Java 正则（三）](advanced/java-regex-03.md)
+  * [Java 实现消息摘要与数字签名](advanced/encode/java-message-digest.md)
+  * [Java 实现加密算法](advanced/encode/java-encryption.md)
+  * [Java 实现加密算法](advanced/encode/java-encryption.md)
+  * [JDK 升级](advanced/jdk-upgrade.md)
 
 ## Effective Java
 

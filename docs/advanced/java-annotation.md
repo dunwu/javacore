@@ -1,13 +1,3 @@
----
-title: Java 注解
-date: 2017/11/08
-categories:
-- javase
-tags:
-- javase
-- annotation
----
-
 ## 什么是注解（Annotation）
 
 Annotation（注解）就是 Java 提供了一种元程序中的元素关联任何信息和着任何元数据（metadata）的途径和方法。

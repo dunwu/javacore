@@ -1,13 +1,3 @@
----
-title: Java 枚举
-date: 2017/11/08
-categories:
-- javase
-tags:
-- javase
-- enum
----
-
 ## 概念
 
  `enum` 的全称为 enumeration， 是 JDK 1.5  中引入的新特性。

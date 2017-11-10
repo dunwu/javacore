@@ -1,12 +1,3 @@
----
-title: Java 数据类型
-date: 2017/11/08
-categories:
-- javase
-tags:
-- javase
----
-
 ## 值类型和引用类型
 
 Java 中的数据类型有两类：
