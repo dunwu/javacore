@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+
+
+  <!-- [Part 1] BASIC SETTINGS BEGIN -->
 
   <!-- MAVEN COORDINATE BEGIN -->
   <groupId>io.github.dunwu</groupId>
@@ -10,40 +14,70 @@
   <packaging>pom</packaging>
   <!-- MAVEN COORDINATE END -->
 
-
-  <!--PROJECT INFO BEGIN-->
-  <name>javase-notes</name>
-  <description>javase 学习笔记</description>
-  <!--PROJECT INFO END-->
-
-
-  <!-- BASIC CONFIGURATION BEGIN -->
+  <!-- RELATIONSHIP SETTINGS BEGIN -->
   <modules>
     <module>basics</module>
-    <module>jdk8</module>
     <module>advanced</module>
     <module>effective</module>
+    <module>jdk8</module>
   </modules>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <!-- RELATIONSHIP SETTINGS END -->
+
+  <!-- PROPERTIES BEGIN -->
   <properties>
-    <!-- Plugin的属性 -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
-  <dependencyManagement>
-    <dependencies>
-      <!-- TEST begin -->
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.12</version>
-        <scope>test</scope>
-      </dependency>
-      <!-- TEST end -->
-    </dependencies>
-  </dependencyManagement>
-  <!-- BASIC CONFIGURATION END -->
+  <!-- PROPERTIES END -->
+
+  <!-- [Part 1] BASIC SETTINGS END -->
 
 
-  <!-- BUILD CONFIGURATION BEGIN -->
-  <!-- BUILD CONFIGURATION END -->
+  <!-- [Part 2] BUILD SETTINGS BEGIN -->
+  <!-- [Part 2] BUILD SETTINGS END -->
+
+
+  <!-- [Part 3] PROJECT INFO BEGIN -->
+  <name>${project.artifactId}</name>
+  <description>spring 学习笔记</description>
+  <url>https://github.com/dunwu/javase-notes</url>
+  <inceptionYear>2016-2017</inceptionYear>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+      <comments>A business-friendly OSS license</comments>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Zhang Peng</name>
+      <email>forbreak@163.com</email>
+      <timezone>+8</timezone>
+    </developer>
+  </developers>
+  <!-- [Part 3] PROJECT INFO END -->
+
+
+  <!-- [Part 4] ENVIRONMENT SETTINGS BEGIN -->
+  <issueManagement>
+    <system>Github</system>
+    <url>https://github.com/dunwu/javase-notes/issues</url>
+  </issueManagement>
+  <scm>
+    <url>https://github.com/dunwu/javase-notes</url>
+    <connection>scm:git:git://github.com/dunwu/javase-notes.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:dunwu/javase-notes.git</developerConnection>
+  </scm>
+  <!-- [Part 4] ENVIRONMENT SETTINGS END -->
+
 
 </project>
