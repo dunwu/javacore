@@ -1,12 +1,15 @@
 package io.github.dunwu.javase.array;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * 数组示例
  *
  * @author Zhang Peng
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ArrayDemoTest {
     @Test
     public void demo01() {

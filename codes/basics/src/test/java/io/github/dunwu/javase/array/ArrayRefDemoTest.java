@@ -1,7 +1,10 @@
 package io.github.dunwu.javase.array;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ArrayRefDemoTest {
     private void acceptArray01(int x[]) { // 接收整型数组的引用
         x[0] = 6; // 修改第一个元素

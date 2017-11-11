@@ -1,10 +1,13 @@
 package io.github.dunwu.javase.datatype;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * @author Zhang Peng
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DataDemoTest {
     @Test
     public void demo01() {
