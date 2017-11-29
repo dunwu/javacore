@@ -1,3 +1,5 @@
+# JDK  升级到 1.8 常见问题
+
 > JDK8 发布很久了，它提供了许多吸引人的新特性，能够提高编程效率。
 >
 > 如果是新的项目，使用 JDK8 当然是最好的选择。但是，对于一些老的项目，升级到 JDK8 则存在一些兼容性问题，是否升级需要酌情考虑。
@@ -5,6 +7,60 @@
 > 近期，我在工作中遇到一个任务，将部门所有项目的 JDK 版本升级到 1.8 （老版本大多是 1.6）。在这个过程中，遇到一些问题点，并结合在网上看到的坑，在这里总结一下。
 
 ## FAQ
+
+### Intellij 中的 JDK 环境设置
+
+#### Settings
+
+点击 **File > Settings > Java Compiler**
+
+Project bytecode version 选择 1.8
+
+点击 **File > Settings > Build Tools > Maven > Importing**
+
+选择 JDK for importer 为 1.8
+
+#### Projcet Settings
+
+**Project SDK** 选择 1.8
+
+#### Application
+
+如果 web 应用的启动方式为 Application ，需要修改 JRE
+
+点击 **Run/Debug Configurations > Configuration**
+
+选择 JRE 为 1.8
+
+### Linux 环境修改
+
+#### 修改环境变量
+
+修改 `/etc/profile` 中的 **JAVA_HOME**，设置 为 jdk8 所在路径。
+
+修改后，执行 `source /etc/profile` 生效。
+
+编译、发布脚本中如果有 `export JAVA_HOME` ，需要注意，需要使用 jdk8 的路径。
+
+#### 修改 maven
+
+settings.xml 中 profile 的激活条件如果是 jdk，需要修改一下 jdk 版本
+
+```xml
+<activation>
+  <jdk>1.8</jdk> <!-- 修改为 1.8 -->
+</activation>
+```
+
+#### 修改 server
+
+修改 server 中的 javac 版本，以 resin 为例：
+
+修改 resin 配置文件中的 javac 参数。
+
+```xml
+<javac compiler="internal" args="-source 1.8"/>
+```
 
 ### sun.\* 包缺失问题
 
