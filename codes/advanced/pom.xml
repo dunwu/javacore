@@ -19,15 +19,6 @@
   </parent>
   <!-- RELATIONSHIP SETTINGS END -->
 
-  <!-- PROPERTIES BEGIN -->
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.6</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-  </properties>
-  <!-- PROPERTIES END -->
-
   <!-- [Part 1] BASIC SETTINGS END -->
 
 

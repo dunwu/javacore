@@ -20,6 +20,7 @@
     <module>advanced</module>
     <module>effective</module>
     <module>jdk8</module>
+    <module>concurrent</module>
   </modules>
   <dependencies>
     <dependency>
@@ -34,6 +35,9 @@
   <!-- PROPERTIES BEGIN -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
   </properties>
   <!-- PROPERTIES END -->
 

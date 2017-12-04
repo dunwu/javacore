@@ -7,7 +7,7 @@
   <!-- [Part 1] BASIC SETTINGS BEGIN -->
 
   <!-- MAVEN COORDINATE BEGIN -->
-  <artifactId>javase-notes-basics</artifactId>
+  <artifactId>javase-notes-concurrent</artifactId>
   <packaging>jar</packaging>
   <!-- MAVEN COORDINATE END -->
 
@@ -24,7 +24,7 @@
 
   <!-- [Part 3] PROJECT INFO BEGIN -->
   <name>${project.artifactId}</name>
-  <description>JavaSE 学习笔记之基础篇</description>
+  <description>JavaSE 学习笔记之并发篇</description>
   <!-- [Part 3] PROJECT INFO END -->
 
 
