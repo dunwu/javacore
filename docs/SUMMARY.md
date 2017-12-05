@@ -17,6 +17,10 @@
   * [Java 实现加密算法](advanced/encode/java-encryption.md)
   * [JDK 升级](advanced/jdk-upgrade.md)
 
+## Java 并发
+
+* [Java 并发常见问题](concurrent/java-concurrent-faq.md)
+
 ## JDK8
 
 * [JDK8 快速指南](jdk8-quickstart.md)

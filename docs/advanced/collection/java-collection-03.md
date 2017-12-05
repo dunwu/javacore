@@ -8,6 +8,8 @@
 
 ### 定义
 
+![image.png](http://upload-images.jianshu.io/upload_images/3101171-c1b24a5267f70e85.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 `ArrayList` 的定义：
 
 ```java
@@ -39,6 +41,8 @@ public class ArrayList<E> extends AbstractList<E>
 
 ### 定义
 
+![image.png](http://upload-images.jianshu.io/upload_images/3101171-a60efa703191b6bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 `LinkedList` 的定义：
 
 ```java
@@ -64,6 +68,10 @@ public class LinkedList<E>
 `HashMap` 是不保序的。
 
 ### 定义
+
+![image.png](http://upload-images.jianshu.io/upload_images/3101171-9dd276c2691fe0a4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+`HashMap` 的定义：
 
 ```java
 public class HashMap<K,V> extends AbstractMap<K,V>
@@ -113,6 +121,10 @@ HashMap 的内部实现是采用 Hash 算法。
 
 ### 定义
 
+![image.png](http://upload-images.jianshu.io/upload_images/3101171-c9cc0106796841d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+`LinkedHashMap` 的定义：
+
 ```java
 public class LinkedHashMap<K,V>
     extends HashMap<K,V>
@@ -137,6 +149,10 @@ public class LinkedHashMap<K,V>
 > 它根据键的自然顺序或者在创建 Map 时提供的比较器去进行排序。
 
 ### 定义
+
+![image.png](http://upload-images.jianshu.io/upload_images/3101171-10e471130cb4c222.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+`TreeMap` 的定义：
 
 ```java
 public class TreeMap<K,V>
