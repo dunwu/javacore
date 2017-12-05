@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.concurrent.chapter01;
+package io.github.dunwu.javase.concurrent.thread;
 
 import java.util.ArrayList;
 import java.util.concurrent.locks.Lock;
