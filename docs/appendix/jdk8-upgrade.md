@@ -1,4 +1,14 @@
-# JDK  升级到 1.8 常见问题
+---
+title: jdk8-upgrade.md
+date: 2017/11/08
+categories:
+- javase
+tags:
+- javase
+- 升级
+---
+
+# JDK8 升级常见问题
 
 > JDK8 发布很久了，它提供了许多吸引人的新特性，能够提高编程效率。
 >
@@ -78,36 +88,6 @@ JDK8 不再提供 `sun.*` 包供开发者使用，因为这些接口不是公共
 
 找到$JAVA_HOME下 `jre/lib/security/java.security` ，将禁用的算法设置为空：`jdk.certpath.disabledAlgorithms=` 。
 
-### 第三方jar包无法使用
-
-有些第三方 jar 包基于非 JDK8 版本编译，可能会存在兼容性问题。
-
-这种情况只能具体问题具体分析，下面列举几个常用 jar 包。
-
-- 查找组件用到了 mvel，mvel 为了提高效率进行了字节码优化，正好碰上 JDK8 死穴，所以需要升级。
-
-```xml
-<dependency>
-  <groupId>org.mvel</groupId>
-  <artifactId>mvel2</artifactId>
-  <version>2.2.7.Final</version>
-</dependency>
-```
-
-- javassist
-
-```xml
-<dependency>
-  <groupId>org.javassist</groupId>
-  <artifactId>javassist</artifactId>
-  <version>3.18.1-GA</version>
-</dependency>
-```
-
-> **注意**
->
-> 有些部署工具不会删除旧版本 jar 包，所以可以尝试手动删除老版本 jar 包。
-
 ### JVM参数调整
 
 在jdk8中，PermSize相关的参数已经不被使用：
@@ -135,6 +115,43 @@ JDK8 中再也没有 `PermGen` 了。其中的某些部分，如被 intern 的�
 以下示例显示如何将类类元数据的上限设置为 256 MB：
 
 XX:MaxMetaspaceSize=256m
+
+### 字节码问题
+
+ASM 5.0 beta 开始支持 JDK8
+
+**字节码错误**
+
+```
+Caused by: java.io.IOException: invalid constant type: 15
+	at javassist.bytecode.ConstPool.readOne(ConstPool.java:1113)
+```
+
+- 查找组件用到了 mvel，mvel 为了提高效率进行了字节码优化，正好碰上 JDK8 死穴，所以需要升级。
+
+```xml
+<dependency>
+  <groupId>org.mvel</groupId>
+  <artifactId>mvel2</artifactId>
+  <version>2.2.7.Final</version>
+</dependency>
+```
+
+- javassist
+
+```xml
+<dependency>
+  <groupId>org.javassist</groupId>
+  <artifactId>javassist</artifactId>
+  <version>3.18.1-GA</version>
+</dependency>
+```
+
+> **注意**
+>
+> 有些部署工具不会删除旧版本 jar 包，所以可以尝试手动删除老版本 jar 包。
+
+http://asm.ow2.org/history.html
 
 ## 资料
 

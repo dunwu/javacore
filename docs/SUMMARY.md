@@ -15,7 +15,6 @@
   * [Java 实现消息摘要与数字签名](advanced/encode/java-message-digest.md)
   * [Java 实现加密算法](advanced/encode/java-encryption.md)
   * [Java 实现加密算法](advanced/encode/java-encryption.md)
-  * [JDK 升级](advanced/jdk-upgrade.md)
 
 ## Java 并发
 
@@ -36,4 +35,5 @@
 
 * [附录](appendix/README.md)
   * [资源](appendix/resources.md)
+  * [JDK8 升级常见问题](appendix/jdk8-upgrade.md)
 
