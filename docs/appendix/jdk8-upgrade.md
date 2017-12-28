@@ -153,6 +153,39 @@ Caused by: java.io.IOException: invalid constant type: 15
 
 http://asm.ow2.org/history.html
 
+### Java连接redis启动报错Error redis clients jedis HostAndPort cant resolve localhost address
+
+错误环境:
+本地window开发环境没有问题。上到Linux环境,启动出现问题。
+错误信息:
+Error redis clients jedis HostAndPort cant resolve localhost address
+
+解决办法:
+
+1. 查看Linux系统的主机名
+
+```
+# hostname
+template
+```
+
+2. 查看/etc/hosts文件中是否有127.0.0.1对应主机名，如果没有则添加
+
+### Resin 容器指定 JDK 1.8
+
+如果 resin 容器原来版本低于 JDK1.8，运行 JDK 1.8 编译的 web app 时，可能会提示错误：
+
+```
+java.lang.UnsupportedClassVersionError: PR/Sort : Unsupported major.minor version 52.0
+```
+
+解决方法就是，使用 JDK 1.8 要重新编译一下。然后，我在部署时出现过编译后仍报错的情况，重启一下服务器后，问题解决，不知是什么原因。
+
+```
+./configure --prefix=/usr/local/resin  --with-java=/usr/local/jdk1.8.0_121
+make & make install
+```
+
 ## 资料
 
 - [Compatibility Guide for JDK 8](http://www.oracle.com/technetwork/java/javase/8-compatibility-guide-2156366.html)
