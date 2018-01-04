@@ -2,12 +2,14 @@
 
 ## JavaSE
 
-* [自述](README.md)
-* [基础](basics/README.md)
-  * [Java 数据类型](basics/java-datatype.md)
+* [前言](README.md)
+
+* [JavaSE 基础](basics/README.md)
+  * [Java 数据类型](basics/java-basic-datatype.md)
   * [Java 枚举](basics/java-enum.md)
   * [Java 国际化](basics/java-locale.md)
-* [进阶](advanced/README.md)
+  
+* [JavaSE 进阶](advanced/README.md)
   * [Java 注解](advanced/java-annotation.md)
   * [Java 正则（一）](advanced/java-regex-01.md)
   * [Java 正则（二）](advanced/java-regex-02.md)
@@ -18,11 +20,12 @@
 
 ## Java 并发
 
-* [Java 并发常见问题](concurrent/java-concurrent-faq.md)
+* [Java 并发](concurrent/README.md)
+  * [Java 并发常见问题](concurrent/java-concurrent-faq.md)
 
 ## JDK8
 
-* [JDK8 快速指南](jdk8-quickstart.md)
+  * [JDK8 快速指南](jdk8-quickstart.md)
 
 ## Effective Java
 
