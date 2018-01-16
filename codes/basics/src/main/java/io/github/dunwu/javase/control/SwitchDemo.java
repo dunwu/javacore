@@ -22,6 +22,7 @@ public class SwitchDemo {
             break;
         default:
             System.out.println("Invalid grade");
+            break;
         }
         System.out.println("Your grade is " + grade);
     }
