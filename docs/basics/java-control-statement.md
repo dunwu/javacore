@@ -10,6 +10,10 @@ tags:
 
 # Java 控制语句
 
+## 知识点
+
+![控制语句.png](images/控制语句.png)
+
 ## 选择语句
 
 ### if语句
@@ -376,7 +380,9 @@ public class ForeachDemo {
 // James,Larry,Tom,Lacy,
 ```
 
-### **break 关键字**
+## 中断语句
+
+### break 关键字
 
 break主要用在循环语句或者switch语句中，用来跳出整个语句块。
 
@@ -396,11 +402,14 @@ public class BreakDemo {
             System.out.print(x);
             System.out.print("\n");
         }
+
+        System.out.println("break 示例结束");
     }
 }
 // output:
 // 10
 // 20
+// break 示例结束
 ```
 
 ### continue 关键字
@@ -431,3 +440,32 @@ public class ContinueDemo {
 // 40
 // 50
 ```
+
+### return 关键字
+
+跳出整个函数体，函数体后面的部分不再执行。
+
+示例
+
+```java
+public class ReturnDemo {
+    public static void main(String args[]) {
+        int[] numbers = { 10, 20, 30, 40, 50 };
+
+        for (int x : numbers) {
+            if (x == 30) {
+                return;
+            }
+            System.out.print(x);
+            System.out.print("\n");
+        }
+
+        System.out.println("return 示例结束");
+    }
+}
+// output:
+// 10
+// 20
+```
+
+> 注意：请仔细体会一下 return 和 break 的区别。
