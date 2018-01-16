@@ -11,3 +11,5 @@ public class IfDemo {
         }
     }
 }
+// output:
+// 这是 if 语句

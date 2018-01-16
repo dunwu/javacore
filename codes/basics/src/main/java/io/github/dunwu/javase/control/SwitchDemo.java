@@ -26,3 +26,6 @@ public class SwitchDemo {
         System.out.println("Your grade is " + grade);
     }
 }
+// output:
+// Well done
+// Your grade is C

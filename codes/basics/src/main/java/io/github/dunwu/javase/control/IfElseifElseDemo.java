@@ -18,3 +18,5 @@ public class IfElseifElseDemo {
         }
     }
 }
+// output:
+// Value of X is 3

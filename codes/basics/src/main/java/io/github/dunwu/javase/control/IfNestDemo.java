@@ -15,3 +15,5 @@ public class IfNestDemo {
         }
     }
 }
+// output:
+// X = 30 and Y = 10
