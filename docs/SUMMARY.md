@@ -5,7 +5,10 @@
 * [前言](README.md)
 
 * [JavaSE 基础](basics/README.md)
-  * [Java 数据类型](basics/java-basic-datatype.md)
+  * [Java 安装](basics/java-install.md)
+  * [Java 基本数据类型](basics/java-basic-datatype.md)
+  * [Java 控制语句](basics/java-control-statement.md)
+  * [Java 操作符](basics/java-operator.md)
   * [Java 枚举](basics/java-enum.md)
   * [Java 国际化](basics/java-locale.md)
   

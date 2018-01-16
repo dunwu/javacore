@@ -1,5 +1,5 @@
 ---
-title: Java 基础数据类型
+title: Java 基本数据类型
 date: 2017/11/14
 categories:
 - javase
@@ -8,7 +8,7 @@ tags:
 - basics
 ---
 
-# Java 基础数据类型
+# Java 基本数据类型
 
 ## 值类型和引用类型
 
