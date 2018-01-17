@@ -1,6 +1,12 @@
-package io.github.dunwu.javase.control;
+package io.github.dunwu.javase.statement;
 
 /**
+ * 循环语句示例
+ * @see WhileDemo
+ * @see DoWhileDemo
+ * @see ForDemo
+ * @see ForNestedDemo
+ * @see ForeachDemo
  * @author Zhang Peng
  */
 public class ForeachDemo {

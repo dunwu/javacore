@@ -1,9 +1,17 @@
-package io.github.dunwu.javase.control;
+package io.github.dunwu.javase.statement;
 
 /**
+ * 分支语句示例
+ * @see IfDemo
+ * @see IfElseDemo
+ * @see IfElseifElseDemo
+ * @see IfNestedDemo
+ * @see SwitchDemo01
+ * @see SwitchDemo02
+ * @see SwitchDemo03
  * @author Zhang Peng
  */
-public class IfNestDemo {
+public class IfNestedDemo {
     public static void main(String args[]) {
         int x = 30;
         int y = 10;
