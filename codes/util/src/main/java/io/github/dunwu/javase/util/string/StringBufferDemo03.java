@@ -6,7 +6,7 @@ public class StringBufferDemo03 {
         buf.append("World!!"); // 添加内容
         buf.insert(0, "Hello "); // 在第一个内容之前添加内容
         System.out.println(buf);
-        buf.insert(buf.length(), "MLDN~"); // 在最后添加内容
+        buf.insert(buf.length(), "JAVA~"); // 在最后添加内容
         System.out.println(buf);
     }
 };

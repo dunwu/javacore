@@ -9,6 +9,6 @@ public class StringBufferDemo02 {
     }
 
     public static void fun(StringBuffer s) { // 接收StringBuffer引用
-        s.append("MLDN ").append("LiXingHua"); // 修改StringBuffer的内容
+        s.append("JAVA ").append("Zhang Peng"); // 修改StringBuffer的内容
     }
 };

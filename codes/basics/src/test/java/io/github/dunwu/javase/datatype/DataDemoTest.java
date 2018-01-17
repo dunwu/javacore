@@ -74,7 +74,7 @@ public class DataDemoTest {
     @Test
     public void demo08() {
         // 定义字符串变量
-        String str = "lixinghua";
+        String str = "Zhang Peng";
         int x = 30;
         // 修改str的内容并将内容重新给str变量
         str = str + x;
