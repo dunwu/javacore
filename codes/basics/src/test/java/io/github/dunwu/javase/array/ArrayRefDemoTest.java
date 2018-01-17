@@ -59,7 +59,7 @@ public class ArrayRefDemoTest {
 
     @Test
     public void demo03() {
-        int score[] = {67, 89, 87, 69, 90, 100, 75, 90}; // 定义整型数组
+        int[] score = {67, 89, 87, 69, 90, 100, 75, 90}; // 定义整型数组
         int age[] = {31, 30, 18, 17, 8, 9, 1, 39}; // 定义整型数组
         sort(score); // 数组排序
         print(score); // 数组打印
@@ -70,7 +70,7 @@ public class ArrayRefDemoTest {
 
     @Test
     public void demo04() {
-        int score[] = {67, 89, 87, 69, 90, 100, 75, 90}; // 定义整型数组
+        int[] score = {67, 89, 87, 69, 90, 100, 75, 90}; // 定义整型数组
         int age[] = {31, 30, 18, 17, 8, 9, 1, 39}; // 定义整型数组
         java.util.Arrays.sort(score); // 数组排序
         print(score); // 数组打印
