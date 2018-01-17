@@ -9,7 +9,7 @@ import java.util.SortedMap;
  * 取得Charset类的全部编码
  */
 public class GetAllCharsetDemo{
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		SortedMap<String, Charset> all = Charset.availableCharsets(); // 得到全部可用的字符集
 		Iterator<Map.Entry<String, Charset>> iter = all.entrySet().iterator();
 		while(iter.hasNext()) {

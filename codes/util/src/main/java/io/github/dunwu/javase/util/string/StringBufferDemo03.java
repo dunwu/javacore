@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.util.string;
 
 public class StringBufferDemo03 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         StringBuffer buf = new StringBuffer(); // 声明StringBuffer对象
         buf.append("World!!"); // 添加内容
         buf.insert(0, "Hello "); // 在第一个内容之前添加内容

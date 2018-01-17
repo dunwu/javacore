@@ -41,7 +41,7 @@ public enum AddMethod2EnumDemo {
 
     public abstract String getDescription(); // 抽象方法
 
-    public static void main(String args[]) { // 静态方法
+    public static void main(String[] args) { // 静态方法
         for (AddMethod2EnumDemo item : AddMethod2EnumDemo.values()) {
             System.out.println("code: " + item.getCode() + ", description: " + item.getDescription());
         }

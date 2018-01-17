@@ -42,7 +42,7 @@ public enum ErrorCodeEn {
         return result;
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         System.out.println("getAll: " + ErrorCodeEn.getAll());
         for (ErrorCodeEn s : ErrorCodeEn.values()) {
             System.out.println("name: " + s.getDescription() + ", code: " + s.getCode());

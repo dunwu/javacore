@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.util.regex;
 
 public class RegexDemo07 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         String info = "LXH:98|JAVA:90|LI:100"; // 定义一个字符串
         // 拆分的形式：
         /*

@@ -12,7 +12,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class SwitchDemo03 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int option = 4;
         switch (option) {
         case 1: {

@@ -12,7 +12,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class SwitchDemo02 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         String level = "及格";
         switch (level) {
         case "优秀": {

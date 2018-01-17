@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class DateServer{
-	public static void main(String args[]) throws Exception {
+	public static void main(String[] args) throws Exception {
 		int ports[] = {8000,8001,8002,8003,8005,8006} ; // 表示五个监听端口
 		Selector selector = Selector.open() ;	// 通过open()方法找到Selector
 		for(int i=0;i<ports.length;i++){

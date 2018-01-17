@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.object;
 
 public class ObjectRefDemo02 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         String str1 = "hello";
         System.out.println("fun()方法调用之前：" + str1);
         fun(str1);

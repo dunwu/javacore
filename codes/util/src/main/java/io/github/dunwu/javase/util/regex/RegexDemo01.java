@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.util.regex;
 
 public class RegexDemo01 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         String str = "1234567890"; // 此字符串由数字组成
         boolean flag = true; // 定义一个标记变量
         // 要先将字符串拆分成字符数组，之后依次判断

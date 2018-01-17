@@ -6,7 +6,7 @@ import java.nio.IntBuffer;
  * Buffer 的基本操作
  */
 public class IntBufferDemo01 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         IntBuffer buf = IntBuffer.allocate(10); // 准备出10个大小的缓冲区
         System.out.print("1、写入数据之前的position、limit和capacity：");
         System.out.println("position = " + buf.position() + "，limit = " + buf.limit()

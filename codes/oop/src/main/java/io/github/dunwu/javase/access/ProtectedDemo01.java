@@ -7,7 +7,7 @@ class SubHelloDemo extends Hello {
 };
 
 public class ProtectedDemo01 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         SubHelloDemo sub = new SubHelloDemo();
         sub.print();
     }

@@ -3,7 +3,7 @@ package io.github.dunwu.javase.util.math;
 import java.math.BigInteger;
 
 public class BigIntegerDemo01 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         BigInteger bi1 = new BigInteger("123456789"); // 声明BigInteger对象
         BigInteger bi2 = new BigInteger("987654321"); // 声明BigInteger对象
         System.out.println("加法操作：" + bi2.add(bi1)); // 加法操作

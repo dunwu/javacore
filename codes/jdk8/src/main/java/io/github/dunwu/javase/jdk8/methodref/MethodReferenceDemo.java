@@ -11,7 +11,7 @@ import java.util.List;
  * @author Zhang Peng
  */
 public class MethodReferenceDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         List names = new ArrayList();
         names.add("楼");
         names.add("主");

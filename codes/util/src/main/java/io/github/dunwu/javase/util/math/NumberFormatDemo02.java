@@ -12,7 +12,7 @@ class FormatDemo {
 };
 
 public class NumberFormatDemo02 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         FormatDemo demo = new FormatDemo(); // 格式化对象的类
         demo.format1("###,###.###", 111222.34567);
         demo.format1("000,000.000", 11222.34567);

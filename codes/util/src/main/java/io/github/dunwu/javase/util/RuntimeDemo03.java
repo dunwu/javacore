@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.util;
 
 public class RuntimeDemo03 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Runtime run = Runtime.getRuntime(); // 取得Runtime类的实例化对象
         Process p = null; // 定义进程变量
         try {

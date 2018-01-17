@@ -10,7 +10,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class ForDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int sum = 0; // 保存累加的结果
         for (int x = 1; x <= 10; x++) {
             sum += x;

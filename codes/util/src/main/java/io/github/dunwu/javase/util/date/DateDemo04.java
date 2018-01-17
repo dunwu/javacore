@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class DateDemo04 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         DateFormat df1 = null; // 声明一个DateFormat
         DateFormat df2 = null; // 声明一个DateFormat
         df1 = DateFormat.getDateInstance(DateFormat.YEAR_FIELD, new Locale("zh", "CN")); // 得到日期的DateFormat对象

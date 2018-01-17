@@ -61,7 +61,7 @@ class DateTime { // 以后直接通过此类就可以取得日期时间
 };
 
 public class DateDemo06 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         DateTime dt = new DateTime();
         System.out.println("系统日期：" + dt.getDate());
         System.out.println("中文日期：" + dt.getDateComplete());

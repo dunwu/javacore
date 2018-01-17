@@ -10,7 +10,7 @@ import java.nio.charset.CharsetEncoder;
  *
  */
 public class CharsetEnDeDemo{
-	public static void main(String args[]) throws Exception {
+	public static void main(String[] args) throws Exception {
 		Charset charset = Charset.forName("ISO-8859-1");	// 只能表示的英文字符
 		CharsetEncoder encoder = charset.newEncoder();	// 得到编码器
 		CharsetDecoder decoder = charset.newDecoder();	// 得到解码器

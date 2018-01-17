@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.util;
 
 public class RuntimeDemo01 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Runtime run = Runtime.getRuntime(); // 通过Runtime类的静态方法进行实例化操作
         System.out.println("JVM最大内存量：" + run.maxMemory()); // 观察最大的内存，根据机器的不同，环境也会有所不同
         System.out.println("JVM空闲内存量：" + run.freeMemory()); // 取得程序运行的空闲内存

@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel;
  * 内存映射
  */
 public class FileChannelDemo03 {
-	public static void main(String args[]) throws Exception {
+	public static void main(String[] args) throws Exception {
 		File file = new File("d:" + File.separator + "out.txt");
 		FileInputStream input = new FileInputStream(file);
 		FileChannel fin = input.getChannel();	// 得到输入的通道

@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.util.string;
 
 public class StringBufferDemo06 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         StringBuffer buf = new StringBuffer(); // 声明StringBuffer对象
         buf.append("Hello ").append("World!!"); // 向StringBuffer添加内容
         buf.replace(6, 11, "Zhang Peng"); // 将world的内容替换

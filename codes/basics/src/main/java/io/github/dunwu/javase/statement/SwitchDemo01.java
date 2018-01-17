@@ -12,7 +12,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class SwitchDemo01 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int x = 3;
         int y = 6;
         char oper = '+';

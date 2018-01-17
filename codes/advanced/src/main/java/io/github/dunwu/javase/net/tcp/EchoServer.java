@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class EchoServer{
-	public static void main(String args[]) throws Exception {	// 所有异常抛出
+	public static void main(String[] args) throws Exception {	// 所有异常抛出
 		ServerSocket server = null ;		// 定义ServerSocket类
 		Socket client = null ;	// 表示客 户端
 		BufferedReader buf = null ;	// 接收输入流

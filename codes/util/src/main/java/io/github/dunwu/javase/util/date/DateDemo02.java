@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class DateDemo02 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Calendar calendar = new GregorianCalendar(); // 实例化Calendar类对象
         System.out.println("YEAR: " + calendar.get(Calendar.YEAR));
         System.out.println("MONTH: " + (calendar.get(Calendar.MONTH) + 1));

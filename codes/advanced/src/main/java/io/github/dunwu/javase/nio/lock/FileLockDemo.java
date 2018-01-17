@@ -6,7 +6,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
 public class FileLockDemo{
-	public static void main(String args[]) throws Exception {
+	public static void main(String[] args) throws Exception {
 		File file = new File("d:" + File.separator + "out.txt");
 		FileOutputStream output = new FileOutputStream(file,true);
 		FileChannel fout = output.getChannel();// 得到通道

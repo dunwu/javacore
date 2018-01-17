@@ -21,7 +21,7 @@ class Person {
 };
 
 public class SystemDemo04 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Person per = new Person("张三", 30);
         per = null; // 断开引用
         System.gc(); // 强制性释放空间

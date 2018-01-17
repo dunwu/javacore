@@ -6,7 +6,7 @@ import java.nio.IntBuffer;
  * 创建只读缓冲区
  */
 public class IntBufferDemo03 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         IntBuffer buf = IntBuffer.allocate(10); // 准备出10个大小的缓冲区
         IntBuffer read = null; // 定义子缓冲区
         for (int i = 0; i < 10; i++) {

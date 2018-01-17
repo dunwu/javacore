@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.object;
 
 public class ObjectRefDemo06 {
-    public static void main(String arg[]) {
+    public static void main(String[] args) {
         Person2 per = new Person2("张三", 30);
         Person2 cld = new Person2("张草", 10); // 定义一个孩子
         Book bk = new Book("JAVA SE核心开发", 90.0f);

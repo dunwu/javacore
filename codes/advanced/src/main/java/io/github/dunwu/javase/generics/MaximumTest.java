@@ -13,7 +13,7 @@ public class MaximumTest {
         return max; // 返回最大对象
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         System.out.printf("%d, %d 和 %d 中最大的数为 %d\n\n",
                 3, 4, 5, maximum(3, 4, 5));
 

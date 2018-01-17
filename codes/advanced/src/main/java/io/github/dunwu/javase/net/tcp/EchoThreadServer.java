@@ -4,7 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class EchoThreadServer{
-	public static void main(String args[]) throws Exception {	// 所有异常抛出
+	public static void main(String[] args) throws Exception {	// 所有异常抛出
 		ServerSocket server = null ;		// 定义ServerSocket类
 		Socket client = null ;	// 表示客 户端
 		server = new ServerSocket(8888) ;	// 服务器在8888端口上监听

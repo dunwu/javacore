@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel;
  * 使用輸出通道輸出內容
  */
 public class FileChannelDemo01{
-	public static void main(String args[]) throws Exception{
+	public static void main(String[] args) throws Exception{
 		String info[] = {"大风起兮云飞扬，","威加海内兮归故乡，","安得猛士兮守四方。"};
 		File file = new File("d:" + File.separator + "out.txt");
 		FileOutputStream fos = new FileOutputStream(file);

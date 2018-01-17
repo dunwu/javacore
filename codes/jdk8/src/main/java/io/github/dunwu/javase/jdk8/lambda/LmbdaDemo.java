@@ -8,7 +8,7 @@ package io.github.dunwu.javase.jdk8.lambda;
  * @author Zhang Peng
  */
 public class LmbdaDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         LmbdaDemo demo = new LmbdaDemo();
 
         // 类型声明

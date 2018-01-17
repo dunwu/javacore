@@ -35,7 +35,7 @@ class MyMath {
 };
 
 public class BigDecimalDemo01 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         System.out.println("加法运算：" + MyMath.round(MyMath.add(10.345, 3.333), 1));
         System.out.println("减法运算：" + MyMath.round(MyMath.sub(10.345, 3.333), 3));
         System.out.println("乘法运算：" + MyMath.round(MyMath.mul(10.345, 3.333), 2));

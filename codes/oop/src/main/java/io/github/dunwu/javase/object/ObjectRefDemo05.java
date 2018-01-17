@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.object;
 
 public class ObjectRefDemo05 {
-    public static void main(String arg[]) {
+    public static void main(String[] args) {
         Person2 per = new Person2("张三", 30);
         Book bk = new Book("JAVA SE核心开发", 90.0f);
         per.setBook(bk); // 设置两个对象间的关系，一个人有一本书

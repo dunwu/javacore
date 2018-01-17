@@ -10,7 +10,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class WhileDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int x = 1;
         int sum = 0; // 保存累加的结果
         while (x <= 10) {

@@ -25,7 +25,7 @@ public class SynchronizedDemo implements Runnable {
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         SynchronizedDemo demo = new SynchronizedDemo(); // 定义线程对象
         for (int i = 0; i < 10; i++) {
             Thread t = new Thread(demo, "线程-" + i);

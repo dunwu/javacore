@@ -12,7 +12,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class IfDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int x = 3; // 定义整型变量3
         int y = 10; // 定义整型变量10
         if (x > y) {

@@ -16,7 +16,7 @@ class TimerTaskDemo extends TimerTask {
         System.out.println("当前系统时间为：" + sdf.format(new Date()));
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Timer t = new Timer(); // 建立Timer类对象
         TimerTaskDemo mytask = new TimerTaskDemo(); // 定义任务
         t.schedule(mytask, 1000, 2000); // 设置任务的执行，1秒后开始，每2秒重复

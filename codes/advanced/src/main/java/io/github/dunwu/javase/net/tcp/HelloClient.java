@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 public class HelloClient{
-	public static void main(String args[]) throws Exception {	// 所有异常抛出
+	public static void main(String[] args) throws Exception {	// 所有异常抛出
 		Socket client = null ;	// 表示客 户端
 		client = new Socket("localhost",8888) ;
 		BufferedReader buf = null ;	// 一次性接收完成

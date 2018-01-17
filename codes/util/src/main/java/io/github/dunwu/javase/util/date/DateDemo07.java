@@ -23,7 +23,7 @@ class DateTime2 { // 以后直接通过此类就可以取得日期时间
 };
 
 public class DateDemo07 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         DateTime2 dt = new DateTime2();
         System.out.println("系统日期：" + dt.getDate());
         System.out.println("中文日期：" + dt.getDateComplete());

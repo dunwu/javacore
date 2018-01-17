@@ -6,7 +6,7 @@ import java.nio.IntBuffer;
  * 创建子缓冲区
  */
 public class IntBufferDemo02 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         IntBuffer buf = IntBuffer.allocate(10); // 准备出10个大小的缓冲区
         IntBuffer sub = null; // 定义子缓冲区
         for (int i = 0; i < 10; i++) {

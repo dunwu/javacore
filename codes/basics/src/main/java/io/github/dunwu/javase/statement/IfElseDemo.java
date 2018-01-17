@@ -12,7 +12,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class IfElseDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int x = 3; // 定义整型变量x
         if (x % 2 == 1) { // 判断于是是否为1
             System.out.println("x是奇数！"); // 如果余数为1表示奇数

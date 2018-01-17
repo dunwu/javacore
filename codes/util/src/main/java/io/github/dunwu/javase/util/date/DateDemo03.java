@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 
 public class DateDemo03 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         DateFormat df1 = null; // 声明一个DateFormat
         DateFormat df2 = null; // 声明一个DateFormat
         df1 = DateFormat.getDateInstance(); // 得到日期的DateFormat对象

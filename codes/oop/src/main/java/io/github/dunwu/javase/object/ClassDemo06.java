@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.object;
 
 public class ClassDemo06 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Person2 per = new Person2();
 
         // 由于 Person2 中属性设为 private，所以不能在外部访问

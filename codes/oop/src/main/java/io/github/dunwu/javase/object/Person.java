@@ -9,7 +9,7 @@ class Person {
         System.out.println("姓名：" + name + "；年龄：" + age);
     }
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Person per = new Person();
         per.tell();
     }

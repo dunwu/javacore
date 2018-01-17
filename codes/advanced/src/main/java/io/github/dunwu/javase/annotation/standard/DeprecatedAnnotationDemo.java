@@ -29,7 +29,7 @@ class DeprecatedClass {
 
 
 public class DeprecatedAnnotationDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         DeprecatedMethod dm = new DeprecatedMethod();
         System.out.println(dm.print());
 

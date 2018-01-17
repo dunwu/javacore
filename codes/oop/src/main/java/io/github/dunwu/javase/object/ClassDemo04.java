@@ -1,7 +1,7 @@
 package io.github.dunwu.javase.object;
 
 public class ClassDemo04 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         // 创建对象
         Person person1 = new Person();
         Person person2 = person1;

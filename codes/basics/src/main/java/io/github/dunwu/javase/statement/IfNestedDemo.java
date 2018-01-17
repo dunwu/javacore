@@ -12,7 +12,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class IfNestedDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int x = 30;
         int y = 10;
 

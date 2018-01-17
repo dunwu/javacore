@@ -10,7 +10,7 @@ import java.nio.channels.FileChannel;
  * 使用通道进行读写操作
  */
 public class FileChannelDemo02 {
-	public static void main(String args[]) throws Exception {
+	public static void main(String[] args) throws Exception {
 		File file1 = new File("d:" + File.separator + "out.txt");
 		File file2 = new File("d:" + File.separator + "outnote.txt");
 		FileInputStream input = new FileInputStream(file1);

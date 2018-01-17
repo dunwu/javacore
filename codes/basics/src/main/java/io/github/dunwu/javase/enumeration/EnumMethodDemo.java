@@ -20,7 +20,7 @@ public class EnumMethodDemo {
 
     enum Size {BIG, MIDDLE, SMALL;}
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         System.out.println("=========== Print all Color ===========");
         for (Color c : Color.values()) {
             System.out.println(c + " ordinal: " + c.ordinal());

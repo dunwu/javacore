@@ -22,7 +22,7 @@ public class SuppressWarningsAnnotationDemo {
      * @param args
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         SuppressDemo d = new SuppressDemo();
         d.setVar("南京");
         System.out.println("地名：" + d.getVar());

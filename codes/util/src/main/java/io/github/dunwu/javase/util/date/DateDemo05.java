@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateDemo05 {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         String strDate = "2008-10-19 10:11:30.345";
         // 准备第一个模板，从字符串中提取出日期数字
         String pat1 = "yyyy-MM-dd HH:mm:ss.SSS";

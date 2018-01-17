@@ -10,7 +10,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class ForNestedDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         // 控制行
         for (int i = 1; i <= 9; i++) {
             // 控制列

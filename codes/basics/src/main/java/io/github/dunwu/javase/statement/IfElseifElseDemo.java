@@ -12,7 +12,7 @@ package io.github.dunwu.javase.statement;
  * @author Zhang Peng
  */
 public class IfElseifElseDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int x = 5; // 定义整型变量x
         if (x == 1) {
             System.out.println("x的值是1！");
