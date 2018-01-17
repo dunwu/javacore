@@ -10,7 +10,7 @@
   <!-- MAVEN COORDINATE BEGIN -->
   <groupId>io.github.dunwu</groupId>
   <artifactId>javase-notes</artifactId>
-  <version>1.0.1</version>
+  <version>${javase.notes.version}</version>
   <packaging>pom</packaging>
   <!-- MAVEN COORDINATE END -->
 
@@ -39,6 +39,8 @@
     <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
+
+    <javase.notes.version>1.0.1</javase.notes.version>
   </properties>
   <!-- PROPERTIES END -->
 
