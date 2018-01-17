@@ -21,6 +21,7 @@
     <module>effective</module>
     <module>jdk8</module>
     <module>concurrent</module>
+    <module>util</module>
   </modules>
   <dependencies>
     <dependency>

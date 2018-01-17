@@ -2,7 +2,7 @@
  * The Apache License 2.0
  * Copyright (c) 2016 Zhang Peng
  */
-package io.github.dunwu.javase.locale;
+package io.github.dunwu.javase.util.locale;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
