@@ -6,23 +6,14 @@ import java.util.Arrays;
  * @author Zhang Peng
  */
 public class ArraysDemo {
-
-    private static void printDoubleArray(double[] array) {
-        for (int i = 0; i < array.length; i++) {
-            System.out.print(array[i] + " ");
-        }
-        System.out.println();
-
-    }
-
     public static void main(String[] args) {
-        double[] array = new double[] { 7.6, 8.9, -5.7 };
-        printDoubleArray(array);
+        int[] array = new int[] { 4, 1, 5 };
+        ArrayHelper.print(array);
 
         Arrays.sort(array);
-        printDoubleArray(array);
+        ArrayHelper.print(array);
 
-        Arrays.fill(array, 5.6);
-        printDoubleArray(array);
+        Arrays.fill(array, 6);
+        ArrayHelper.print(array);
     }
 }
