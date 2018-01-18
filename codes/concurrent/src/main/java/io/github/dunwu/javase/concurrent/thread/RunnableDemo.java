@@ -7,10 +7,6 @@ public class RunnableDemo implements Runnable {
     private int ticket = 5;
     private String name;
 
-    public RunnableDemo() {
-
-    }
-
     public RunnableDemo(String name) {
         this.name = name;
     }
@@ -25,5 +21,12 @@ public class RunnableDemo implements Runnable {
                 System.out.println(this.name + " 卖票：ticket = " + ticket--);
             }
         }
+    }
+
+    public static void main(String[] args) {
+        RunnableDemo runnableDemo = new RunnableDemo("Runnable 线程"); // 实例化对象
+        new Thread(runnableDemo).run(); // 调用线程主体
+        new Thread(runnableDemo).run(); // 调用线程主体
+        new Thread(runnableDemo).run(); // 调用线程主体
     }
 }

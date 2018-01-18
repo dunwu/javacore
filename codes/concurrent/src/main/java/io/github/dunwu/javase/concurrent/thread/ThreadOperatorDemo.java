@@ -3,7 +3,7 @@ package io.github.dunwu.javase.concurrent.thread;
 /**
  * @author Zhang Peng
  */
-public class MyThread implements Runnable {
+public class ThreadOperatorDemo implements Runnable {
     @Override
     public void run() {
         for (int i = 0; i < 10; i++) {
@@ -12,7 +12,7 @@ public class MyThread implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(Thread.currentThread().getName() + "运行，i = " + i);
+            System.out.println(Thread.currentThread().getName() + " 运行，i = " + i);
         }
     }
 }
