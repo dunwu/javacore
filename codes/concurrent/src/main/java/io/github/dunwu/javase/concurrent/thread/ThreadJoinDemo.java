@@ -13,7 +13,7 @@ class ThreadJoin implements Runnable { // 实现Runnable接口
 
 
 public class ThreadJoinDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         ThreadJoin mt = new ThreadJoin(); // 实例化Runnable子类对象
         Thread t = new Thread(mt, "线程"); // 实例化Thread对象
         t.start(); // 启动线程

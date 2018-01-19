@@ -16,7 +16,7 @@ class ThreadPriority implements Runnable { // 实现Runnable接口
 
 
 public class ThreadPriorityDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Thread t1 = new Thread(new ThreadPriority(), "线程A"); // 实例化线程对象
         Thread t2 = new Thread(new ThreadPriority(), "线程B"); // 实例化线程对象
         Thread t3 = new Thread(new ThreadPriority(), "线程C"); // 实例化线程对象

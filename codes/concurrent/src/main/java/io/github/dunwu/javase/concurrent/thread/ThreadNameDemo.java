@@ -13,7 +13,7 @@ class ThreadName implements Runnable { // 实现Runnable接口
 
 
 public class ThreadNameDemo {
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         ThreadName mt = new ThreadName(); // 实例化Runnable子类对象
         new Thread(mt).start(); // 系统自动设置线程名称
         new Thread(mt, "线程-A").start(); // 手工设置线程名称

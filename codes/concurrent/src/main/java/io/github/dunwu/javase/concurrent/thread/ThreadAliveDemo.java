@@ -9,7 +9,7 @@ class MyThread implements Runnable{	// 实现Runnable接口
 	}
 };
 public class ThreadAliveDemo{
-	public static void main(String args[]){
+	public static void main(String[] args){
 		MyThread mt = new MyThread() ;	// 实例化Runnable子类对象
 		Thread t = new Thread(mt,"线程");		// 实例化Thread对象
 		System.out.println("线程开始执行之前 --> " + t.isAlive()) ;	 // 判断是否启动
