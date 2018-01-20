@@ -1,3 +1,12 @@
+---
+title: Java 中线程的实现
+date: 2018/01/16
+categories:
+- javase
+tags:
+- javase
+- concurrent
+---
 # Java 中线程的实现
 
 Java 中实现线程有两种方式：

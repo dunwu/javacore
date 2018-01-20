@@ -24,6 +24,8 @@
 ## Java 并发
 
 * [Java 并发](concurrent/README.md)
+  * [Java 中线程的实现](concurrent/java-create-thread.md)
+  * [Java 线程主要操作方法](concurrent/java-thread-operator.md)
   * [Java 并发常见问题](concurrent/java-concurrent-faq.md)
 
 ## JDK8
