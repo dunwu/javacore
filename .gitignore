@@ -8,6 +8,7 @@ logs
 *.class
 *.jar
 *.war
+*.versionsBackup
 
 
 ################ JAVASCRIPT ################

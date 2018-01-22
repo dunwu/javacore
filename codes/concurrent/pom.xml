@@ -15,7 +15,7 @@
   <parent>
     <groupId>io.github.dunwu</groupId>
     <artifactId>javase-notes</artifactId>
-    <version>${javase.notes.version}</version>
+    <version>1.0.1</version>
   </parent>
   <!-- RELATIONSHIP SETTINGS END -->
 
