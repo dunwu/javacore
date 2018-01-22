@@ -91,7 +91,7 @@ public ThreadPoolExecutor(int corePoolSize,
 
 #### ThreadPoolExecutor 继承结构
 
-![diagram-ThreadPoolExecutor.png](..\diagram\diagram-ThreadPoolExecutor.png)
+![diagram-ThreadPoolExecutor.png](../diagram/diagram-ThreadPoolExecutor.png)
 
 Executor是一个顶层接口，在它里面只声明了一个方法execute(Runnable)，返回值为void，参数为Runnable类型，从字面意思可以理解，就是用来执行传进去的任务的；
 
