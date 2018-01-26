@@ -11,6 +11,13 @@
         - [加锁顺序](#%E5%8A%A0%E9%94%81%E9%A1%BA%E5%BA%8F)
         - [加锁时限](#%E5%8A%A0%E9%94%81%E6%97%B6%E9%99%90)
         - [死锁检测](#%E6%AD%BB%E9%94%81%E6%A3%80%E6%B5%8B)
+    - [饥饿和公平](#%E9%A5%A5%E9%A5%BF%E5%92%8C%E5%85%AC%E5%B9%B3)
+        - [Java中导致饥饿的原因](#java%E4%B8%AD%E5%AF%BC%E8%87%B4%E9%A5%A5%E9%A5%BF%E7%9A%84%E5%8E%9F%E5%9B%A0)
+        - [在Java中实现公平性](#%E5%9C%A8java%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%85%AC%E5%B9%B3%E6%80%A7)
+            - [使用锁方式替代同步块](#%E4%BD%BF%E7%94%A8%E9%94%81%E6%96%B9%E5%BC%8F%E6%9B%BF%E4%BB%A3%E5%90%8C%E6%AD%A5%E5%9D%97)
+            - [公平锁](#%E5%85%AC%E5%B9%B3%E9%94%81)
+    - [嵌套管程锁死](#%E5%B5%8C%E5%A5%97%E7%AE%A1%E7%A8%8B%E9%94%81%E6%AD%BB)
+        - [一个更现实的例子](#%E4%B8%80%E4%B8%AA%E6%9B%B4%E7%8E%B0%E5%AE%9E%E7%9A%84%E4%BE%8B%E5%AD%90)
 
 <!-- /TOC -->
 
@@ -185,3 +192,319 @@ Thread 2 waits randomly (e.g. 43 millis) before retrying.
 一个可行的做法是释放所有锁，回退，并且等待一段随机的时间后重试。这个和简单的加锁超时类似，不一样的是只有死锁已经发生了才回退，而不会是因为加锁的请求超时了。虽然有回退和等待，但是如果有大量的线程竞争同一批锁，它们还是会重复地死锁（编者注：原因同超时类似，不能从根本上减轻竞争）。
 
 一个更好的方案是给这些线程设置优先级，让一个（或几个）线程回退，剩下的线程就像没发生死锁一样继续保持着它们需要的锁。如果赋予这些线程的优先级是固定不变的，同一批线程总是会拥有更高的优先级。为避免这个问题，可以在死锁发生的时候设置随机的优先级。
+
+## 饥饿和公平
+
+如果一个线程因为CPU时间全部被其他线程抢走而得不到CPU运行时间，这种状态被称之为“饥饿”。而该线程被“饥饿致死”正是因为它得不到CPU运行时间的机会。解决饥饿的方案被称之为“公平性” – 即所有线程均能公平地获得运行机会。
+
+### Java中导致饥饿的原因
+
+在Java中，下面三个常见的原因会导致线程饥饿：
+
+* 高优先级线程吞噬所有的低优先级线程的CPU时间
+
+    你能为每个线程设置独自的线程优先级，优先级越高的线程获得的CPU时间越多，线程优先级值设置在1到10之间，而这些优先级值所表示行为的准确解释则依赖于你的应用运行平台。对大多数应用来说，你最好是不要改变其优先级值。
+
+* 线程被永久堵塞在一个等待进入同步块的状态
+
+    Java的同步代码区也是一个导致饥饿的因素。Java的同步代码区对哪个线程允许进入的次序没有任何保障。这就意味着理论上存在一个试图进入该同步区的线程处于被永久堵塞的风险，因为其他线程总是能持续地先于它获得访问，这即是“饥饿”问题，而一个线程被“饥饿致死”正是因为它得不到CPU运行时间的机会。
+
+* 线程在等待一个本身(在其上调用wait())也处于永久等待完成的对象
+
+    如果多个线程处在wait()方法执行上，而对其调用notify()不会保证哪一个线程会获得唤醒，任何线程都有可能处于继续等待的状态。因此存在这样一个风险：一个等待线程从来得不到唤醒，因为其他等待线程总是能被获得唤醒。
+
+### 在Java中实现公平性
+
+虽Java不可能实现100%的公平性，我们依然可以通过同步结构在线程间实现公平性的提高。
+
+首先来学习一段简单的同步态代码：
+
+```java
+public class Synchronizer{
+
+  public synchronized void doSynchronized(){
+    //do a lot of work which takes a long time
+  }
+
+}
+```
+
+如果有一个以上的线程调用doSynchronized()方法，在第一个获得访问的线程未完成前，其他线程将一直处于阻塞状态，而且在这种多线程被阻塞的场景下，接下来将是哪个线程获得访问是没有保障的。
+
+#### 使用锁方式替代同步块
+
+为了提高等待线程的公平性，我们使用锁方式来替代同步块。
+
+```java
+public class Synchronizer{
+  Lock lock = new Lock();
+
+  public void doSynchronized() throws InterruptedException{
+    this.lock.lock();
+      //critical section, do a lot of work which takes a long time
+    this.lock.unlock();
+  }
+
+}
+```
+
+注意到doSynchronized()不再声明为synchronized，而是用lock.lock()和lock.unlock()来替代。
+
+下面是用Lock类做的一个实现：
+
+```java
+public class Lock{
+  private boolean isLocked      = false;
+  private Thread  lockingThread = null;
+
+  public synchronized void lock() throws InterruptedException{
+    while(isLocked){
+      wait();
+    }
+    isLocked      = true;
+    lockingThread = Thread.currentThread();
+  }
+
+  public synchronized void unlock(){
+    if(this.lockingThread != Thread.currentThread()){
+      throw new IllegalMonitorStateException(
+        "Calling thread has not locked this lock");
+    }
+    isLocked      = false;
+    lockingThread = null;
+    notify();
+  }
+}
+```
+
+注意到上面对Lock的实现，如果存在多线程并发访问lock()，这些线程将阻塞在对lock()方法的访问上。另外，如果锁已经锁上（校对注：这里指的是isLocked等于true时），这些线程将阻塞在while(isLocked)循环的wait()调用里面。要记住的是，当线程正在等待进入lock() 时，可以调用wait()释放其锁实例对应的同步锁，使得其他多个线程可以进入lock()方法，并调用wait()方法。
+
+这回看下doSynchronized()，你会注意到在lock()和unlock()之间的注释：在这两个调用之间的代码将运行很长一段时间。进一步设想，这段代码将长时间运行，和进入lock()并调用wait()来比较的话。这意味着大部分时间用在等待进入锁和进入临界区的过程是用在wait()的等待中，而不是被阻塞在试图进入lock()方法中。
+
+在早些时候提到过，同步块不会对等待进入的多个线程谁能获得访问做任何保障，同样当调用notify()时，wait()也不会做保障一定能唤醒线程（至于为什么，请看线程通信）。因此这个版本的Lock类和doSynchronized()那个版本就保障公平性而言，没有任何区别。
+
+但我们能改变这种情况。当前的Lock类版本调用自己的wait()方法，如果每个线程在不同的对象上调用wait()，那么只有一个线程会在该对象上调用wait()，Lock类可以决定哪个对象能对其调用notify()，因此能做到有效的选择唤醒哪个线程。
+
+#### 公平锁
+
+下面来讲述将上面Lock类转变为公平锁FairLock。你会注意到新的实现和之前的Lock类中的同步和wait()/notify()稍有不同。
+
+准确地说如何从之前的Lock类做到公平锁的设计是一个渐进设计的过程，每一步都是在解决上一步的问题而前进的：Nested Monitor Lockout, Slipped Conditions和Missed Signals。这些本身的讨论虽已超出本文的范围，但其中每一步的内容都将会专题进行讨论。重要的是，每一个调用lock()的线程都会进入一个队列，当解锁后，只有队列里的第一个线程被允许锁住Farlock实例，所有其它的线程都将处于等待状态，直到他们处于队列头部。
+
+```java
+public class FairLock {
+    private boolean           isLocked       = false;
+    private Thread            lockingThread  = null;
+    private List<QueueObject> waitingThreads =
+            new ArrayList<QueueObject>();
+
+  public void lock() throws InterruptedException{
+    QueueObject queueObject           = new QueueObject();
+    boolean     isLockedForThisThread = true;
+    synchronized(this){
+        waitingThreads.add(queueObject);
+    }
+
+    while(isLockedForThisThread){
+      synchronized(this){
+        isLockedForThisThread =
+            isLocked || waitingThreads.get(0) != queueObject;
+        if(!isLockedForThisThread){
+          isLocked = true;
+           waitingThreads.remove(queueObject);
+           lockingThread = Thread.currentThread();
+           return;
+         }
+      }
+      try{
+        queueObject.doWait();
+      }catch(InterruptedException e){
+        synchronized(this) { waitingThreads.remove(queueObject); }
+        throw e;
+      }
+    }
+  }
+
+  public synchronized void unlock(){
+    if(this.lockingThread != Thread.currentThread()){
+      throw new IllegalMonitorStateException(
+        "Calling thread has not locked this lock");
+    }
+    isLocked      = false;
+    lockingThread = null;
+    if(waitingThreads.size() > 0){
+      waitingThreads.get(0).doNotify();
+    }
+  }
+}
+public class QueueObject {
+
+  private boolean isNotified = false;
+
+  public synchronized void doWait() throws InterruptedException {
+    while(!isNotified){
+        this.wait();
+    }
+    this.isNotified = false;
+  }
+
+  public synchronized void doNotify() {
+    this.isNotified = true;
+    this.notify();
+  }
+
+  public boolean equals(Object o) {
+    return this == o;
+  }
+}
+```
+
+首先注意到lock()方法不在声明为synchronized，取而代之的是对必需同步的代码，在synchronized中进行嵌套。
+
+FairLock新创建了一个QueueObject的实例，并对每个调用lock()的线程进行入队列。调用unlock()的线程将从队列头部获取QueueObject，并对其调用doNotify()，以唤醒在该对象上等待的线程。通过这种方式，在同一时间仅有一个等待线程获得唤醒，而不是所有的等待线程。这也是实现FairLock公平性的核心所在。
+
+请注意，在同一个同步块中，锁状态依然被检查和设置，以避免出现滑漏条件。
+
+还需注意到，QueueObject实际是一个semaphore。doWait()和doNotify()方法在QueueObject中保存着信号。这样做以避免一个线程在调用queueObject.doWait()之前被另一个调用unlock()并随之调用queueObject.doNotify()的线程重入，从而导致信号丢失。queueObject.doWait()调用放置在synchronized(this)块之外，以避免被monitor嵌套锁死，所以另外的线程可以解锁，只要当没有线程在lock方法的synchronized(this)块中执行即可。
+
+最后，注意到queueObject.doWait()在try – catch块中是怎样调用的。在InterruptedException抛出的情况下，线程得以离开lock()，并需让它从队列中移除。
+
+性能考虑
+
+如果比较Lock和FairLock类，你会注意到在FairLock类中lock()和unlock()还有更多需要深入的地方。这些额外的代码会导致FairLock的同步机制实现比Lock要稍微慢些。究竟存在多少影响，还依赖于应用在FairLock临界区执行的时长。执行时长越大，FairLock带来的负担影响就越小，当然这也和代码执行的频繁度相关。
+
+## 嵌套管程锁死
+
+嵌套管程锁死类似于死锁， 下面是一个嵌套管程锁死的场景：
+
+```
+线程1获得A对象的锁。
+线程1获得对象B的锁（同时持有对象A的锁）。
+线程1决定等待另一个线程的信号再继续。
+线程1调用B.wait()，从而释放了B对象上的锁，但仍然持有对象A的锁。
+
+线程2需要同时持有对象A和对象B的锁，才能向线程1发信号。
+线程2无法获得对象A上的锁，因为对象A上的锁当前正被线程1持有。
+线程2一直被阻塞，等待线程1释放对象A上的锁。
+
+线程1一直阻塞，等待线程2的信号，因此，不会释放对象A上的锁，
+	而线程2需要对象A上的锁才能给线程1发信号……
+```
+
+你可以能会说，这是个空想的场景，好吧，让我们来看看下面这个比较挫的Lock实现：
+
+```java
+//lock implementation with nested monitor lockout problem
+
+public class Lock{
+  protected MonitorObject monitorObject = new MonitorObject();
+  protected boolean isLocked = false;
+
+  public void lock() throws InterruptedException{
+    synchronized(this){
+      while(isLocked){
+        synchronized(this.monitorObject){
+            this.monitorObject.wait();
+        }
+      }
+      isLocked = true;
+    }
+  }
+
+  public void unlock(){
+    synchronized(this){
+      this.isLocked = false;
+      synchronized(this.monitorObject){
+        this.monitorObject.notify();
+      }
+    }
+  }
+}
+```
+
+可以看到，lock()方法首先在”this”上同步，然后在monitorObject上同步。如果isLocked等于false，因为线程不会继续调用monitorObject.wait()，那么一切都没有问题 。但是如果isLocked等于true，调用lock()方法的线程会在monitorObject.wait()上阻塞。
+
+这里的问题在于，调用monitorObject.wait()方法只释放了monitorObject上的管程对象，而与”this“关联的管程对象并没有释放。换句话说，这个刚被阻塞的线程仍然持有”this”上的锁。
+
+（校对注：如果一个线程持有这种Lock的时候另一个线程执行了lock操作）当一个已经持有这种Lock的线程想调用unlock(),就会在unlock()方法进入synchronized(this)块时阻塞。这会一直阻塞到在lock()方法中等待的线程离开synchronized(this)块。但是，在unlock中isLocked变为false，monitorObject.notify()被执行之后，lock()中等待的线程才会离开synchronized(this)块。
+
+简而言之，在lock方法中等待的线程需要其它线程成功调用unlock方法来退出lock方法，但是，在lock()方法离开外层同步块之前，没有线程能成功执行unlock()。
+
+结果就是，任何调用lock方法或unlock方法的线程都会一直阻塞。这就是嵌套管程锁死。
+
+### 一个更现实的例子
+
+你可能会说，这么挫的实现方式我怎么可能会做呢？你或许不会在里层的管程对象上调用wait或notify方法，但完全有可能会在外层的this上调。
+有很多类似上面例子的情况。例如，如果你准备实现一个公平锁。你可能希望每个线程在它们各自的QueueObject上调用wait()，这样就可以每次唤醒一个线程。
+
+下面是一个比较挫的公平锁实现方式：
+
+```java
+//Fair Lock implementation with nested monitor lockout problem
+
+public class FairLock {
+  private boolean           isLocked       = false;
+  private Thread            lockingThread  = null;
+  private List<QueueObject> waitingThreads =
+            new ArrayList<QueueObject>();
+
+  public void lock() throws InterruptedException{
+    QueueObject queueObject = new QueueObject();
+
+    synchronized(this){
+      waitingThreads.add(queueObject);
+
+      while(isLocked || waitingThreads.get(0) != queueObject){
+
+        synchronized(queueObject){
+          try{
+            queueObject.wait();
+          }catch(InterruptedException e){
+            waitingThreads.remove(queueObject);
+            throw e;
+          }
+        }
+      }
+      waitingThreads.remove(queueObject);
+      isLocked = true;
+      lockingThread = Thread.currentThread();
+    }
+  }
+
+  public synchronized void unlock(){
+    if(this.lockingThread != Thread.currentThread()){
+      throw new IllegalMonitorStateException(
+        "Calling thread has not locked this lock");
+    }
+    isLocked      = false;
+    lockingThread = null;
+    if(waitingThreads.size() > 0){
+      QueueObject queueObject = waitingThread.get(0);
+      synchronized(queueObject){
+        queueObject.notify();
+      }
+    }
+  }
+}
+public class QueueObject {}
+```
+
+乍看之下，嗯，很好，但是请注意lock方法是怎么调用queueObject.wait()的，在方法内部有两个synchronized块，一个锁定this，一个嵌在上一个synchronized块内部，它锁定的是局部变量queueObject。
+当一个线程调用queueObject.wait()方法的时候，它仅仅释放的是在queueObject对象实例的锁，并没有释放”this”上面的锁。
+
+现在我们还有一个地方需要特别注意， unlock方法被声明成了synchronized，这就相当于一个synchronized（this）块。这就意味着，如果一个线程在lock()中等待，该线程将持有与this关联的管程对象。所有调用unlock()的线程将会一直保持阻塞，等待着前面那个已经获得this锁的线程释放this锁，但这永远也发生不了，因为只有某个线程成功地给lock()中等待的线程发送了信号，this上的锁才会释放，但只有执行unlock()方法才会发送这个信号。
+
+因此，上面的公平锁的实现会导致嵌套管程锁死。更好的公平锁实现方式可以参考Starvation and Fairness。
+
+嵌套管程锁死 VS 死锁
+
+嵌套管程锁死与死锁很像：都是线程最后被一直阻塞着互相等待。
+
+但是两者又不完全相同。在死锁中我们已经对死锁有了个大概的解释，死锁通常是因为两个线程获取锁的顺序不一致造成的，线程1锁住A，等待获取B，线程2已经获取了B，再等待获取A。如死锁避免中所说的，死锁可以通过总是以相同的顺序获取锁来避免。
+但是发生嵌套管程锁死时锁获取的顺序是一致的。线程1获得A和B，然后释放B，等待线程2的信号。线程2需要同时获得A和B，才能向线程1发送信号。所以，一个线程在等待唤醒，另一个线程在等待想要的锁被释放。
+
+不同点归纳如下：
+
+死锁中，二个线程都在等待对方释放锁。
+
+嵌套管程锁死中，线程1持有锁A，同时等待从线程2发来的信号，线程2需要锁A来发信号给线程1。
