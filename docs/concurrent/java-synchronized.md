@@ -1,5 +1,16 @@
 # Java synchronized
 
+<!-- TOC -->
+
+- [Java synchronized](#java-synchronized)
+  - [实例方法同步](#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E5%90%8C%E6%AD%A5)
+  - [静态方法同步](#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E5%90%8C%E6%AD%A5)
+  - [实例方法中的同步块](#%E5%AE%9E%E4%BE%8B%E6%96%B9%E6%B3%95%E4%B8%AD%E7%9A%84%E5%90%8C%E6%AD%A5%E5%9D%97)
+  - [静态方法中的同步块](#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95%E4%B8%AD%E7%9A%84%E5%90%8C%E6%AD%A5%E5%9D%97)
+  - [Java同步实例](#java%E5%90%8C%E6%AD%A5%E5%AE%9E%E4%BE%8B)
+
+<!-- /TOC -->
+
 Java 同步关键字（synchronized）
 
 Java中的同步块用synchronized标记。同步块在Java中是同步在某个对象上。所有同步在一个对象上的同步块在同时只能被一个线程进入并执行操作。所有其他等待进入该同步块的线程将被阻塞，直到执行该同步块中的线程退出。
@@ -90,7 +101,7 @@ public class MyClass {
 
 和上面类似，下面是两个静态方法同步的例子。这些方法同步在该方法所属的类对象上。
 
-```
+```java
 public class MyClass {
 
     public static synchronized void log1(String msg1, String msg2){
@@ -155,15 +166,15 @@ public class Example {
 
 ```java
 public class Example {
-	public static void main(String[] args){
-		Counter counterA = new Counter();
-		Counter counterB = new Counter();
-		Thread  threadA = new CounterThread(counterA);
-		Thread  threadB = new CounterThread(counterB);
+    public static void main(String[] args){
+        Counter counterA = new Counter();
+        Counter counterB = new Counter();
+        Thread  threadA = new CounterThread(counterA);
+        Thread  threadB = new CounterThread(counterB);
 
-		threadA.start();
-		threadB.start(); 
-	}
+        threadA.start();
+        threadB.start(); 
+    }
 }
 ```
 
