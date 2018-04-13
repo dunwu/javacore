@@ -18,8 +18,6 @@
 
 ## 学习编程语言的步骤
 
-![learn-programming-language.png](extend/learn-programming-language.png)
-
 ### 基本语法
 
 首先当然是了解语言的最基本语法。
