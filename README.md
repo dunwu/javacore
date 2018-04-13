@@ -1,42 +1,17 @@
 # javase-notes
 
-> ​:book: JavaSE 学习笔记。
->
-
-<p align="center">
-  <a href="https://dunwu.gitbooks.io/javase-notes" target="_blank">
-    :point_right: 在线电子书
-  </a>
-</p>
+> javase-notes 是一个 javase 学习笔记。
 
 ## 内容
 
-基础
-
-进阶
-
-JDK8
-
-Effective Java
+- [x] [Java 基础篇](docs/basics/)
+- [x] [Java 进阶篇](docs/advanced/)
+- [ ] [Java 虚拟机](docs/jvm/)
+- [ ] [Java 并发编程](docs/concurrent/)
+- [ ] [Java 编程规范](docs/style/)
+- [ ] [思维导图](docs/xmind/)
 
 ## 说明
 
-### 目录结构
-
-- **codes** 代码目录。包含本笔记中涉及的示例代码。
-- **docs** 文档目录。文档遵循 [**GitBook**](https://github.com/GitbookIO/gitbook) 规范。
-
-### 运行环境
-
-- **jdk** 1.8
-- **maven** 3.5
-
-### 电子书
-
-本教程已使用 Gitbook 生成电子书。:point_right:  [**在线电子书**](https://dunwu.gitbooks.io/javase-notes)
-
-## 规约
-
-### License
-
-Apache-2.0
+- **`/codes`**：代码目录。
+- **`/docs`**：文档目录。
