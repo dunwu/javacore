@@ -20,6 +20,7 @@
     <module>advanced</module>
     <module>effective</module>
     <module>jdk8</module>
+    <module>jvm</module>
     <module>concurrent</module>
     <module>util</module>
     <module>oop</module>
