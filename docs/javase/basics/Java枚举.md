@@ -1,3 +1,19 @@
+---
+title: Java 枚举
+date: 2016/11/24
+categories:
+- javase
+tags:
+- javase
+- basics
+---
+
+# Java 枚举
+
+## 知识点
+
+![枚举.png](https://upload-images.jianshu.io/upload_images/3101171-9c7b947d48b0de29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
 ## 概念
 
  `enum` 的全称为 enumeration， 是 JDK 1.5  中引入的新特性。
@@ -8,11 +24,11 @@
 enum Color { RED, GREEN, BLUE }
 ```
 
-如果枚举不添加任何方法，**枚举值默认为从0开始的有序数值**。以 Color 枚举类型举例，它的枚举常量依次为RED：0，GREEN：1，BLUE：2
+如果枚举不添加任何方法，**枚举值默认为从0开始的有序数值**。以 Color 枚举类型举例，它的枚举常量依次为 `RED：0，GREEN：1，BLUE：2`。
 
-**枚举的好处：**可以将常量组织起来，统一进行管理。
+**枚举的好处**：可以将常量组织起来，统一进行管理。
 
-**枚举的典型应用场景：**错误码、状态机等。
+**枚举的典型应用场景**：错误码、状态机等。
 
 ### 枚举类型的本质
 
@@ -31,13 +47,13 @@ public abstract class Enum<E extends Enum<E>>
 
 在enum中，提供了一些基本方法：
 
-`values()`：返回enum实例的数组，而且该数组中的元素严格保持在enum中声明时的顺序。
+`values()`：返回 enum 实例的数组，而且该数组中的元素严格保持在 enum 中声明时的顺序。
 
 `name()`：返回实例名。
 
 `ordinal()`：返回实例声明时的次序，从0开始。
 
-`getDeclaringClass()`：返回实例所属的enum类型。
+`getDeclaringClass()`：返回实例所属的 enum 类型。
 
  `equals()` ：判断是否为同一个对象。
 
@@ -122,9 +138,9 @@ typedef enum{
 } Number;
 ```
 
-#### enum 可以添加普通方法、静态方法、抽象方法、构造方法
+#### 枚举可以添加普通方法、静态方法、抽象方法、构造方法
 
-Java虽然不能直接为实例赋值，但是它有更优秀的解决方案：**为 enum 添加方法来间接实现显示赋值**。
+Java 虽然不能直接为实例赋值，但是它有更优秀的解决方案：**为 enum 添加方法来间接实现显示赋值**。
 
 创建 `enum` 时，可以为其添加多种方法，甚至可以为其添加构造方法。
 
@@ -151,7 +167,7 @@ public enum ErrorCode {
     };
 
     private int code;
-    
+
     // 构造方法：enum的构造方法只能被声明为private权限或不声明权限
     private ErrorCode(int number) { // 构造方法
         this.code = number;
@@ -221,7 +237,7 @@ public enum ErrorCodeEn2 implements INumberEnum {
         this.code = number;
         this.description = description;
     }
-    
+
     private int code;
     private String description;
 
@@ -241,7 +257,7 @@ public enum ErrorCodeEn2 implements INumberEnum {
 
 **enum 不可以继承另外一个类，当然，也不能继承另一个 enum 。**
 
-因为 `enum` 实际上都继承自 `java.lang.Enum` 类，而 Java 不支持多重继承，所以enum不能再继承其他类，当然也不能继承另一个 `enum`。
+因为 `enum` 实际上都继承自 `java.lang.Enum` 类，而 Java 不支持多重继承，所以 `enum` 不能再继承其他类，当然也不能继承另一个 `enum`。
 
 ## 枚举的应用场景
 
@@ -269,21 +285,21 @@ enum Color { RED, GREEN, BLUE; }
 enum Signal {RED, YELLOW, GREEN}
 
 public static String getTrafficInstruct(Signal signal) {
-	String instruct = "信号灯故障";
-	switch (signal) {
-		case RED:
-			instruct = "红灯停";
-			break;
-		case YELLOW:
-			instruct = "黄灯请注意";
-			break;
-		case GREEN:
-			instruct = "绿灯行";
-			break;
-		default:
-			break;
-	}
-	return instruct;
+    String instruct = "信号灯故障";
+    switch (signal) {
+        case RED:
+            instruct = "红灯停";
+            break;
+        case YELLOW:
+            instruct = "黄灯请注意";
+            break;
+        case GREEN:
+            instruct = "绿灯行";
+            break;
+        default:
+            break;
+    }
+    return instruct;
 }
 ```
 
@@ -417,17 +433,17 @@ System.out.println("时薪100的人在周六工作8小时的收入：" + Payroll
 
 ## EnumSet和EnumMap
 
-Java中提供了两个方便操作enum的工具类——EnumSet和EnumMap。
+Java 中提供了两个方便操作enum的工具类——EnumSet 和 EnumMap。
 
-`EnumSet` 是枚举类型的高性能`Set`实现。它要求放入它的枚举常量必须属于同一枚举类型。
-`EnumMap` 是专门为枚举类型量身定做的`Map`实现。虽然使用其它的Map实现（如HashMap）也能完成枚举类型实例到值得映射，但是使用EnumMap会更加高效：它只能接收同一枚举类型的实例作为键值，并且由于枚举类型实例的数量相对固定并且有限，所以EnumMap使用数组来存放与枚举类型对应的值。这使得EnumMap的效率非常高。
+`EnumSet` 是枚举类型的高性能 `Set` 实现。它要求放入它的枚举常量必须属于同一枚举类型。
+`EnumMap` 是专门为枚举类型量身定做的 `Map` 实现。虽然使用其它的 Map 实现（如HashMap）也能完成枚举类型实例到值得映射，但是使用 EnumMap 会更加高效：它只能接收同一枚举类型的实例作为键值，并且由于枚举类型实例的数量相对固定并且有限，所以 EnumMap 使用数组来存放与枚举类型对应的值。这使得 EnumMap 的效率非常高。
 
 ```java
 // EnumSet的使用
 System.out.println("EnumSet展示");
 EnumSet<ErrorCodeEn> errSet = EnumSet.allOf(ErrorCodeEn.class);
 for (ErrorCodeEn e : errSet) {
-	System.out.println(e.name() + " : " + e.ordinal());
+    System.out.println(e.name() + " : " + e.ordinal());
 }
 
 // EnumMap的使用
@@ -437,7 +453,7 @@ errMap.put(StateMachine.Signal.RED, "红灯");
 errMap.put(StateMachine.Signal.YELLOW, "黄灯");
 errMap.put(StateMachine.Signal.GREEN, "绿灯");
 for (Iterator<Map.Entry<StateMachine.Signal, String>> iter = errMap.entrySet().iterator(); iter.hasNext();) {
-	Map.Entry<StateMachine.Signal, String> entry = iter.next();
-	System.out.println(entry.getKey().name() + " : " + entry.getValue());
+    Map.Entry<StateMachine.Signal, String> entry = iter.next();
+    System.out.println(entry.getKey().name() + " : " + entry.getValue());
 }
 ```

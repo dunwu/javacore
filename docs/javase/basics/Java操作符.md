@@ -12,7 +12,7 @@ tags:
 
 ## 知识点
 
-![操作符.png](images/操作符.png)
+![操作符.png](https://upload-images.jianshu.io/upload_images/3101171-ceed021ed7c60696.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 计算机的最基本用途之一就是执行数学运算，作为一门计算机语言，Java也提供了一套丰富的操作符来操纵变量。我们可以把操作符分成以下几组：
 

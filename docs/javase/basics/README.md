@@ -2,6 +2,7 @@
 
 ## 目录
 
-* [Java 数据类型](java-datatype.html)
-* [Java 枚举](java-enum.html)
-* [Java 国际化](java-locale.html)
+- [Java数据类型](Java数据类型.md)
+- [Java操作符](Java操作符.md)
+- [Java控制语句](Java控制语句.md)
+- [Java枚举](Java枚举.md)

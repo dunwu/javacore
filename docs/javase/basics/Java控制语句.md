@@ -12,7 +12,7 @@ tags:
 
 ## 知识点
 
-![控制语句.png](images/控制语句.png)
+![控制语句.png](https://upload-images.jianshu.io/upload_images/3101171-a4b447bc6fef43e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## 选择语句
 
