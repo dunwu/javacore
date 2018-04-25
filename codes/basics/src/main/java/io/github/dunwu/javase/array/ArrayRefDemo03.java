@@ -1,5 +1,6 @@
 package io.github.dunwu.javase.array;
 
+import io.github.dunwu.javase.array.util.ArrayUtil;
 import java.util.Arrays;
 
 public class ArrayRefDemo03 {
@@ -9,10 +10,10 @@ public class ArrayRefDemo03 {
         int[] age = { 31, 30, 18, 17, 8, 9, 1, 39 };
         // 数组排序并打印
         Arrays.sort(score);
-        ArrayHelper.print(score);
+        ArrayUtil.print(score);
         System.out.println("\n---------------------------");
         // 数组排序并打印
         Arrays.sort(age);
-        ArrayHelper.print(age);
+        ArrayUtil.print(age);
     }
 };

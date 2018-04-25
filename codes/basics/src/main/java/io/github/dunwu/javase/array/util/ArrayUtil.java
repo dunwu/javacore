@@ -1,9 +1,9 @@
-package io.github.dunwu.javase.array;
+package io.github.dunwu.javase.array.util;
 
 /**
  * @author Zhang Peng
  */
-public class ArrayHelper {
+public class ArrayUtil {
     /**
      * 在控制台打印数组元素
      * @param array
