@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.statement;
+package io.github.dunwu.javase.control;
 
 /**
  * 中断语句示例
@@ -7,11 +7,11 @@ package io.github.dunwu.javase.statement;
  * @see ReturnDemo
  * @author Zhang Peng
  */
-public class ReturnDemo {
+public class BreakDemo {
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
             if (i == 3) {
-                return;
+                break;
             }
             System.out.println(i);
         }
@@ -22,3 +22,4 @@ public class ReturnDemo {
 // 0
 // 1
 // 2
+// 示例结束

@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.statement;
+package io.github.dunwu.javase.control;
 
 /**
  * 循环语句示例
