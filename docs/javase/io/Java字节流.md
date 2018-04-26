@@ -1,5 +1,5 @@
 ---
-title: Java 输入输出
+title: Java 字节流
 date: 2015/05/18
 categories:
 - javase
@@ -9,117 +9,9 @@ tags:
 - io
 ---
 
-# Java 输入输出
+# Java 字节流
 
-## 知识点
-
-## 概念
-
-## File 类
-
-`File` 类是 `java.io` 包中唯一对文件本身进行操作的类。它可以对文件、目录进行增删查操作。
-
-createNewFille
-
-delete
-
-mkdir
-
-list
-
-listFiles
-
-## RandomAccessFile 类
-
-> 注：`RandomAccessFile` 类虽然可以实现对文件内容的读写操作，但是比较复杂。所以一般操作文件内容往往会使用字节流或字符流方式。
-
-`RandomAccessFile` 类是随机读取类，它是一个完全独立的类。
-
-它适用于由大小已知的记录组成的文件，所以我们可以使用 `seek()` 将记录从一处转移到另一处，然后读取或者修改记录。
-
-文件中记录的大小不一定都相同，只要能够确定哪些记录有多大以及它们在文件中的位置即可。
-
-### 写操作
-
-当用 `rw` 方式声明 `RandomAccessFile` 对象时，如果要写入的文件不存在，系统将自行创建。
-
-`r` 为只读；`w` 为只写；`rw` 为读写。
-
-示例：
-
-```java
-public class RandomAccessFileDemo01 {
-
-    public static void main(String args[]) throws IOException {
-        File f = new File("d:" + File.separator + "test.txt"); // 指定要操作的文件
-        RandomAccessFile rdf = null; // 声明RandomAccessFile类的对象
-        rdf = new RandomAccessFile(f, "rw");// 读写模式，如果文件不存在，会自动创建
-        String name = null;
-        int age = 0;
-        name = "zhangsan"; // 字符串长度为8
-        age = 30; // 数字的长度为4
-        rdf.writeBytes(name); // 将姓名写入文件之中
-        rdf.writeInt(age); // 将年龄写入文件之中
-        name = "lisi    "; // 字符串长度为8
-        age = 31; // 数字的长度为4
-        rdf.writeBytes(name); // 将姓名写入文件之中
-        rdf.writeInt(age); // 将年龄写入文件之中
-        name = "wangwu  "; // 字符串长度为8
-        age = 32; // 数字的长度为4
-        rdf.writeBytes(name); // 将姓名写入文件之中
-        rdf.writeInt(age); // 将年龄写入文件之中
-        rdf.close(); // 关闭
-    }
-}
-```
-
-### 读操作
-
-读取是直接使用 `r` 的模式即可，以只读的方式打开文件。
-
-读取时所有的字符串只能按照 byte 数组方式读取出来，而且长度必须和写入时的固定大小相匹配。
-
-```java
-public class RandomAccessFileDemo02 {
-
-    public static void main(String args[]) throws IOException {
-        File f = new File("d:" + File.separator + "test.txt");    // 指定要操作的文件
-        RandomAccessFile rdf = null;        // 声明RandomAccessFile类的对象
-        rdf = new RandomAccessFile(f, "r");// 以只读的方式打开文件
-        String name = null;
-        int age = 0;
-        byte b[] = new byte[8];    // 开辟byte数组
-        // 读取第二个人的信息，意味着要空出第一个人的信息
-        rdf.skipBytes(12);        // 跳过第一个人的信息
-        for (int i = 0; i < b.length; i++) {
-            b[i] = rdf.readByte();    // 读取一个字节
-        }
-        name = new String(b);    // 将读取出来的byte数组变为字符串
-        age = rdf.readInt();    // 读取数字
-        System.out.println("第二个人的信息 --> 姓名：" + name + "；年龄：" + age);
-        // 读取第一个人的信息
-        rdf.seek(0);    // 指针回到文件的开头
-        for (int i = 0; i < b.length; i++) {
-            b[i] = rdf.readByte();    // 读取一个字节
-        }
-        name = new String(b);    // 将读取出来的byte数组变为字符串
-        age = rdf.readInt();    // 读取数字
-        System.out.println("第一个人的信息 --> 姓名：" + name + "；年龄：" + age);
-        rdf.skipBytes(12);    // 空出第二个人的信息
-        for (int i = 0; i < b.length; i++) {
-            b[i] = rdf.readByte();    // 读取一个字节
-        }
-        name = new String(b);    // 将读取出来的byte数组变为字符串
-        age = rdf.readInt();    // 读取数字
-        System.out.println("第三个人的信息 --> 姓名：" + name + "；年龄：" + age);
-        rdf.close();                // 关闭
-    }
-}
-```
-
-## 字节流
-
-### 文件字节流
+## 文件字节流
 
 文件字节流有两个类：`FileOutputStream` 和 `FileInputStream`。
 
@@ -215,7 +107,7 @@ public class FileInputStreamDemo {
 }
 ```
 
-### 内存流
+## 内存流
 
 `ByteArrayInputStream` 和 `ByteArrayOutputStream` 是用来完成内存的输入和输出功能。
 
@@ -247,7 +139,7 @@ public class ByteArrayStreamDemo {
 };
 ```
 
-### 管道流
+## 管道流
 
 管道流的主要作用是可以进行两个线程间的通信。
 
@@ -328,7 +220,7 @@ class Receive implements Runnable {
 };
 ```
 
-### 数据操作流
+## 数据操作流
 
 数据操作流提供了格式化读入和输出数据的方法，分别为 `DataInputStream` 和 `DataOutputStream`。
 
@@ -393,7 +285,7 @@ public class DataInputStreamDemo {
 };
 ```
 
-### 合并流
+## 合并流
 
 合并流的主要功能是将多个 `InputStream` 合并为一个 `InputStream` 流。
 
