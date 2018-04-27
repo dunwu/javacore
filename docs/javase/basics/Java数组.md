@@ -43,7 +43,7 @@ int arr[]; // 效果相同，但不是首选方法
 
 ### 创建数组
 
-Java语言使用 `new` 操作符来创建数组。
+Java 语言使用 `new` 操作符来创建数组。
 
 ```java
 int[] array = new int[5];
@@ -147,7 +147,7 @@ public class MultiDimWrapperArray {
 
 ## Arrays 类
 
-- binarySearch - 查找数组元素
-- equals - 比较数组
-- fill - 给数组赋值
-- sort - 对数组排序
+* binarySearch - 查找数组元素
+* equals - 比较数组
+* fill - 给数组赋值
+* sort - 对数组排序

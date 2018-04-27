@@ -16,7 +16,7 @@ tags:
 
 ## 选择语句
 
-### if语句
+### if 语句
 
 if 语句会判断括号中的条件是否成立，如果成立则执行 if 语句中的代码块，否则跳过代码块继续执行。
 
@@ -74,11 +74,11 @@ public class IfElseDemo {
 // 这是 else 语句
 ```
 
-### if...else if...else语句
+### if...else if...else 语句
 
-- if语句至多有1个else语句，else语句在所有的elseif语句之后。
-- If语句可以有若干个elseif语句，它们必须在else语句之前。
-- 一旦其中一个else if语句检测为true，其他的else if以及else语句都将跳过执行。
+* if 语句至多有 1 个 else 语句，else 语句在所有的 elseif 语句之后。
+* If 语句可以有若干个 elseif 语句，它们必须在 else 语句之前。
+* 一旦其中一个 else if 语句检测为 true，其他的 else if 以及 else 语句都将跳过执行。
 
 **语法**
 
@@ -116,9 +116,9 @@ public class IfElseifElseDemo {
 // Value of X is 3
 ```
 
-### 嵌套的if…else语句
+### 嵌套的 if…else 语句
 
-使用嵌套的if-else语句是合法的。也就是说你可以在另一个if或者elseif语句中使用if或者elseif语句。
+使用嵌套的 if-else 语句是合法的。也就是说你可以在另一个 if 或者 elseif 语句中使用 if 或者 elseif 语句。
 
 **语法**
 
@@ -150,18 +150,18 @@ public class IfNestDemo {
 // X = 30 and Y = 10
 ```
 
-### **switch语句**
+### **switch 语句**
 
-switch语句判断一个变量与一系列值中某个值是否相等，每个值称为一个分支。
+switch 语句判断一个变量与一系列值中某个值是否相等，每个值称为一个分支。
 
-switch语句有如下规则：
+switch 语句有如下规则：
 
-- switch语句中的变量类型只能为byte、short、int、char 或者 String。
-- switch语句可以拥有多个case语句。每个case后面跟一个要比较的值和冒号。
-- case语句中的值的数据类型必须与变量的数据类型相同，而且只能是常量或者字面常量。
-- 当变量的值与case语句的值相等时，那么case语句之后的语句开始执行，直到break语句出现才会跳出switch语句。
-- 当遇到break语句时，switch语句终止。程序跳转到switch语句后面的语句执行。case语句不必须要包含break语句。如果没有break语句出现，程序会继续执行下一条case语句，直到出现break语句。
-- switch语句可以包含一个default分支，该分支必须是switch语句的最后一个分支。default在没有case语句的值和变量值相等的时候执行。default分支不需要break语句。
+* switch 语句中的变量类型只能为 byte、short、int、char 或者 String。
+* switch 语句可以拥有多个 case 语句。每个 case 后面跟一个要比较的值和冒号。
+* case 语句中的值的数据类型必须与变量的数据类型相同，而且只能是常量或者字面常量。
+* 当变量的值与 case 语句的值相等时，那么 case 语句之后的语句开始执行，直到 break 语句出现才会跳出 switch 语句。
+* 当遇到 break 语句时，switch 语句终止。程序跳转到 switch 语句后面的语句执行。case 语句不必须要包含 break 语句。如果没有 break 语句出现，程序会继续执行下一条 case 语句，直到出现 break 语句。
+* switch 语句可以包含一个 default 分支，该分支必须是 switch 语句的最后一个分支。default 在没有 case 语句的值和变量值相等的时候执行。default 分支不需要 break 语句。
 
 **语法**
 
@@ -212,7 +212,7 @@ public class SwitchDemo {
 // Your grade is C
 ```
 
-##  循环语句
+## 循环语句
 
 ### while 循环
 
@@ -224,8 +224,7 @@ while( 布尔表达式 ) {
 }
 ```
 
-> 只要布尔表达式为true，循环体会一直执行下去。
->
+> 只要布尔表达式为 true，循环体会一直执行下去。
 
 **示例**
 
@@ -253,11 +252,11 @@ public class WhileDemo {
 // value of x : 19
 ```
 
-###  do while 循环
+### do while 循环
 
-对于while语句而言，如果不满足条件，则不能进入循环。但有时候我们需要即使不满足条件，也至少执行一次。
+对于 while 语句而言，如果不满足条件，则不能进入循环。但有时候我们需要即使不满足条件，也至少执行一次。
 
-do…while循环和while循环相似，不同的是，do…while循环至少会执行一次。
+do…while 循环和 while 循环相似，不同的是，do…while 循环至少会执行一次。
 
 **语法**
 
@@ -267,7 +266,7 @@ do {
 } while (布尔表达式);
 ```
 
-布尔表达式在循环体的后面，所以语句块在检测布尔表达式之前已经执行了。 如果布尔表达式的值为true，则语句块一直执行，直到布尔表达式的值为false。
+布尔表达式在循环体的后面，所以语句块在检测布尔表达式之前已经执行了。 如果布尔表达式的值为 true，则语句块一直执行，直到布尔表达式的值为 false。
 
 **示例**
 
@@ -298,8 +297,8 @@ public class DoWhileDemo {
 
 ### for 循环
 
-虽然所有循环结构都可以用while或者do...while表示，但Java提供了另一种语句 —— for循环，使一些循环结构变得更加简单。
-for循环执行的次数是在执行前就确定的。
+虽然所有循环结构都可以用 while 或者 do...while 表示，但 Java 提供了另一种语句 —— for 循环，使一些循环结构变得更加简单。
+for 循环执行的次数是在执行前就确定的。
 
 **语法**
 
@@ -309,10 +308,10 @@ for (初始化; 布尔表达式; 更新) {
 }
 ```
 
-- 最先执行初始化步骤。可以声明一种类型，但可初始化一个或多个循环控制变量，也可以是空语句。
-- 然后，检测布尔表达式的值。如果为true，循环体被执行。如果为false，循环终止，开始执行循环体后面的语句。
-- 执行一次循环后，更新循环控制变量。
-- 再次检测布尔表达式。循环执行上面的过程。
+* 最先执行初始化步骤。可以声明一种类型，但可初始化一个或多个循环控制变量，也可以是空语句。
+* 然后，检测布尔表达式的值。如果为 true，循环体被执行。如果为 false，循环终止，开始执行循环体后面的语句。
+* 执行一次循环后，更新循环控制变量。
+* 再次检测布尔表达式。循环执行上面的过程。
 
 **示例**
 
@@ -340,7 +339,7 @@ public class ForDemo {
 
 ### foreach 循环
 
-Java5引入了一种主要用于数组的增强型for循环。 
+Java5 引入了一种主要用于数组的增强型 for 循环。
 
 **语法**
 
@@ -384,9 +383,9 @@ public class ForeachDemo {
 
 ### break 关键字
 
-break主要用在循环语句或者switch语句中，用来跳出整个语句块。
+break 主要用在循环语句或者 switch 语句中，用来跳出整个语句块。
 
-break跳出最里层的循环，并且继续执行该循环下面的语句。
+break 跳出最里层的循环，并且继续执行该循环下面的语句。
 
 **示例**
 
@@ -414,9 +413,7 @@ public class BreakDemo {
 
 ### continue 关键字
 
-continue适用于任何循环控制结构中。作用是让程序立刻跳转到下一次循环的迭代。
-在for循环中，continue语句使程序立即跳转到更新语句。
-在while或者do…while循环中，程序立即跳转到布尔表达式的判断语句。
+continue 适用于任何循环控制结构中。作用是让程序立刻跳转到下一次循环的迭代。在 for 循环中，continue 语句使程序立即跳转到更新语句。在 while 或者 do…while 循环中，程序立即跳转到布尔表达式的判断语句。
 
 **示例**
 

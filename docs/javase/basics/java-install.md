@@ -30,7 +30,7 @@ Linux 环境的 jdk 包，解压到本地即可。
 
 `JAVA_HOME`：`C:\Program Files (x86)\Java\jdk1.8.0_91` （根据自己的实际路径配置）
 
-`CLASSPATH`：`.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;`  （注意前面有个"."）
+`CLASSPATH`：`.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;` （注意前面有个"."）
 
 `Path`：`%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;`
 

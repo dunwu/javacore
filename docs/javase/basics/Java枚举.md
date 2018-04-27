@@ -16,15 +16,15 @@ tags:
 
 ## 概念
 
- `enum` 的全称为 enumeration， 是 JDK 1.5  中引入的新特性。
+`enum` 的全称为 enumeration， 是 JDK 1.5 中引入的新特性。
 
-在Java中，被 `enum` 关键字修饰的类型就是枚举类型。形式如下：
+在 Java 中，被 `enum` 关键字修饰的类型就是枚举类型。形式如下：
 
 ```java
 enum Color { RED, GREEN, BLUE }
 ```
 
-如果枚举不添加任何方法，**枚举值默认为从0开始的有序数值**。以 Color 枚举类型举例，它的枚举常量依次为 `RED：0，GREEN：1，BLUE：2`。
+如果枚举不添加任何方法，**枚举值默认为从 0 开始的有序数值**。以 Color 枚举类型举例，它的枚举常量依次为 `RED：0，GREEN：1，BLUE：2`。
 
 **枚举的好处**：可以将常量组织起来，统一进行管理。
 
@@ -32,9 +32,9 @@ enum Color { RED, GREEN, BLUE }
 
 ### 枚举类型的本质
 
-尽管 `enum` 看起来像是一种新的数据类型，事实上，**enum是一种受限制的类，并且具有自己的方法**。
+尽管 `enum` 看起来像是一种新的数据类型，事实上，**enum 是一种受限制的类，并且具有自己的方法**。
 
-创建enum时，编译器会为你生成一个相关的类，这个类继承自 `java.lang.Enum`。
+创建 enum 时，编译器会为你生成一个相关的类，这个类继承自 `java.lang.Enum`。
 
 `java.lang.Enum`类声明
 
@@ -45,23 +45,23 @@ public abstract class Enum<E extends Enum<E>>
 
 ## 枚举的方法
 
-在enum中，提供了一些基本方法：
+在 enum 中，提供了一些基本方法：
 
 `values()`：返回 enum 实例的数组，而且该数组中的元素严格保持在 enum 中声明时的顺序。
 
 `name()`：返回实例名。
 
-`ordinal()`：返回实例声明时的次序，从0开始。
+`ordinal()`：返回实例声明时的次序，从 0 开始。
 
 `getDeclaringClass()`：返回实例所属的 enum 类型。
 
- `equals()` ：判断是否为同一个对象。
+`equals()` ：判断是否为同一个对象。
 
 可以使用 `==` 来比较`enum`实例。
 
 此外，`java.lang.Enum`实现了`Comparable`和 `Serializable` 接口，所以也提供 `compareTo()` 方法。
 
-**例：展示enum的基本方法**
+**例：展示 enum 的基本方法**
 
 ```java
 public class EnumMethodDemo {
@@ -121,11 +121,11 @@ green == Color.BLUE: false
 
 ### 枚举可以添加方法
 
-在概念章节提到了，**枚举值默认为从0开始的有序数值** 。那么问题来了：如何为枚举显示的赋值。
+在概念章节提到了，**枚举值默认为从 0 开始的有序数值** 。那么问题来了：如何为枚举显示的赋值。
 
 #### Java 不允许使用 = 为枚举常量赋值
 
-如果你接触过C/C++，你肯定会很自然的想到赋值符号 `=` 。在C/C++语言中的enum，可以用赋值符号`=`显示的为枚举常量赋值；但是 ，很遗憾，**Java 语法中却不允许使用赋值符号 `=` 为枚举常量赋值**。
+如果你接触过 C/C++，你肯定会很自然的想到赋值符号 `=` 。在 C/C++语言中的 enum，可以用赋值符号`=`显示的为枚举常量赋值；但是 ，很遗憾，**Java 语法中却不允许使用赋值符号 `=` 为枚举常量赋值**。
 
 **例：C/C++ 语言中的枚举声明**
 
@@ -144,7 +144,7 @@ Java 虽然不能直接为实例赋值，但是它有更优秀的解决方案：
 
 创建 `enum` 时，可以为其添加多种方法，甚至可以为其添加构造方法。
 
-**注意一个细节：如果要为enum定义方法，那么必须在enum的最后一个实例尾部添加一个分号。此外，在enum中，必须先定义实例，不能将字段或方法定义在实例前面。否则，编译器会报错。**
+**注意一个细节：如果要为 enum 定义方法，那么必须在 enum 的最后一个实例尾部添加一个分号。此外，在 enum 中，必须先定义实例，不能将字段或方法定义在实例前面。否则，编译器会报错。**
 
 **例：全面展示如何在枚举中定义普通方法、静态方法、抽象方法、构造方法**
 
@@ -263,7 +263,7 @@ public enum ErrorCodeEn2 implements INumberEnum {
 
 ### 组织常量
 
-在JDK1.5 之前，在Java中定义常量都是`public static final TYPE a;` 这样的形式。有了枚举，你可以将有关联关系的常量组织起来，使代码更加易读、安全，并且还可以使用枚举提供的方法。
+在 JDK1.5 之前，在 Java 中定义常量都是`public static final TYPE a;` 这样的形式。有了枚举，你可以将有关联关系的常量组织起来，使代码更加易读、安全，并且还可以使用枚举提供的方法。
 
 #### 枚举声明的格式
 
@@ -279,7 +279,7 @@ enum Color { RED, GREEN, BLUE; }
 
 ### switch 状态机
 
-我们经常使用switch语句来写状态机。JDK7以后，switch已经支持 `int`、`char`、`String`、`enum` 类型的参数。这几种类型的参数比较起来，使用枚举的switch代码更具有可读性。
+我们经常使用 switch 语句来写状态机。JDK7 以后，switch 已经支持 `int`、`char`、`String`、`enum` 类型的参数。这几种类型的参数比较起来，使用枚举的 switch 代码更具有可读性。
 
 ```java
 enum Signal {RED, YELLOW, GREEN}
@@ -309,7 +309,7 @@ public static String getTrafficInstruct(Signal signal) {
 
 但是一般用接口方式进行组织。
 
-原因是：Java接口在编译时会自动为enum类型加上`public static`修饰符；Java类在编译时会自动为 `enum` 类型加上static修饰符。看出差异了吗？没错，就是说，在类中组织 `enum`，如果你不给它修饰为 `public`，那么只能在本包中进行访问。
+原因是：Java 接口在编译时会自动为 enum 类型加上`public static`修饰符；Java 类在编译时会自动为 `enum` 类型加上 static 修饰符。看出差异了吗？没错，就是说，在类中组织 `enum`，如果你不给它修饰为 `public`，那么只能在本包中进行访问。
 
 **例：在接口中组织 enum**
 
@@ -377,11 +377,11 @@ public class Plant2 {
 
 ### 策略枚举
 
-EffectiveJava中展示了一种策略枚举。这种枚举通过枚举嵌套枚举的方式，将枚举常量分类处理。
+EffectiveJava 中展示了一种策略枚举。这种枚举通过枚举嵌套枚举的方式，将枚举常量分类处理。
 
-这种做法虽然没有switch语句简洁，但是更加安全、灵活。
+这种做法虽然没有 switch 语句简洁，但是更加安全、灵活。
 
-**例：EffectvieJava中的策略枚举范例**
+**例：EffectvieJava 中的策略枚举范例**
 
 ```java
 enum PayrollDay {
@@ -431,12 +431,12 @@ System.out.println("时薪100的人在周五工作8小时的收入：" + Payroll
 System.out.println("时薪100的人在周六工作8小时的收入：" + PayrollDay.SATURDAY.pay(8.0, 100));
 ```
 
-## EnumSet和EnumMap
+## EnumSet 和 EnumMap
 
-Java 中提供了两个方便操作enum的工具类——EnumSet 和 EnumMap。
+Java 中提供了两个方便操作 enum 的工具类——EnumSet 和 EnumMap。
 
 `EnumSet` 是枚举类型的高性能 `Set` 实现。它要求放入它的枚举常量必须属于同一枚举类型。
-`EnumMap` 是专门为枚举类型量身定做的 `Map` 实现。虽然使用其它的 Map 实现（如HashMap）也能完成枚举类型实例到值得映射，但是使用 EnumMap 会更加高效：它只能接收同一枚举类型的实例作为键值，并且由于枚举类型实例的数量相对固定并且有限，所以 EnumMap 使用数组来存放与枚举类型对应的值。这使得 EnumMap 的效率非常高。
+`EnumMap` 是专门为枚举类型量身定做的 `Map` 实现。虽然使用其它的 Map 实现（如 HashMap）也能完成枚举类型实例到值得映射，但是使用 EnumMap 会更加高效：它只能接收同一枚举类型的实例作为键值，并且由于枚举类型实例的数量相对固定并且有限，所以 EnumMap 使用数组来存放与枚举类型对应的值。这使得 EnumMap 的效率非常高。
 
 ```java
 // EnumSet的使用

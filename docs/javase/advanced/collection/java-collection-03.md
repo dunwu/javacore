@@ -19,11 +19,11 @@ public class ArrayList<E> extends AbstractList<E>
 
 > **说明**
 >
-> - `ArrayList` 扩展了 `AbstractList` 类，支持对于数据存储（如数组）的一些基本的操作，如（add、remove、get、set）
-> - `ArrayList` 实现了 `List` 接口、底层使用数组保存所有元素。其操作基本上是对数组的操作。
-> - `ArrayList` 实现了 `RandomAccess` 接口，支持快速随机访问，实际上就是通过下标序号进行快速访问。
-> - `ArrayList` 实现了`Cloneable` 接口，支持克隆。
-> - `ArrayList` 实现了 `Serializable` 接口，支持序列化。
+> * `ArrayList` 扩展了 `AbstractList` 类，支持对于数据存储（如数组）的一些基本的操作，如（add、remove、get、set）
+> * `ArrayList` 实现了 `List` 接口、底层使用数组保存所有元素。其操作基本上是对数组的操作。
+> * `ArrayList` 实现了 `RandomAccess` 接口，支持快速随机访问，实际上就是通过下标序号进行快速访问。
+> * `ArrayList` 实现了`Cloneable` 接口，支持克隆。
+> * `ArrayList` 实现了 `Serializable` 接口，支持序列化。
 
 ### 动态数组
 
@@ -31,13 +31,13 @@ public class ArrayList<E> extends AbstractList<E>
 
 每当向数组中添加元素时，都要去检查添加后元素的个数是否会超出当前数组的长度，如果超出，数组将会进行扩容。
 
-> 数组进行扩容时，会将老数组中的元素重新拷贝一份到新的数组中，每次数组容量的增长大约是其原容量的1.5倍。这种操作的代价是很高的，因此在实际使用时，我们应该尽量避免数组容量的扩张。当我们可预知要保存的元素的多少时，要在构造 `ArrayList` 实例时，就指定其容量，以避免数组扩容的发生。或者根据实际需求，通过调用 `ensureCapacity` 方法来手动增加`ArrayList` 实例的容量。
+> 数组进行扩容时，会将老数组中的元素重新拷贝一份到新的数组中，每次数组容量的增长大约是其原容量的 1.5 倍。这种操作的代价是很高的，因此在实际使用时，我们应该尽量避免数组容量的扩张。当我们可预知要保存的元素的多少时，要在构造 `ArrayList` 实例时，就指定其容量，以避免数组扩容的发生。或者根据实际需求，通过调用 `ensureCapacity` 方法来手动增加`ArrayList` 实例的容量。
 
 ## LinkedList
 
 > `LinkedList` 是 `List` 和 `Qeue` 接口的双链表实现。
 >
-> `LinkedList ` 是非线程安全的。
+> `LinkedList` 是非线程安全的。
 
 ### 定义
 
@@ -53,11 +53,11 @@ public class LinkedList<E>
 
 > **说明**
 >
-> - `LinkedList` 是一个继承于`AbstractSequentialList` 的双链表。它也可以被当作堆栈、队列或双端队列进行操作。
-> - `LinkedList` 实现 `List` 接口，能对它进行队列操作。
-> - `LinkedList` 实现 `Deque` 接口，即能将 `LinkedList` 当作双链表使用。
-> - `LinkedList` 实现了`Cloneable` 接口，支持克隆。
-> - `LinkedList` 实现了 `Serializable` 接口，支持序列化。
+> * `LinkedList` 是一个继承于`AbstractSequentialList` 的双链表。它也可以被当作堆栈、队列或双端队列进行操作。
+> * `LinkedList` 实现 `List` 接口，能对它进行队列操作。
+> * `LinkedList` 实现 `Deque` 接口，即能将 `LinkedList` 当作双链表使用。
+> * `LinkedList` 实现了`Cloneable` 接口，支持克隆。
+> * `LinkedList` 实现了 `Serializable` 接口，支持序列化。
 
 ## HashMap
 
@@ -80,16 +80,16 @@ public class HashMap<K,V> extends AbstractMap<K,V>
 
 > **说明**
 >
-> - `HashMap` 扩展了 `AbstractMap` 类，相当于默认实现了 `Map` 的基本操作。
-> - `HashMap` 实现 `Map` 接口，支持 `Map` 操作。
-> - `HashMap` 实现了`Cloneable` 接口，支持克隆。
-> - `HashMap` 实现了 `Serializable` 接口，支持序列化。
+> * `HashMap` 扩展了 `AbstractMap` 类，相当于默认实现了 `Map` 的基本操作。
+> * `HashMap` 实现 `Map` 接口，支持 `Map` 操作。
+> * `HashMap` 实现了`Cloneable` 接口，支持克隆。
+> * `HashMap` 实现了 `Serializable` 接口，支持序列化。
 
 ### 原理
 
 HashMap 的内部实现是采用 Hash 算法。
 
-初始化 `HashMap` 时，系统会创建一个长度为 capacity 的 `Entry` 数组，这个数组里可以存储元素的位置被称为**桶（bucket）**，每个 bucket 都有其指定索引，系统可以根据其索引快速访问该 bucket 里存储的元素。 
+初始化 `HashMap` 时，系统会创建一个长度为 capacity 的 `Entry` 数组，这个数组里可以存储元素的位置被称为**桶（bucket）**，每个 bucket 都有其指定索引，系统可以根据其索引快速访问该 bucket 里存储的元素。
 
 ### 性能
 
@@ -109,9 +109,9 @@ HashMap 的内部实现是采用 Hash 算法。
 
 为了保证 `HashMap` 的效率，系统必须要在某个临界点进行扩容处理。
 
-该临界点在当 `HashMap` 中元素的数量等于容量 * 加载因子。
+该临界点在当 `HashMap` 中元素的数量等于容量 \* 加载因子。
 
-但是扩容是一个非常耗时的过程，因为它需要重新计算这些数据在新table数组中的位置并进行复制处理。
+但是扩容是一个非常耗时的过程，因为它需要重新计算这些数据在新 table 数组中的位置并进行复制处理。
 
 所以如果我们已经预知 `HashMap` 中元素的个数，那么预设元素的个数能够有效的提高`HashMap` 的性能。
 
@@ -133,8 +133,8 @@ public class LinkedHashMap<K,V>
 
 > **说明**
 >
-> - `HashMap` 扩展了 `HashMap` 类，相当于继承了 `HashMap` 的所有功能。
-> - `HashMap` 实现 `Map` 接口，支持 `Map` 操作。
+> * `HashMap` 扩展了 `HashMap` 类，相当于继承了 `HashMap` 的所有功能。
+> * `HashMap` 实现 `Map` 接口，支持 `Map` 操作。
 
 ### 双链表
 
@@ -162,7 +162,7 @@ public class TreeMap<K,V>
 
 > **说明**
 >
-> - `HashMap` 扩展了 `AbstractMap` 类，相当于默认实现了 `Map` 的基本操作。
-> - `TreeMap` 实现 `NavigableMap` 接口，支持 `Map` 操作。
-> - `TreeMap` 实现了`Cloneable` 接口，支持克隆。
-> - `TreeMap` 实现了 `Serializable` 接口，支持序列化。
+> * `HashMap` 扩展了 `AbstractMap` 类，相当于默认实现了 `Map` 的基本操作。
+> * `TreeMap` 实现 `NavigableMap` 接口，支持 `Map` 操作。
+> * `TreeMap` 实现了`Cloneable` 接口，支持克隆。
+> * `TreeMap` 实现了 `Serializable` 接口，支持序列化。
