@@ -31,6 +31,7 @@
   - [同步方法和同步块，哪个是更好的选择？](#同步方法和同步块哪个是更好的选择)
   - [volatile 有什么作用？它的实现原理是什么？](#volatile-有什么作用它的实现原理是什么)
   - [volatile 和 synchronized 的区别](#volatile-和-synchronized-的区别)
+  - [什么是同步容器？有哪些常见同步容器？它们是如何实现线程安全的？同步容器真的线程安全吗？](#什么是同步容器有哪些常见同步容器它们是如何实现线程安全的同步容器真的线程安全吗)
 - [并发容器](#并发容器)
   - [什么是并发容器的实现？](#什么是并发容器的实现)
 - [原子操作](#原子操作)
@@ -270,6 +271,15 @@ BlockingQueue 接口是 java collections 框架的一部分，它主要用于实
 * volatile 标记的变量不会被编译器优化；synchronized 标记的变量可以被编译器优化
 
 > 参考阅读：[volatile 和 synchronized 的区别](https://blog.csdn.net/suifeng3051/article/details/52611233)
+
+### 什么是同步容器？有哪些常见同步容器？它们是如何实现线程安全的？同步容器真的线程安全吗？
+
+* 同步容器是指 Java 中使用 synchronized 关键字修饰方法以保证方法线程安全的容器。
+* 常见的同步容器有 Vector、HashTable、Stack，与之相对应的 ArrayList、HashMap、LinkedList 则是非线程安全的。
+* 同步容器之所以说是线程安全的，是因为它们的方法被 synchronized 关键字修饰，从而保证了当有一个线程执行方法时，其他线程被阻塞。
+* 同步容器中的所有自带方法都是线程安全的。但是，对这些集合类的复合操作无法保证其线程安全性。需要客户端通过主动加锁来保证。
+
+> 参考阅读：[Java并发编程：同步容器](https://www.cnblogs.com/dolphin0520/p/3933404.html)
 
 ## 并发容器
 
