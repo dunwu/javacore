@@ -11,9 +11,9 @@
 - [Java 中线程的实现](#java-中线程的实现)
   - [Java 线程生命周期中有哪些状态？各状态之间如何切换？](#java-线程生命周期中有哪些状态各状态之间如何切换)
   - [创建线程有哪些方式？这些方法各自利弊是什么？](#创建线程有哪些方式这些方法各自利弊是什么)
-  - [你如何确保 main()方法所在的线程是 Java 程序最后结束的线程？](#你如何确保-main方法所在的线程是-java-程序最后结束的线程)
-  - [为什么 Thread 类的 sleep()和 yield()方法是静态的？](#为什么-thread-类的-sleep和-yield方法是静态的)
-  - [Java 中的线程优先级控制？](#java-中的线程优先级控制)
+  - [start() 和 run() 有什么区别？可以直接调用 Thread 类的 run() 方法么？](#start-和-run-有什么区别可以直接调用-thread-类的-run-方法么)
+  - [sleep()、yield()、join() 方法有什么区别？为什么 sleep()和 yield()方法是静态的？](#sleepyieldjoin-方法有什么区别为什么-sleep和-yield方法是静态的)
+  - [Java 的线程优先级如何控制？高优先级的 Java 线程一定先执行吗？](#java-的线程优先级如何控制高优先级的-java-线程一定先执行吗)
   - [什么是守护线程？为什么要用守护线程？如何创建守护线程？](#什么是守护线程为什么要用守护线程如何创建守护线程)
 - [线程间通信](#线程间通信)
   - [如何确保线程安全？](#如何确保线程安全)
@@ -107,12 +107,8 @@
   <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/thread-states.png" alt="thread-states">
 </p>
 
-> 参考阅读：
->
-> * [Java Thread Methods and Thread States](https://www.w3resource.com/java-tutorial/java-threadclass-methods-and-threadstates.php)
-> * [Java 线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
-
-> 参考阅读：[java 创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
+> 参考阅读：[Java Thread Methods and Thread States](https://www.w3resource.com/java-tutorial/java-threadclass-methods-and-threadstates.php)
+> 参考阅读：[Java 线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
 
 ### 创建线程有哪些方式？这些方法各自利弊是什么？
 
@@ -133,25 +129,42 @@
 * 三种创建线程方式对比
   * 实现 Runnable 接口优于继承 Thread 类，因为实现接口更便于扩展；
   * 实现 Runnable 接口的线程没有返回值；而使用 Callable Future 方式可以让线程有返回值。
-* 可以直接调用 Thread 类的 run()方法么？
-  * 可以。但是如果调用了 Thread 的 run()方法，它的行为就会和普通的方法一样。
+
+> 参考阅读：[java 创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
+
+### start() 和 run() 有什么区别？可以直接调用 Thread 类的 run() 方法么？
+
+* run() 方法是线程的执行体。
+* start() 方法会启动线程，然后 JVM 会让这个线程去执行 run() 方法。
+* 可以直接调用 Thread 类的 run() 方法么
+  * 可以。但是如果直接调用 Thread 的 run()方法，它的行为就会和普通的方法一样。
   * 为了在新的线程中执行我们的代码，必须使用 Thread.start()方法。
 
-### 你如何确保 main()方法所在的线程是 Java 程序最后结束的线程？
+### sleep()、yield()、join() 方法有什么区别？为什么 sleep()和 yield()方法是静态的？
 
-我们可以使用 Thread 类的 joint()方法来确保所有程序创建的线程在 main()方法退出前结束。这里有一篇文章关于 Thread 类的 joint()方法。
+* yield()
+  * yield() 方法可以让当前正在执行的线程暂停，但它不会阻塞该线程，它只是将该线程从 Running 状态转入 Runnable 状态。
+  * 当某个线程调用了 yield() 方法暂停之后，只有优先级与当前线程相同，或者优先级比当前线程更高的处于就绪状态的线程才会获得执行的机会。
+* sleep()
+  * sleep() 方法需要指定等待的时间，它可以让当前正在执行的线程在指定的时间内暂停执行，进入 Blocked 状态。
+  * 该方法既可以让其他同优先级或者高优先级的线程得到执行的机会，也可以让低优先级的线程得到执行机会。
+  * 但是， sleep() 方法不会释放“锁标志”，也就是说如果有 synchronized 同步块，其他线程仍然不能访问共享数据。
+* join()
+  * join() 方法会使当前线程转入 Blocked 状态，等待调用 join() 方法的线程结束后才能继续执行。
+* 为什么 sleep() 和 yield() 方法是静态的
+  * Thread 类的 sleep() 和 yield() 方法将处理 Running 状态的线程。所以在其他处于非 Running 状态的线程上执行这两个方法是没有意义的。这就是为什么这些方法是静态的。它们可以在当前正在执行的线程中工作，并避免程序员错误的认为可以在其他非运行线程调用这些方法。
 
-> 参考阅读：[java 线程方法 join 的简单总结](https://www.cnblogs.com/lcplcpjava/p/6896904.html)
+> 参考阅读：[Java 线程中 yield 与 join 方法的区别](http://www.importnew.com/14958.html)
+> 参考阅读：[sleep()，wait()，yield()和join()方法的区别](https://blog.csdn.net/xiangwanpeng/article/details/54972952)
 
-### 为什么 Thread 类的 sleep()和 yield()方法是静态的？
+### Java 的线程优先级如何控制？高优先级的 Java 线程一定先执行吗？
 
-Thread 类的 sleep()和 yield()方法将在当前正在执行的线程上运行。所以在其他处于等待状态的线程上调用这些方法是没有意义的。这就是为什么这些方法是静态的。它们可以在当前正在执行的线程中工作，并避免程序员错误的认为可以在其他非运行线程调用这些方法。
-
-### Java 中的线程优先级控制？
-
-在 Java 中，线程优先级可以分为从 1 到 10，一般来说，高优先级的线程在运行时会具有优先权。
-
-但是，这并不能保证高优先级的线程会在低优先级的线程前执行。因为 Java 线程优先级依赖于线程调度的实现，这个实现是和操作系统相关的(OS dependent)。
+* Java 中的线程优先级如何控制
+  * Java 中的线程优先级的范围是 [1,10]，一般来说，高优先级的线程在运行时会具有优先权。可以通过 `thread.setPriority(Thread.MAX_PRIORITY)` 的方式设置，默认优先级为 5。
+* 高优先级的 Java 线程一定先执行吗
+  * 即使设置了线程的优先级，也**无法保证高优先级的线程一定先执行**。
+  * 原因：这是因为线程优先级依赖于操作系统的支持，然而，不同的操作系统支持的线程优先级并不相同，不能很好的和 Java 中线程优先级一一对应。
+  * 结论：Java 线程优先级控制并不可靠。
 
 ### 什么是守护线程？为什么要用守护线程？如何创建守护线程？
 
@@ -163,7 +176,7 @@ Thread 类的 sleep()和 yield()方法将在当前正在执行的线程上运行
 * 如何创建守护线程
   * 使用 thread.setDaemon(true) 可以设置 thread 线程为守护线程。
   * 注意点：
-    * 正在运行的用户线程无法设置为守护线程，所以 thread.setDaemon(true)必须在 thread.start()之前设置，否则会抛出 llegalThreadStateException 异常；
+    * 正在运行的用户线程无法设置为守护线程，所以 thread.setDaemon(true) 必须在 thread.start() 之前设置，否则会抛出 llegalThreadStateException 异常；
     * 一个守护线程创建的子线程依然是守护线程。
     * 不要认为所有的应用都可以分配给 Daemon 来进行服务，比如读写操作或者计算逻辑。
 
@@ -278,8 +291,15 @@ BlockingQueue 接口是 java collections 框架的一部分，它主要用于实
 * 常见的同步容器有 Vector、HashTable、Stack，与之相对应的 ArrayList、HashMap、LinkedList 则是非线程安全的。
 * 同步容器之所以说是线程安全的，是因为它们的方法被 synchronized 关键字修饰，从而保证了当有一个线程执行方法时，其他线程被阻塞。
 * 同步容器中的所有自带方法都是线程安全的。但是，对这些集合类的复合操作无法保证其线程安全性。需要客户端通过主动加锁来保证。
+  * 典型场景：使用同步容器做迭代操作时，如果不对外部做同步，就可能出现 ConcurrentModificationException 异常。
+  * 结论：由于同步容器不能彻底保证线程安全，且性能不高，所以不建议使用。如果想使用线程安全的容器，可以考虑 juc 包中提供的 ConcurrentHashMap 等并发容器。
 
-> 参考阅读：[Java并发编程：同步容器](https://www.cnblogs.com/dolphin0520/p/3933404.html)
+```java
+for(int i=0;i<vector.size();i++)
+    vector.remove(i);
+```
+
+> 参考阅读：[Java 并发编程：同步容器](https://www.cnblogs.com/dolphin0520/p/3933404.html)
 
 ## 并发容器
 
