@@ -4,13 +4,12 @@
 
 ## 内容
 
-- [x] [Java 基础篇](docs/javase/basics/)
-- [x] [Java 进阶篇](docs/javase/advanced/)
-- [ ] [Java 面向对象编程](docs/javase/oop/)
-- [ ] [Java 并发编程](docs/javase/concurrent/)
-- [ ] [Java IO](docs/javase/io/)
-- [ ] [Java 虚拟机](docs/jvm/)
-- [ ] [Java 编程规范](docs/style/)
+- [x] [Java 基础](docs/basic)
+- [x] [Java 进阶](docs/advanced)
+- [ ] [Java 并发](docs/concurrent)
+- [ ] [Java IO](docs/io)
+- [ ] [Java 虚拟机](docs/jvm)
+- [ ] [Java 编程规范](docs/style)
 
 ## 说明
 
