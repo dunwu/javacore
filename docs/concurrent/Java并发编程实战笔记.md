@@ -28,7 +28,7 @@
 - [第 5 章 基础构建模块](#第-5-章-基础构建模块)
   - [5.1 同步容器类](#51-同步容器类)
   - [5.2 并发容器](#52-并发容器)
-  - [5.3 阻塞队列和生产者-消费者模式](#53-阻塞队列和生产者-消费者模式)
+  - [5.3 BlockingQueue](#53-blockingqueue)
   - [5.4 阻塞方法与中断方法](#54-阻塞方法与中断方法)
   - [5.5 同步工具类](#55-同步工具类)
   - [5.6 构建高效且可伸缩的结果缓存](#56-构建高效且可伸缩的结果缓存)
@@ -223,17 +223,29 @@ Java 提供了一种内置的锁机制来支持原子性：synchronized。
 
 ### 5.1 同步容器类
 
-* 5.1.1 同步容器类的问题
-* 5.1.2 迭代器与 Concurrent-ModificationException
-* 5.1.3 隐藏迭代器
+* 包括 Vector 和 Hashtable。
+* 实现线程安全的方式是：将它们的状态封装起来，并对每个公有方法都进行同步，使得每次只有一个线程能访问容器的状态。
+* 同步容器类的问题
+  * 迭代，如果有其他线程并发修改容器，会抛出 ConcurrentModificationException
+  * 跳转
+  * 条件运算
+* 解决方法
+  * 在客户端额外加锁来保护复合操作。
 
 ### 5.2 并发容器
 
-* 5.2.1 ConcurrentHashMap
-* 5.2.2 额外的原子 Map 操作
-* 5.2.3 CopyOnWriteArrayList
+* 包括 ConcurrentHashMap、CopyOnWriteArrayList、CopyOnWriteArraySet。
+* ConcurrentHashMap 用于替代同步 HashMap。
+* ConcurrentHashMap 的实现机制是分段锁。在这种机制中，任意数量的读线程可以并发访问 Map，一定数量的写线程可以并发修改 Map。
+* ConcurrentHashMap 在并发访问环境下实现了更高的吞吐量，而在单线程环境中只损失非常小的性能。
+* ConcurrentHashMap 不同于同步容器，不需要再迭代过程中对容器加锁。
+* CopyOnWriteArrayList 用于替代同步 List。CopyOnWrite 意味着写入时复制，即在每次修改时，都会创建并重新发布一个新的容器副本，从而实现可变性。写入时复制容器的迭代器保留一个指向底层基础数组的引用，这个数组当前位于迭代器的起始位置，由于它不会被修改，因此在对齐进行同步时只需确保数组内容的可见性。
 
-### 5.3 阻塞队列和生产者-消费者模式
+### 5.3 BlockingQueue
+
+* BlockingQueue 提供了可阻塞的 put 和 take 方法，以及支持定时的 offer 和 poll 方法。如果队列满了，那么 put 方法将阻塞直到有空间可用；如果列队为空，那么 take 方法将阻塞到有元素可用。队列可以是有界的或无界的，无界队列永远不会填满，所以无界队列的 put 方法永远不会阻塞。
+* BlockingQueue 支持生产者-消费者模式。
+* BlockingQueue 的实现：LinkedBlockingQueue 和 ArrayBlockingQueue 是 FIFO 队列。PriorityBlockingQueue 是一个按优先级排序的队列。
 
 * 5.3.1 示例：桌面搜索
 * 5.3.2 串行线程封闭
