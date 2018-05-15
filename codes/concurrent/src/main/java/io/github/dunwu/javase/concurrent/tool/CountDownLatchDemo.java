@@ -4,8 +4,11 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * CountDownLatch 示例
- * CountDownLatch 可以实现类似计数器的功能。
- *
+ * <p>
+ * 作用：允许一个或多个线程等待，直到在其他线程中执行的一组操作完成。
+ * <p>
+ * 原理：CountDownLatch 维护一个计数器 count。每次调用 countDown 方法会让 count 的值减 1，减到 0 的时候，那些因为调用 await
+ * 方法而在等待的线程就会被唤醒。
  * @author Zhang Peng
  * @date 2018/5/10
  * @see java.util.concurrent.CountDownLatch
