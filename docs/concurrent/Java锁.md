@@ -31,6 +31,10 @@ tags:
 - [ReentrantReadWriteLock](#reentrantreadwritelock)
   - [要点](#要点-3)
   - [示例](#示例-1)
+- [AQS](#aqs)
+  - [要点](#要点-4)
+  - [源码](#源码-3)
+  - [独占锁](#独占锁)
 - [资料](#资料)
 
 <!-- /TOC -->
@@ -177,13 +181,15 @@ public class ReentrantLockDemo {
 
 ### 要点
 
-* 功能
-  * 对于特定的资源，ReadWriteLock 允许多个线程同时对其执行读操作，但是只允许一个线程对其执行写操作。
-* 原理
-  * “读-读”线程之间不存在互斥关系。
-  * “读-写”线程、“写-写”线程之间存在互斥关系。
-  * ReadWriteLock 维护一对相关的锁。一个是读锁；一个是写锁。
-  * 将读写锁分开，有利于提高并发效率。
+作用：对于特定的资源，ReadWriteLock 允许多个线程同时对其执行读操作，但是只允许一个线程对其执行写操作。
+
+原理
+
+“读-读”线程之间不存在互斥关系。
+
+“读-写”线程、“写-写”线程之间存在互斥关系。
+
+ReadWriteLock 维护一对相关的锁。一个是读锁；一个是写锁。将读写锁分开，有利于提高并发效率。
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/ReadWriteLock.jpg">
@@ -211,8 +217,7 @@ public interface ReadWriteLock {
 
 ### 要点
 
-* 功能
-  * ReentrantReadWriteLock 实现了 ReadWriteLock 接口，所以它是一个读写锁。
+作用：ReentrantReadWriteLock 实现了 ReadWriteLock 接口，所以它是一个读写锁。
 
 ### 示例
 
@@ -243,8 +248,92 @@ public class ReentrantReadWriteLockDemo {
 }
 ```
 
+## AQS
+
+### 要点
+
+作用：AQS，AbstractQueuedSynchronizer，即队列同步器。它是构建锁或者其他同步组件的基础框架（如 ReentrantLock、ReentrantReadWriteLock、Semaphore 等）。
+
+场景：在 LOCK 包中的相关锁(常用的有 ReentrantLock、 ReadWriteLock)都是基于 AQS 来构建。然而这些锁都没有直接来继承 AQS，而是定义了一个 Sync 类去继承 AQS。那么为什么要这样呢?because:锁面向的是使用用户，而同步器面向的则是线程控制，那么在锁的实现中聚合同步器而不是直接继承 AQS 就可以很好的隔离二者所关注的事情。
+
+原理：AQS 在内部定义了一个 int 变量 state，用来表示同步状态。AQS 通过一个双向的 FIFO 同步队列来完成同步状态的管理，当有线程获取锁失败后，就被添加到队列末尾。
+
+### 源码
+
+AbstractQueuedSynchronizer 继承自 AbstractOwnableSynchronize。
+
+#### 同步队列
+
+```java
+public abstract class AbstractQueuedSynchronizer
+    extends AbstractOwnableSynchronizer
+    implements java.io.Serializable {
+
+    /** 等待队列的队头，懒加载。只能通过 setHead 方法修改。 */
+    private transient volatile Node head;
+    /** 等待队列的队尾，懒加载。只能通过 enq 方法添加新的等待节点。*/
+    private transient volatile Node tail;
+    /** 同步状态 */
+    private volatile int state;
+}
+```
+
+<p align="center">
+  <img src="http://www.liuhaihua.cn/wp-content/uploads/2018/05/7zei6fI.png">
+</p>
+
+##### Node
+
+```java
+static final class Node {
+    /** 该等待同步的节点处于共享模式 */
+    static final Node SHARED = new Node();
+    /** 该等待同步的节点处于独占模式 */
+    static final Node EXCLUSIVE = null;
+
+    /** 等待状态,这个和 state 是不一样的:有 1,0,-1,-2,-3 五个值 */
+    volatile int waitStatus;
+    static final int CANCELLED =  1;
+    static final int SIGNAL    = -1;
+    static final int CONDITION = -2;
+    static final int PROPAGATE = -3;
+
+    /** 前驱节点 */
+    volatile Node prev;
+    /** 后继节点 */
+    volatile Node next;
+    /** 等待锁的线程 */
+    volatile Thread thread;
+}
+```
+
+很显然，Node 是一个双链表结构。
+
+waitStatus 5 个状态值的含义：
+
+1. CANCELLED（1） - 该节点的线程可能由于超时或被中断而处于被取消(作废)状态，一旦处于这个状态，节点状态将一直处于 CANCELLED(作废)，因此应该从队列中移除.
+2. SIGNAL（-1） - 当前节点为 SIGNAL 时，后继节点会被挂起，因此在当前节点释放锁或被取消之后必须被唤醒(unparking)其后继结点.
+3. CONDITION（-2） - 该节点的线程处于等待条件状态，不会被当作是同步队列上的节点,直到被唤醒(signal)，设置其值为 0,重新进入阻塞状态。
+4. PROPAGATE（-3） - 下一个 acquireShared 应无条件传播。
+5. 0 - 非以上状态。
+
+```java
+public final void acquire(int arg) {
+    if (!tryAcquire(arg) &&
+        acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+        selfInterrupt();
+}
+```
+
+### 独占锁
+
+独占锁的获取（acquire方法）
+
 ## 资料
 
 * [Java 并发编程实战](https://item.jd.com/10922250.html)
 * [Java 并发编程的艺术](https://item.jd.com/11740734.html)
 * http://www.cnblogs.com/dolphin0520/p/3923167.html
+* https://zhuanlan.zhihu.com/p/27134110
+* https://t.hao0.me/java/2016/04/01/aqs.html
+* http://ju.outofmemory.cn/entry/353762
