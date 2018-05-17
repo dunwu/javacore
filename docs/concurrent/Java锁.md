@@ -13,28 +13,33 @@ tags:
 
 > 本文内容基于 JDK1.8。
 
-<!-- TOC depthFrom:2 depthTo:3 -->
+<!-- TOC depthFrom:2 depthTo:4 -->
 
 - [概述](#概述)
-  - [为什么会出现 Lock？](#为什么会出现-lock)
-  - [synchronized](#synchronized)
+    - [为什么会出现 Lock？](#为什么会出现-lock)
+    - [synchronized](#synchronized)
 - [Lock 接口](#lock-接口)
-  - [要点](#要点)
-  - [源码](#源码)
+    - [要点](#要点)
+    - [源码](#源码)
 - [ReentrantLock](#reentrantlock)
-  - [要点](#要点-1)
-  - [源码](#源码-1)
-  - [示例](#示例)
+    - [要点](#要点-1)
+    - [源码](#源码-1)
+        - [内部类](#内部类)
+        - [重要属性](#重要属性)
+        - [重要方法](#重要方法)
+    - [示例](#示例)
 - [ReadWriteLock](#readwritelock)
-  - [要点](#要点-2)
-  - [源码](#源码-2)
+    - [要点](#要点-2)
+    - [源码](#源码-2)
 - [ReentrantReadWriteLock](#reentrantreadwritelock)
-  - [要点](#要点-3)
-  - [示例](#示例-1)
+    - [要点](#要点-3)
+    - [示例](#示例-1)
 - [AQS](#aqs)
-  - [要点](#要点-4)
-  - [源码](#源码-3)
-  - [独占锁](#独占锁)
+    - [要点](#要点-4)
+    - [源码](#源码-3)
+        - [同步队列](#同步队列)
+        - [独占锁](#独占锁)
+        - [共享锁](#共享锁)
 - [资料](#资料)
 
 <!-- /TOC -->
@@ -311,23 +316,193 @@ static final class Node {
 
 waitStatus 5 个状态值的含义：
 
-1. CANCELLED（1） - 该节点的线程可能由于超时或被中断而处于被取消(作废)状态，一旦处于这个状态，节点状态将一直处于 CANCELLED(作废)，因此应该从队列中移除.
-2. SIGNAL（-1） - 当前节点为 SIGNAL 时，后继节点会被挂起，因此在当前节点释放锁或被取消之后必须被唤醒(unparking)其后继结点.
-3. CONDITION（-2） - 该节点的线程处于等待条件状态，不会被当作是同步队列上的节点,直到被唤醒(signal)，设置其值为 0,重新进入阻塞状态。
-4. PROPAGATE（-3） - 下一个 acquireShared 应无条件传播。
-5. 0 - 非以上状态。
+1.  CANCELLED（1） - 该节点的线程可能由于超时或被中断而处于被取消(作废)状态，一旦处于这个状态，节点状态将一直处于 CANCELLED(作废)，因此应该从队列中移除.
+2.  SIGNAL（-1） - 当前节点为 SIGNAL 时，后继节点会被挂起，因此在当前节点释放锁或被取消之后必须被唤醒(unparking)其后继结点.
+3.  CONDITION（-2） - 该节点的线程处于等待条件状态，不会被当作是同步队列上的节点,直到被唤醒(signal)，设置其值为 0,重新进入阻塞状态。
+4.  PROPAGATE（-3） - 下一个 acquireShared 应无条件传播。
+5.  0 - 非以上状态。
+
+#### 独占锁
+
+##### 获取锁
+
+acquire
 
 ```java
+/**
+ * 先调用 tryAcquire 查看同步状态。
+ * 如果成功获取同步状态，则结束方法，直接返回；
+ * 反之，则先调用 addWaiter，再调用 acquireQueued。
+ */
 public final void acquire(int arg) {
-    if (!tryAcquire(arg) &&
-        acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
-        selfInterrupt();
+        if (!tryAcquire(arg) &&
+            acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+            selfInterrupt();
 }
 ```
 
-### 独占锁
+addWaiter
 
-独占锁的获取（acquire方法）
+`addWaiter` 方法的作用是将当前线程插入等待同步队列的队尾。
+
+```java
+private Node addWaiter(Node mode) {
+    // 1. 将当前线程构建成 Node 类型
+    Node node = new Node(Thread.currentThread(), mode);
+    // 2. 判断尾指针是否为 null
+    Node pred = tail;
+    if (pred != null) {
+        // 2.2 将当前节点插入队列尾部
+        node.prev = pred;
+        if (compareAndSetTail(pred, node)) {
+            pred.next = node;
+            return node;
+        }
+    }
+    // 2.1. 尾指针为 null，说明当前节点是第一个加入队列的节点
+    enq(node);
+    return node;
+}
+```
+
+enq
+
+`enq` 方法的作用是通过自旋（死循环），不断尝试利用 CAS 操作将节点插入队列尾部，直到成功为止。
+
+```java
+private Node enq(final Node node) {
+    // 设置死循环，是为了不断尝试 CAS 操作，直到成功为止
+    for (;;) {
+        Node t = tail;
+        if (t == null) {
+            // 1. 构造头结点（必须初始化，需要领会双链表的精髓）
+            if (compareAndSetHead(new Node()))
+                tail = head;
+        } else {
+            // 2. 通过 CAS 操作将节点插入队列尾部
+            node.prev = t;
+            if (compareAndSetTail(t, node)) {
+                t.next = node;
+                return t;
+            }
+        }
+    }
+}
+```
+
+acquireQueued
+
+`acquireQueued` 方法的作用是通过自旋（死循环），不断尝试为等待队列中线程获取独占锁。
+
+```java
+final boolean acquireQueued(final Node node, int arg) {
+        boolean failed = true;
+        try {
+            boolean interrupted = false;
+            for (;;) {
+                // 1. 获得当前节点的上一个节点
+                final Node p = node.predecessor();
+                // 2. 当前节点能否获取独占式锁
+                // 2.1 如果当前节点是队列中第一个节点，并且成功获取同步状态，即可以获得独占式锁
+                // 说明：当前节点的上一个节点是头指针，即意味着当前节点是队列中第一个节点。
+                if (p == head && tryAcquire(arg)) {
+                    setHead(node);
+                    p.next = null; // help GC
+                    failed = false;
+                    return interrupted;
+                }
+                // 2.2 获取锁失败，线程进入等待状态等待获取独占式锁
+                if (shouldParkAfterFailedAcquire(p, node) &&
+                    parkAndCheckInterrupt())
+                    interrupted = true;
+            }
+        } finally {
+            if (failed)
+                cancelAcquire(node);
+        }
+    }
+```
+
+acquireQueued Before
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/aqs-acquireQueued-before.png">
+</p>
+
+`setHead` 方法
+
+```java
+private void setHead(Node node) {
+    head = node;
+    node.thread = null;
+    node.prev = null;
+}
+```
+
+将当前节点通过 setHead 方法设置为队列的头结点，然后将之前的头结点的 next 域设置为 null，并且 pre 域也为 null，即与队列断开，无任何引用方便 GC 时能够将内存进行回收。
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/aqs-acquireQueued-after.png">
+</p>
+
+shouldParkAfterFailedAcquire
+
+`shouldParkAfterFailedAcquire` 方法的作用是使用 `compareAndSetWaitStatus(pred, ws, Node.SIGNAL)` 将节点状态由 INITIAL 设置成 SIGNAL，表示当前线程阻塞。
+
+当 compareAndSetWaitStatus 设置失败，则说明 shouldParkAfterFailedAcquire 方法返回 false，重新进入外部方法 acquireQueued。由于 acquireQueued 方法中是死循环，会再一次执行 shouldParkAfterFailedAcquire，直至 compareAndSetWaitStatus 设置节点状态位为 SIGNAL。
+
+```java
+private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {
+    int ws = pred.waitStatus;
+    if (ws == Node.SIGNAL)
+        return true;
+    if (ws > 0) {
+        do {
+            node.prev = pred = pred.prev;
+        } while (pred.waitStatus > 0);
+        pred.next = node;
+    } else {
+        compareAndSetWaitStatus(pred, ws, Node.SIGNAL);
+    }
+    return false;
+}
+```
+
+parkAndCheckInterrupt
+
+`parkAndCheckInterrupt` 方法的作用是调用 `LookSupport.park` 方法，该方法是用来阻塞当前线程的。
+
+```
+private final boolean parkAndCheckInterrupt() {
+    LockSupport.park(this);
+    return Thread.interrupted();
+}
+```
+
+acquire 流程
+
+综上所述，就是 acquire 的完整流程。可以以一幅图来说明：
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/aqs-acquire-flow.png">
+</p>
+
+##### 释放锁
+
+release
+unparkSuccessor
+
+##### 可中断式获取锁
+
+acquireInterruptibly
+
+##### 超时等待式获取锁
+
+tryAcquireNanos
+
+#### 共享锁
+
+独占锁的获取（acquire 方法）
 
 ## 资料
 
