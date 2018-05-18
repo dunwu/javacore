@@ -16,30 +16,31 @@ tags:
 <!-- TOC depthFrom:2 depthTo:4 -->
 
 - [概述](#概述)
-    - [为什么会出现 Lock？](#为什么会出现-lock)
-    - [synchronized](#synchronized)
-- [Lock 接口](#lock-接口)
-    - [要点](#要点)
-    - [源码](#源码)
-- [ReentrantLock](#reentrantlock)
-    - [要点](#要点-1)
-    - [源码](#源码-1)
-        - [内部类](#内部类)
-        - [重要属性](#重要属性)
-        - [重要方法](#重要方法)
-    - [示例](#示例)
-- [ReadWriteLock](#readwritelock)
-    - [要点](#要点-2)
-    - [源码](#源码-2)
-- [ReentrantReadWriteLock](#reentrantreadwritelock)
-    - [要点](#要点-3)
-    - [示例](#示例-1)
+  - [为什么会出现 Lock？](#为什么会出现-lock)
+  - [synchronized](#synchronized)
+- [Lock 和 ReentrantLock](#lock-和-reentrantlock)
+  - [要点](#要点)
+  - [源码](#源码)
+    - [Lock](#lock)
+    - [ReentrantLock](#reentrantlock)
+  - [示例](#示例)
+- [ReadWriteLock 和 ReentrantReadWriteLock](#readwritelock-和-reentrantreadwritelock)
+  - [要点](#要点-1)
+  - [源码](#源码-1)
+    - [ReadWriteLock](#readwritelock)
+  - [示例](#示例-1)
 - [AQS](#aqs)
-    - [要点](#要点-4)
-    - [源码](#源码-3)
-        - [同步队列](#同步队列)
-        - [独占锁](#独占锁)
-        - [共享锁](#共享锁)
+  - [要点](#要点-2)
+  - [源码](#源码-2)
+    - [同步队列](#同步队列)
+    - [获取独占锁](#获取独占锁)
+    - [释放独占锁](#释放独占锁)
+    - [获取可中断的独占锁](#获取可中断的独占锁)
+    - [获取超时等待式的独占锁](#获取超时等待式的独占锁)
+    - [获取共享锁](#获取共享锁)
+    - [释放共享锁](#释放共享锁)
+    - [获取可中断的共享锁](#获取可中断的共享锁)
+    - [获取超时等待式的共享锁](#获取超时等待式的共享锁)
 - [资料](#资料)
 
 <!-- /TOC -->
@@ -63,13 +64,17 @@ synchronized 是 Java 的内置锁。
 
 可重入锁可中断锁公平锁读写锁
 
-## Lock 接口
+## Lock 和 ReentrantLock
 
 ### 要点
 
+ReentrantLock 实现了 Lock 接口，所以支持 Lock 的所有方法。
+
+ReentrantLock 字面意为可重入锁。
+
 ### 源码
 
-Lock 接口
+#### Lock
 
 ```java
 public interface Lock {
@@ -102,24 +107,16 @@ public interface Lock {
 }
 ```
 
-## ReentrantLock
+#### ReentrantLock
 
-### 要点
-
-作用：字面意为可重入锁。原理
-
-### 源码
-
-ReentrantLock 实现了 Lock 接口，所以支持 Lock 的所有方法。
-
-#### 内部类
+##### Sync
 
 * `Sync` 这个类是 `ReentrantLock` 的同步控制核心。使用 AQS 状态来表示锁的保留数。
 * `Sync` 是一个抽象类，有两个子类：
   * `FairSync` - 公平锁版本。
   * `NonfairSync` - 非公平锁版本。
 
-#### 重要属性
+##### 重要属性
 
 `Sync` 的实例。
 
@@ -127,7 +124,7 @@ ReentrantLock 实现了 Lock 接口，所以支持 Lock 的所有方法。
 private final Sync sync;
 ```
 
-#### 重要方法
+##### 重要方法
 
 **构造方法**
 
@@ -182,11 +179,15 @@ public class ReentrantLockDemo {
 }
 ```
 
-## ReadWriteLock
+## ReadWriteLock 和 ReentrantReadWriteLock
 
 ### 要点
 
-作用：对于特定的资源，ReadWriteLock 允许多个线程同时对其执行读操作，但是只允许一个线程对其执行写操作。
+作用
+
+对于特定的资源，ReadWriteLock 允许多个线程同时对其执行读操作，但是只允许一个线程对其执行写操作。
+
+ReentrantReadWriteLock 实现了 ReadWriteLock 接口，所以它是一个读写锁。
 
 原理
 
@@ -202,7 +203,7 @@ ReadWriteLock 维护一对相关的锁。一个是读锁；一个是写锁。将
 
 ### 源码
 
-ReadWriteLock 接口
+#### ReadWriteLock
 
 ```java
 public interface ReadWriteLock {
@@ -217,12 +218,6 @@ public interface ReadWriteLock {
     Lock writeLock();
 }
 ```
-
-## ReentrantReadWriteLock
-
-### 要点
-
-作用：ReentrantReadWriteLock 实现了 ReadWriteLock 接口，所以它是一个读写锁。
 
 ### 示例
 
@@ -255,6 +250,8 @@ public class ReentrantReadWriteLockDemo {
 
 ## AQS
 
+> AQS 作为构建锁或者其他同步组件的基础框架
+
 ### 要点
 
 作用：AQS，AbstractQueuedSynchronizer，即队列同步器。它是构建锁或者其他同步组件的基础框架（如 ReentrantLock、ReentrantReadWriteLock、Semaphore 等）。
@@ -282,6 +279,8 @@ public abstract class AbstractQueuedSynchronizer
     private volatile int state;
 }
 ```
+
+AQS 维护了一个 Node 类型双链表，通过 head 和 tail 指针进行访问。
 
 <p align="center">
   <img src="http://www.liuhaihua.cn/wp-content/uploads/2018/05/7zei6fI.png">
@@ -322,11 +321,9 @@ waitStatus 5 个状态值的含义：
 4.  PROPAGATE（-3） - 下一个 acquireShared 应无条件传播。
 5.  0 - 非以上状态。
 
-#### 独占锁
+#### 获取独占锁
 
-##### 获取锁
-
-acquire
+##### acquire
 
 ```java
 /**
@@ -341,7 +338,7 @@ public final void acquire(int arg) {
 }
 ```
 
-addWaiter
+##### addWaiter
 
 `addWaiter` 方法的作用是将当前线程插入等待同步队列的队尾。
 
@@ -365,7 +362,7 @@ private Node addWaiter(Node mode) {
 }
 ```
 
-enq
+##### enq
 
 `enq` 方法的作用是通过自旋（死循环），不断尝试利用 CAS 操作将节点插入队列尾部，直到成功为止。
 
@@ -390,7 +387,7 @@ private Node enq(final Node node) {
 }
 ```
 
-acquireQueued
+##### acquireQueued
 
 `acquireQueued` 方法的作用是通过自旋（死循环），不断尝试为等待队列中线程获取独占锁。
 
@@ -445,7 +442,7 @@ private void setHead(Node node) {
   <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/aqs-acquireQueued-after.png">
 </p>
 
-shouldParkAfterFailedAcquire
+##### shouldParkAfterFailedAcquire
 
 `shouldParkAfterFailedAcquire` 方法的作用是使用 `compareAndSetWaitStatus(pred, ws, Node.SIGNAL)` 将节点状态由 INITIAL 设置成 SIGNAL，表示当前线程阻塞。
 
@@ -468,7 +465,7 @@ private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {
 }
 ```
 
-parkAndCheckInterrupt
+##### parkAndCheckInterrupt
 
 `parkAndCheckInterrupt` 方法的作用是调用 `LookSupport.park` 方法，该方法是用来阻塞当前线程的。
 
@@ -479,7 +476,7 @@ private final boolean parkAndCheckInterrupt() {
 }
 ```
 
-acquire 流程
+##### acquire 流程
 
 综上所述，就是 acquire 的完整流程。可以以一幅图来说明：
 
@@ -487,22 +484,282 @@ acquire 流程
   <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/aqs-acquire-flow.png">
 </p>
 
-##### 释放锁
+#### 释放独占锁
 
-release
-unparkSuccessor
+##### release
 
-##### 可中断式获取锁
+release 方法以独占模式发布。如果 tryRelease 返回 true，则通过解锁一个或多个线程来实现。这个方法可以用来实现 Lock.unlock 方法。
 
-acquireInterruptibly
+```java
+public final boolean release(int arg) {
+    // 判断同步状态释放是否成功
+    if (tryRelease(arg)) {
+        Node h = head;
+        if (h != null && h.waitStatus != 0)
+            unparkSuccessor(h);
+        return true;
+    }
+    return false;
+}
+```
 
-##### 超时等待式获取锁
+##### unparkSuccessor
 
-tryAcquireNanos
+unparkSuccessor 方法作用是唤醒 node 的下一个节点。
 
-#### 共享锁
+头指针的后继节点
 
-独占锁的获取（acquire 方法）
+```java
+private void unparkSuccessor(Node node) {
+    /*
+     * 如果状态为负值（即可能需要信号），请尝试清除信号。
+     * 如果失败或状态由于等待线程而改变也是正常的。
+     */
+    int ws = node.waitStatus;
+    if (ws < 0)
+        compareAndSetWaitStatus(node, ws, 0);
+
+    /**
+     * 释放后继节点的线程。
+     * 如果状态为 CANCELLED 放或节点明显为空，
+     * 则从尾部向后遍历以找到状态不是 CANCELLED 的后继节点。
+     */
+    Node s = node.next;
+    if (s == null || s.waitStatus > 0) {
+        s = null;
+        for (Node t = tail; t != null && t != node; t = t.prev)
+            if (t.waitStatus <= 0)
+                s = t;
+    }
+    // 后继节点不为 null 时唤醒该线程
+    if (s != null)
+        LockSupport.unpark(s.thread);
+}
+```
+
+##### 总结
+
+* 线程获取锁失败，线程被封装成 Node 进行入队操作，核心方法在于 addWaiter()和 enq()，同时 enq()完成对同步队列的头结点初始化工作以及 CAS 操作失败的重试 ;
+* 线程获取锁是一个自旋的过程，当且仅当 当前节点的前驱节点是头结点并且成功获得同步状态时，节点出队即该节点引用的线程获得锁，否则，当不满足条件时就会调用 LookSupport.park()方法使得线程阻塞 ；
+* 释放锁的时候会唤醒后继节点；
+
+#### 获取可中断的独占锁
+
+##### acquireInterruptibly
+
+Lock 能响应中断，这是相较于 synchronized 的一个显著优点。
+
+那么 Lock 响应中断的特性是如何实现的？答案就在 acquireInterruptibly 方法中。
+
+```java
+public final void acquireInterruptibly(int arg)
+        throws InterruptedException {
+    if (Thread.interrupted())
+        throw new InterruptedException();
+    if (!tryAcquire(arg))
+        // 线程获取锁失败
+        doAcquireInterruptibly(arg);
+}
+```
+
+##### doAcquireInterruptibly
+
+获取同步状态失败后就会调用 doAcquireInterruptibly 方法
+
+```java
+private void doAcquireInterruptibly(int arg)
+    throws InterruptedException {
+	// 将节点插入到同步队列中
+    final Node node = addWaiter(Node.EXCLUSIVE);
+    boolean failed = true;
+    try {
+        for (;;) {
+            final Node p = node.predecessor();
+            // 获取锁出队
+			if (p == head && tryAcquire(arg)) {
+                setHead(node);
+                p.next = null; // help GC
+                failed = false;
+                return;
+            }
+            if (shouldParkAfterFailedAcquire(p, node) &&
+                parkAndCheckInterrupt())
+				// 线程中断抛异常
+                throw new InterruptedException();
+        }
+    } finally {
+        if (failed)
+            cancelAcquire(node);
+    }
+}
+```
+
+与 acquire 方法逻辑几乎一致，唯一的区别是当 parkAndCheckInterrupt 返回 true 时（即线程阻塞时该线程被中断），代码抛出被中断异常。
+
+#### 获取超时等待式的独占锁
+
+##### tryAcquireNanos
+
+通过调用 lock.tryLock(timeout,TimeUnit) 方式达到超时等待获取锁的效果，该方法会在三种情况下才会返回：
+
+1.  在超时时间内，当前线程成功获取了锁；
+2.  当前线程在超时时间内被中断；
+3.  超时时间结束，仍未获得锁返回 false。
+
+我们仍然通过采取阅读源码的方式来学习底层具体是怎么实现的，该方法会调用 AQS 的方法 tryAcquireNanos
+
+```java
+public final boolean tryAcquireNanos(int arg, long nanosTimeout)
+        throws InterruptedException {
+    if (Thread.interrupted())
+        throw new InterruptedException();
+    return tryAcquire(arg) ||
+		// 实现超时等待的效果
+        doAcquireNanos(arg, nanosTimeout);
+}
+```
+
+##### doAcquireNanos
+
+```java
+private boolean doAcquireNanos(int arg, long nanosTimeout)
+        throws InterruptedException {
+    if (nanosTimeout <= 0L)
+        return false;
+	// 1. 根据超时时间和当前时间计算出截止时间
+    final long deadline = System.nanoTime() + nanosTimeout;
+    final Node node = addWaiter(Node.EXCLUSIVE);
+    boolean failed = true;
+    try {
+        for (;;) {
+            final Node p = node.predecessor();
+			// 2. 当前线程获得锁出队列
+            if (p == head && tryAcquire(arg)) {
+                setHead(node);
+                p.next = null; // help GC
+                failed = false;
+                return true;
+            }
+			// 3.1 重新计算超时时间
+            nanosTimeout = deadline - System.nanoTime();
+            // 3.2 超时返回 false
+			if (nanosTimeout <= 0L)
+                return false;
+			// 3.3 线程阻塞等待
+            if (shouldParkAfterFailedAcquire(p, node) &&
+                nanosTimeout > spinForTimeoutThreshold)
+                LockSupport.parkNanos(this, nanosTimeout);
+            // 3.4 线程被中断抛出被中断异常
+			if (Thread.interrupted())
+                throw new InterruptedException();
+        }
+    } finally {
+        if (failed)
+            cancelAcquire(node);
+    }
+}
+```
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/aqs-doAcquireNanos-flow.png">
+</p>
+
+#### 获取共享锁
+
+##### acquireShared
+
+```java
+public final void acquireShared(int arg) {
+    if (tryAcquireShared(arg) < 0)
+        doAcquireShared(arg);
+}
+```
+
+尝试获取共享锁失败，调用 doAcquireShared
+
+```java
+private void doAcquireShared(int arg) {
+    final Node node = addWaiter(Node.SHARED);
+    boolean failed = true;
+    try {
+        boolean interrupted = false;
+        for (;;) {
+            final Node p = node.predecessor();
+            if (p == head) {
+                int r = tryAcquireShared(arg);
+                if (r >= 0) {
+					// 当该节点的前驱节点是头结点且成功获取同步状态
+                    setHeadAndPropagate(node, r);
+                    p.next = null; // help GC
+                    if (interrupted)
+                        selfInterrupt();
+                    failed = false;
+                    return;
+                }
+            }
+            if (shouldParkAfterFailedAcquire(p, node) &&
+                parkAndCheckInterrupt())
+                interrupted = true;
+        }
+    } finally {
+        if (failed)
+            cancelAcquire(node);
+    }
+}
+```
+
+以上代码和 acquireQueued 的代码逻辑十分相似，区别仅在于自旋的条件以及节点出队的操作有所不同。
+
+#### 释放共享锁
+
+##### releaseShared
+
+```java
+public final boolean releaseShared(int arg) {
+    if (tryReleaseShared(arg)) {
+        doReleaseShared();
+        return true;
+    }
+    return false;
+}
+```
+
+##### doReleaseShared
+
+当成功释放同步状态之后即 tryReleaseShared 会继续执行 doReleaseShared 方法
+
+发送后继信号并确保传播。 （注意：对于独占模式，如果需要信号，释放就相当于调用头的 unparkSuccessor。）
+
+```java
+private void doReleaseShared() {
+    for (;;) {
+        Node h = head;
+        if (h != null && h != tail) {
+            int ws = h.waitStatus;
+            if (ws == Node.SIGNAL) {
+                if (!compareAndSetWaitStatus(h, Node.SIGNAL, 0))
+                    continue;            // loop to recheck cases
+                unparkSuccessor(h);
+            }
+            else if (ws == 0 &&
+                     !compareAndSetWaitStatus(h, 0, Node.PROPAGATE))
+                // 如果 CAS 失败，继续自旋
+                continue;
+        }
+        // 如果头指针变化，break
+        if (h == head)
+            break;
+    }
+}
+```
+
+#### 获取可中断的共享锁
+
+acquireSharedInterruptibly 方法与 acquireInterruptibly 几乎一致，不再赘述。
+
+#### 获取超时等待式的共享锁
+
+tryAcquireSharedNanos 方法与 tryAcquireNanos 几乎一致，不再赘述。
 
 ## 资料
 
