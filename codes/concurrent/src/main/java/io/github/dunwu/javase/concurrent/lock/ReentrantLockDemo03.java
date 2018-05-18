@@ -1,65 +1,79 @@
 package io.github.dunwu.javase.concurrent.lock;
 
-import java.util.concurrent.locks.Lock;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * ReentrantLock lockInterruptibly() 示例
+ * ReentrantLock tryLock(long timeout, TimeUnit unit) 示例
+ *
  * @author Zhang Peng
  * @date 2018/5/11
  */
 @SuppressWarnings("all")
 public class ReentrantLockDemo03 {
 
-    private Lock lock = new ReentrantLock();
-
     public static void main(String[] args) {
-        ReentrantLockDemo03 demo = new ReentrantLockDemo03();
-        MyThread thread1 = new MyThread(demo);
-        MyThread thread2 = new MyThread(demo);
-        thread1.start();
-        thread2.start();
-
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        thread2.interrupt();
-    }
-
-    public void insert(Thread thread) throws InterruptedException {
-        lock.lockInterruptibly();   //注意，如果需要正确中断等待锁的线程，必须将获取锁放在外面，然后将InterruptedException抛出
-        try {
-            System.out.println(thread.getName() + "得到了锁");
-            long startTime = System.currentTimeMillis();
-            for (; ; ) {
-                if (System.currentTimeMillis() - startTime >= Integer.MAX_VALUE) { break; }
-                //插入数据
-            }
-        } finally {
-            System.out.println(Thread.currentThread().getName() + "执行finally");
-            lock.unlock();
-            System.out.println(thread.getName() + "释放了锁");
-        }
+        Task service = new Task();
+        MyThread tA = new MyThread("Thread-A", service);
+        MyThread tB = new MyThread("Thread-B", service);
+        MyThread tC = new MyThread("Thread-C", service);
+        tA.start();
+        tB.start();
+        tC.start();
     }
 
     static class MyThread extends Thread {
+        private Task task;
 
-        private ReentrantLockDemo03 demo = null;
-
-        public MyThread(ReentrantLockDemo03 test) {
-            this.demo = test;
+        public MyThread(String name, Task task) {
+            super(name);
+            this.task = task;
         }
 
         @Override
         public void run() {
-            try {
-                demo.insert(Thread.currentThread());
-            } catch (InterruptedException e) {
-                System.out.println(Thread.currentThread().getName() + "被中断");
-            }
+            super.run();
+            task.execute();
         }
     }
 
+
+    static class Task {
+        private ReentrantLock lock = new ReentrantLock();
+
+        public void execute() {
+            try {
+                if (lock.tryLock(2, TimeUnit.SECONDS)) {
+                    try {
+                        for (int i = 0; i < 3; i++) {
+                            System.out.println(Thread.currentThread().getName());
+
+                            // 查询当前线程保持此锁的次数
+                            System.out.println("\t holdCount: " + lock.getHoldCount());
+
+                            // 返回正等待获取此锁的线程估计数
+                            System.out.println("\t queuedLength: " + lock.getQueueLength());
+
+                            // 如果此锁的公平设置为 true，则返回 true
+                            System.out.println("\t isFair: " + lock.isFair());
+
+                            try {
+                                Thread.sleep(500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } finally {
+                        lock.unlock();
+                    }
+                } else {
+                    System.out.println(Thread.currentThread().getName() + " 获取锁失败");
+                }
+            } catch (InterruptedException e) {
+                System.out.println(Thread.currentThread().getName() + " 获取锁超时");
+                e.printStackTrace();
+            }
+
+        }
+    }
 }

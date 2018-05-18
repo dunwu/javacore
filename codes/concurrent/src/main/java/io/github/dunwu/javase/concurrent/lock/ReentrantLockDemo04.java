@@ -3,15 +3,16 @@ package io.github.dunwu.javase.concurrent.lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * ReentrantLock lock() 示例
+ * ReentrantLock lockInterruptibly() 示例
  *
  * @author Zhang Peng
- * @date 2018/5/11
+ * @date 2018/5/18
  */
 @SuppressWarnings("all")
-public class ReentrantLockDemo {
+public class ReentrantLockDemo04 {
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args) throws InterruptedException {
         Task service = new Task();
         MyThread tA = new MyThread("Thread-A", service);
         MyThread tB = new MyThread("Thread-B", service);
@@ -19,9 +20,11 @@ public class ReentrantLockDemo {
         tA.start();
         tB.start();
         tC.start();
+        tA.interrupt();
     }
 
     static class MyThread extends Thread {
+
         private Task task;
 
         public MyThread(String name, Task task) {
@@ -38,11 +41,14 @@ public class ReentrantLockDemo {
 
 
     static class Task {
+
         private ReentrantLock lock = new ReentrantLock();
 
         public void execute() {
-            lock.lock();
+
             try {
+                lock.lockInterruptibly();
+
                 for (int i = 0; i < 3; i++) {
                     System.out.println(Thread.currentThread().getName());
 
@@ -61,9 +67,13 @@ public class ReentrantLockDemo {
                         e.printStackTrace();
                     }
                 }
+            } catch (InterruptedException e) {
+                System.out.println(Thread.currentThread().getName() + "被中断");
+                e.printStackTrace();
             } finally {
                 lock.unlock();
             }
         }
     }
+
 }
