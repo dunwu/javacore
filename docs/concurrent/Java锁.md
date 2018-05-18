@@ -16,39 +16,40 @@ tags:
 <!-- TOC depthFrom:2 depthTo:4 -->
 
 - [概述](#概述)
-  - [概念](#概念)
-    - [公平锁/非公平锁](#公平锁非公平锁)
-    - [可重入锁](#可重入锁)
-    - [独享锁/共享锁](#独享锁共享锁)
-    - [互斥锁/读写锁](#互斥锁读写锁)
-    - [乐观锁/悲观锁](#乐观锁悲观锁)
-    - [分段锁](#分段锁)
-    - [偏向锁/轻量级锁/重量级锁](#偏向锁轻量级锁重量级锁)
-    - [自旋锁](#自旋锁)
-  - [为什么用 Lock、ReadWriteLock](#为什么用-lockreadwritelock)
+    - [概念](#概念)
+        - [公平锁/非公平锁](#公平锁非公平锁)
+        - [可重入锁](#可重入锁)
+        - [独享锁/共享锁](#独享锁共享锁)
+        - [互斥锁/读写锁](#互斥锁读写锁)
+        - [乐观锁/悲观锁](#乐观锁悲观锁)
+        - [分段锁](#分段锁)
+        - [偏向锁/轻量级锁/重量级锁](#偏向锁轻量级锁重量级锁)
+        - [自旋锁](#自旋锁)
+    - [为什么用 Lock、ReadWriteLock](#为什么用-lockreadwritelock)
 - [Lock 和 ReentrantLock](#lock-和-reentrantlock)
-  - [要点](#要点)
-  - [源码](#源码)
-    - [Lock](#lock)
-    - [ReentrantLock](#reentrantlock)
-  - [示例](#示例)
+    - [要点](#要点)
+    - [源码](#源码)
+        - [Lock 接口定义](#lock-接口定义)
+        - [ReentrantLock 属性和方法](#reentrantlock-属性和方法)
+        - [Sync](#sync)
+    - [示例](#示例)
 - [ReadWriteLock 和 ReentrantReadWriteLock](#readwritelock-和-reentrantreadwritelock)
-  - [要点](#要点-1)
-  - [源码](#源码-1)
-    - [ReadWriteLock](#readwritelock)
-  - [示例](#示例-1)
+    - [要点](#要点-1)
+    - [源码](#源码-1)
+        - [ReadWriteLock 接口定义](#readwritelock-接口定义)
+    - [示例](#示例-1)
 - [AQS](#aqs)
-  - [要点](#要点-2)
-  - [源码](#源码-2)
-    - [同步队列](#同步队列)
-    - [获取独占锁](#获取独占锁)
-    - [释放独占锁](#释放独占锁)
-    - [获取可中断的独占锁](#获取可中断的独占锁)
-    - [获取超时等待式的独占锁](#获取超时等待式的独占锁)
-    - [获取共享锁](#获取共享锁)
-    - [释放共享锁](#释放共享锁)
-    - [获取可中断的共享锁](#获取可中断的共享锁)
-    - [获取超时等待式的共享锁](#获取超时等待式的共享锁)
+    - [要点](#要点-2)
+    - [源码](#源码-2)
+        - [同步队列](#同步队列)
+        - [获取独占锁](#获取独占锁)
+        - [释放独占锁](#释放独占锁)
+        - [获取可中断的独占锁](#获取可中断的独占锁)
+        - [获取超时等待式的独占锁](#获取超时等待式的独占锁)
+        - [获取共享锁](#获取共享锁)
+        - [释放共享锁](#释放共享锁)
+        - [获取可中断的共享锁](#获取可中断的共享锁)
+        - [获取超时等待式的共享锁](#获取超时等待式的共享锁)
 - [资料](#资料)
 
 <!-- /TOC -->
@@ -145,85 +146,65 @@ synchronized void setB() throws Exception{
 
 ### 要点
 
-ReentrantLock 实现了 Lock 接口，所以支持 Lock 的所有方法。
+如果采用 Lock，必须主动去释放锁，并且在发生异常时，不会自动释放锁。因此一般来说，使用 Lock 必须在 try catch 块中进行，并且将释放锁的操作放在 finally 块中进行，以保证锁一定被被释放，防止死锁的发生。
+
+`lock()` 方法的作用是获取锁。如果锁已被其他线程获取，则进行等待。
+
+`tryLock()` 方法的作用是尝试获取锁，如果成功，则返回 true；如果失败（即锁已被其他线程获取），则返回 false。也就是说，这个方法无论如何都会立即返回，获取不到锁时不会一直等待。
+
+`tryLock(long time, TimeUnit unit)` 方法和 `tryLock()` 方法是类似的，区别仅在于这个方法在获取不到锁时会等待一定的时间，在时间期限之内如果还获取不到锁，就返回 false。如果如果一开始拿到锁或者在等待期间内拿到了锁，则返回 true。
+
+`lockInterruptibly()` 方法比较特殊，当通过这个方法去获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即中断线程的等待状态。也就使说，当两个线程同时通过 `lock.lockInterruptibly()` 想获取某个锁时，假若此时线程 A 获取到了锁，而线程 B 只有在等待，那么对线程 B 调用 `threadB.interrupt()` 方法能够中断线程 B 的等待过程。由于 `lockInterruptibly()` 的声明中抛出了异常，所以 `lock.lockInterruptibly()` 必须放在 try 块中或者在调用 `lockInterruptibly()` 的方法外声明抛出 `InterruptedException`。
+
+> 注意：当一个线程获取了锁之后，是不会被 interrupt() 方法中断的。因为本身在前面的文章中讲过单独调用 interrupt() 方法不能中断正在运行过程中的线程，只能中断阻塞过程中的线程。因此当通过 lockInterruptibly() 方法获取某个锁时，如果不能获取到，只有进行等待的情况下，是可以响应中断的。
+
+`unlock()` 方法的作用是释放锁。
+
+ReentrantLock 是唯一实现了 Lock 接口的类。
 
 ReentrantLock 字面意为可重入锁。
 
 ### 源码
 
-#### Lock
+#### Lock 接口定义
 
 ```java
 public interface Lock {
-    /** 获取锁，如果锁已被其他线程获取，则进行等待。 */
     void lock();
-    /**
-     * 获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即中断线程的等待状态。
-     * 当两个线程同时通过lock.lockInterruptibly()想获取某个锁时，假若此时线程A获取到了锁，
-     * 而线程B只有在等待，那么对线程B调用threadB.interrupt()* 方法能够中断线程B的等待过程。
-     */
     void lockInterruptibly() throws InterruptedException;
-    /**
-     * tryLock()方法是有返回值的，它表示用来尝试获取锁，如果获取成功，则返回 true。
-     * 如果获取失败（即锁已被其他线程获取），则返回 false，也就说这个方法无论如何都会立即返回。在拿不到锁时不会一直在那等待。
-     */
     boolean tryLock();
-    /**
-     * 这个方法在拿不到锁时会等待一定的时间，在时间期限之内如果还拿不到锁，就返回false。
-     * 如果如果一开始拿到锁或者在等待期间内拿到了锁，则返回true。
-     */
     boolean tryLock(long time, TimeUnit unit) throws InterruptedException;
-    /** 释放锁 */
     void unlock();
-    /**
-     * 返回绑定到此Lock实例的新的Condition实例。
-     * 在等待条件之前，锁必须由当前线程保持。对 Condition.await 的调用将在等待之前以原子方式释放锁，
-     * 并在等待返回之前重新获取锁。
-     */
     Condition newCondition();
 }
 ```
 
-#### ReentrantLock
+#### ReentrantLock 属性和方法
 
-##### Sync
+ReentrantLock 的核心方法当然是 Lock 中的方法（具体实现完全基于 `Sync` 类中提供的方法）。
 
-* `Sync` 这个类是 `ReentrantLock` 的同步控制核心。使用 AQS 状态来表示锁的保留数。
+此外，ReentrantLock 有两个构造方法，功能参考下面源码片段中的注释。
+
+```java
+// 同步机制完全依赖于此
+private final Sync sync;
+// 默认初始化 sync 的实例为非公平锁（NonfairSync）
+public ReentrantLock() {}
+// 根据 boolean 值选择初始化 sync 的实例为公平的锁（FairSync）或不公平锁（NonfairSync）
+public ReentrantLock(boolean fair) {}
+```
+
+#### Sync
+
+* `Sync` 类是 `ReentrantLock` 的内部类，也是一个抽象类。
+* `ReentrantLock` 的同步机制几乎完全依赖于`Sync`。使用 AQS 状态来表示锁的保留数（详细介绍参见 [AQS](#aqs)）。
 * `Sync` 是一个抽象类，有两个子类：
   * `FairSync` - 公平锁版本。
   * `NonfairSync` - 非公平锁版本。
 
-##### 重要属性
-
-`Sync` 的实例。
-
-```java
-private final Sync sync;
-```
-
-##### 重要方法
-
-**构造方法**
-
-```java
-// 默认初始化一个非公平的重入锁
-public ReentrantLock() {}
-// 根据 boolean 值选择初始化一个公平的或不公平的重入锁
-public ReentrantLock(boolean fair) {}
-```
-
-**实现 Lock 接口的方法**
-
-以下方法的功能可以参考 [Lock](#lock-接口) 中的描述。具体实现完全基于 `Sync` 类中提供的方法。
-
-```java
-void lock();
-void lockInterruptibly() throws InterruptedException;
-boolean tryLock();
-boolean tryLock(long time, TimeUnit unit) throws InterruptedException;
-void unlock();
-Condition newCondition();
-```
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/ReentrantLock-diagram.png">
+</p>
 
 ### 示例
 
@@ -256,23 +237,21 @@ public class ReentrantLockDemo {
 }
 ```
 
+:point_right: [更多示例](https://github.com/dunwu/javase-notes/tree/master/codes/concurrent/src/main/java/io/github/dunwu/javase/concurrent/lock)
+
 ## ReadWriteLock 和 ReentrantReadWriteLock
 
 ### 要点
 
-作用
-
 对于特定的资源，ReadWriteLock 允许多个线程同时对其执行读操作，但是只允许一个线程对其执行写操作。
 
-ReentrantReadWriteLock 实现了 ReadWriteLock 接口，所以它是一个读写锁。
+ReadWriteLock 维护一对相关的锁。一个是读锁；一个是写锁。将读写锁分开，有利于提高并发效率。
 
-原理
+ReentrantReadWriteLock 实现了 ReadWriteLock 接口，所以它是一个读写锁。
 
 “读-读”线程之间不存在互斥关系。
 
 “读-写”线程、“写-写”线程之间存在互斥关系。
-
-ReadWriteLock 维护一对相关的锁。一个是读锁；一个是写锁。将读写锁分开，有利于提高并发效率。
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/ReadWriteLock.jpg">
@@ -280,7 +259,7 @@ ReadWriteLock 维护一对相关的锁。一个是读锁；一个是写锁。将
 
 ### 源码
 
-#### ReadWriteLock
+#### ReadWriteLock 接口定义
 
 ```java
 public interface ReadWriteLock {
@@ -298,7 +277,7 @@ public interface ReadWriteLock {
 
 ### 示例
 
-```
+```java
 public class ReentrantReadWriteLockDemo {
 
     private ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
