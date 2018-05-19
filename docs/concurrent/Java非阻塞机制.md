@@ -1,0 +1,198 @@
+---
+title: Java非阻塞机制
+date: 2018/05/19
+categories:
+- Javase
+tags:
+- Javase
+- concurrent
+- juc
+---
+
+# Java 非阻塞机制
+
+> 本文内容基于 JDK1.8。
+
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [concurrent 包的实现](#concurrent-包的实现)
+- [CAS](#cas)
+    - [简介](#简介)
+    - [操作](#操作)
+    - [应用](#应用)
+    - [原理](#原理)
+    - [特点](#特点)
+    - [总结](#总结)
+- [资料](#资料)
+
+<!-- /TOC -->
+
+## concurrent 包的实现
+
+由于 Java 的 CAS 同时具有 volatile 读和 volatile 写的内存语义，因此 Java 线程之间的通信现在有了下面四种方式：
+
+1.  A 线程写 volatile 变量，随后 B 线程读这个 volatile 变量。
+2.  A 线程写 volatile 变量，随后 B 线程用 CAS 更新这个 volatile 变量。
+3.  A 线程用 CAS 更新一个 volatile 变量，随后 B 线程用 CAS 更新这个 volatile 变量。
+4.  A 线程用 CAS 更新一个 volatile 变量，随后 B 线程读这个 volatile 变量。
+
+同时，volatile 变量的读/写和 CAS 可以实现线程之间的通信。把这些特性整合在一起，就形成了整个 concurrent 包得以实现的基石。如果我们仔细分析 concurrent 包的源代码实现，会发现一个通用化的实现模式：
+
+首先，声明共享变量为 volatile；
+
+然后，使用 CAS 的原子条件更新来实现线程之间的同步；
+
+同时，配合以 volatile 的读/写和 CAS 所具有的 volatile 读和写的内存语义来实现线程之间的通信。
+
+AQS，非阻塞数据结构和原子变量类（Java.util.concurrent.atomic 包中的类），这些 concurrent 包中的基础类都是使用这种模式来实现的，而 concurrent 包中的高层类又是依赖于这些基础类来实现的。从整体来看，concurrent 包的实现示意图如下：
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/dunwu/Javase-notes/master/images/concurrent/juc-architecture.png">
+</p>
+
+## CAS
+
+### 简介
+
+CAS（Compare and Swap），字面意思为比较并交换。CAS 有 3 个操作数，内存值 V，旧的预期值 A，要修改的新值 B。当且仅当预期值 A 和内存值 V 相同时，将内存值 V 修改为 B，否则什么都不做。
+
+### 操作
+
+我们常常做这样的操作
+
+```Java
+if(a==b) {
+    a++;
+}
+```
+
+试想一下如果在做 a++之前 a 的值被改变了怎么办？a++还执行吗？出现该问题的原因是在多线程环境下，a 的值处于一种不定的状态。采用锁可以解决此类问题，但 CAS 也可以解决，而且可以不加锁。
+
+```Java
+int expect = a;
+if(a.compareAndSet(expect,a+1)) {
+    doSomeThing1();
+} else {
+    doSomeThing2();
+}
+```
+
+这样如果 a 的值被改变了 a++就不会被执行。按照上面的写法，a!=expect 之后,a++就不会被执行，如果我们还是想执行 a++操作怎么办，没关系，可以采用 while 循环
+
+```Java
+while(true) {
+    int expect = a;
+    if (a.compareAndSet(expect, a + 1)) {
+        doSomeThing1();
+        return;
+    } else {
+        doSomeThing2();
+    }
+}
+```
+
+采用上面的写法，在没有锁的情况下实现了 a++操作，这实际上是一种非阻塞算法。
+
+### 应用
+
+非阻塞算法 （nonblocking algorithms）
+
+一个线程的失败或者挂起不应该影响其他线程的失败或挂起的算法。
+
+现代的 CPU 提供了特殊的指令，可以自动更新共享数据，而且能够检测到其他线程的干扰，而 compareAndSet() 就用这些代替了锁定。
+
+拿出 AtomicInteger 来研究在没有锁的情况下是如何做到数据正确性的。
+
+```Java
+private volatile int value;
+```
+
+首先毫无疑问，在没有锁的机制下可能需要借助 volatile 原语，保证线程间的数据是可见的（共享的）。
+
+这样才获取变量的值的时候才能直接读取。
+
+```Java
+public final int get() {
+    return value;
+}
+```
+
+然后来看看++i 是怎么做到的。
+
+```Java
+public final int incrementAndGet() {
+    for (;;) {
+        int current = get();
+        int next = current + 1;
+            if (compareAndSet(current, next))
+                return next;
+    }
+}
+```
+
+在这里采用了 CAS 操作，每次从内存中读取数据然后将此数据和+1 后的结果进行 CAS 操作，如果成功就返回结果，否则重试直到成功为止。
+
+而 compareAndSet 利用 JNI 来完成 CPU 指令的操作。
+
+```Java
+public final boolean compareAndSet(int expect, int update) {
+    return unsafe.compareAndSwapInt(this, valueOffset, expect, update);
+}
+```
+
+整体的过程就是这样子的，利用 CPU 的 CAS 指令，同时借助 JNI 来完成 Java 的非阻塞算法。其它原子操作都是利用类似的特性完成的。
+
+其中 unsafe.compareAndSwapInt(this, valueOffset, expect, update)类似：
+
+```Java
+if (this == expect) {
+    this = update
+    return true;
+} else {
+    return false;
+}
+```
+
+那么问题就来了，成功过程中需要 2 个步骤：比较 this == expect，替换 this = update，compareAndSwapInt 如何这两个步骤的原子性呢？ 参考 CAS 的原理
+
+### 原理
+
+Java 代码如何确保处理器执行 CAS 操作？
+
+CAS 通过调用 JNI（JNI:Java Native Interface 为 Java 本地调用，允许 Java 调用其他语言。）的代码实现的。JVM 将 CAS 操作编译为底层提供的最有效方法。在支持 CAS 的处理器上，JVM 将它们编译为相应的机器指令；在不支持 CAS 的处理器上，JVM 将使用自旋锁。
+
+### 特点
+
+#### 优点
+
+一般情况下，比锁性能更高。因为 CAS 是一种非阻塞算法，所以其避免了线程被阻塞时的等待时间。
+
+#### 缺点
+
+##### ABA 问题
+
+因为 CAS 需要在操作值的时候检查下值有没有发生变化，如果没有发生变化则更新，但是如果一个值原来是 A，变成了 B，又变成了 A，那么使用 CAS 进行检查时会发现它的值没有发生变化，但是实际上却变化了。ABA 问题的解决思路就是使用版本号。在变量前面追加上版本号，每次变量更新的时候把版本号加一，那么 A－B－A 就会变成 1A-2B－3A。
+
+从 Java1.5 开始 JDK 的 atomic 包里提供了一个类 AtomicStampedReference 来解决 ABA 问题。这个类的 compareAndSet 方法作用是首先检查当前引用是否等于预期引用，并且当前标志是否等于预期标志，如果全部相等，则以原子方式将该引用和该标志的值设置为给定的更新值。
+
+##### 循环时间长开销大
+
+自旋 CAS 如果长时间不成功，会给 CPU 带来非常大的执行开销。如果 JVM 能支持处理器提供的 pause 指令那么效率会有一定的提升，pause 指令有两个作用，第一它可以延迟流水线执行指令（de-pipeline）,使 CPU 不会消耗过多的执行资源，延迟的时间取决于具体实现的版本，在一些处理器上延迟时间是零。第二它可以避免在退出循环的时候因内存顺序冲突（memory order violation）而引起 CPU 流水线被清空（CPU pipeline flush），从而提高 CPU 的执行效率。
+
+比较花费 CPU 资源，即使没有任何用也会做一些无用功。
+
+##### 只能保证一个共享变量的原子操作
+
+当对一个共享变量执行操作时，我们可以使用循环 CAS 的方式来保证原子操作，但是对多个共享变量操作时，循环 CAS 就无法保证操作的原子性，这个时候就可以用锁，或者有一个取巧的办法，就是把多个共享变量合并成一个共享变量来操作。比如有两个共享变量 i ＝ 2,j=a，合并一下 ij=2a，然后用 CAS 来操作 ij。从 Java1.5 开始 JDK 提供了 AtomicReference 类来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行 CAS 操作。
+
+### 总结
+
+可以用 CAS 在无锁的情况下实现原子操作，但要明确应用场合，非常简单的操作且又不想引入锁可以考虑使用 CAS 操作，当想要非阻塞地完成某一操作也可以考虑 CAS。不推荐在复杂操作中引入 CAS，会使程序可读性变差，且难以测试，同时会出现 ABA 问题。
+
+## 资料
+
+* [Java 并发编程实战](https://item.jd.com/10922250.html)
+* [Java 并发编程的艺术](https://item.jd.com/11740734.html)
+* https://www.jianshu.com/p/473e14d5ab2d
+* https://blog.csdn.net/ls5718/article/details/52563959
+* http://tutorials.jenkov.com/java-concurrency/non-blocking-algorithms.html
