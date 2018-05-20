@@ -1,5 +1,5 @@
 ---
-title: Java非阻塞机制
+title: Java 并发机制的底层实现
 date: 2018/05/19
 categories:
 - Javase
@@ -9,13 +9,14 @@ tags:
 - juc
 ---
 
-# Java 非阻塞机制
+# Java 并发机制的底层实现
 
 > 本文内容基于 JDK1.8。
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [concurrent 包的实现](#concurrent-包的实现)
+- [volatile](#volatile)
 - [CAS](#cas)
     - [简介](#简介)
     - [操作](#操作)
@@ -49,6 +50,14 @@ AQS，非阻塞数据结构和原子变量类（Java.util.concurrent.atomic 包�
 <p align="center">
   <img src="https://raw.githubusercontent.com/dunwu/Javase-notes/master/images/concurrent/juc-architecture.png">
 </p>
+
+## volatile
+
+volatile 是轻量级的 synchronized，它在多处理器开发中保证了共享变量的“可见性”。
+
+可见性的意思是当一个线程修改一个共享变量时，另外一个线程能读到这个修改的值。如果 volatile 变量修饰符使用恰当的话，它比 synchronized 的使用和执行成本更低，因为它不会引起线程上下文的切换和调度。
+
+如果一个字段被声明成volatile，Java线程内存模型确保所有线程看到这个变量的值是一致的。
 
 ## CAS
 
@@ -192,7 +201,7 @@ CAS 通过调用 JNI（JNI:Java Native Interface 为 Java 本地调用，允许 
 ## 资料
 
 * [Java 并发编程实战](https://item.jd.com/10922250.html)
-* [Java 并发编程的艺术](https://item.jd.com/11740734.html)
+* [Java 并发编程的艺术](https://item.jd.com/11740734.html)：第 2 章 Java 并发机制的底层实现原理
 * https://www.jianshu.com/p/473e14d5ab2d
 * https://blog.csdn.net/ls5718/article/details/52563959
 * http://tutorials.jenkov.com/java-concurrency/non-blocking-algorithms.html
