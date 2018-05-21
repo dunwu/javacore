@@ -16,14 +16,15 @@ tags:
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [concurrent 包的实现](#concurrent-包的实现)
+- [synchronized](#synchronized)
 - [volatile](#volatile)
 - [CAS](#cas)
-    - [简介](#简介)
-    - [操作](#操作)
-    - [应用](#应用)
-    - [原理](#原理)
-    - [特点](#特点)
-    - [总结](#总结)
+  - [简介](#简介)
+  - [操作](#操作)
+  - [应用](#应用)
+  - [原理](#原理)
+  - [特点](#特点)
+  - [总结](#总结)
 - [资料](#资料)
 
 <!-- /TOC -->
@@ -51,13 +52,30 @@ AQS，非阻塞数据结构和原子变量类（Java.util.concurrent.atomic 包�
   <img src="https://raw.githubusercontent.com/dunwu/Javase-notes/master/images/concurrent/juc-architecture.png">
 </p>
 
+## synchronized
+
+synchronized 实现同步的基础是：Java 中的每一个对象都可以作为锁。
+
+* 对于普通同步方法，锁是当前实例对象。
+* 对于静态同步方法，锁是当前类的Class对象。
+* 对于同步方法块，锁是Synchonized括号里配置的对象。
+
+synchronized 用的锁是存在 Java 对象头里的。
+
 ## volatile
 
 volatile 是轻量级的 synchronized，它在多处理器开发中保证了共享变量的“可见性”。
 
-可见性的意思是当一个线程修改一个共享变量时，另外一个线程能读到这个修改的值。如果 volatile 变量修饰符使用恰当的话，它比 synchronized 的使用和执行成本更低，因为它不会引起线程上下文的切换和调度。
+可见性的意思是当一个线程修改一个共享变量时，另外一个线程能读到这个修改的值。
 
-如果一个字段被声明成volatile，Java线程内存模型确保所有线程看到这个变量的值是一致的。
+如果 volatile 变量修饰符使用恰当的话，它比 synchronized 的使用和执行成本更低，因为它不会引起线程上下文的切换和调度。
+
+如果一个字段被声明成 volatile，Java 线程内存模型确保所有线程看到这个变量的值是一致的。
+
+volatile 的两条实现原则
+
+* Lock 前缀指令会引起处理器缓存回写到内存。
+* 一个处理器的缓存回写到内存会导致其他处理器的缓存无效。
 
 ## CAS
 
