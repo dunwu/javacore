@@ -15,17 +15,26 @@ tags:
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [concurrent 包的实现](#concurrent-包的实现)
-- [synchronized](#synchronized)
-- [volatile](#volatile)
-- [CAS](#cas)
-  - [简介](#简介)
-  - [操作](#操作)
-  - [应用](#应用)
-  - [原理](#原理)
-  - [特点](#特点)
-  - [总结](#总结)
-- [资料](#资料)
+* [concurrent 包的实现](#concurrent-包的实现)
+* [synchronized](#synchronized)
+    * [实例方法同步](#实例方法同步)
+    * [静态方法同步](#静态方法同步)
+    * [实例方法中的同步块](#实例方法中的同步块)
+    * [静态方法中的同步块](#静态方法中的同步块)
+* [volatile](#volatile)
+* [CAS](#cas)
+    * [简介](#简介)
+    * [操作](#操作)
+    * [应用](#应用)
+    * [原理](#原理)
+    * [特点](#特点)
+        * [优点](#优点)
+        * [缺点](#缺点)
+            * [ABA 问题](#aba-问题)
+            * [循环时间长开销大](#循环时间长开销大)
+            * [只能保证一个共享变量的原子操作](#只能保证一个共享变量的原子操作)
+    * [总结](#总结)
+* [资料](#资料)
 
 <!-- /TOC -->
 
@@ -57,16 +66,128 @@ AQS，非阻塞数据结构和原子变量类（Java.util.concurrent.atomic 包�
 synchronized 实现同步的基础是：Java 中的每一个对象都可以作为锁。
 
 * 对于普通同步方法，锁是当前实例对象。
-* 对于静态同步方法，锁是当前类的Class对象。
-* 对于同步方法块，锁是Synchonized括号里配置的对象。
+* 对于静态同步方法，锁是当前类的 Class 对象。
+* 对于同步方法块，锁是 Synchonized 括号里配置的对象。
 
 synchronized 用的锁是存在 Java 对象头里的。
+
+同步块在 Java 中是同步在某个对象上。所有同步在一个对象上的同步块在同时只能被一个线程进入并执行操作。所有其他等待进入该同步块的线程将被阻塞，直到执行该同步块中的线程退出。
+
+有四种不同的同步块：
+
+* 实例方法
+* 静态方法
+* 实例方法中的同步块
+* 静态方法中的同步块
+
+### 实例方法同步
+
+```java
+public synchronized void add(int value){
+    this.count += value;
+}
+```
+
+注意在方法声明中同步（synchronized ）关键字。这告诉 Java 该方法是同步的。
+
+Java 实例方法同步是同步在拥有该方法的对象上。这样，每个实例其方法同步都同步在不同的对象上，即该方法所属的实例。只有一个线程能够在实例方法同步块中运行。如果有多个实例存在，那么一个线程一次可以在一个实例同步块中执行操作。一个实例一个线程。
+
+### 静态方法同步
+
+静态方法同步和实例方法同步方法一样，也使用 synchronized 关键字。Java 静态方法同步如下示例：
+
+```java
+public static synchronized void add(int value){
+    count += value;
+}
+```
+
+同样，这里 synchronized 关键字告诉 Java 这个方法是同步的。
+
+静态方法的同步是指同步在该方法所在的类对象上。因为在 Java 虚拟机中一个类只能对应一个类对象，所以同时只允许一个线程执行同一个类中的静态同步方法。
+
+对于不同类中的静态同步方法，一个线程可以执行每个类中的静态同步方法而无需等待。不管类中的那个静态同步方法被调用，一个类只能由一个线程同时执行。
+
+### 实例方法中的同步块
+
+有时你不需要同步整个方法，而是同步方法中的一部分。Java 可以对方法的一部分进行同步。
+
+在非同步的 Java 方法中的同步块的例子如下所示：
+
+```java
+public void add(int value){
+    synchronized(this){
+        this.count += value;
+    }
+}
+```
+
+示例使用 Java 同步块构造器来标记一块代码是同步的。该代码在执行时和同步方法一样。
+
+注意 Java 同步块构造器用括号将对象括起来。在上例中，使用了 `this`，即为调用 add 方法的实例本身。在同步构造器中用括号括起来的对象叫做监视器对象。上述代码使用监视器对象同步，同步实例方法使用调用方法本身的实例作为监视器对象。
+
+一次只有一个线程能够在同步于同一个监视器对象的 Java 方法内执行。
+
+下面两个例子都同步他们所调用的实例对象上，因此他们在同步的执行效果上是等效的。
+
+```java
+public class MyClass {
+
+    public synchronized void log1(String msg1, String msg2){
+        log.writeln(msg1);
+        log.writeln(msg2);
+    }
+
+
+    public void log2(String msg1, String msg2){
+        synchronized(this){
+          log.writeln(msg1);
+          log.writeln(msg2);
+        }
+    }
+}
+```
+
+在上例中，每次只有一个线程能够在两个同步块中任意一个方法内执行。
+
+如果第二个同步块不是同步在 this 实例对象上，那么两个方法可以被线程同时执行。
+
+### 静态方法中的同步块
+
+和上面类似，下面是两个静态方法同步的例子。这些方法同步在该方法所属的类对象上。
+
+```java
+public class MyClass {
+
+    public static synchronized void log1(String msg1, String msg2){
+        log.writeln(msg1);
+        log.writeln(msg2);
+    }
+
+
+    public static void log2(String msg1, String msg2){
+        synchronized(MyClass.class){
+          log.writeln(msg1);
+          log.writeln(msg2);  
+        }
+    }
+}
+```
+
+这两个方法不允许同时被线程访问。
+
+如果第二个同步块不是同步在 MyClass.class 这个对象上。那么这两个方法可以同时被线程访问。
 
 ## volatile
 
 volatile 是轻量级的 synchronized，它在多处理器开发中保证了共享变量的“可见性”。
 
 可见性的意思是当一个线程修改一个共享变量时，另外一个线程能读到这个修改的值。
+
+一旦一个共享变量（类的成员变量、类的静态成员变量）被volatile修饰之后，那么就具备了两层语义：
+
+1. 保证了不同线程对这个变量进行操作时的可见性，即一个线程修改了某个变量的值，这新值对其他线程来说是立即可见的。
+2. 禁止进行指令重排序。
 
 如果 volatile 变量修饰符使用恰当的话，它比 synchronized 的使用和执行成本更低，因为它不会引起线程上下文的切换和调度。
 
