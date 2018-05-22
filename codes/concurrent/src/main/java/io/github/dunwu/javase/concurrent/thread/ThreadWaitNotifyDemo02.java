@@ -10,26 +10,24 @@ import java.util.PriorityQueue;
  */
 public class ThreadWaitNotifyDemo02 {
 
-    private int queueSize = 10;
-    private final PriorityQueue<Integer> queue = new PriorityQueue<>(queueSize);
+    private static final int QUEUE_SIZE = 10;
+    private static final PriorityQueue<Integer> queue = new PriorityQueue<>(QUEUE_SIZE);
 
     public static void main(String[] args) {
-        ThreadWaitNotifyDemo02 test = new ThreadWaitNotifyDemo02();
-        Producer producer = test.new Producer();
-        Consumer consumer = test.new Consumer();
-
-        producer.start();
-        consumer.start();
+        new Producer("生产者A").start();
+        new Producer("生产者B").start();
+        new Consumer("消费者A").start();
+        new Consumer("消费者B").start();
     }
 
-    class Consumer extends Thread {
+    static class Consumer extends Thread {
+
+        Consumer(String name) {
+            super(name);
+        }
 
         @Override
         public void run() {
-            consume();
-        }
-
-        private void consume() {
             while (true) {
                 synchronized (queue) {
                     while (queue.size() == 0) {
@@ -38,39 +36,49 @@ public class ThreadWaitNotifyDemo02 {
                             queue.wait();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
-                            queue.notify();
+                            queue.notifyAll();
                         }
                     }
                     queue.poll(); // 每次移走队首元素
-                    queue.notify();
-                    System.out.println("从队列取走一个元素，队列剩余" + queue.size() + "个元素");
+                    queue.notifyAll();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(Thread.currentThread().getName() + " 从队列取走一个元素，队列当前有：" + queue.size() + "个元素");
                 }
             }
         }
     }
 
-    class Producer extends Thread {
+    static class Producer extends Thread {
+
+        Producer(String name) {
+            super(name);
+        }
 
         @Override
         public void run() {
-            produce();
-        }
-
-        private void produce() {
             while (true) {
                 synchronized (queue) {
-                    while (queue.size() == queueSize) {
+                    while (queue.size() == QUEUE_SIZE) {
                         try {
                             System.out.println("队列满，等待有空余空间");
                             queue.wait();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
-                            queue.notify();
+                            queue.notifyAll();
                         }
                     }
                     queue.offer(1); // 每次插入一个元素
-                    queue.notify();
-                    System.out.println("向队列取中插入一个元素，队列剩余空间：" + (queueSize - queue.size()));
+                    queue.notifyAll();
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(Thread.currentThread().getName() + " 向队列取中插入一个元素，队列当前有：" + queue.size() + "个元素");
                 }
             }
         }
