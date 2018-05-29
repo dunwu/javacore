@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.concurrent.lock;
+package io.github.dunwu.javase.concurrent.chapter01;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 死锁示例
- * @see DeadLockFixDemo
+ * 解决死锁示例
+ * @see DeadLockDemo
  */
 @SuppressWarnings("all")
-public class DeadLockDemo {
+public class DeadLockFixDemo {
 
     public static void main(String[] args) throws InterruptedException {
         List<Integer> list1 = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10));
@@ -33,6 +33,8 @@ public class DeadLockDemo {
 
     private static void moveListItem(List<Integer> from, List<Integer> to, Integer item) {
         log("attempting lock for list", from);
+        boolean removedSuccessful = false;
+
         synchronized (from) {
             log("lock acquired for list", from);
             try {
@@ -40,12 +42,14 @@ public class DeadLockDemo {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            removedSuccessful = from.remove(item);
+        }
+        if (removedSuccessful) {
             log("attempting lock for list ", to);
             synchronized (to) {
                 log("lock acquired for list", to);
-                if (from.remove(item)) {
-                    to.add(item);
-                }
+
+                to.add(item);
                 log("moved item to list ", to);
             }
         }

@@ -1,51 +1,57 @@
 package io.github.dunwu.javase.concurrent.chapter01;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 /**
- * 死锁例子
- *
- * @author tengfei.fangtf
- * @version $Id: DeadLockDemo.java, v 0.1 2015-7-18 下午10:08:28 tengfei.fangtf Exp $
+ * 死锁示例
+ * @see DeadLockFixDemo
  */
+@SuppressWarnings("all")
 public class DeadLockDemo {
 
-    /** A锁 */
-    private static String A = "A";
-    /** B锁 */
-    private static String B = "B";
+    public static void main(String[] args) throws InterruptedException {
+        List<Integer> list1 = new ArrayList<>(Arrays.asList(2, 4, 6, 8, 10));
+        List<Integer> list2 = new ArrayList<>(Arrays.asList(1, 3, 7, 9, 11));
 
-    public static void main(String[] args) {
-        new DeadLockDemo().deadLock();
-    }
-
-    private void deadLock() {
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (A) {
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    synchronized (B) {
-                        System.out.println("1");
-                    }
-                }
-            }
+        Thread thread1 = new Thread(() -> {
+            moveListItem(list1, list2, 2);
+        });
+        Thread thread2 = new Thread(() -> {
+            moveListItem(list2, list1, 9);
         });
 
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (B) {
-                    synchronized (A) {
-                        System.out.println("2");
-                    }
-                }
-            }
-        });
-        t1.start();
-        t2.start();
+        thread1.start();
+        thread2.start();
+        thread1.join();
+        thread2.join();
+        System.out.println(list1);
+        System.out.println(list2);
     }
 
+    private static void moveListItem(List<Integer> from, List<Integer> to, Integer item) {
+        log("attempting lock for list", from);
+        synchronized (from) {
+            log("lock acquired for list", from);
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            log("attempting lock for list ", to);
+            synchronized (to) {
+                log("lock acquired for list", to);
+                if (from.remove(item)) {
+                    to.add(item);
+                }
+                log("moved item to list ", to);
+            }
+        }
+    }
+
+    private static void log(String msg, Object target) {
+        System.out.println(Thread.currentThread().getName() + ": " + msg + " " + System.identityHashCode(target));
+    }
 }
