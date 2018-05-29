@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.concurrent.thread;
+package io.github.dunwu.javase.concurrent.chapter02;
 
 /**
  * 错误启动线程方式。使用 run() 方法启动线程并不会交错执行。

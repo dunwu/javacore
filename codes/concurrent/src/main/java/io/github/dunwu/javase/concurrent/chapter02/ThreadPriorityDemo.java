@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.concurrent.thread;
+package io.github.dunwu.javase.concurrent.chapter02;
 
 /**
  * Java 的线程优先级控制示例

@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.concurrent.thread;
+package io.github.dunwu.javase.concurrent.chapter02;
 
 import java.util.PriorityQueue;
 import java.util.concurrent.locks.Condition;

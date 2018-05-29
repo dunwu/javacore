@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.concurrent.thread;
+package io.github.dunwu.javase.concurrent.chapter02;
 
 /**
  * Thread.yield() 示例 yield() 方法可以让当前正在执行的线程暂停，但它不会阻塞该线程，它只是将该线程从 Running 状态转入 Runnable 状态。 当某个线程调用了 yield()

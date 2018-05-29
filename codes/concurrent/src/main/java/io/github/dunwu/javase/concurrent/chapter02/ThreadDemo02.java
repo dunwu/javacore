@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.concurrent.thread;
+package io.github.dunwu.javase.concurrent.chapter02;
 
 /**
  * 正确启动线程方式。

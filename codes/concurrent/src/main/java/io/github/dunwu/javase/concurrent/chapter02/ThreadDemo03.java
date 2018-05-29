@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.concurrent.thread;
+package io.github.dunwu.javase.concurrent.chapter02;
 
 /**
  * 重复调用 start() 会抛出 java.lang.IllegalThreadStateException 异常。

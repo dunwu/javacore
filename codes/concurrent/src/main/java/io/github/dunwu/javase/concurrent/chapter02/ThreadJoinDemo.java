@@ -1,4 +1,4 @@
-package io.github.dunwu.javase.concurrent.thread;
+package io.github.dunwu.javase.concurrent.chapter02;
 
 /**
  * thread.join() 示例 join() 方法会使当前线程等待调用 join() 方法的线程结束后才能继续执行。
