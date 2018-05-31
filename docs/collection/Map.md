@@ -421,6 +421,8 @@ public class LinkedHashMap<K,V>
 }
 ```
 
+LinkedHashMap 继承了 HashMap 的 put 函数，本身没有实现 put 函数。
+
 ## TreeMap
 
 ## 资料
