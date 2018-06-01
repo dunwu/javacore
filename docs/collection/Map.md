@@ -572,7 +572,7 @@ private void deleteEntry(Entry<K,V> p) {
     // Start fixup at replacement node, if it exists.
     Entry<K,V> replacement = (p.left != null ? p.left : p.right);
 
-    if (replacement != null) {
+    if (replacement != null) { // 要删除的节点有一个孩子节点
         // Link replacement to parent
         replacement.parent = p.parent;
         if (p.parent == null)
@@ -580,7 +580,7 @@ private void deleteEntry(Entry<K,V> p) {
         else if (p == p.parent.left)
             p.parent.left  = replacement;
         else
-            p.parent.right = replacement;
+ D:\codes\zp\java\database\docs\redis\分布式锁.md           p.parent.right = replacement;
 
         // Null out links so they are OK to use by fixAfterDeletion.
         p.left = p.right = p.parent = null;
