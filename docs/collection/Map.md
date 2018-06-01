@@ -12,17 +12,31 @@ tags:
 
 <!-- TOC -->
 
-- [Map](#map)
-    - [Map 要点](#map-要点)
-- [HashMap](#hashmap)
-    - [HashMap 要点](#hashmap-要点)
-    - [HashMap 源码](#hashmap-源码)
-    - [小结](#小结)
-- [LinkedHashMap](#linkedhashmap)
-    - [LinkedHashMap 要点](#linkedhashmap-要点)
-    - [LinkedHashMap 源码](#linkedhashmap-源码)
-- [TreeMap](#treemap)
-- [资料](#资料)
+- [容器之 Map](#map)
+    - [Map](#map)
+        - [Map 要点](#map)
+    - [HashMap](#hashmap)
+        - [HashMap 要点](#hashmap)
+        - [HashMap 源码](#hashmap)
+            - [HashMap 定义](#hashmap)
+            - [构造方法](#)
+            - [put 函数的实现](#put)
+            - [get 函数的实现](#get)
+            - [hash 函数的实现](#hash)
+            - [resize 的实现](#resize)
+        - [小结](#)
+    - [LinkedHashMap](#linkedhashmap)
+        - [LinkedHashMap 要点](#linkedhashmap)
+        - [LinkedHashMap 源码](#linkedhashmap)
+            - [LinkedHashMap 定义](#linkedhashmap)
+    - [TreeMap](#treemap)
+        - [TreeMap 要点](#treemap)
+        - [TreeMap 源码](#treemap)
+            - [put 函数](#put)
+            - [get 函数](#get)
+        - [remove 函数](#remove)
+        - [TreeMap 示例](#treemap)
+    - [资料](#)
 
 <!-- /TOC -->
 
@@ -425,6 +439,204 @@ LinkedHashMap 继承了 HashMap 的 put 函数，本身没有实现 put 函数�
 
 ## TreeMap
 
+### TreeMap 要点
+
+TreeMap 基于红黑树实现。
+
+TreeMap 是有序的。它的排序规则是：根据 map 中的 key 的自然顺序或提供的比较器的比较顺序。
+
+TreeMap 不是并发安全的。
+
+### TreeMap 源码
+
+#### put 函数
+
+```java
+public V put(K key, V value) {
+    Entry<K,V> t = root;
+    // 如果根节点为 null，插入第一个节点
+    if (t == null) {
+        compare(key, key); // type (and possibly null) check
+
+        root = new Entry<>(key, value, null);
+        size = 1;
+        modCount++;
+        return null;
+    }
+    int cmp;
+    Entry<K,V> parent;
+    // split comparator and comparable paths
+    Comparator<? super K> cpr = comparator;
+    // 每个节点的左孩子节点的值小于它；右孩子节点的值大于它
+    // 如果有比较器，使用比较器进行比较
+    if (cpr != null) {
+        do {
+            parent = t;
+            cmp = cpr.compare(key, t.key);
+            if (cmp < 0)
+                t = t.left;
+            else if (cmp > 0)
+                t = t.right;
+            else
+                return t.setValue(value);
+        } while (t != null);
+    }
+    // 没有比较器，使用 key 的自然顺序进行比较
+    else {
+        if (key == null)
+            throw new NullPointerException();
+        @SuppressWarnings("unchecked")
+            Comparable<? super K> k = (Comparable<? super K>) key;
+        do {
+            parent = t;
+            cmp = k.compareTo(t.key);
+            if (cmp < 0)
+                t = t.left;
+            else if (cmp > 0)
+                t = t.right;
+            else
+                return t.setValue(value);
+        } while (t != null);
+    }
+    // 通过上面的遍历未找到 key 值，则新插入节点
+    Entry<K,V> e = new Entry<>(key, value, parent);
+    if (cmp < 0)
+        parent.left = e;
+    else
+        parent.right = e;
+    // 插入后，为了维持红黑树的平衡需要调整
+    fixAfterInsertion(e);
+    size++;
+    modCount++;
+    return null;
+}
+```
+
+#### get 函数
+
+```java
+public V get(Object key) {
+    Entry<K,V> p = getEntry(key);
+    return (p==null ? null : p.value);
+}
+
+final Entry<K,V> getEntry(Object key) {
+    // Offload comparator-based version for sake of performance
+    if (comparator != null)
+        return getEntryUsingComparator(key);
+    if (key == null)
+        throw new NullPointerException();
+    @SuppressWarnings("unchecked")
+        Comparable<? super K> k = (Comparable<? super K>) key;
+    Entry<K,V> p = root;
+    // 按照二叉树搜索的方式进行搜索，搜到返回
+    while (p != null) {
+        int cmp = k.compareTo(p.key);
+        if (cmp < 0)
+            p = p.left;
+        else if (cmp > 0)
+            p = p.right;
+        else
+            return p;
+    }
+    return null;
+}
+```
+
+### remove 函数
+
+```java
+public V remove(Object key) {
+    Entry<K,V> p = getEntry(key);
+    if (p == null)
+        return null;
+
+    V oldValue = p.value;
+    deleteEntry(p);
+    return oldValue;
+}
+private void deleteEntry(Entry<K,V> p) {
+    modCount++;
+    size--;
+
+    // 如果当前节点有左右孩子节点，使用后继节点替换要删除的节点
+    // If strictly internal, copy successor's element to p and then make p
+    // point to successor.
+    if (p.left != null && p.right != null) {
+        Entry<K,V> s = successor(p);
+        p.key = s.key;
+        p.value = s.value;
+        p = s;
+    } // p has 2 children
+
+    // Start fixup at replacement node, if it exists.
+    Entry<K,V> replacement = (p.left != null ? p.left : p.right);
+
+    if (replacement != null) {
+        // Link replacement to parent
+        replacement.parent = p.parent;
+        if (p.parent == null)
+            root = replacement;
+        else if (p == p.parent.left)
+            p.parent.left  = replacement;
+        else
+            p.parent.right = replacement;
+
+        // Null out links so they are OK to use by fixAfterDeletion.
+        p.left = p.right = p.parent = null;
+
+        // Fix replacement
+        if (p.color == BLACK)
+            fixAfterDeletion(replacement);
+    } else if (p.parent == null) { // return if we are the only node.
+        root = null;
+    } else { //  No children. Use self as phantom replacement and unlink.
+        if (p.color == BLACK)
+            fixAfterDeletion(p);
+
+        if (p.parent != null) {
+            if (p == p.parent.left)
+                p.parent.left = null;
+            else if (p == p.parent.right)
+                p.parent.right = null;
+            p.parent = null;
+        }
+    }
+}
+```
+
+### TreeMap 示例
+
+```java
+public class TreeMapDemo {
+
+    private static final String[] chars = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z".split(" ");
+
+    public static void main(String[] args) {
+        TreeMap<Integer, String> treeMap = new TreeMap<>();
+        for (int i = 0; i < chars.length; i++) {
+            treeMap.put(i, chars[i]);
+        }
+        System.out.println(treeMap);
+        Integer low = treeMap.firstKey();
+        Integer high = treeMap.lastKey();
+        System.out.println(low);
+        System.out.println(high);
+        Iterator<Integer> it = treeMap.keySet().iterator();
+        for (int i = 0; i <= 6; i++) {
+            if (i == 3) { low = it.next(); }
+            if (i == 6) { high = it.next(); } else { it.next(); }
+        }
+        System.out.println(low);
+        System.out.println(high);
+        System.out.println(treeMap.subMap(low, high));
+        System.out.println(treeMap.headMap(high));
+        System.out.println(treeMap.tailMap(low));
+    }
+}
+```
+
 ## 资料
 
-https://yikun.github.io/2015/04/01/Java-HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/
+* https://yikun.github.io/2015/04/01/Java-HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/
+* https://blog.csdn.net/justloveyou_/article/details/71713781
