@@ -22,8 +22,8 @@ tags:
 - [4. 默认序列化机制](#4-默认序列化机制)
 - [5. 非默认序列化机制](#5-非默认序列化机制)
     - [5.1. transient 关键字](#51-transient-关键字)
-    - [5.2. writeObject() 方法与 readObject() 方法](#52-writeobject-方法与-readobject-方法)
-    - [5.3. Externalizable 接口](#53-externalizable-接口)
+    - [5.2. Externalizable 接口](#52-externalizable-接口)
+    - [5.3. Externalizable 接口的替代方法](#53-externalizable-接口的替代方法)
     - [5.4. readResolve() 方法](#54-readresolve-方法)
 - [6. 总结](#6-总结)
 - [7. 推荐阅读](#7-推荐阅读)
@@ -233,17 +233,19 @@ name: Jack, age: null, sex: MALE
 
 从输出结果可以看出，age 字段没有被序列化。
 
-### 5.2. writeObject() 方法与 readObject() 方法
+### 5.2. Externalizable 接口
 
-对于上述已被声明为 transitive 的字段 age，除了将 transitive 关键字去掉之外，是否还有其它方法能使它再次可被序列化？
+无论是使用 transient 关键字，还是使用 writeObject()和 readObject()方法，其实都是基于 Serializable 接口的序列化。
 
-答案是有。方法之一，就是：**在可序列化类添加添加 writeObject()与 readObject() 方法，可以显示控制需要忽略的字段**。
+JDK 中提供了另一个序列化接口--`Externalizable`。
 
-示例如下所示：
+**可序列化类实现 `Externalizable` 接口之后，基于 Serializable 接口的默认序列化机制就会失效**。
+
+我们来基于 SerializeDemo02 再次做一些改动，代码如下：
 
 ```java
-public class SerializeDemo03 {
-    static class Person implements Serializable {
+public class ExternalizeDemo01 {
+    static class Person implements Externalizable {
         transient private Integer age = null;
         // 其他内容略
 
@@ -256,34 +258,33 @@ public class SerializeDemo03 {
             in.defaultReadObject();
             age = in.readInt();
         }
-        // 其他内容略
+
+        @Override
+        public void writeExternal(ObjectOutput out) throws IOException { }
+
+        @Override
+        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException { }
     }
-    // 其他内容略
+     // 其他内容略
 }
 ```
 
 输出：
 
 ```
-name: Jack, age: 30, sex: MALE
+call Person()
+name: null, age: null, sex: null
 ```
 
-在 writeObject()方法中会先调用 ObjectOutputStream 中的 defaultWriteObject()方法，该方法会执行默认的序列化机制，如 5.1 节所述，此时会忽略掉 age 字段。然后再调用 writeInt() 方法显示地将 age 字段写入到 ObjectOutputStream 中。readObject() 的作用则是针对对象的读取，其原理与 writeObject()方法相同。
+从该结果，一方面可以看出 Person 对象中任何一个字段都没有被序列化。另一方面，如果细心的话，还可以发现这此次序列化过程调用了 Person 类的无参构造方法。
 
-> 注意：writeObject()与 readObject()都是 private 方法，那么它们是如何被调用的呢？毫无疑问，是使用反射。详情可见 ObjectOutputStream 中的 writeSerialData 方法，以及 ObjectInputStream 中的 readSerialData 方法。
+* **Externalizable 继承于 Serializable，它增添了两个方法：writeExternal() 与 readExternal()。这两个方法在序列化和反序列化过程中会被自动调用，以便执行一些特殊操作**。当使用该接口时，序列化的细节需要由程序员去完成。如上所示的代码，由于 writeExternal() 与 readExternal() 方法未作任何处理，那么该序列化行为将不会保存/读取任何一个字段。这也就是为什么输出结果中所有字段的值均为空。
+* 另外，**若使用 Externalizable 进行序列化，当读取对象时，会调用被序列化类的无参构造方法去创建一个新的对象；然后再将被保存对象的字段的值分别填充到新对象中**。这就是为什么在此次序列化过程中 Person 类的无参构造方法会被调用。由于这个原因，实现 Externalizable 接口的类必须要提供一个无参的构造方法，且它的访问权限为 public。
 
-### 5.3. Externalizable 接口
-
-无论是使用 transient 关键字，还是使用 writeObject()和 readObject()方法，其实都是基于 Serializable 接口的序列化。
-
-JDK 中提供了另一个序列化接口--`Externalizable`。
-
-**可序列化类实现 `Externalizable` 接口之后，基于 Serializable 接口的默认序列化机制就会失效**。
-
-我们来基于 SerializeDemo03 再次做一些改动，代码如下：
+对上述 Person 类作进一步的修改，使其能够对 name 与 age 字段进行序列化，但要忽略掉 gender 字段，如下代码所示：
 
 ```java
-public class ExternalizeDemo01 {
+public class ExternalizeDemo02 {
     static class Person implements Externalizable {
         transient private Integer age = null;
         // 其他内容略
@@ -318,19 +319,18 @@ public class ExternalizeDemo01 {
 
 ```
 call Person()
-name: null, age: null, sex: null
+name: Jack, age: 30, sex: null
 ```
 
-从该结果，一方面可以看出 Person 对象中任何一个字段都没有被序列化。另一方面，如果细心的话，还可以发现这此次序列化过程调用了 Person 类的无参构造方法。
+### 5.3. Externalizable 接口的替代方法
 
-* **Externalizable 继承于 Serializable，当使用该接口时，序列化的细节需要由程序员去完成**。如上所示的代码，由于 writeExternal() 与 readExternal() 方法未作任何处理，那么该序列化行为将不会保存/读取任何一个字段。这也就是为什么输出结果中所有字段的值均为空。
-* 另外，**若使用 Externalizable 进行序列化，当读取对象时，会调用被序列化类的无参构造方法去创建一个新的对象；然后再将被保存对象的字段的值分别填充到新对象中**。这就是为什么在此次序列化过程中 Person 类的无参构造方法会被调用。由于这个原因，实现 Externalizable 接口的类必须要提供一个无参的构造方法，且它的访问权限为 public。
+实现 Externalizable 接口可以控制序列化和反序列化的细节。它有一个替代方法：实现 `Serializable` 接口，并添加 `writeObject(ObjectOutputStream out)` 与 `readObject(ObjectInputStream in)` 方法。序列化和反序列化过程中会自动回调这两个方法。
 
-对上述 Person 类作进一步的修改，使其能够对 name 与 age 字段进行序列化，但要忽略掉 gender 字段，如下代码所示：
+示例如下所示：
 
 ```java
-public class ExternalizeDemo02 {
-    static class Person implements Externalizable {
+public class SerializeDemo03 {
+    static class Person implements Serializable {
         transient private Integer age = null;
         // 其他内容略
 
@@ -343,23 +343,21 @@ public class ExternalizeDemo02 {
             in.defaultReadObject();
             age = in.readInt();
         }
-
-        @Override
-        public void writeExternal(ObjectOutput out) throws IOException { }
-
-        @Override
-        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException { }
+        // 其他内容略
     }
-     // 其他内容略
+    // 其他内容略
 }
 ```
 
 输出：
 
 ```
-call Person()
-name: Jack, age: 30, sex: null
+name: Jack, age: 30, sex: MALE
 ```
+
+在 writeObject()方法中会先调用 ObjectOutputStream 中的 defaultWriteObject()方法，该方法会执行默认的序列化机制，如 5.1 节所述，此时会忽略掉 age 字段。然后再调用 writeInt() 方法显示地将 age 字段写入到 ObjectOutputStream 中。readObject() 的作用则是针对对象的读取，其原理与 writeObject()方法相同。
+
+> 注意：writeObject()与 readObject()都是 private 方法，那么它们是如何被调用的呢？毫无疑问，是使用反射。详情可见 ObjectOutputStream 中的 writeSerialData 方法，以及 ObjectInputStream 中的 readSerialData 方法。
 
 ### 5.4. readResolve() 方法
 
