@@ -8,21 +8,25 @@
 
 ## [Java 基础](docs/basic)
 
-* [ ] [Java 简介]()
+* [ ] Java 简介
 * [x] [Java 开发环境配置](docs/basic/Java开发环境配置.md)
-* [ ] [Java 基础语法]()
+* [ ] Java 基础语法
 * [x] [Java 数据类型](docs/basic/Java数据类型.md)
 * [x] [Java 操作符](docs/basic/Java操作符.md)
 * [x] [Java 控制语句](docs/basic/Java控制语句.md)
-* [x] [Java 方法]()
+* [x] Java 方法
 * [x] [Java 数组](docs/basic/Java数组.md)
 * [x] [Java 枚举](docs/basic/Java枚举.md)
 * [x] [Java 异常](docs/basic/Java异常.md)
 
 ## [Java 进阶](docs/advanced)
 
-* [Java 正则](docs/advanced/Java正则.md)
-* [Java 泛型](docs/advanced/Java泛型.md)
+- [ ] [Java 正则](docs/advanced/Java正则.md)
+- [ ] [Java 泛型](docs/advanced/Java泛型.md)
+- [ ] Java 反射
+- [x] [Java 序列化](docs/advanced/Java序列化.md)
+- [ ] Java 注解
+- [ ] [Java 本地化](docs/advanced/Java本地化.md)
 
 ## [Java 并发](docs/concurrent)
 
