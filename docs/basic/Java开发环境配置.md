@@ -1,5 +1,5 @@
 ---
-title: Java 安装
+title: Java开发环境配置
 date: 2017/12/06
 categories:
 - javase
@@ -8,7 +8,7 @@ tags:
 - javase
 ---
 
-# Java 安装
+# Java 开发环境配置
 
 ## 下载
 
@@ -33,7 +33,7 @@ Linux 环境的 jdk 包，解压到本地即可。
 `CLASSPATH`：`.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;` （注意前面有个"."）
 
 `Path`：`%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;`
-
+__
 ### Linux
 
 执行 `vi /etc/profile` ，编辑环境变量文件
