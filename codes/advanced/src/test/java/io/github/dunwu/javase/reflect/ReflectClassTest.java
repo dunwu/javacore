@@ -1,7 +1,11 @@
 package io.github.dunwu.javase.reflect;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.junit.Test;
 
@@ -101,5 +105,32 @@ public class ReflectClassTest {
 
         Class c3 = Thread.State.class.getEnclosingClass();
         System.out.println(c3.getCanonicalName());
+    }
+
+    @Test
+    public void demo06() {
+        ArrayList arrayList = new ArrayList();
+        if (arrayList instanceof List) {
+            System.out.println("ArrayList is List");
+        }
+        if (List.class.isInstance(arrayList)) {
+            System.out.println("ArrayList is List");
+        }
+    }
+
+    @Test
+    public void demo07()
+        throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        Class<?> c1 = String.class;
+        Object str1 = c1.newInstance();
+        System.out.println(str1.getClass().getCanonicalName());
+
+        //获取String所对应的Class对象
+        Class<?> c2 = String.class;
+        //获取String类带一个String参数的构造器
+        Constructor constructor = c2.getConstructor(String.class);
+        //根据构造器创建实例
+        Object obj = constructor.newInstance("bbb");
+        System.out.println(obj.getClass().getCanonicalName());
     }
 }
