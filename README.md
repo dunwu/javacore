@@ -30,6 +30,8 @@
 
 ## [Java 容器](docs/container)
 
+* [x] [List](docs/container/List.md)
+
 ## [Java 并发](docs/concurrent)
 
 * [x] [第一章 并发简介](docs/concurrent/1-并发简介.md)
