@@ -1,3 +1,14 @@
+---
+title: List
+date: 2018/06/28
+categories:
+- javase
+tags:
+- java
+- javase
+- container
+---
+
 # List
 
 > `List` 是 `Collection` 的子接口，其中可以保存各个重复的内容。
@@ -23,7 +34,7 @@ public interface List<E> extends Collection<E>
 `List` 主要方法：
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/collection/list-api.png" width="400"/>
+<img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/container/list-api.png" width="400"/>
 </div>
 
 `List` 常见子类：

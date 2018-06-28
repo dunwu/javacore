@@ -31,6 +31,7 @@
 ## [Java 容器](docs/container)
 
 * [x] [List](docs/container/List.md)
+* [x] [Map](docs/container/Map.md)
 
 ## [Java 并发](docs/concurrent)
 

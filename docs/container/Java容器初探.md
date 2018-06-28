@@ -32,7 +32,7 @@ tags:
 ## Java 容器框架
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/collection/collection-structure.png" width="640"/>
+<img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/container/collection-structure.png" width="640"/>
 </div>
 
 Java 容器框架主要分为 Collection 和 Map 两种。其中，Collection 又分为 List、Set 以及 Queue。
