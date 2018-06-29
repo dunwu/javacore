@@ -29,7 +29,7 @@ tags:
 ## Queue 架构
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/container/Queue-diagrams.png" />
+<img src="https://raw.githubusercontent.com/dunwu/JavaSE/master/images/container/Queue-diagrams.png" />
 </div>
 
 ## Queue 接口

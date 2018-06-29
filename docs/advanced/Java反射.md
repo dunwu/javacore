@@ -254,9 +254,9 @@ System.out.println(constructor);
 
 ## 推荐阅读
 
-本文示例代码见：[源码](https://github.com/dunwu/javase-notes/tree/master/codes/advanced/src/main/java/io/github/dunwu/javase)
+本文示例代码见：[源码](https://github.com/dunwu/JavaSE/tree/master/codes/advanced/src/main/java/io/github/dunwu/javase)
 
-本文同步维护在：[Java 系列教程](https://github.com/dunwu/javase-notes)
+本文同步维护在：[Java 系列教程](https://github.com/dunwu/JavaSE)
 
 ## 参考资料
 

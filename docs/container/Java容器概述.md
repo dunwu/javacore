@@ -39,7 +39,7 @@ Java 中常用的存储容器就是数组和容器，二者有以下区别：
 ### 容器框架
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/container/java-container-structure.png" width="640"/>
+<img src="https://raw.githubusercontent.com/dunwu/JavaSE/master/images/container/java-container-structure.png" width="640"/>
 </div>
 
 Java 容器框架主要分为 Collection 和 Map 两种。其中，Collection 又分为 List、Set 以及 Queue。
@@ -68,7 +68,7 @@ list.add(123);
 
 如果没有泛型技术，如示例中的代码那样，容器中就可能存储任意数据类型，这是很危险的行为。
 
-> 想了解泛型技术的细节可以参考我的另一篇博文：[Java 泛型](https://github.com/dunwu/javase-notes/blob/master/docs/advanced/Java泛型.md)
+> 想了解泛型技术的细节可以参考我的另一篇博文：[Java 泛型](https://github.com/dunwu/JavaSE/blob/master/docs/advanced/Java泛型.md)
 
 ### Iterable
 
@@ -81,7 +81,7 @@ Collection 继承了 Iterable 接口。
 > 目标：提供一种方法顺序访问一个聚合对象中各个元素, 而又无须暴露该对象的内部表示。
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/oop/design-patterns/iterator-pattern.png" width="500"/>
+<img src="https://raw.githubusercontent.com/dunwu/JavaSE/master/images/oop/design-patterns/iterator-pattern.png" width="500"/>
 </div>
 
 ### Comparable 和 Comparator
@@ -127,7 +127,7 @@ fail-fast 是 Java 容器的一种错误检测机制。当多个线程对容器�
 
 为了在并发环境下安全地使用容器，Java 提供了同步容器和并发容器。
 
-> 同步容器和并发容器详情请参考：[同步容器和并发容器](https://github.com/dunwu/javase-notes/blob/master/docs/concurrent/5-同步容器和并发容器.md)
+> 同步容器和并发容器详情请参考：[同步容器和并发容器](https://github.com/dunwu/JavaSE/blob/master/docs/concurrent/5-同步容器和并发容器.md)
 
 ## 资料
 

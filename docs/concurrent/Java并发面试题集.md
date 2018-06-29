@@ -121,7 +121,7 @@
 线程状态切换如下图所示：
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/thread-state.png" alt="thread-states">
+  <img src="https://raw.githubusercontent.com/dunwu/JavaSE/master/images/concurrent/thread-state.png" alt="thread-states">
 </p>
 
 > 参考阅读：[Java Thread Methods and Thread States](https://www.w3resource.com/java-tutorial/java-threadclass-methods-and-threadstates.php)
@@ -304,7 +304,7 @@ ThreadLocal 用于创建线程的本地变量，我们知道一个对象的所�
   * 对于一个对象的成员变量，不管它是原始类型还是包装类型，都会被存储到堆区。
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/dunwu/javase-notes/master/images/concurrent/jmm-model.png" alt="thread-states">
+  <img src="https://raw.githubusercontent.com/dunwu/JavaSE/master/images/concurrent/jmm-model.png" alt="thread-states">
 </p>
 
 > 参考阅读：[全面理解 Java 内存模型](https://blog.csdn.net/suifeng3051/article/details/52611310)
