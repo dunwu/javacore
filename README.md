@@ -33,6 +33,7 @@
 * [x] [List](docs/container/List.md)
 * [x] [Map](docs/container/Map.md)
 * [x] [Set](docs/container/Set.md)
+* [x] [Queue](docs/container/Queue.md)
 
 ## [Java 并发](docs/concurrent)
 
