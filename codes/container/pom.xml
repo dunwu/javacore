@@ -5,12 +5,11 @@
 
   <parent>
     <groupId>io.github.dunwu</groupId>
-    <artifactId>javase-notes</artifactId>
+    <artifactId>javase</artifactId>
     <version>1.0.1</version>
   </parent>
   <artifactId>javase-container</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
-  <description>Java容器示例</description>
 
 </project>

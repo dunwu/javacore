@@ -9,7 +9,7 @@
 
   <!-- MAVEN COORDINATE BEGIN -->
   <groupId>io.github.dunwu</groupId>
-  <artifactId>javase-notes</artifactId>
+  <artifactId>javase</artifactId>
   <version>1.0.1</version>
   <packaging>pom</packaging>
   <!-- MAVEN COORDINATE END -->
@@ -55,7 +55,7 @@
   <!-- [Part 3] PROJECT INFO BEGIN -->
   <name>${project.artifactId}</name>
   <description>spring 学习笔记</description>
-  <url>https://github.com/dunwu/javase-notes</url>
+  <url>https://github.com/dunwu/JavaSE</url>
   <inceptionYear>2016-2017</inceptionYear>
   <licenses>
     <license>
@@ -78,12 +78,12 @@
   <!-- [Part 4] ENVIRONMENT SETTINGS BEGIN -->
   <issueManagement>
     <system>Github</system>
-    <url>https://github.com/dunwu/javase-notes/issues</url>
+    <url>https://github.com/dunwu/JavaSE/issues</url>
   </issueManagement>
   <scm>
-    <url>https://github.com/dunwu/javase-notes</url>
-    <connection>scm:git:git://github.com/dunwu/javase-notes.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com:dunwu/javase-notes.git</developerConnection>
+    <url>https://github.com/dunwu/JavaSE</url>
+    <connection>scm:git:git://github.com/dunwu/JavaSE.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:dunwu/JavaSE.git</developerConnection>
   </scm>
   <!-- [Part 4] ENVIRONMENT SETTINGS END -->
 
