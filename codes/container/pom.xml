@@ -5,10 +5,10 @@
 
   <parent>
     <groupId>io.github.dunwu</groupId>
-    <artifactId>javase</artifactId>
+    <artifactId>javacore</artifactId>
     <version>1.0.1</version>
   </parent>
-  <artifactId>javase-container</artifactId>
+  <artifactId>javacore-container</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
 
