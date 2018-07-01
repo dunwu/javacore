@@ -2,9 +2,9 @@
 title: Java 枚举
 date: 2016/11/24
 categories:
-- javase
+- javacore
 tags:
-- javase
+- javacore
 - basics
 ---
 

@@ -2,10 +2,10 @@
 title: Java 本地化
 date: 2016/01/20
 categories:
-- javase
+- javacore
 tags:
 - java
-- javase
+- javacore
 - advanced
 ---
 

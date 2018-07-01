@@ -2,9 +2,9 @@
 title: Java 数组
 date: 2014/10/14
 categories:
-- javase
+- javacore
 tags:
-- javase
+- javacore
 - basics
 ---
 

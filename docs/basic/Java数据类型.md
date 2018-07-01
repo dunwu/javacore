@@ -2,9 +2,9 @@
 title: Java 数据类型
 date: 2017/11/14
 categories:
-- javase
+- javacore
 tags:
-- javase
+- javacore
 - basics
 ---
 

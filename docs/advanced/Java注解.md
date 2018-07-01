@@ -68,7 +68,7 @@ Annotation（注解）就是 Java 提供了一种元程序中的元素关联任�
 
 注解的语法比较简单，除了@符号的使用外，他基本与 Java 固有的语法一致。
 
-JavaSE 中内置三个标准注解，定义在 `java.lang` 中：
+JavaCore 中内置三个标准注解，定义在 `java.lang` 中：
 
 1.  **@Override**：用于修饰此方法覆盖了父类的方法;
 2.  **@Deprecated**：用于修饰已经过时的方法;

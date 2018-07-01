@@ -2,9 +2,9 @@
 title: 泛型
 date: 2018/06/02
 categories:
-- javase
+- javacore
 tags:
-- javase
+- javacore
 ---
 
 # 泛型

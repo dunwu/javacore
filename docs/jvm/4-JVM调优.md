@@ -2,10 +2,10 @@
 title: JVM 调优
 date: 2018/05/29
 categories:
-- javase
+- javacore
 tags:
 - java
-- javase
+- javacore
 - jvm
 ---
 

@@ -2,9 +2,9 @@
 title: JDK8 快速指南
 date: 2017/11/14
 categories:
-- javase
+- javacore
 tags:
-- javase
+- javacore
 - jdk8
 ---
 

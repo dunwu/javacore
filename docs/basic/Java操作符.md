@@ -2,9 +2,9 @@
 title: Java 操作符
 date: 2015/02/15
 categories:
-- javase
+- javacore
 tags:
-- javase
+- javacore
 - basics
 ---
 

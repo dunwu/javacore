@@ -2,10 +2,10 @@
 title: Java 容器之 Set
 date: 2018/06/28
 categories:
-- javase
+- javacore
 tags:
 - java
-- javase
+- javacore
 - container
 ---
 
@@ -29,7 +29,7 @@ tags:
 ## Set 架构
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaSE/master/images/container/Set-diagrams.png" width="400" />
+<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/container/Set-diagrams.png" width="400" />
 </div>
 
 - Set 继承了 Collection 的接口。实际上 Set 就是 Collection，只是行为略有不同：Set 集合不允许有重复元素。

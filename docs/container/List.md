@@ -2,10 +2,10 @@
 title: List
 date: 2018/06/28
 categories:
-- javase
+- javacore
 tags:
 - java
-- javase
+- javacore
 - container
 ---
 
@@ -34,7 +34,7 @@ public interface List<E> extends Collection<E>
 `List` 主要方法：
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaSE/master/images/container/list-api.png" width="400"/>
+<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/container/list-api.png" width="400"/>
 </div>
 
 `List` 常见子类：

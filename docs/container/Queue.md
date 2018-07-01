@@ -2,10 +2,10 @@
 title: Java 容器之 Queue
 date: 2018/06/29
 categories:
-- javase
+- javacore
 tags:
 - java
-- javase
+- javacore
 - container
 ---
 
@@ -29,7 +29,7 @@ tags:
 ## Queue 架构
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaSE/master/images/container/Queue-diagrams.png" />
+<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/container/Queue-diagrams.png" />
 </div>
 
 ## Queue 接口

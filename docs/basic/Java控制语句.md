@@ -2,9 +2,9 @@
 title: Java 控制语句
 date: 2015/05/28
 categories:
-- javase
+- javacore
 tags:
-- javase
+- javacore
 - basics
 ---
 

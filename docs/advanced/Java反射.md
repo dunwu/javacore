@@ -2,10 +2,10 @@
 title: Java 反射
 date: 2018/06/05
 categories:
-- javase
+- javacore
 tags:
 - java
-- javase
+- javacore
 - advanced
 ---
 
@@ -88,7 +88,7 @@ java.lang.reflect 包中的类都没有 public 构造方法。
 （1）**使用 Class 类的 `forName` 静态方法**，示例：
 
 ```java
-Class c1 = Class.forName("io.github.dunwu.javase.reflect.ReflectClassTest");
+Class c1 = Class.forName("io.github.dunwu.javacore.reflect.ReflectClassTest");
 Class c2 = Class.forName("[D");
 Class c3 = Class.forName("[[Ljava.lang.String;");
 ```
@@ -254,9 +254,9 @@ System.out.println(constructor);
 
 ## 推荐阅读
 
-本文示例代码见：[源码](https://github.com/dunwu/JavaSE/tree/master/codes/advanced/src/main/java/io/github/dunwu/javase)
+本文示例代码见：[源码](https://github.com/dunwu/JavaCore/tree/master/codes/advanced/src/main/java/io/github/dunwu/javase)
 
-本文同步维护在：[Java 系列教程](https://github.com/dunwu/JavaSE)
+本文同步维护在：[Java 系列教程](https://github.com/dunwu/JavaCore)
 
 ## 参考资料
 

@@ -2,9 +2,9 @@
 title: Java 异常
 date: 2015/02/15
 categories:
-- javase
+- javacore
 tags:
-- javase
+- javacore
 - basics
 ---
 

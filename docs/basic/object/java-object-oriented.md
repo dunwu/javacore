@@ -2,9 +2,9 @@
 title: Java 面向对象
 date: 2017/11/14
 categories:
-- javase
+- javacore
 tags:
-- javase
+- javacore
 - basics
 ---
 

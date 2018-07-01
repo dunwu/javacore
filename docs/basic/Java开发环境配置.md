@@ -2,10 +2,10 @@
 title: Java开发环境配置
 date: 2017/12/06
 categories:
-- javase
+- javacore
 tags:
 - java
-- javase
+- javacore
 ---
 
 # Java 开发环境配置

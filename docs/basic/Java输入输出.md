@@ -2,10 +2,10 @@
 title: Java IO
 date: 2018/07/01
 categories:
-- javase
+- javacore
 tags:
 - java
-- javase
+- javacore
 - basic
 - io
 ---

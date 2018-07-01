@@ -1,4 +1,4 @@
-# JavaSE - 进阶篇
+# JavaCore - 进阶篇
 
 ## 目录
 

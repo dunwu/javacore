@@ -5,7 +5,7 @@ categories:
 - java
 tags:
 - java
-- javase
+- javacore
 - concurrent
 ---
 
