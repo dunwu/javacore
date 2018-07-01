@@ -12,15 +12,17 @@ tags:
 
 # Java IO
 
-<!-- TOC depthFrom:2 depthTo:3 -->
+<!-- TOC depthFrom:2 depthTo:2 -->
 
-- [File 和 RandomAccessFile](#file-和-randomaccessfile)
-    - [File 类](#file-类)
-    - [RandomAccessFile 类](#randomaccessfile-类)
+- [File](#file)
+- [RandomAccessFile](#randomaccessfile)
+- [System](#system)
+- [Scanner](#scanner)
 - [字符流和字节流](#字符流和字节流)
-    - [字符流和字节流的区别](#字符流和字节流的区别)
 - [FileReader 和 FileWriter](#filereader-和-filewriter)
 - [InputStreamReader 和 OutputStreamWriter](#inputstreamreader-和-outputstreamwriter)
+- [BufferedReader](#bufferedreader)
+- [PrintStream](#printstream)
 - [FileInputStream 和 FileOutputStream](#fileinputstream-和-fileoutputstream)
 - [ByteArrayInputStream 和 ByteArrayOutputStream](#bytearrayinputstream-和-bytearrayoutputstream)
 - [PipedInputStream 和 PipedOutputStream](#pipedinputstream-和-pipedoutputstream)
@@ -30,15 +32,13 @@ tags:
 
 <!-- /TOC -->
 
-## File 和 RandomAccessFile
-
-### File 类
+## File
 
 `File` 类是 `java.io` 包中唯一对文件本身进行操作的类。它可以对文件、目录进行增删查操作。
 
-#### 常用方法
+### 常用方法
 
-##### createNewFille
+#### createNewFille
 
 可以使用 `createNewFille()` 方法创建一个新文件。
 
@@ -57,7 +57,7 @@ File f = new File(filename);
 boolean flag = f.createNewFile();
 ```
 
-##### mkdir
+#### mkdir
 
 可以使用 `mkdir()` 来创建文件夹，但是如果要创建的目录的父路径不存在，则无法创建成功。
 
@@ -70,7 +70,7 @@ File f = new File(filename);
 boolean flag = f.mkdir();
 ```
 
-##### delete
+#### delete
 
 可以使用 `delete()` 来删除文件或目录。
 
@@ -83,7 +83,7 @@ File f = new File(filename);
 boolean flag = f.delete();
 ```
 
-##### list 和 listFiles
+#### list 和 listFiles
 
 `File` 中给出了两种列出文件夹内容的方法：
 
@@ -104,7 +104,7 @@ File f = new File(filename);
 File files[] = f.listFiles();
 ```
 
-### RandomAccessFile 类
+## RandomAccessFile
 
 > 注：`RandomAccessFile` 类虽然可以实现对文件内容的读写操作，但是比较复杂。所以一般操作文件内容往往会使用字节流或字符流方式。
 
@@ -114,7 +114,7 @@ File files[] = f.listFiles();
 
 文件中记录的大小不一定都相同，只要能够确定哪些记录有多大以及它们在文件中的位置即可。
 
-#### 写操作
+### 写操作
 
 当用 `rw` 方式声明 `RandomAccessFile` 对象时，如果要写入的文件不存在，系统将自行创建。
 
@@ -148,7 +148,7 @@ public class RandomAccessFileDemo01 {
 }
 ```
 
-#### 读操作
+### 读操作
 
 读取是直接使用 `r` 的模式即可，以只读的方式打开文件。
 
@@ -188,6 +188,116 @@ public class RandomAccessFileDemo02 {
         age = rdf.readInt();    // 读取数字
         System.out.println("第三个人的信息 --> 姓名：" + name + "；年龄：" + age);
         rdf.close();                // 关闭
+    }
+}
+```
+
+## System
+
+System 中提供了三个常用于 IO 的静态成员：
+
+- System.out
+- System.err
+- System.in
+
+示例：重定向 System.out 输出流
+
+```java
+import java.io.*;
+public class SystemOutDemo {
+
+    public static void main(String args[]) throws Exception {
+        OutputStream out = new FileOutputStream("d:\\test.txt");
+        PrintStream ps = new PrintStream(out);
+        System.setOut(ps);
+        System.out.println("人生若只如初见，何事秋风悲画扇");
+        ps.close();
+        out.close();
+    }
+}
+```
+
+示例：重定向 System.err 输出流
+
+```java
+public class SystemErrDemo {
+
+    public static void main(String args[]) throws IOException {
+        OutputStream bos = new ByteArrayOutputStream();        // 实例化
+        PrintStream ps = new PrintStream(bos);        // 实例化
+        System.setErr(ps);    // 输出重定向
+        System.err.print("此处有误");
+        System.out.println(bos);    // 输出内存中的数据
+    }
+}
+```
+
+示例：接受控制台输入信息
+
+```java
+import java.io.*;
+public class SystemInDemo {
+
+    public static void main(String args[]) throws IOException {
+        InputStream input = System.in;
+        StringBuffer buf = new StringBuffer();
+        System.out.print("请输入内容：");
+        int temp = 0;
+        while ((temp = input.read()) != -1) {
+            char c = (char) temp;
+            if (c == '\n') {
+                break;
+            }
+            buf.append(c);
+        }
+        System.out.println("输入的内容为：" + buf);
+        input.close();
+    }
+}
+```
+
+## Scanner
+
+Scanner 可以完成输入数据操作，并对数据进行验证。
+
+示例：
+
+```java
+import java.io.*;
+public class ScannerDemo {
+
+    public static void main(String args[]) {
+        Scanner scan = new Scanner(System.in);    // 从键盘接收数据
+        int i = 0;
+        float f = 0.0f;
+        System.out.print("输入整数：");
+        if (scan.hasNextInt()) {    // 判断输入的是否是整数
+            i = scan.nextInt();    // 接收整数
+            System.out.println("整数数据：" + i);
+        } else {
+            System.out.println("输入的不是整数！");
+        }
+
+        System.out.print("输入小数：");
+        if (scan.hasNextFloat()) {    // 判断输入的是否是小数
+            f = scan.nextFloat();    // 接收小数
+            System.out.println("小数数据：" + f);
+        } else {
+            System.out.println("输入的不是小数！");
+        }
+
+        Date date = null;
+        String str = null;
+        System.out.print("输入日期（yyyy-MM-dd）：");
+        if (scan.hasNext("^\\d{4}-\\d{2}-\\d{2}$")) {    // 判断
+            str = scan.next("^\\d{4}-\\d{2}-\\d{2}$");    // 接收
+            try {
+                date = new SimpleDateFormat("yyyy-MM-dd").parse(str);
+            } catch (Exception e) {}
+        } else {
+            System.out.println("输入的日期格式错误！");
+        }
+        System.out.println(date);
     }
 }
 ```
@@ -303,6 +413,60 @@ public class InputStreamReaderDemo {
         int len = reader.read(c);
         reader.close();
         System.out.println(new String(c, 0, len));
+    }
+}
+```
+
+## BufferedReader
+
+BufferedReader 类用于从缓冲区中读取内容，所有的输入字节数据都放在缓冲区中。
+
+示例：
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class BufferedReaderDemo {
+
+    public static void main(String args[]) throws IOException {
+        BufferedReader buf = new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+            System.out.print("请输入内容：");
+            String str = buf.readLine();
+            if (str.equalsIgnoreCase("exit")) {
+                System.out.print("退出");
+                break;
+            }
+            System.out.println("输入的内容为：" + str);
+        }
+    }
+}
+```
+
+## PrintStream
+
+PrintStream 提供了非常方便的打印功能。
+
+事实上，我们常用的 System 中提供的静态成员 System.out 和 System.err 就是 PrintStream 对象。
+
+示例：
+
+```java
+import java.io.*;
+
+public class PrintStreamDemo {
+
+    public static void main(String arg[]) throws Exception {
+        final String filepath = "d:\\test.txt";
+        // 如果现在是使用 FileOuputStream 实例化，意味着所有的数据都会输出到文件中
+        OutputStream os = new FileOutputStream(new File(filepath));
+        PrintStream ps = new PrintStream(os);
+        ps.print("Hello ");
+        ps.println("World!!!");
+        ps.printf("姓名：%s；年龄：%d", "张三", 18);
+        ps.close();
     }
 }
 ```

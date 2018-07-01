@@ -50,8 +50,6 @@
 * [x] [第九章 线程池](docs/concurrent/9-线程池.md)
 * [x] [Java 并发面试题集](docs/concurrent/Java并发面试题集.md)
 
-## Java IO
-
 ## [Java 虚拟机](docs/jvm)
 
 * [第一章 运行时数据区域](docs/jvm/1-运行时数据区域.md)
