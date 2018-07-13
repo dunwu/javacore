@@ -13,41 +13,42 @@ tags:
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [JVM 调优概述](#jvm-调优概述)
-    - [性能定义](#性能定义)
-    - [调优原则](#调优原则)
-    - [GC 优化的过程](#gc-优化的过程)
-- [命令](#命令)
-    - [jmap](#jmap)
-    - [jstack](#jstack)
-    - [jps](#jps)
-    - [jstat](#jstat)
-    - [jhat](#jhat)
-    - [jinfo](#jinfo)
-- [HotSpot VM 参数](#hotspot-vm-参数)
-    - [JVM 内存配置](#jvm-内存配置)
-    - [GC 类型配置](#gc-类型配置)
-    - [辅助配置](#辅助配置)
-- [典型配置](#典型配置)
-    - [堆大小设置](#堆大小设置)
-    - [回收器选择](#回收器选择)
-- [JVM 实战](#jvm-实战)
-    - [分析 GC 日志](#分析-gc-日志)
-    - [1. 获取 GC 日志](#1-获取-gc-日志)
-    - [2. 如何分析 GC 日志](#2-如何分析-gc-日志)
-- [资料](#资料)
+- [1. JVM 调优概述](#1-jvm-调优概述)
+    - [1.1. 性能定义](#11-性能定义)
+    - [1.2. 调优原则](#12-调优原则)
+    - [1.3. GC 优化的过程](#13-gc-优化的过程)
+- [2. 命令](#2-命令)
+    - [2.1. jmap](#21-jmap)
+    - [2.2. jstack](#22-jstack)
+    - [2.3. jps](#23-jps)
+    - [2.4. jstat](#24-jstat)
+    - [2.5. jhat](#25-jhat)
+    - [2.6. jinfo](#26-jinfo)
+- [3. HotSpot VM 参数](#3-hotspot-vm-参数)
+    - [3.1. JVM 内存配置](#31-jvm-内存配置)
+    - [3.2. GC 类型配置](#32-gc-类型配置)
+    - [3.3. 辅助配置](#33-辅助配置)
+- [4. 典型配置](#4-典型配置)
+    - [4.1. 堆大小设置](#41-堆大小设置)
+    - [4.2. 回收器选择](#42-回收器选择)
+- [5. JVM 实战](#5-jvm-实战)
+    - [5.1. 分析 GC 日志](#51-分析-gc-日志)
+    - [5.2. 获取 GC 日志](#52-获取-gc-日志)
+    - [5.3. 如何分析 GC 日志](#53-如何分析-gc-日志)
+    - [5.4. OutOfMemory(OOM)分析](#54-outofmemoryoom分析)
+- [6. 资料](#6-资料)
 
 <!-- /TOC -->
 
-## JVM 调优概述
+## 1. JVM 调优概述
 
-### 性能定义
+### 1.1. 性能定义
 
 - 吞吐量 - 指不考虑 GC 引起的停顿时间或内存消耗，垃圾收集器能支撑应用达到的最高性能指标。
 - 延迟 - 其度量标准是缩短由于垃圾啊收集引起的停顿时间或者完全消除因垃圾收集所引起的停顿，避免应用运行时发生抖动。
 - 内存占用 - 垃圾收集器流畅运行所需要的内存数量。
 
-### 调优原则
+### 1.2. 调优原则
 
 GC 优化的两个目标：
 
@@ -83,7 +84,7 @@ GC 优化时最常用的参数是`-Xms`,`-Xmx`和`-XX:NewRatio`。`-Xms`和`-Xmx
 
 有些人可能会问**如何设置永久代内存大小**，你可以用`-XX:PermSize`和`-XX:MaxPermSize`参数来进行设置，但是要记住，只有当出现`OutOfMemoryError`错误时你才需要去设置永久代内存。
 
-### GC 优化的过程
+### 1.3. GC 优化的过程
 
 GC 优化的过程和大多数常见的提升性能的过程相似，下面是笔者使用的流程：
 
@@ -117,9 +118,9 @@ GC 优化的过程和大多数常见的提升性能的过程相似，下面是�
 
 在下面的章节中，你将会看到上述每一步所做的具体工作。
 
-## 命令
+## 2. 命令
 
-### jmap
+### 2.1. jmap
 
 jmap 即 JVM Memory Map。
 
@@ -144,7 +145,7 @@ option 参数：
 - permstat - to print permanent generation statistics
 - F - 当-dump 没有响应时，强制生成 dump 快照
 
-示例：
+#### 示例：jmap -dump PID 生成堆快照
 
 dump 堆到文件，format 指定输出格式，live 指明是活着的对象，file 指定文件名
 
@@ -156,7 +157,63 @@ Heap dump file created
 
 dump.hprof 这个后缀是为了后续可以直接用 MAT(Memory Anlysis Tool)打开。
 
-### jstack
+#### 示例：jmap -heap 查看指定进程的堆信息
+
+注意：使用 CMS GC 情况下，jmap -heap 的执行有可能会导致 java 进程挂起。
+
+```java
+jmap -heap PID
+[root@chances bin]# ./jmap -heap 12379
+Attaching to process ID 12379, please wait...
+Debugger attached successfully.
+Server compiler detected.
+JVM version is 17.0-b16
+
+using thread-local object allocation.
+Parallel GC with 6 thread(s)
+
+Heap Configuration:
+   MinHeapFreeRatio = 40
+   MaxHeapFreeRatio = 70
+   MaxHeapSize      = 83886080 (80.0MB)
+   NewSize          = 1310720 (1.25MB)
+   MaxNewSize       = 17592186044415 MB
+   OldSize          = 5439488 (5.1875MB)
+   NewRatio         = 2
+   SurvivorRatio    = 8
+   PermSize         = 20971520 (20.0MB)
+   MaxPermSize      = 88080384 (84.0MB)
+
+Heap Usage:
+PS Young Generation
+Eden Space:
+   capacity = 9306112 (8.875MB)
+   used     = 5375360 (5.1263427734375MB)
+   free     = 3930752 (3.7486572265625MB)
+   57.761608714788736% used
+From Space:
+   capacity = 9306112 (8.875MB)
+   used     = 3425240 (3.2665634155273438MB)
+   free     = 5880872 (5.608436584472656MB)
+   36.80634834397007% used
+To Space:
+   capacity = 9306112 (8.875MB)
+   used     = 0 (0.0MB)
+   free     = 9306112 (8.875MB)
+   0.0% used
+PS Old Generation
+   capacity = 55967744 (53.375MB)
+   used     = 48354640 (46.11457824707031MB)
+   free     = 7613104 (7.2604217529296875MB)
+   86.39733629427693% used
+PS Perm Generation
+   capacity = 62062592 (59.1875MB)
+   used     = 60243112 (57.452308654785156MB)
+   free     = 1819480 (1.7351913452148438MB)
+   97.06831451706046% used
+```
+
+### 2.2. jstack
 
 **jstack 用于生成 java 虚拟机当前时刻的线程快照。**
 
@@ -176,7 +233,7 @@ option 参数：
 - `-l` - 除堆栈外，显示关于锁的附加信息
 - `-m` - 如果调用到本地方法的话，可以显示 C/C++的堆栈
 
-### jps
+### 2.3. jps
 
 jps(JVM Process Status Tool)，显示指定系统内所有的 HotSpot 虚拟机进程。
 
@@ -202,7 +259,7 @@ $ jps -l -m
 25816 sun.tools.jps.Jps -l -m
 ```
 
-### jstat
+### 2.4. jstat
 
 jstat(JVM statistics Monitoring)，是用于监视虚拟机运行时状态信息的命令，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT 编译等运行数据。
 
@@ -219,7 +276,7 @@ jstat [option] LVMID [interval] [count]
 - [interval] - 连续输出的时间间隔
 - [count] - 连续输出的次数
 
-### jhat
+### 2.5. jhat
 
 jhat(JVM Heap Analysis Tool)，是与 jmap 搭配使用，用来分析 jmap 生成的 dump，jhat 内置了一个微型的 HTTP/HTML 服务器，生成 dump 的分析结果后，可以在浏览器中查看。
 
@@ -231,7 +288,7 @@ jhat(JVM Heap Analysis Tool)，是与 jmap 搭配使用，用来分析 jmap 生�
 jhat [dumpfile]
 ```
 
-### jinfo
+### 2.6. jinfo
 
 jinfo(JVM Configuration info)，用于实时查看和调整虚拟机运行参数。
 
@@ -249,11 +306,11 @@ option 参数：
 > - -flags : 不需要 args 参数，输出所有 JVM 参数的值
 > - -sysprops : 输出系统属性，等同于 System.getProperties()
 
-## HotSpot VM 参数
+## 3. HotSpot VM 参数
 
 > 详细参数说明请参考官方文档：[Java HotSpot VM Options](http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html)，这里仅列举常用参数。
 
-### JVM 内存配置
+### 3.1. JVM 内存配置
 
 | 配置              | 描述                 |
 | ----------------- | -------------------- |
@@ -265,7 +322,7 @@ option 参数：
 | `-XX:PermSize`    | 永久代空间的初始值。 |
 | `-XX:MaxPermSize` | 永久代空间的最大值。 |
 
-### GC 类型配置
+### 3.2. GC 类型配置
 
 | 配置                    | 描述                                      |
 | ----------------------- | ----------------------------------------- |
@@ -276,7 +333,7 @@ option 参数：
 | -XX:ParallelCMSThreads= | 并发标记扫描垃圾回收器 = 为使用的线程数量 |
 | -XX:+UseG1GC            | G1 垃圾回收器                             |
 
-### 辅助配置
+### 3.3. 辅助配置
 
 | 配置                              | 描述                     |
 | --------------------------------- | ------------------------ |
@@ -284,9 +341,9 @@ option 参数：
 | `-Xloggc:<filename>`              | 指定 GC 日志文件名       |
 | `-XX:+HeapDumpOnOutOfMemoryError` | 内存溢出时输出堆快照文件 |
 
-## 典型配置
+## 4. 典型配置
 
-### 堆大小设置
+### 4.1. 堆大小设置
 
 **年轻代的设置很关键。**
 
@@ -303,15 +360,15 @@ JVM 中最大堆大小有三方面限制：
 - 持久代一般固定大小为 64m。使用 `-XX:PermSize` 设置。
 - 官方推荐年轻代占整个堆的 3/8。使用 `-Xmn` 设置。
 
-### 回收器选择
+### 4.2. 回收器选择
 
 JVM 给了三种选择：串行收集器、并行收集器、并发收集器。
 
-## JVM 实战
+## 5. JVM 实战
 
-### 分析 GC 日志
+### 5.1. 分析 GC 日志
 
-### 1. 获取 GC 日志
+### 5.2. 获取 GC 日志
 
 获取 GC 日志有两种方式：
 
@@ -358,7 +415,7 @@ JAVA_OPTS="-server -Xms2000m -Xmx2000m -Xmn800m -XX:PermSize=64m -XX:MaxPermSize
   指定 rmi 调用时 gc 的时间间隔
 - `-XX:+UseConcMarkSweepGC -XX:MaxTenuringThreshold=15` 采用并发 gc 方式，经过 15 次 minor gc 后进入年老代
 
-### 2. 如何分析 GC 日志
+### 5.3. 如何分析 GC 日志
 
 Young GC 回收日志:
 
@@ -380,7 +437,164 @@ Young GC 日志:![img](http://ityouknow.com/assets/images/2017/jvm/Young%20GC.pn
 
 Full GC 日志:![img](http://ityouknow.com/assets/images/2017/jvm/Full%20GC.png)
 
-## 资料
+### 5.4. OutOfMemory(OOM)分析
+
+OutOfMemory ，即内存溢出，是一个常见的 JVM 问题。那么分析 OOM 的思路是什么呢？
+
+首先，要知道有三种 OutOfMemoryError：
+
+- **OutOfMemoryError:Java heap space** - 堆空间溢出
+- **OutOfMemoryError:PermGen space** - 方法区和运行时常量池溢出
+- **OutOfMemoryError:unable to create new native thread** - 线程过多
+
+#### OutOfMemoryError:PermGen space
+
+OutOfMemoryError:PermGen space 表示方法区和运行时常量池溢出。
+
+原因：程序中使用了大量的 jar 或 class，使 java 虚拟机装载类的空间不够，与永久代空间有关。
+
+##### 解决方案
+
+（1）扩大永久代空间
+
+- JDK7 以前使用 `-XX:PermSize` 和 `-XX:MaxPermSize` 来控制永久代大小。
+- JDK8 以后把原本放在永久代的字符串常量池移出, 放在 Java 堆中(元空间 Metaspace)中，元数据并不在虚拟机中，使用的是本地的内存。使用 `-XX:MetaspaceSize` 和 `-XX:MaxMetaspaceSize` 控制元空间大小。
+
+> 注意：`-XX:PermSize` 一般设为 64M
+
+（2）清理应用程序中 `WEB-INF/lib` 下的 jar，用不上的 jar 删除掉，多个应用公共的 jar 移动到 Tomcat 的 lib 目录，减少重复加载。
+
+#### OutOfMemoryError:Java heap space
+
+OutOfMemoryError:Java heap space 表示堆空间溢出。
+
+原因：JVM 分配给堆内存的空间已经用满了。
+
+##### 问题定位
+
+（1）使用 jmap 或 -XX:+HeapDumpOnOutOfMemoryError 获取堆快照。
+（2）使用内存分析工具（visualvm、mat、jProfile 等）对堆快照文件进行分析。
+（3）根据分析图，重点是确认内存中的对象是否是必要的，分清究竟是是内存泄漏（Memory Leak）还是内存溢出（Memory Overflow）。
+
+###### 内存泄露
+
+内存泄漏是指由于疏忽或错误造成程序未能释放已经不再使用的内存的情况。
+
+内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，失去了对该段内存的控制，因而造成了内存的浪费。
+
+内存泄漏随着被执行的次数越多-最终会导致内存溢出。
+
+而因程序死循环导致的不断创建对象-只要被执行到就会产生内存溢出。
+
+内存泄漏常见几个情况：
+
+- 静态集合类
+  - 声明为静态（static）的 HashMap、Vector 等集合
+  - 通俗来讲 A 中有 B，当前只把 B 设置为空，A 没有设置为空，回收时 B 无法回收-因被 A 引用。
+- 监听器
+  - 监听器被注册后释放对象时没有删除监听器
+- 物理连接
+  - DataSource.getConnection()建立链接，必须通过 close()关闭链接
+- 内部类和外部模块等的引用
+  - 发现它的方式同内存溢出，可再加个实时观察
+  - jstat -gcutil 7362 2500 70
+
+重点关注：
+
+- FGC — 从应用程序启动到采样时发生 Full GC 的次数。
+- FGCT– 从应用程序启动到采样时 Full GC 所用的时间（单位秒）。
+- FGC 次数越多，FGCT 所需时间越多-可非常有可能存在内存泄漏。
+
+##### 解决方案
+
+（1）检查程序，看是否有死循环或不必要地重复创建大量对象。有则改之。
+
+下面是一个重复创建内存的示例：
+
+```java
+public class OOM {
+    public static void main(String[] args) {
+        Integer sum1=300000;
+        Integer sum2=400000;
+        OOM oom = new OOM();
+        System.out.println("往ArrayList中加入30w内容");
+        oom.javaHeapSpace(sum1);
+        oom.memoryTotal();
+        System.out.println("往ArrayList中加入40w内容");
+        oom.javaHeapSpace(sum2);
+        oom.memoryTotal();
+    }
+    public void javaHeapSpace(Integer sum){
+        Random random = new Random();  
+        ArrayList openList = new ArrayList();
+        for(int i=0;i<sum;i++){
+            String charOrNum = String.valueOf(random.nextInt(10));
+            openList.add(charOrNum);
+        }  
+    }
+    public void memoryTotal(){
+        Runtime run = Runtime.getRuntime();
+        long max = run.maxMemory();
+        long total = run.totalMemory();
+        long free = run.freeMemory();
+        long usable = max - total + free;
+        System.out.println("最大内存 = " + max);
+        System.out.println("已分配内存 = " + total);
+        System.out.println("已分配内存中的剩余空间 = " + free);
+        System.out.println("最大可用内存 = " + usable);
+    }
+}
+```
+
+执行结果：
+
+```
+往ArrayList中加入30w内容
+最大内存 = 20447232
+已分配内存 = 20447232
+已分配内存中的剩余空间 = 4032576
+最大可用内存 = 4032576
+往ArrayList中加入40w内容
+Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+    at java.util.Arrays.copyOf(Arrays.java:2245)
+    at java.util.Arrays.copyOf(Arrays.java:2219)
+    at java.util.ArrayList.grow(ArrayList.java:242)
+    at java.util.ArrayList.ensureExplicitCapacity(ArrayList.java:216)
+    at java.util.ArrayList.ensureCapacityInternal(ArrayList.java:208)
+    at java.util.ArrayList.add(ArrayList.java:440)
+    at pers.qingqian.study.seven.OOM.javaHeapSpace(OOM.java:36)
+    at pers.qingqian.study.seven.OOM.main(OOM.java:26)
+```
+
+（2）扩大堆内存空间
+
+使用 `-Xms` 和 `-Xmx` 来控制堆内存空间大小。
+
+#### OutOfMemoryError：unable to create new native thread
+
+原因：线程过多
+
+那么能创建多少线程呢？这里有一个公式：
+
+```
+(MaxProcessMemory - JVMMemory - ReservedOsMemory) / (ThreadStackSize) = Number of threads  
+MaxProcessMemory 指的是一个进程的最大内存  
+JVMMemory         JVM内存  
+ReservedOsMemory  保留的操作系统内存  
+ThreadStackSize      线程栈的大小
+```
+
+当发起一个线程的创建时，虚拟机会在 JVM 内存创建一个 Thread 对象同时创建一个操作系统线程，而这个系统线程的内存用的不是 JVMMemory，而是系统中剩下的内存：
+(MaxProcessMemory - JVMMemory - ReservedOsMemory)
+结论：你给 JVM 内存越多，那么你能用来创建的系统线程的内存就会越少，越容易发生 java.lang.OutOfMemoryError: unable to create new native thread。
+
+```
+假设操作系统总内存为8G、JVM中分配内存4G/6G、保留内存345M、ThreadStackSize 为1M。
+线程数=（8G-4G-345M）/1M=3751
+线程数=（8G-6G-345M）/1M=1703
+```
+
+## 6. 资料
 
 - [JVM（4）：Jvm 调优-命令篇](http://www.importnew.com/23761.html)
 - [Java 系列笔记(4) - JVM 监控与调优](https://www.cnblogs.com/zhguang/p/Java-JVM-GC.html)
@@ -388,3 +602,4 @@ Full GC 日志:![img](http://ityouknow.com/assets/images/2017/jvm/Full%20GC.png)
 - [JVM 调优总结（5）：典型配置](http://www.importnew.com/19264.html)
 - [如何合理的规划一次 jvm 性能调优](https://juejin.im/post/59f02f406fb9a0451869f01c)
 - [jvm 系列(九):如何优化 Java GC「译」](http://www.ityouknow.com/jvm/2017/09/21/How-to-optimize-Java-GC.html)
+- [作为测试你应该知道的JAVA OOM及定位分析](https://www.jianshu.com/p/28935cbfbae0)
