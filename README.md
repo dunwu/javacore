@@ -25,6 +25,7 @@
 - [x] [Java 正则](docs/advanced/Java正则.md)
 - [x] [Java 泛型](docs/advanced/Java泛型.md)
 - [x] [Java 反射](docs/advanced/Java反射.md)
+- [x] [Java 动态代理](docs/advanced/Java动态代理.md)
 - [x] [Java 序列化](docs/advanced/Java序列化.md)
 - [x] [Java 注解](docs/advanced/Java注解.md)
 - [x] [Java 本地化](docs/advanced/Java本地化.md)
