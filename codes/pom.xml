@@ -4,17 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-
-  <!-- [Part 1] BASIC SETTINGS BEGIN -->
-
-  <!-- MAVEN COORDINATE BEGIN -->
   <groupId>io.github.dunwu</groupId>
   <artifactId>javacore</artifactId>
   <version>1.0.1</version>
+  <name>JavaCore</name>
   <packaging>pom</packaging>
-  <!-- MAVEN COORDINATE END -->
+  <description>JavaCore 经验总结</description>
 
-  <!-- RELATIONSHIP SETTINGS BEGIN -->
   <modules>
     <module>basics</module>
     <module>advanced</module>
@@ -23,48 +19,19 @@
     <module>jvm</module>
     <module>container</module>
     <module>concurrent</module>
-    <module>util</module>
+    <module>utils</module>
     <module>oop</module>
   </modules>
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-  <!-- RELATIONSHIP SETTINGS END -->
 
-  <!-- PROPERTIES BEGIN -->
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
   </properties>
-  <!-- PROPERTIES END -->
 
-  <!-- [Part 1] BASIC SETTINGS END -->
-
-
-  <!-- [Part 2] BUILD SETTINGS BEGIN -->
-  <!-- [Part 2] BUILD SETTINGS END -->
-
-
-  <!-- [Part 3] PROJECT INFO BEGIN -->
-  <name>${project.artifactId}</name>
-  <description>spring 学习笔记</description>
   <url>https://github.com/dunwu/JavaCore</url>
   <inceptionYear>2016-2017</inceptionYear>
-  <licenses>
-    <license>
-      <name>Apache License, Version 2.0</name>
-      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
-      <distribution>repo</distribution>
-      <comments>A business-friendly OSS license</comments>
-    </license>
-  </licenses>
   <developers>
     <developer>
       <name>Zhang Peng</name>
@@ -72,10 +39,6 @@
       <timezone>+8</timezone>
     </developer>
   </developers>
-  <!-- [Part 3] PROJECT INFO END -->
-
-
-  <!-- [Part 4] ENVIRONMENT SETTINGS BEGIN -->
   <issueManagement>
     <system>Github</system>
     <url>https://github.com/dunwu/JavaCore/issues</url>
@@ -85,7 +48,4 @@
     <connection>scm:git:git://github.com/dunwu/JavaCore.git</connection>
     <developerConnection>scm:git:ssh://git@github.com:dunwu/JavaCore.git</developerConnection>
   </scm>
-  <!-- [Part 4] ENVIRONMENT SETTINGS END -->
-
-
 </project>
