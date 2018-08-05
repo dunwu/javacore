@@ -451,9 +451,13 @@ OutOfMemory ，即内存溢出，是一个常见的 JVM 问题。那么分析 OO
 
 OutOfMemoryError:PermGen space 表示方法区和运行时常量池溢出。
 
-原因：程序中使用了大量的 jar 或 class，使 java 虚拟机装载类的空间不够，与永久代空间有关。
+**原因：**
 
-##### 解决方案
+Perm 区主要用于存放 Class 和 Meta 信息的，Class 在被 Loader 时就会被放到 PermGen space，这个区域称为年老代。GC 在主程序运行期间不会对年老区进行清理，默认是 64M 大小。
+
+当程序程序中使用了大量的 jar 或 class，使 java 虚拟机装载类的空间不够，超过 64M 就会报这部分内存溢出了，需要加大内存分配，一般 128m 足够。
+
+**解决方案：**
 
 （1）扩大永久代空间
 
@@ -502,7 +506,7 @@ OutOfMemoryError:Java heap space 表示堆空间溢出。
 重点关注：
 
 - FGC — 从应用程序启动到采样时发生 Full GC 的次数。
-- FGCT– 从应用程序启动到采样时 Full GC 所用的时间（单位秒）。
+- FGCT — 从应用程序启动到采样时 Full GC 所用的时间（单位秒）。
 - FGC 次数越多，FGCT 所需时间越多-可非常有可能存在内存泄漏。
 
 ##### 解决方案
@@ -570,6 +574,19 @@ Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
 
 使用 `-Xms` 和 `-Xmx` 来控制堆内存空间大小。
 
+#### OutOfMemoryError: GC overhead limit exceeded
+
+原因：JDK6 新增错误类型，当 GC 为释放很小空间占用大量时间时抛出；一般是因为堆太小，导致异常的原因，没有足够的内存。
+
+解决方案：
+
+查看系统是否有使用大内存的代码或死循环；
+通过添加 JVM 配置，来限制使用内存：
+
+```xml
+<jvm-arg>-XX:-UseGCOverheadLimit</jvm-arg>
+```
+
 #### OutOfMemoryError：unable to create new native thread
 
 原因：线程过多
@@ -588,10 +605,122 @@ ThreadStackSize      线程栈的大小
 (MaxProcessMemory - JVMMemory - ReservedOsMemory)
 结论：你给 JVM 内存越多，那么你能用来创建的系统线程的内存就会越少，越容易发生 java.lang.OutOfMemoryError: unable to create new native thread。
 
+#### CPU 过高
+
+定位步骤：
+
+（1）执行 top -c 命令，找到 cpu 最高的进程的 id
+
+（2）jstack PID 导出 Java 应用程序的线程堆栈信息。
+
+示例：
+
 ```
-假设操作系统总内存为8G、JVM中分配内存4G/6G、保留内存345M、ThreadStackSize 为1M。
-线程数=（8G-4G-345M）/1M=3751
-线程数=（8G-6G-345M）/1M=1703
+jstack 6795
+
+"Low Memory Detector" daemon prio=10 tid=0x081465f8 nid=0x7 runnable [0x00000000..0x00000000]  
+        "CompilerThread0" daemon prio=10 tid=0x08143c58 nid=0x6 waiting on condition [0x00000000..0xfb5fd798]  
+        "Signal Dispatcher" daemon prio=10 tid=0x08142f08 nid=0x5 waiting on condition [0x00000000..0x00000000]  
+        "Finalizer" daemon prio=10 tid=0x08137ca0 nid=0x4 in Object.wait() [0xfbeed000..0xfbeeddb8]  
+
+        at java.lang.Object.wait(Native Method)  
+
+        - waiting on <0xef600848> (a java.lang.ref.ReferenceQueue$Lock)  
+
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:116)  
+
+        - locked <0xef600848> (a java.lang.ref.ReferenceQueue$Lock)  
+
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:132)  
+
+        at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:159)  
+
+        "Reference Handler" daemon prio=10 tid=0x081370f0 nid=0x3 in Object.wait() [0xfbf4a000..0xfbf4aa38]  
+
+        at java.lang.Object.wait(Native Method)  
+
+        - waiting on <0xef600758> (a java.lang.ref.Reference$Lock)  
+
+        at java.lang.Object.wait(Object.java:474)  
+
+        at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:116)  
+
+        - locked <0xef600758> (a java.lang.ref.Reference$Lock)  
+
+        "VM Thread" prio=10 tid=0x08134878 nid=0x2 runnable  
+
+        "VM Periodic Task Thread" prio=10 tid=0x08147768 nid=0x8 waiting on condition
+```
+
+在打印的堆栈日志文件中，tid 和 nid 的含义：
+
+```
+nid : 对应的 Linux 操作系统下的 tid 线程号，也就是前面转化的 16 进制数字
+tid: 这个应该是 jvm 的 jmm 内存规范中的唯一地址定位
+```
+
+在 CPU 过高的情况下，查找响应的线程，一般定位都是用 nid 来定位的。而如果发生死锁之类的问题，一般用 tid 来定位。
+
+（3）定位 CPU 高的线程打印其 nid
+
+查看线程下具体进程信息的命令如下：
+
+top -H -p 6735
+
+```
+top - 14:20:09 up 611 days,  2:56,  1 user,  load average: 13.19, 7.76, 7.82
+Threads: 6991 total,  17 running, 6974 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 90.4 us,  2.1 sy,  0.0 ni,  7.0 id,  0.0 wa,  0.0 hi,  0.4 si,  0.0 st
+KiB Mem:  32783044 total, 32505008 used,   278036 free,   120304 buffers
+KiB Swap:        0 total,        0 used,        0 free.  4497428 cached Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+ 6800 root      20   0 27.299g 0.021t   7172 S 54.7 70.1 187:55.61 java
+ 6803 root      20   0 27.299g 0.021t   7172 S 54.4 70.1 187:52.59 java
+ 6798 root      20   0 27.299g 0.021t   7172 S 53.7 70.1 187:55.08 java
+ 6801 root      20   0 27.299g 0.021t   7172 S 53.7 70.1 187:55.25 java
+ 6797 root      20   0 27.299g 0.021t   7172 S 53.1 70.1 187:52.78 java
+ 6804 root      20   0 27.299g 0.021t   7172 S 53.1 70.1 187:55.76 java
+ 6802 root      20   0 27.299g 0.021t   7172 S 52.1 70.1 187:54.79 java
+ 6799 root      20   0 27.299g 0.021t   7172 S 51.8 70.1 187:53.36 java
+ 6807 root      20   0 27.299g 0.021t   7172 S 13.6 70.1  48:58.60 java
+11014 root      20   0 27.299g 0.021t   7172 R  8.4 70.1   8:00.32 java
+10642 root      20   0 27.299g 0.021t   7172 R  6.5 70.1   6:32.06 java
+ 6808 root      20   0 27.299g 0.021t   7172 S  6.1 70.1 159:08.40 java
+11315 root      20   0 27.299g 0.021t   7172 S  3.9 70.1   5:54.10 java
+12545 root      20   0 27.299g 0.021t   7172 S  3.9 70.1   6:55.48 java
+23353 root      20   0 27.299g 0.021t   7172 S  3.9 70.1   2:20.55 java
+24868 root      20   0 27.299g 0.021t   7172 S  3.9 70.1   2:12.46 java
+ 9146 root      20   0 27.299g 0.021t   7172 S  3.6 70.1   7:42.72 java  
+```
+
+由此可以看出占用 CPU 较高的线程，但是这些还不高，无法直接定位到具体的类。nid 是 16 进制的，所以我们要获取线程的 16 进制 ID：
+
+```
+printf "%x\n" 6800
+```
+
+```
+输出结果:45cd
+```
+
+然后根据输出结果到 jstack 打印的堆栈日志中查定位：
+
+```
+"catalina-exec-5692" daemon prio=10 tid=0x00007f3b05013800 nid=0x45cd waiting on condition [0x00007f3ae08e3000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+        at sun.misc.Unsafe.park(Native Method)
+        - parking to wait for  <0x00000006a7800598> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+        at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
+        at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2082)
+        at java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:467)
+        at org.apache.tomcat.util.threads.TaskQueue.poll(TaskQueue.java:86)
+        at org.apache.tomcat.util.threads.TaskQueue.poll(TaskQueue.java:32)
+        at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+        at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+        at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+        at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+        at java.lang.Thread.run(Thread.java:745)
 ```
 
 ## 6. 资料
@@ -602,4 +731,5 @@ ThreadStackSize      线程栈的大小
 - [JVM 调优总结（5）：典型配置](http://www.importnew.com/19264.html)
 - [如何合理的规划一次 jvm 性能调优](https://juejin.im/post/59f02f406fb9a0451869f01c)
 - [jvm 系列(九):如何优化 Java GC「译」](http://www.ityouknow.com/jvm/2017/09/21/How-to-optimize-Java-GC.html)
-- [作为测试你应该知道的JAVA OOM及定位分析](https://www.jianshu.com/p/28935cbfbae0)
+- [作为测试你应该知道的 JAVA OOM 及定位分析](https://www.jianshu.com/p/28935cbfbae0)
+- [异常、堆内存溢出、OOM 的几种情况](https://blog.csdn.net/sinat_29912455/article/details/51125748)
