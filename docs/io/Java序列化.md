@@ -11,6 +11,8 @@ tags:
 
 # Java 序列化
 
+> 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`
+
 <!-- TOC depthFrom:2 depthTo:4 -->
 
 - [1. 简介](#1-简介)
@@ -40,23 +42,23 @@ tags:
 **反序列化**：反序列化是将字节流转换为对象。
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/advanced/序列化与反序列化.jpg" />
+<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/io/序列化与反序列化.jpg" />
 </div>
 
 ### 1.2. 用途
 
 序列化的用途有：
 
-* 序列化可以将对象的字节序列持久化——保存在内存、文件、数据库中。
-* 在网络上传送对象的字节序列。
-* RMI(远程方法调用)
+- 序列化可以将对象的字节序列持久化——保存在内存、文件、数据库中。
+- 在网络上传送对象的字节序列。
+- RMI(远程方法调用)
 
 ## 2. 序列化和反序列化
 
 Java 通过对象输入输出流来实现序列化和反序列化：
 
-* 序列化：`java.io.ObjectOutputStream` 类的 `writeObject()` 方法可以实现序列化；
-* 反序列化：`java.io.ObjectInputStream` 类的 `readObject()` 方法用于实现反序列化。
+- 序列化：`java.io.ObjectOutputStream` 类的 `writeObject()` 方法可以实现序列化；
+- 反序列化：`java.io.ObjectInputStream` 类的 `readObject()` 方法用于实现反序列化。
 
 序列化和反序列化示例：
 
@@ -278,8 +280,8 @@ name: null, age: null, sex: null
 
 从该结果，一方面可以看出 Person 对象中任何一个字段都没有被序列化。另一方面，如果细心的话，还可以发现这此次序列化过程调用了 Person 类的无参构造方法。
 
-* **Externalizable 继承于 Serializable，它增添了两个方法：writeExternal() 与 readExternal()。这两个方法在序列化和反序列化过程中会被自动调用，以便执行一些特殊操作**。当使用该接口时，序列化的细节需要由程序员去完成。如上所示的代码，由于 writeExternal() 与 readExternal() 方法未作任何处理，那么该序列化行为将不会保存/读取任何一个字段。这也就是为什么输出结果中所有字段的值均为空。
-* 另外，**若使用 Externalizable 进行序列化，当读取对象时，会调用被序列化类的无参构造方法去创建一个新的对象；然后再将被保存对象的字段的值分别填充到新对象中**。这就是为什么在此次序列化过程中 Person 类的无参构造方法会被调用。由于这个原因，实现 Externalizable 接口的类必须要提供一个无参的构造方法，且它的访问权限为 public。
+- **Externalizable 继承于 Serializable，它增添了两个方法：writeExternal() 与 readExternal()。这两个方法在序列化和反序列化过程中会被自动调用，以便执行一些特殊操作**。当使用该接口时，序列化的细节需要由程序员去完成。如上所示的代码，由于 writeExternal() 与 readExternal() 方法未作任何处理，那么该序列化行为将不会保存/读取任何一个字段。这也就是为什么输出结果中所有字段的值均为空。
+- 另外，**若使用 Externalizable 进行序列化，当读取对象时，会调用被序列化类的无参构造方法去创建一个新的对象；然后再将被保存对象的字段的值分别填充到新对象中**。这就是为什么在此次序列化过程中 Person 类的无参构造方法会被调用。由于这个原因，实现 Externalizable 接口的类必须要提供一个无参的构造方法，且它的访问权限为 public。
 
 对上述 Person 类作进一步的修改，使其能够对 name 与 age 字段进行序列化，但要忽略掉 gender 字段，如下代码所示：
 
@@ -479,7 +481,7 @@ true
 通过上面的内容，相各位已经了解了 Java 序列化的使用。这里用一张脑图来总结知识点。
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/advanced/Java序列化脑图.png" />
+<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/io/Java序列化脑图.png" />
 </div>
 
 ## 7. 推荐阅读
@@ -490,8 +492,8 @@ true
 
 ## 8. 参考资料
 
-* [Java 编程思想（Thinking in java）](https://item.jd.com/10058164.html)
-* http://www.hollischuang.com/archives/1140
-* http://www.codenuclear.com/serialization-deserialization-java/
-* http://www.blogjava.net/jiangshachina/archive/2012/02/13/369898.html
-* https://github.com/giantray/stackoverflow-java-top-qa/blob/master/contents/what-is-a-serialversionuid-and-why-should-i-use-it.md
+- [Java 编程思想（Thinking in java）](https://item.jd.com/10058164.html)
+- http://www.hollischuang.com/archives/1140
+- http://www.codenuclear.com/serialization-deserialization-java/
+- http://www.blogjava.net/jiangshachina/archive/2012/02/13/369898.html
+- https://github.com/giantray/stackoverflow-java-top-qa/blob/master/contents/what-is-a-serialversionuid-and-why-should-i-use-it.md
