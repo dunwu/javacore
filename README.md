@@ -3,23 +3,23 @@
 > :coffee: JavaCore 是对 Java 核心技术的经验总结。
 
 |            :one:            |            :two:            |            :three:            |            :four:            |          :five:          |              :six:              |                :seven:                |
-| :-------------------------: | :-------------------------: | :---------------------------: | :--------------------------: | :----------------------: | :-----------------------------: | :-----------------------------------: |
+|:---------------------------:|:---------------------------:|:-----------------------------:|:----------------------------:|:------------------------:|:-------------------------------:|:-------------------------------------:|
 | [Java 基础](#one-java-基础) | [Java 进阶](#two-java-进阶) | [Java 容器](#three-java-容器) | [Java 并发](#four-java-并发) | [Java IO](#five-java-io) | [Java 虚拟机](#six-java-虚拟机) | [Java 编程规范](#seven-java-编程规范) |
 
 ## :one: Java 基础
 
 > [Java 基础](docs/basic) 总结 Java 的一些基础特性。
 
-- Java 简介
-- [Java 开发环境配置](docs/basic/Java开发环境配置.md)
+- [Java 简介](docs/basic/1-Java简介.md) - **关键词：** JDK、JRE、JSR、JVM、Java SE、Java EE、Java ME
+- [Java 开发环境](docs/basic/2-Java开发环境.md) - **关键词：** JAVA_HOME、CLASSPATH、Path、环境变量、IDE
 - Java 基础语法
 - [Java 数据类型](docs/basic/Java数据类型.md)
 - [Java 操作符](docs/basic/Java操作符.md)
-- [Java 控制语句](docs/basic/Java控制语句.md)
+- [Java 控制语句](docs/basic/Java控制语句.md) - **关键词：** `if`、`else if`、`else`、`switch`、`while`、`do while`、`for`、`break`、`continue`、`return`
 - Java 方法
 - [Java 数组](docs/basic/Java数组.md)
-- [Java 枚举](docs/basic/Java枚举.md)
-- [Java 异常](docs/basic/Java异常.md)
+- [Java 枚举](docs/basic/Java枚举.md) - **关键词：** `enum`
+- [Java 异常](docs/basic/Java异常.md) - **关键词：** `Throwable`、`Error`、`Exception`
 
 ## :two: Java 进阶
 
