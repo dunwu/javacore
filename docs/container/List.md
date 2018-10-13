@@ -34,7 +34,7 @@ public interface List<E> extends Collection<E>
 `List` 主要方法：
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/container/list-api.png" width="400"/>
+<img src="http://dunwu.test.upcdn.net/images/java/container/list-api.png" width="400"/>
 </div>
 
 `List` 常见子类：

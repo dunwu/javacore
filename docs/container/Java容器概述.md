@@ -39,7 +39,7 @@ Java 中常用的存储容器就是数组和容器，二者有以下区别：
 ### 容器框架
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/container/java-container-structure.png" width="640"/>
+<img src="http://dunwu.test.upcdn.net/images/java/container/java-container-structure.png" width="640"/>
 </div>
 
 Java 容器框架主要分为 Collection 和 Map 两种。其中，Collection 又分为 List、Set 以及 Queue。
@@ -81,7 +81,7 @@ Collection 继承了 Iterable 接口。
 > 目标：提供一种方法顺序访问一个聚合对象中各个元素, 而又无须暴露该对象的内部表示。
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/oop/design-patterns/iterator-pattern.png" width="500"/>
+<img src="http://dunwu.test.upcdn.net/images/java/oop/design-patterns/iterator-pattern.png" width="500"/>
 </div>
 
 ### Comparable 和 Comparator

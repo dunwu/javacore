@@ -42,7 +42,7 @@ tags:
 **反序列化**：反序列化是将字节流转换为对象。
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/io/序列化与反序列化.jpg" />
+<img src="http://dunwu.test.upcdn.net/images/java/io/序列化与反序列化.jpg" />
 </div>
 
 ### 1.2. 用途
@@ -481,7 +481,7 @@ true
 通过上面的内容，相各位已经了解了 Java 序列化的使用。这里用一张脑图来总结知识点。
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/JavaCore/master/images/io/Java序列化脑图.png" />
+<img src="http://dunwu.test.upcdn.net/images/java/io/Java序列化脑图.png" />
 </div>
 
 ## 7. 推荐阅读

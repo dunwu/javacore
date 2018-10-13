@@ -5,6 +5,12 @@
 package io.github.dunwu.javacore.io;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,10 +22,17 @@ import java.util.List;
  * @date 2017/1/5.
  */
 public class FileUtil {
-    public static void main(String[] args) {
-        List<String> allFiles = getFilesInFolder("D:\\home", false);
+    public static void main(String[] args) throws IOException {
+        List<String> allFiles = getFilesInFolder("H:\\娱乐休闲\\音乐\\歌曲\\华语歌曲", false);
         for (String item : allFiles) {
-            System.out.println(item);
+            File file = new File(item);
+            String filename = file.getName();
+            if (filename.contains("丁当")) {
+                filename = filename.replace(".mp3", "");
+                String newname = filename.substring(filename.indexOf("- ") + 2, filename.length());
+                System.out.println(newname);
+//                file.renameTo(new File(newname));
+            }
         }
     }
 
