@@ -6,20 +6,20 @@ package io.github.dunwu.javacore.operator;
  */
 public class RelationOperatorDemo {
     public static void main(String[] args) {
-        int a = 10;
-        int b = 20;
-        System.out.println("a == b = " + (a == b));
-        System.out.println("a != b = " + (a != b));
-        System.out.println("a > b = " + (a > b));
-        System.out.println("a < b = " + (a < b));
-        System.out.println("b >= a = " + (b >= a));
-        System.out.println("b <= a = " + (b <= a));
+        int x = 20;
+        int y = 10;
+        System.out.println("x == y = " + (x == y));
+        System.out.println("x != y = " + (x != y));
+        System.out.println("x > y = " + (x > y));
+        System.out.println("x < y = " + (x < y));
+        System.out.println("x >= y = " + (x >= y));
+        System.out.println("x <= y = " + (x <= y));
     }
 }
 // output:
-// a == b = false
-// a != b = true
-// a > b = false
-// a < b = true
-// b >= a = true
-// b <= a = false
+// x == y = false
+// x != y = true
+// x > y = true
+// x < y = false
+// x >= y = true
+// x <= y = false

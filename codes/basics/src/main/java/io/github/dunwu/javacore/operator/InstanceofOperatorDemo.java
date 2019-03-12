@@ -5,15 +5,16 @@ package io.github.dunwu.javacore.operator;
  * @author Zhang Peng
  */
 public class InstanceofOperatorDemo {
+    static class Animal {}
+
+
+    static class Cat extends Animal {}
+
     public static void main(String[] args) {
         Animal animal = new Cat();
         boolean result = animal instanceof Cat;
         System.out.println(result);
     }
 }
-
-class Animal {}
-class Cat extends Animal {}
-
 // output:
 // true

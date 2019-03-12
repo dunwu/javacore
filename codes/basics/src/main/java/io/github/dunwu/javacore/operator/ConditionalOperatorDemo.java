@@ -5,10 +5,10 @@ package io.github.dunwu.javacore.operator;
  */
 public class ConditionalOperatorDemo {
     public static void main(String[] args) {
-        int max = 0; // 保存最大值
-        int x = 3; // 定义整型变量x
+        int x = 3;
         int y = 10;
-        max = (x > y) ? x : y; // 通过三目运算符求出最大值
+        // 通过三目运算符求出最大值
+        int max = (x > y) ? x : y;
         System.out.println("最大值为：" + max);
     }
 }
