@@ -1,6 +1,5 @@
 package io.github.dunwu.javacore.array;
 
-import io.github.dunwu.javacore.array.util.ArrayUtil;
 import java.util.Arrays;
 
 /**
@@ -8,13 +7,13 @@ import java.util.Arrays;
  */
 public class ArraysDemo {
     public static void main(String[] args) {
-        int[] array = new int[] { 4, 1, 5 };
-        ArrayUtil.print(array);
+        int[] array = new int[] {4, 1, 5};
+        System.out.println(Arrays.toString(array));
 
         Arrays.sort(array);
-        ArrayUtil.print(array);
+        System.out.println(Arrays.toString(array));
 
         Arrays.fill(array, 6);
-        ArrayUtil.print(array);
+        System.out.println(Arrays.toString(array));
     }
 }
