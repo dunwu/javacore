@@ -1,51 +1,50 @@
-/**
- * The Apache License 2.0
- * Copyright (c) 2016 Zhang Peng
- */
 package io.github.dunwu.javacore.enumeration;
 
 /**
  * 错误码常量集（通用方式）
- *
  * @author Zhang Peng
  * @date 2016/11/24.
- * @see org.zp.javase.enumeration.ErrorCodeEn2
- * @see org.zp.javase.enumeration.AddMethod2EnumDemo
  */
 public enum ErrorCodeEn {
-    OK(0, "成功"),
-    ERROR_A(100, "错误A"),
-    ERROR_B(200, "错误B");
-
-    ErrorCodeEn(int number, String description) {
-        this.code = number;
-        this.description = description;
-    }
+    OK(0) {
+        @Override
+        public String getDescription() {
+            return "成功";
+        }
+    },
+    ERROR_A(100) {
+        @Override
+        public String getDescription() {
+            return "错误A";
+        }
+    },
+    ERROR_B(200) {
+        @Override
+        public String getDescription() {
+            return "错误B";
+        }
+    };
 
     private int code;
-    private String description;
 
-    public int getCode() {
+    // 构造方法：enum的构造方法只能被声明为private权限或不声明权限
+    private ErrorCodeEn(int number) { // 构造方法
+        this.code = number;
+    }
+
+    public int getCode() { // 普通方法
         return code;
-    }
+    } // 普通方法
 
-    public String getDescription() {
-        return description;
-    }
+    public abstract String getDescription(); // 抽象方法
 
-    public static String getAll() {
-        String result = "[";
-        for (ErrorCodeEn code : ErrorCodeEn.values()) {
-            result += code.getDescription() + ", ";
-        }
-        result += "]";
-        return result;
-    }
-
-    public static void main(String[] args) {
-        System.out.println("getAll: " + ErrorCodeEn.getAll());
+    public static void main(String args[]) { // 静态方法
         for (ErrorCodeEn s : ErrorCodeEn.values()) {
-            System.out.println("name: " + s.getDescription() + ", code: " + s.getCode());
+            System.out.println("code: " + s.getCode() + ", description: " + s.getDescription());
         }
     }
 }
+// Output:
+// code: 0, description: 成功
+// code: 100, description: 错误A
+// code: 200, description: 错误B

@@ -1,7 +1,3 @@
-/**
- * The Apache License 2.0
- * Copyright (c) 2016 Zhang Peng
- */
 package io.github.dunwu.javacore.enumeration;
 
 /**

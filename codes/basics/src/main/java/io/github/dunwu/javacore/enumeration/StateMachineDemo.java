@@ -1,7 +1,3 @@
-/**
- * The Apache License 2.0
- * Copyright (c) 2016 Zhang Peng
- */
 package io.github.dunwu.javacore.enumeration;
 
 /**
@@ -10,7 +6,7 @@ package io.github.dunwu.javacore.enumeration;
  * @author Zhang Peng
  * @date 2016/11/24.
  */
-public class StateMachine {
+public class StateMachineDemo {
     public enum Signal {
         GREEN, YELLOW, RED
     }
@@ -37,3 +33,5 @@ public class StateMachine {
         System.out.println(getTrafficInstruct(Signal.RED));
     }
 }
+// Output:
+// 红灯停

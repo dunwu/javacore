@@ -29,12 +29,12 @@ public class App {
 
         // EnumMap的使用
         System.out.println("EnumMap展示");
-        EnumMap<StateMachine.Signal, String> errMap = new EnumMap(StateMachine.Signal.class);
-        errMap.put(StateMachine.Signal.RED, "红灯");
-        errMap.put(StateMachine.Signal.YELLOW, "黄灯");
-        errMap.put(StateMachine.Signal.GREEN, "绿灯");
-        for (Iterator<Map.Entry<StateMachine.Signal, String>> iter = errMap.entrySet().iterator(); iter.hasNext();) {
-            Map.Entry<StateMachine.Signal, String> entry = iter.next();
+        EnumMap<StateMachineDemo.Signal, String> errMap = new EnumMap(StateMachineDemo.Signal.class);
+        errMap.put(StateMachineDemo.Signal.RED, "红灯");
+        errMap.put(StateMachineDemo.Signal.YELLOW, "黄灯");
+        errMap.put(StateMachineDemo.Signal.GREEN, "绿灯");
+        for (Iterator<Map.Entry<StateMachineDemo.Signal, String>> iter = errMap.entrySet().iterator(); iter.hasNext();) {
+            Map.Entry<StateMachineDemo.Signal, String> entry = iter.next();
             System.out.println(entry.getKey().name() + " : " + entry.getValue());
         }
     }
