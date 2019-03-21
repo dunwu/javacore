@@ -1,20 +1,16 @@
 package io.github.dunwu.javacore.generics;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GenericsExtendsDemo02 {
-    static class Fruit{}
-    static class Apple extends GenericsSuperDemo01.Fruit {}
-    static class Orange extends GenericsSuperDemo01.Fruit {}
+    static class A { /* ... */ }
+    interface B { /* ... */ }
+    interface C { /* ... */ }
+    static class D1 <T extends A & B & C> { /* ... */ }
+    // static class D2 <T extends B & A & C> { /* ... */ } // 编译报错
+    static class E extends A implements B, C { /* ... */ }
 
     public static void main(String[] args) {
-        List<? super Fruit> fruits = new ArrayList<>();
-        // fruits.add(new Apple()); // 编译会报错
-        // fruits.add(new Orange()); // 编译会报错
+        D1<E> demo1 = new D1<>();
+        System.out.println(demo1.getClass().toString());
+        // D1<String> demo2 = new D1<>(); // 编译报错
     }
 }
-// Output:
-// 5
-// 8.8
-// pear

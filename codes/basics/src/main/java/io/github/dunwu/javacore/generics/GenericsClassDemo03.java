@@ -1,6 +1,7 @@
 package io.github.dunwu.javacore.generics;
 
 import io.github.dunwu.javacore.generics.entity.Info;
+import io.github.dunwu.javacore.generics.entity.MyMap;
 
 /**
  * @author Zhang Peng
@@ -8,10 +9,10 @@ import io.github.dunwu.javacore.generics.entity.Info;
  */
 public class GenericsClassDemo03 {
     public static void main(String[] args) {
-        Info info = new Info();
-        info.setValue(10);
-        System.out.println(info.getValue());
-        info.setValue("abc");
-        System.out.println(info.getValue());
+        Info<String> info = new Info("Hello");
+        MyMap<Integer, Info<String>> map = new MyMap<>(1, info);
+        System.out.println(map);
     }
 }
+// Output:
+// MyMap{key=1, value=Info{value=Hello}}

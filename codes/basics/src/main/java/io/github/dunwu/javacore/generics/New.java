@@ -30,5 +30,8 @@ public class New {
         LinkedList<String> lls = New.lList();
         Set<String> ss = New.set();
         Queue<String> qs = New.queue();
+
+Integer i = new Integer(10);
+Object obj = i;
     }
 }
