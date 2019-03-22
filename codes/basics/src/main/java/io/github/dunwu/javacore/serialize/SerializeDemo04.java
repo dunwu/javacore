@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.serialization;
+package io.github.dunwu.javacore.serialize;
 
 import java.io.*;
 
@@ -7,11 +7,11 @@ import java.io.*;
  * @author Zhang Peng
  * @date 2018/6/4
  * @see SerializeDemo01
- * @see SerializeDemo03
+ * @see SerializeDemo04
  * @see UnSerializeDemo
  */
 @SuppressWarnings("all")
-public class SerializeDemo03 {
+public class SerializeDemo04 {
 
     enum Sex {
         MALE, FEMALE
@@ -22,25 +22,20 @@ public class SerializeDemo03 {
         private String name = null;
         transient private Integer age = null;
         private Sex sex;
+        static final Person instatnce = new Person("Tom", 31, Sex.MALE);
 
-        public Person() {
+        private Person() {
             System.out.println("call Person()");
         }
 
-        public Person(String name, Integer age, Sex sex) {
+        private Person(String name, Integer age, Sex sex) {
             this.name = name;
             this.age = age;
             this.sex = sex;
         }
 
-        private void writeObject(ObjectOutputStream out) throws IOException {
-            out.defaultWriteObject();
-            out.writeInt(age);
-        }
-
-        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-            in.defaultReadObject();
-            age = in.readInt();
+        public static Person getInstance() {
+            return instatnce;
         }
 
         public String toString() {
@@ -71,6 +66,7 @@ public class SerializeDemo03 {
         ois.close();
         in.close();
         System.out.println(obj);
+        System.out.println(obj == Person.getInstance());
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -79,3 +75,6 @@ public class SerializeDemo03 {
         deserialize(filename);
     }
 }
+// Output:
+// name: Jack, age: null, sex: MALE
+// false

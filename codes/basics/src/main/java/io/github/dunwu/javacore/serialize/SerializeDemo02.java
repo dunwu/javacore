@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.serialization;
+package io.github.dunwu.javacore.serialize;
 
 import java.io.*;
 
@@ -7,11 +7,11 @@ import java.io.*;
  * @author Zhang Peng
  * @date 2018/6/4
  * @see SerializeDemo01
- * @see SerializeDemo05
+ * @see SerializeDemo02
  * @see UnSerializeDemo
  */
 @SuppressWarnings("all")
-public class SerializeDemo05 {
+public class SerializeDemo02 {
 
     enum Sex {
         MALE, FEMALE
@@ -22,24 +22,15 @@ public class SerializeDemo05 {
         private String name = null;
         transient private Integer age = null;
         private Sex sex;
-        static final Person instatnce = new Person("Tom", 31, Sex.MALE);
 
-        private Person() {
+        public Person() {
             System.out.println("call Person()");
         }
 
-        private Person(String name, Integer age, Sex sex) {
+        public Person(String name, Integer age, Sex sex) {
             this.name = name;
             this.age = age;
             this.sex = sex;
-        }
-
-        public static Person getInstance() {
-            return instatnce;
-        }
-
-        private Object readResolve() {
-            return instatnce;
         }
 
         public String toString() {
@@ -70,7 +61,6 @@ public class SerializeDemo05 {
         ois.close();
         in.close();
         System.out.println(obj);
-        System.out.println(obj == Person.getInstance());
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -79,3 +69,5 @@ public class SerializeDemo05 {
         deserialize(filename);
     }
 }
+// Output:
+// name: Jack, age: null, sex: MALE

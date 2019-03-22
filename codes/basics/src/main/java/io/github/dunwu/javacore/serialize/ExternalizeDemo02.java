@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.serialization;
+package io.github.dunwu.javacore.serialize;
 
 import java.io.*;
 
@@ -6,17 +6,20 @@ import java.io.*;
  * 序列化示例
  * @author Zhang Peng
  * @date 2018/6/4
+ * @see SerializeDemo01
+ * @see ExternalizeDemo02
+ * @see UnSerializeDemo
  */
 @SuppressWarnings("all")
-public class SerializeDemo01 {
+public class ExternalizeDemo02 {
     enum Sex {
         MALE, FEMALE
     }
 
-    static class Person implements Serializable {
+    static class Person implements Externalizable {
         private static final long serialVersionUID = 1L;
         private String name = null;
-        private Integer age = null;
+        transient private Integer age = null;
         private Sex sex;
 
         public Person() {
@@ -27,6 +30,28 @@ public class SerializeDemo01 {
             this.name = name;
             this.age = age;
             this.sex = sex;
+        }
+
+        private void writeObject(ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            out.writeInt(age);
+        }
+
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject();
+            age = in.readInt();
+        }
+
+        @Override
+        public void writeExternal(ObjectOutput out) throws IOException {
+            out.writeObject(name);
+            out.writeInt(age);
+        }
+
+        @Override
+        public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+            name = (String) in.readObject();
+            age = in.readInt();
         }
 
         public String toString() {
@@ -65,3 +90,6 @@ public class SerializeDemo01 {
         deserialize(filename);
     }
 }
+// Output:
+// call Person()
+// name: Jack, age: 30, sex: null

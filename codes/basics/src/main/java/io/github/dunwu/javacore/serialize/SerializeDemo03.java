@@ -1,23 +1,26 @@
-package io.github.dunwu.javacore.serialization;
+package io.github.dunwu.javacore.serialize;
 
 import java.io.*;
 
 /**
- * 序列化示例 由于
- * <p>
- * 没有实现 Serializable 接口，运行时会抛出 NotSerializableException 异常
+ * 序列化示例
  * @author Zhang Peng
  * @date 2018/6/4
+ * @see SerializeDemo01
+ * @see SerializeDemo03
+ * @see UnSerializeDemo
  */
-public class UnSerializeDemo {
+@SuppressWarnings("all")
+public class SerializeDemo03 {
+
     enum Sex {
         MALE, FEMALE
     }
 
-    static class Person {
+    static class Person implements Serializable {
         private static final long serialVersionUID = 1L;
         private String name = null;
-        private Integer age = null;
+        transient private Integer age = null;
         private Sex sex;
 
         public Person() {
@@ -28,6 +31,16 @@ public class UnSerializeDemo {
             this.name = name;
             this.age = age;
             this.sex = sex;
+        }
+
+        private void writeObject(ObjectOutputStream out) throws IOException {
+            out.defaultWriteObject();
+            out.writeInt(age);
+        }
+
+        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+            in.defaultReadObject();
+            age = in.readInt();
         }
 
         public String toString() {
@@ -66,3 +79,5 @@ public class UnSerializeDemo {
         deserialize(filename);
     }
 }
+// Output:
+// name: Jack, age: 30, sex: MALE

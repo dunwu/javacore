@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.serialization;
+package io.github.dunwu.javacore.serialize;
 
 import java.io.*;
 
@@ -7,11 +7,11 @@ import java.io.*;
  * @author Zhang Peng
  * @date 2018/6/4
  * @see SerializeDemo01
- * @see SerializeDemo04
+ * @see SerializeDemo05
  * @see UnSerializeDemo
  */
 @SuppressWarnings("all")
-public class SerializeDemo04 {
+public class SerializeDemo05 {
 
     enum Sex {
         MALE, FEMALE
@@ -35,6 +35,10 @@ public class SerializeDemo04 {
         }
 
         public static Person getInstance() {
+            return instatnce;
+        }
+
+        private Object readResolve() {
             return instatnce;
         }
 
@@ -75,3 +79,6 @@ public class SerializeDemo04 {
         deserialize(filename);
     }
 }
+// Output:
+// name: Tom, age: 31, sex: MALE
+// true
