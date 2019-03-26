@@ -48,7 +48,7 @@ public class ExternalizeDemo01 {
         @Override
         public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException { }
 
-        public String toString() {
+        @Override public String toString() {
             return "name: " + this.name + ", age: " + this.age + ", sex: " + this.sex;
         }
     }

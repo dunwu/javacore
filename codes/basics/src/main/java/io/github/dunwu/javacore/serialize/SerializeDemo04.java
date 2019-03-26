@@ -38,7 +38,7 @@ public class SerializeDemo04 {
             return instatnce;
         }
 
-        public String toString() {
+        @Override public String toString() {
             return "name: " + this.name + ", age: " + this.age + ", sex: " + this.sex;
         }
     }

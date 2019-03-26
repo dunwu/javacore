@@ -54,7 +54,7 @@ public class ExternalizeDemo02 {
             age = in.readInt();
         }
 
-        public String toString() {
+        @Override public String toString() {
             return "name: " + this.name + ", age: " + this.age + ", sex: " + this.sex;
         }
     }

@@ -13,17 +13,17 @@ package io.github.dunwu.javacore.enumeration;
  */
 public enum AddMethod2EnumDemo {
     OK(0) {
-        public String getDescription() {
+        @Override public String getDescription() {
             return "成功";
         }
     },
     ERROR_A(100) {
-        public String getDescription() {
+        @Override public String getDescription() {
             return "错误A";
         }
     },
     ERROR_B(200) {
-        public String getDescription() {
+        @Override public String getDescription() {
             return "错误B";
         }
     };

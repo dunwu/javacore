@@ -5,6 +5,50 @@ import java.lang.reflect.*;
 
 @SuppressWarnings("deprecation")
 public class ReflectDemo {
+    class Job {}
+
+
+    static class Person {
+        private String name;
+        private int age;
+        private Job job;
+
+        public Person() {}
+
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public int getAge() {
+            return age;
+        }
+
+        public void setAge(int age) {
+            this.age = age;
+        }
+
+        public final boolean checkPersonInfo(String name, int age) {
+            if (null == name || 0 == name.length() || age <= 0) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public String toString() {
+            return "[Person]name = " + this.name + ", age = " + this.age;
+        }
+    }
+
     /**
      * @description 展示获取Class的不同方式
      * @author Zhang Peng
@@ -12,7 +56,7 @@ public class ReflectDemo {
      */
     public static void testGetClassObject() throws Exception {
         // 方法一
-        Class<?> clazz1 = Class.forName("io.github.dunwu.javacore.reflect.Person");
+        Class<?> clazz1 = Class.forName("io.github.dunwu.javacore.reflect.ReflectDemo$Person");
 
         // 方法二
         // Java中每个类都有class属性
@@ -30,14 +74,14 @@ public class ReflectDemo {
 
 
     /**
+     * @return void
      * @title testGetObjectByClass
      * @description 通过Class实例化对象
      * @author Zhang Peng
      * @date 2016年8月5日
-     * @return void
      */
     public static void testGetObjectByClass() throws Exception {
-        Class<?> clazz = Class.forName("org.zp.javase.reflect.Person");
+        Class<?> clazz = Class.forName("io.github.dunwu.javacore.reflect.ReflectDemo$Person");
         Person person = (Person) clazz.newInstance();
         person.setName("Tom");
         person.setAge(20);
@@ -45,19 +89,19 @@ public class ReflectDemo {
     }
 
     /**
+     * @return void
+     * @throws Exception
      * @title testGetFieldsByClass
      * @description 获取类的所有的属性
      * @author Zhang Peng
      * @date 2016年8月5日
-     * @return void
-     * @throws Exception
      */
     public static void testPrintClassInfo() throws Exception {
         StringBuffer sb = new StringBuffer();
         sb.append("============== 打印Person类声明信息 ==============\n");
 
         // 获取Class对象
-        Class<?> clazz = Class.forName("org.zp.javase.reflect.Person");
+        Class<?> clazz = Class.forName("io.github.dunwu.javacore.reflect.ReflectDemo$Person");
 
         // 获取类的所有注解类型
         Annotation[] annotations = clazz.getDeclaredAnnotations();
