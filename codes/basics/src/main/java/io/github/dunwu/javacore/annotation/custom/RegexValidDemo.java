@@ -7,11 +7,11 @@ package io.github.dunwu.javacore.annotation.custom;
 public class RegexValidDemo {
     static class User {
         private String name;
-        @RegexValid(regex = RegexValid.Policy.DATE)
+        @RegexValid(policy = RegexValid.Policy.DATE)
         private String date;
-        @RegexValid(regex = RegexValid.Policy.MAIL)
+        @RegexValid(policy = RegexValid.Policy.MAIL)
         private String mail;
-        @RegexValid(value = "^((\\+)?86\\s*)?((13[0-9])|(15([0-3]|[5-9]))|(18[0,2,5-9]))\\d{8}$")
+        @RegexValid("^((\\+)?86\\s*)?((13[0-9])|(15([0-3]|[5-9]))|(18[0,2,5-9]))\\d{8}$")
         private String phone;
 
         public User(String name, String date, String mail, String phone) {
@@ -26,6 +26,10 @@ public class RegexValidDemo {
             return "User{" + "name='" + name + '\'' + ", date='" + date + '\'' + ", mail='" + mail + '\'' + ", phone='"
                 + phone + '\'' + '}';
         }
+    }
+
+    static void printDate(@RegexValid(policy = RegexValid.Policy.DATE) String date){
+        System.out.println(date);
     }
 
     public static void main(String[] args) throws Exception {

@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * @date 2019-03-31
  */
 @Documented
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RegexValid {
     enum Policy {
@@ -19,17 +19,17 @@ public @interface RegexValid {
         MAIL("^[A-Za-z0-9](([_\\.\\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\\.\\-]?[a-zA-Z0-9]+)*)\\.([A-Za-z]{2,})$");
         // @formatter:on
 
-        private String regex;
+        private String policy;
 
-        Policy(String regex) {
-            this.regex = regex;
+        Policy(String policy) {
+            this.policy = policy;
         }
 
-        public String getRegex() {
-            return regex;
+        public String getPolicy() {
+            return policy;
         }
     }
 
     String value() default "";
-    Policy regex() default Policy.EMPTY;
+    Policy policy() default Policy.EMPTY;
 }

@@ -14,29 +14,33 @@ public class RegexValidUtil {
         StringBuilder sb = new StringBuilder();
         Field[] fields = obj.getClass().getDeclaredFields();
         for (Field field : fields) {
+            // 判断成员是否被 @RegexValid 注解所修饰
             if (field.isAnnotationPresent(RegexValid.class)) {
                 RegexValid valid = field.getAnnotation(RegexValid.class);
-                String regex = valid.value();
-                if ("".equals(regex)) {
-                    RegexValid.Policy policy = valid.regex();
-                    regex = policy.getRegex();
+
+                // 如果 value 为空字符串，说明没有注入自定义正则表达式，改用 policy 属性
+                String value = valid.value();
+                if ("".equals(value)) {
+                    RegexValid.Policy policy = valid.policy();
+                    value = policy.getPolicy();
                 }
 
+                // 通过设置 setAccessible(true) 来访问私有成员
                 field.setAccessible(true);
-                Object value = null;
+                Object fieldObj = null;
                 try {
-                    value = field.get(obj);
+                    fieldObj = field.get(obj);
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-                if (value == null) {
+                if (fieldObj == null) {
                     sb.append("\n")
                         .append(String.format("%s 类中的 %s 字段不能为空！", obj.getClass().getName(), field.getName()));
                     result = false;
                 } else {
-                    if (value instanceof String) {
-                        String text = (String) value;
-                        Pattern p = Pattern.compile(regex);
+                    if (fieldObj instanceof String) {
+                        String text = (String) fieldObj;
+                        Pattern p = Pattern.compile(value);
                         Matcher m = p.matcher(text);
                         result = m.matches();
                         if (!result) {

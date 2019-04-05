@@ -9,6 +9,9 @@ import java.util.List;
  * @date 2019-03-30
  */
 public class SafeVarargsAnnotationDemo {
+    /**
+     * 此方法实际上并不安全，不使用此注解，编译时会告警
+     */
     @SafeVarargs
     static void wrongMethod(List<String>... stringLists) {
         Object[] array = stringLists;
