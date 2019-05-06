@@ -131,8 +131,8 @@ fail-fast 是 Java 容器的一种错误检测机制。当多个线程对容器�
 
 ## 资料
 
-[Java 编程思想（第 4 版）](https://item.jd.com/10058164.html)
-https://www.jianshu.com/p/589d58033841
-https://www.jianshu.com/p/9081017a2d67
-[java 提高篇（三十）-----Iterator](https://www.cnblogs.com/chenssy/p/3821328.html)
-[Java 提高篇（三四）-----fail-fast 机制](https://blog.csdn.net/chenssy/article/details/38151189)
+- [Java 编程思想（第 4 版）](https://item.jd.com/10058164.html)
+- [由浅入深理解java集合(一)——集合框架 Collection、Map](https://www.jianshu.com/p/589d58033841)
+- [由浅入深理解java集合(二)——集合 Set](https://www.jianshu.com/p/9081017a2d67)
+- [java 提高篇（三十）-----Iterator](https://www.cnblogs.com/chenssy/p/3821328.html)
+- [Java 提高篇（三四）-----fail-fast 机制](https://blog.csdn.net/chenssy/article/details/38151189)
