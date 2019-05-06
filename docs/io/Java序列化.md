@@ -1,51 +1,49 @@
 ---
 title: Java 序列化
-date: 2018/06/04
-categories:
-- javacore
-tags:
-- java
-- javacore
-- advanced
+date: 2018-06-04 17:32
+categories: ['java', 'javacore', 'io']
+tags: ['java', 'javacore', 'io', 'serialize']
 ---
 
 # Java 序列化
 
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+>
 > 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`
 
 <!-- TOC depthFrom:2 depthTo:4 -->
 
-- [1. 简介](#1-简介)
-    - [1.1. 定义](#11-定义)
-    - [1.2. 用途](#12-用途)
-- [2. 序列化和反序列化](#2-序列化和反序列化)
-- [3. Serializable 接口](#3-serializable-接口)
-    - [3.1. serialVersionUID](#31-serialversionuid)
-- [4. 默认序列化机制](#4-默认序列化机制)
-- [5. 非默认序列化机制](#5-非默认序列化机制)
-    - [5.1. transient 关键字](#51-transient-关键字)
-    - [5.2. Externalizable 接口](#52-externalizable-接口)
-    - [5.3. Externalizable 接口的替代方法](#53-externalizable-接口的替代方法)
-    - [5.4. readResolve() 方法](#54-readresolve-方法)
-- [6. 总结](#6-总结)
-- [7. 推荐阅读](#7-推荐阅读)
-- [8. 参考资料](#8-参考资料)
+- [简介](#简介)
+    - [定义](#定义)
+    - [用途](#用途)
+- [序列化和反序列化](#序列化和反序列化)
+- [Serializable 接口](#serializable-接口)
+    - [serialVersionUID](#serialversionuid)
+- [默认序列化机制](#默认序列化机制)
+- [非默认序列化机制](#非默认序列化机制)
+    - [transient 关键字](#transient-关键字)
+    - [Externalizable 接口](#externalizable-接口)
+    - [Externalizable 接口的替代方法](#externalizable-接口的替代方法)
+    - [readResolve() 方法](#readresolve-方法)
+- [总结](#总结)
+- [推荐阅读](#推荐阅读)
+- [参考资料](#参考资料)
 
 <!-- /TOC -->
 
-## 1. 简介
+## 简介
 
-### 1.1. 定义
+### 定义
 
 **序列化**：序列化是将对象转换为字节流。
 
 **反序列化**：反序列化是将字节流转换为对象。
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/io/序列化与反序列化.jpg" />
+<img src="https://raw.githubusercontent.com/dunwu/images/master/images/java/io/序列化与反序列化.jpg" />
 </div>
 
-### 1.2. 用途
+### 用途
 
 序列化的用途有：
 
@@ -53,7 +51,7 @@ tags:
 - 在网络上传送对象的字节序列。
 - RMI(远程方法调用)
 
-## 2. 序列化和反序列化
+## 序列化和反序列化
 
 Java 通过对象输入输出流来实现序列化和反序列化：
 
@@ -128,7 +126,7 @@ public class SerializeDemo01 {
 name: Jack, age: 30, sex: MALE
 ```
 
-## 3. Serializable 接口
+## Serializable 接口
 
 **被序列化的类必须属于 Enum、Array 和 Serializable 类型其中的任何一种**。
 
@@ -150,7 +148,7 @@ Exception in thread "main" java.io.NotSerializableException:
 ...
 ```
 
-### 3.1. serialVersionUID
+### serialVersionUID
 
 请注意 `serialVersionUID` 字段，你可以在 Java 世界的无数类中看到这个字段。
 
@@ -199,7 +197,7 @@ private static final long serialVersionUID = 2L;
 
 综上所述，我们大概可以清楚：**serialVersionUID 用于控制序列化版本是否兼容**。若我们认为修改的可序列化类是向后兼容的，则不修改 serialVersionUID。
 
-## 4. 默认序列化机制
+## 默认序列化机制
 
 如果仅仅只是让某个类实现 `Serializable` 接口，而没有其它任何处理的话，那么就是使用默认序列化机制。
 
@@ -207,11 +205,11 @@ private static final long serialVersionUID = 2L;
 
 > 注意：这里的父类和引用对象既然要进行序列化，那么它们当然也要满足序列化要求：**被序列化的类必须属于 Enum、Array 和 Serializable 类型其中的任何一种**。
 
-## 5. 非默认序列化机制
+## 非默认序列化机制
 
 在现实应用中，有些时候不能使用默认序列化机制。比如，希望在序列化过程中忽略掉敏感数据，或者简化序列化过程。下面将介绍若干影响序列化的方法。
 
-### 5.1. transient 关键字
+### transient 关键字
 
 **当某个字段被声明为 transient 后，默认序列化机制就会忽略该字段**。
 
@@ -235,7 +233,7 @@ name: Jack, age: null, sex: MALE
 
 从输出结果可以看出，age 字段没有被序列化。
 
-### 5.2. Externalizable 接口
+### Externalizable 接口
 
 无论是使用 transient 关键字，还是使用 writeObject()和 readObject()方法，其实都是基于 Serializable 接口的序列化。
 
@@ -324,7 +322,7 @@ call Person()
 name: Jack, age: 30, sex: null
 ```
 
-### 5.3. Externalizable 接口的替代方法
+### Externalizable 接口的替代方法
 
 实现 Externalizable 接口可以控制序列化和反序列化的细节。它有一个替代方法：实现 `Serializable` 接口，并添加 `writeObject(ObjectOutputStream out)` 与 `readObject(ObjectInputStream in)` 方法。序列化和反序列化过程中会自动回调这两个方法。
 
@@ -361,7 +359,7 @@ name: Jack, age: 30, sex: MALE
 
 > 注意：writeObject()与 readObject()都是 private 方法，那么它们是如何被调用的呢？毫无疑问，是使用反射。详情可见 ObjectOutputStream 中的 writeSerialData 方法，以及 ObjectInputStream 中的 readSerialData 方法。
 
-### 5.4. readResolve() 方法
+### readResolve() 方法
 
 当我们使用 Singleton 模式时，应该是期望某个类的实例应该是唯一的，但如果该类是可序列化的，那么情况可能会略有不同。此时对第 2 节使用的 Person 类进行修改，使其实现 Singleton 模式，如下所示：
 
@@ -476,21 +474,21 @@ name: Jack, age: 30, sex: MALE
 true
 ```
 
-## 6. 总结
+## 总结
 
 通过上面的内容，相各位已经了解了 Java 序列化的使用。这里用一张脑图来总结知识点。
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/io/Java序列化脑图.png" />
+<img src="https://raw.githubusercontent.com/dunwu/images/master/images/java/io/Java序列化脑图.png" />
 </div>
 
-## 7. 推荐阅读
+## 推荐阅读
 
 本文示例代码见：[源码](https://github.com/dunwu/JavaCore/tree/master/codes/advanced/src/main/java/io/github/dunwu/javacore)
 
 本文同步维护在：[Java 系列教程](https://github.com/dunwu/JavaCore)
 
-## 8. 参考资料
+## 参考资料
 
 - [Java 编程思想（Thinking in java）](https://item.jd.com/10058164.html)
 - http://www.hollischuang.com/archives/1140

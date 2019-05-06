@@ -1,6 +1,24 @@
+---
+title: Java 网络编程
+date: 2018-08-06 17:30
+categories: ['java', 'javacore', 'io']
+tags: ['java', 'javacore', 'io']
+---
+
 # Java 网络编程
 
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+>
 > 关键词：URL、InetAddress
+
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [InetAddress](#inetaddress)
+- [URL](#url)
+- [Sockets](#sockets)
+- [Datagram](#datagram)
+
+<!-- /TOC -->
 
 Java 中的网络支持：
 
@@ -51,7 +69,7 @@ public static void main(String[] args) throws IOException {
 - Socket：客户端类
 - 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
 
-<div align="center"> <img src="../pics//ClienteServidorSockets1521731145260.jpg"/> </div><br>
+<div align="center"> <img src="../pics//ClienteServidorSockets1521731145260.jpg"/> </div>
 
 ## Datagram
 

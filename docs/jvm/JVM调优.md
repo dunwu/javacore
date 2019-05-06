@@ -1,54 +1,52 @@
 ---
 title: JVM 调优
-date: 2018/05/29
-categories:
-- javacore
-tags:
-- java
-- javacore
-- jvm
+date: 2018-05-29 15:32
+categories: ['java', 'javacore', 'jvm']
+tags: ['java', 'javacore', 'jvm']
 ---
 
 # JVM 调优
 
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [1. JVM 调优概述](#1-jvm-调优概述)
-    - [1.1. 性能定义](#11-性能定义)
-    - [1.2. 调优原则](#12-调优原则)
-    - [1.3. GC 优化的过程](#13-gc-优化的过程)
-- [2. 命令](#2-命令)
-    - [2.1. jmap](#21-jmap)
-    - [2.2. jstack](#22-jstack)
-    - [2.3. jps](#23-jps)
-    - [2.4. jstat](#24-jstat)
-    - [2.5. jhat](#25-jhat)
-    - [2.6. jinfo](#26-jinfo)
-- [3. HotSpot VM 参数](#3-hotspot-vm-参数)
-    - [3.1. JVM 内存配置](#31-jvm-内存配置)
-    - [3.2. GC 类型配置](#32-gc-类型配置)
-    - [3.3. 辅助配置](#33-辅助配置)
-- [4. 典型配置](#4-典型配置)
-    - [4.1. 堆大小设置](#41-堆大小设置)
-    - [4.2. 回收器选择](#42-回收器选择)
-- [5. JVM 实战](#5-jvm-实战)
-    - [5.1. 分析 GC 日志](#51-分析-gc-日志)
-    - [5.2. 获取 GC 日志](#52-获取-gc-日志)
-    - [5.3. 如何分析 GC 日志](#53-如何分析-gc-日志)
-    - [5.4. OutOfMemory(OOM)分析](#54-outofmemoryoom分析)
-- [6. 资料](#6-资料)
+- [JVM 调优概述](#jvm-调优概述)
+    - [性能定义](#性能定义)
+    - [调优原则](#调优原则)
+    - [GC 优化的过程](#gc-优化的过程)
+- [命令](#命令)
+    - [jmap](#jmap)
+    - [jstack](#jstack)
+    - [jps](#jps)
+    - [jstat](#jstat)
+    - [jhat](#jhat)
+    - [jinfo](#jinfo)
+- [HotSpot VM 参数](#hotspot-vm-参数)
+    - [JVM 内存配置](#jvm-内存配置)
+    - [GC 类型配置](#gc-类型配置)
+    - [辅助配置](#辅助配置)
+- [典型配置](#典型配置)
+    - [堆大小设置](#堆大小设置)
+    - [回收器选择](#回收器选择)
+- [JVM 实战](#jvm-实战)
+    - [分析 GC 日志](#分析-gc-日志)
+    - [获取 GC 日志](#获取-gc-日志)
+    - [如何分析 GC 日志](#如何分析-gc-日志)
+    - [OutOfMemory(OOM)分析](#outofmemoryoom分析)
+- [参考资料](#参考资料)
 
 <!-- /TOC -->
 
-## 1. JVM 调优概述
+## JVM 调优概述
 
-### 1.1. 性能定义
+### 性能定义
 
 - 吞吐量 - 指不考虑 GC 引起的停顿时间或内存消耗，垃圾收集器能支撑应用达到的最高性能指标。
 - 延迟 - 其度量标准是缩短由于垃圾啊收集引起的停顿时间或者完全消除因垃圾收集所引起的停顿，避免应用运行时发生抖动。
 - 内存占用 - 垃圾收集器流畅运行所需要的内存数量。
 
-### 1.2. 调优原则
+### 调优原则
 
 GC 优化的两个目标：
 
@@ -84,7 +82,7 @@ GC 优化时最常用的参数是`-Xms`,`-Xmx`和`-XX:NewRatio`。`-Xms`和`-Xmx
 
 有些人可能会问**如何设置永久代内存大小**，你可以用`-XX:PermSize`和`-XX:MaxPermSize`参数来进行设置，但是要记住，只有当出现`OutOfMemoryError`错误时你才需要去设置永久代内存。
 
-### 1.3. GC 优化的过程
+### GC 优化的过程
 
 GC 优化的过程和大多数常见的提升性能的过程相似，下面是笔者使用的流程：
 
@@ -118,9 +116,9 @@ GC 优化的过程和大多数常见的提升性能的过程相似，下面是�
 
 在下面的章节中，你将会看到上述每一步所做的具体工作。
 
-## 2. 命令
+## 命令
 
-### 2.1. jmap
+### jmap
 
 jmap 即 JVM Memory Map。
 
@@ -213,7 +211,7 @@ PS Perm Generation
    97.06831451706046% used
 ```
 
-### 2.2. jstack
+### jstack
 
 **jstack 用于生成 java 虚拟机当前时刻的线程快照。**
 
@@ -233,7 +231,7 @@ option 参数：
 - `-l` - 除堆栈外，显示关于锁的附加信息
 - `-m` - 如果调用到本地方法的话，可以显示 C/C++的堆栈
 
-### 2.3. jps
+### jps
 
 jps(JVM Process Status Tool)，显示指定系统内所有的 HotSpot 虚拟机进程。
 
@@ -259,7 +257,7 @@ $ jps -l -m
 25816 sun.tools.jps.Jps -l -m
 ```
 
-### 2.4. jstat
+### jstat
 
 jstat(JVM statistics Monitoring)，是用于监视虚拟机运行时状态信息的命令，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT 编译等运行数据。
 
@@ -276,7 +274,7 @@ jstat [option] LVMID [interval] [count]
 - [interval] - 连续输出的时间间隔
 - [count] - 连续输出的次数
 
-### 2.5. jhat
+### jhat
 
 jhat(JVM Heap Analysis Tool)，是与 jmap 搭配使用，用来分析 jmap 生成的 dump，jhat 内置了一个微型的 HTTP/HTML 服务器，生成 dump 的分析结果后，可以在浏览器中查看。
 
@@ -288,7 +286,7 @@ jhat(JVM Heap Analysis Tool)，是与 jmap 搭配使用，用来分析 jmap 生�
 jhat [dumpfile]
 ```
 
-### 2.6. jinfo
+### jinfo
 
 jinfo(JVM Configuration info)，用于实时查看和调整虚拟机运行参数。
 
@@ -306,11 +304,11 @@ option 参数：
 > - -flags : 不需要 args 参数，输出所有 JVM 参数的值
 > - -sysprops : 输出系统属性，等同于 System.getProperties()
 
-## 3. HotSpot VM 参数
+## HotSpot VM 参数
 
 > 详细参数说明请参考官方文档：[Java HotSpot VM Options](http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html)，这里仅列举常用参数。
 
-### 3.1. JVM 内存配置
+### JVM 内存配置
 
 | 配置              | 描述                 |
 | ----------------- | -------------------- |
@@ -322,7 +320,7 @@ option 参数：
 | `-XX:PermSize`    | 永久代空间的初始值。 |
 | `-XX:MaxPermSize` | 永久代空间的最大值。 |
 
-### 3.2. GC 类型配置
+### GC 类型配置
 
 | 配置                    | 描述                                      |
 | ----------------------- | ----------------------------------------- |
@@ -333,7 +331,7 @@ option 参数：
 | -XX:ParallelCMSThreads= | 并发标记扫描垃圾回收器 = 为使用的线程数量 |
 | -XX:+UseG1GC            | G1 垃圾回收器                             |
 
-### 3.3. 辅助配置
+### 辅助配置
 
 | 配置                              | 描述                     |
 | --------------------------------- | ------------------------ |
@@ -341,9 +339,9 @@ option 参数：
 | `-Xloggc:<filename>`              | 指定 GC 日志文件名       |
 | `-XX:+HeapDumpOnOutOfMemoryError` | 内存溢出时输出堆快照文件 |
 
-## 4. 典型配置
+## 典型配置
 
-### 4.1. 堆大小设置
+### 堆大小设置
 
 **年轻代的设置很关键。**
 
@@ -360,15 +358,15 @@ JVM 中最大堆大小有三方面限制：
 - 持久代一般固定大小为 64m。使用 `-XX:PermSize` 设置。
 - 官方推荐年轻代占整个堆的 3/8。使用 `-Xmn` 设置。
 
-### 4.2. 回收器选择
+### 回收器选择
 
 JVM 给了三种选择：串行收集器、并行收集器、并发收集器。
 
-## 5. JVM 实战
+## JVM 实战
 
-### 5.1. 分析 GC 日志
+### 分析 GC 日志
 
-### 5.2. 获取 GC 日志
+### 获取 GC 日志
 
 获取 GC 日志有两种方式：
 
@@ -415,7 +413,7 @@ JAVA_OPTS="-server -Xms2000m -Xmx2000m -Xmn800m -XX:PermSize=64m -XX:MaxPermSize
   指定 rmi 调用时 gc 的时间间隔
 - `-XX:+UseConcMarkSweepGC -XX:MaxTenuringThreshold=15` 采用并发 gc 方式，经过 15 次 minor gc 后进入年老代
 
-### 5.3. 如何分析 GC 日志
+### 如何分析 GC 日志
 
 Young GC 回收日志:
 
@@ -433,11 +431,11 @@ Full GC 回收日志:
 
 通过两张图非常明显看出 gc 日志构成：
 
-Young GC 日志:![img](http://ityouknow.com/assets/images/2017/jvm/Young%20GC.png)
+<div align="center"><img src="http://ityouknow.com/assets/images/2017/jvm/Young%20GC.png"/></div>
 
-Full GC 日志:![img](http://ityouknow.com/assets/images/2017/jvm/Full%20GC.png)
+<div align="center"><img src="http://ityouknow.com/assets/images/2017/jvm/Full%20GC.png"/></div>
 
-### 5.4. OutOfMemory(OOM)分析
+### OutOfMemory(OOM)分析
 
 OutOfMemory ，即内存溢出，是一个常见的 JVM 问题。那么分析 OOM 的思路是什么呢？
 
@@ -723,8 +721,10 @@ printf "%x\n" 6800
         at java.lang.Thread.run(Thread.java:745)
 ```
 
-## 6. 资料
+## 参考资料
 
+- [深入理解 Java 虚拟机：JVM 高级特性与最佳实践（第 2 版）](https://item.jd.com/11252778.html)
+- [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [JVM（4）：Jvm 调优-命令篇](http://www.importnew.com/23761.html)
 - [Java 系列笔记(4) - JVM 监控与调优](https://www.cnblogs.com/zhguang/p/Java-JVM-GC.html)
 - [Java 服务 GC 参数调优案例](https://segmentfault.com/a/1190000005174819)

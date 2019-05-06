@@ -1,15 +1,13 @@
 ---
 title: Java 容器之 Set
-date: 2018/06/28
-categories:
-- javacore
-tags:
-- java
-- javacore
-- container
+date: 2018-05-31 20:21
+categories: ['java', 'javacore', 'container']
+tags: ['java', 'javacore', 'container']
 ---
 
 # Java 容器之 Set
+
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
 
 <!-- TOC depthFrom:2 depthTo:2 -->
 
@@ -29,7 +27,7 @@ tags:
 ## Set 架构
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/container/Set-diagrams.png" width="400" />
+<img src="https://raw.githubusercontent.com/dunwu/images/master/images/java/container/Set-diagrams.png" width="400" />
 </div>
 
 - Set 继承了 Collection 的接口。实际上 Set 就是 Collection，只是行为略有不同：Set 集合不允许有重复元素。

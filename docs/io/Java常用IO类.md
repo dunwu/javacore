@@ -1,28 +1,26 @@
 ---
 title: Java 常用 IO 类
-date: 2018/07/01
-categories:
-- javacore
-tags:
-- java
-- javacore
-- io
+date: 2018-08-06 17:30
+categories: ['java', 'javacore', 'io']
+tags: ['java', 'javacore', 'io']
 ---
 
 # Java 常用 IO 类
 
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+>
 > 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
 
 <!-- TOC depthFrom:2 depthTo:2 -->
 
-- [1. File](#1-file)
-- [2. RandomAccessFile](#2-randomaccessfile)
-- [3. System](#3-system)
-- [4. Scanner](#4-scanner)
+- [File](#file)
+- [RandomAccessFile](#randomaccessfile)
+- [System](#system)
+- [Scanner](#scanner)
 
 <!-- /TOC -->
 
-## 1. File
+## File
 
 `File` 类是 `java.io` 包中唯一对文件本身进行操作的类。它可以对文件、目录进行增删查操作。
 
@@ -94,7 +92,7 @@ File f = new File(filename);
 File files[] = f.listFiles();
 ```
 
-## 2. RandomAccessFile
+## RandomAccessFile
 
 > 注：`RandomAccessFile` 类虽然可以实现对文件内容的读写操作，但是比较复杂。所以一般操作文件内容往往会使用字节流或字符流方式。
 
@@ -182,7 +180,7 @@ public class RandomAccessFileDemo02 {
 }
 ```
 
-## 3. System
+## System
 
 System 中提供了三个常用于 IO 的静态成员：
 
@@ -246,7 +244,7 @@ public class SystemInDemo {
 }
 ```
 
-## 4. Scanner
+## Scanner
 
 Scanner 可以完成输入数据操作，并对数据进行验证。
 

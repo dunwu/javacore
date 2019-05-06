@@ -1,15 +1,13 @@
 ---
 title: Java 容器概述
-date: 2018/05/29
-categories:
-- javacore
-tags:
-- java
-- javacore
-- container
+date: 2018-05-29 17:45
+categories: ['java', 'javacore', 'container']
+tags: ['java', 'javacore', 'container']
 ---
 
 # Java 容器概述
+
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -39,7 +37,7 @@ Java 中常用的存储容器就是数组和容器，二者有以下区别：
 ### 容器框架
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/container/java-container-structure.png" width="640"/>
+<img src="https://raw.githubusercontent.com/dunwu/images/master/images/java/container/java-container-structure.png" width="640"/>
 </div>
 
 Java 容器框架主要分为 Collection 和 Map 两种。其中，Collection 又分为 List、Set 以及 Queue。
@@ -81,7 +79,7 @@ Collection 继承了 Iterable 接口。
 > 目标：提供一种方法顺序访问一个聚合对象中各个元素, 而又无须暴露该对象的内部表示。
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/oop/design-patterns/iterator-pattern.png" width="500"/>
+<img src="https://raw.githubusercontent.com/dunwu/images/master/images/java/oop/design-patterns/iterator-pattern.png" width="500"/>
 </div>
 
 ### Comparable 和 Comparator

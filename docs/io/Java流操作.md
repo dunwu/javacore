@@ -1,35 +1,33 @@
 ---
 title: Java 流操作
-date: 2018/07/01
-categories:
-- javacore
-tags:
-- java
-- javacore
-- io
+date: 2018-07-01 19:04
+categories: ['java', 'javacore', 'io']
+tags: ['java', 'javacore', 'io', 'stream']
 ---
 
 # Java 流操作
 
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+>
 > 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 
 <!-- TOC depthFrom:2 depthTo:2 -->
 
-- [1. 字符流和字节流](#1-字符流和字节流)
-- [2. FileReader 和 FileWriter](#2-filereader-和-filewriter)
-- [3. InputStreamReader 和 OutputStreamWriter](#3-inputstreamreader-和-outputstreamwriter)
-- [4. BufferedReader](#4-bufferedreader)
-- [5. PrintStream](#5-printstream)
-- [6. FileInputStream 和 FileOutputStream](#6-fileinputstream-和-fileoutputstream)
-- [7. ByteArrayInputStream 和 ByteArrayOutputStream](#7-bytearrayinputstream-和-bytearrayoutputstream)
-- [8. PipedInputStream 和 PipedOutputStream](#8-pipedinputstream-和-pipedoutputstream)
-- [9. DataInputStream 和 DataOutputStream](#9-datainputstream-和-dataoutputstream)
-- [10. ZipInputStream 和 ZipOutputStream](#10-zipinputstream-和-zipoutputstream)
-- [11. ObjectInputStream 和 ObjectOutputStream](#11-objectinputstream-和-objectoutputstream)
+- [字符流和字节流](#字符流和字节流)
+- [FileReader 和 FileWriter](#filereader-和-filewriter)
+- [InputStreamReader 和 OutputStreamWriter](#inputstreamreader-和-outputstreamwriter)
+- [BufferedReader](#bufferedreader)
+- [PrintStream](#printstream)
+- [FileInputStream 和 FileOutputStream](#fileinputstream-和-fileoutputstream)
+- [ByteArrayInputStream 和 ByteArrayOutputStream](#bytearrayinputstream-和-bytearrayoutputstream)
+- [PipedInputStream 和 PipedOutputStream](#pipedinputstream-和-pipedoutputstream)
+- [DataInputStream 和 DataOutputStream](#datainputstream-和-dataoutputstream)
+- [ZipInputStream 和 ZipOutputStream](#zipinputstream-和-zipoutputstream)
+- [ObjectInputStream 和 ObjectOutputStream](#objectinputstream-和-objectoutputstream)
 
 <!-- /TOC -->
 
-## 1. 字符流和字节流
+## 字符流和字节流
 
 JAVA IO 中的流操作分为两类：
 
@@ -50,7 +48,7 @@ JAVA IO 中的流操作类，常常是以输入、输出两种形式成对提供
 - 字节流主要操作字节类型数据（byte）；字符流主要操作字符类型数据，一个字符占两个字节。
 - 字节流在操作时本身不会用到缓冲区（内存），而是对文件本身直接操作的；字符流在操作时使用了缓冲区，通过缓冲区再操作文件。
 
-## 2. FileReader 和 FileWriter
+## FileReader 和 FileWriter
 
 **FileReader 和 FileWriter 用于输入输出文本文件。**
 
@@ -112,7 +110,7 @@ public class ReaderAndWriterDemo {
 }
 ```
 
-## 3. InputStreamReader 和 OutputStreamWriter
+## InputStreamReader 和 OutputStreamWriter
 
 **InputStreamReader 和 OutputStreamWriter 可以将 InputStream 和 OutputStream 分别转换为 Reader 和 Writer。**
 
@@ -144,7 +142,7 @@ public class InputStreamReaderDemo {
 }
 ```
 
-## 4. BufferedReader
+## BufferedReader
 
 BufferedReader 类用于从缓冲区中读取内容，所有的输入字节数据都放在缓冲区中。
 
@@ -172,7 +170,7 @@ public class BufferedReaderDemo {
 }
 ```
 
-## 5. PrintStream
+## PrintStream
 
 PrintStream 提供了非常方便的打印功能。
 
@@ -198,7 +196,7 @@ public class PrintStreamDemo {
 }
 ```
 
-## 6. FileInputStream 和 FileOutputStream
+## FileInputStream 和 FileOutputStream
 
 **FileInputStream 和 FileOutputStream 用于输入、输出文件。**
 
@@ -254,7 +252,7 @@ public class FileStreamDemo {
 }
 ```
 
-## 7. ByteArrayInputStream 和 ByteArrayOutputStream
+## ByteArrayInputStream 和 ByteArrayOutputStream
 
 **ByteArrayInputStream 和 ByteArrayOutputStream 用于在内存中输入、输出数据。**
 
@@ -288,7 +286,7 @@ public class ByteArrayStreamDemo {
 }
 ```
 
-## 8. PipedInputStream 和 PipedOutputStream
+## PipedInputStream 和 PipedOutputStream
 
 **PipedInputStream 和 PipedOutputStream 可以在两个线程间进行通信。**
 
@@ -377,7 +375,7 @@ public class PipedStreamDemo {
 }
 ```
 
-## 9. DataInputStream 和 DataOutputStream
+## DataInputStream 和 DataOutputStream
 
 DataInputStream 和 DataOutputStream 会一定格式将数据输入、输出。
 
@@ -460,7 +458,7 @@ public class DataStreamDemo {
 }
 ```
 
-## 10. ZipInputStream 和 ZipOutputStream
+## ZipInputStream 和 ZipOutputStream
 
 示例：
 
@@ -622,7 +620,7 @@ public class ZipStreamDemo {
 }
 ```
 
-## 11. ObjectInputStream 和 ObjectOutputStream
+## ObjectInputStream 和 ObjectOutputStream
 
 **ObjectInputStream 和 ObjectOutputStream 是对象输入输出流，一般用于对象序列化。**
 

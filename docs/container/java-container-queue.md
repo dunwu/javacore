@@ -1,15 +1,13 @@
 ---
 title: Java 容器之 Queue
-date: 2018/06/29
-categories:
-- javacore
-tags:
-- java
-- javacore
-- container
+date: 2018-06-29 15:49
+categories: ['java', 'javacore', 'container']
+tags: ['java', 'javacore', 'container']
 ---
 
 # Java 容器之 Queue
+
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
 
 <!-- TOC depthFrom:2 depthTo:2 -->
 
@@ -29,7 +27,7 @@ tags:
 ## Queue 架构
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/container/Queue-diagrams.png" />
+<img src="https://raw.githubusercontent.com/dunwu/images/master/images/java/container/Queue-diagrams.png" />
 </div>
 
 ## Queue 接口
