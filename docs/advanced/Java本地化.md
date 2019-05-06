@@ -1,29 +1,23 @@
 ---
 title: Java 本地化
-date: 2016/01/20
-categories:
-- javacore
-tags:
-- java
-- javacore
-- advanced
+categories: ['java', 'javacore']
+tags: ['java', 'javacore', 'advanced', 'locale']
+date: 2016-01-20 17:46
 ---
 
 # Java 本地化
 
-<!-- TOC depthFrom:2 depthTo:4 -->
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+
+<!-- TOC depthFrom:2 depthTo:3 -->
 
 - [背景知识](#背景知识)
     - [语言编码、国家/地区编码](#语言编码国家地区编码)
     - [字符编码](#字符编码)
 - [Java 中实现本地化](#java-中实现本地化)
     - [定义不同语种的模板](#定义不同语种的模板)
-        - [定义 properties 文件](#定义-properties-文件)
-        - [Unicode  转换工具](#unicode -转换工具)
     - [选择语种](#选择语种)
-        - [Locale](#locale)
     - [加载指定语种的模板](#加载指定语种的模板)
-        - [ResourceBoundle](#resourceboundle)
 - [支持本地化的工具类](#支持本地化的工具类)
     - [NumberFormat](#numberformat)
     - [DateFormat](#dateformat)
@@ -99,7 +93,7 @@ tags:
 
 有人不禁要问，既然 `Unicode` 可以支持所有语言的字符，那还要其他字符编码做什么？
 
-`Unicode`  有一个缺点：为了支持所有语言的字符，所以它需要用更多位数去表示，比如 `ASCII` 表示一个英文字符只需要一个字节，而  `Unicode`  则需要两个字节。很明显，如果字符数多，这样的效率会很低。
+`Unicode` 有一个缺点：为了支持所有语言的字符，所以它需要用更多位数去表示，比如 `ASCII` 表示一个英文字符只需要一个字节，而 `Unicode` 则需要两个字节。很明显，如果字符数多，这样的效率会很低。
 
 为了解决这个问题，有出现了一些中间格式的字符编码：如 `UTF-8`、`UTF-16`、`UTF-32` 等（中国的程序员一般使用**UTF-8**编码）。
 
@@ -129,7 +123,7 @@ tags:
 
 #### 定义 properties 文件
 
-在`src/main/resources/locales`  路径下定义名为 content 的不同语种资源文件：
+在`src/main/resources/locales` 路径下定义名为 content 的不同语种资源文件：
 
 **content_en_US.properties**
 
@@ -145,11 +139,11 @@ helloWorld = \u4e16\u754c\uff0c\u4f60\u597d\uff01
 time = \u5f53\u524d\u65f6\u95f4\u662f\u0025\u0073\u3002
 ```
 
-可以看到：几个资源文件中，定义的 Key  完全一致，只是  Value  是对应语言的字符串。
+可以看到：几个资源文件中，定义的 Key 完全一致，只是 Value 是对应语言的字符串。
 
 虽然属性值各不相同，但属性名却是相同的，这样应用程序就可以通过 Locale 对象和属性名精确调用到某个具体的属性值了。
 
-#### Unicode  转换工具
+#### Unicode 转换工具
 
 上一节中，我们定义的中文资源文件中的属性值都是以\u 开头的四位 16 进制数。其实，这表示的是一个 Unicode 编码。
 
@@ -158,9 +152,9 @@ helloWorld = \u4e16\u754c\uff0c\u4f60\u597d\uff01
 time = \u5f53\u524d\u65f6\u95f4\u662f\u0025\u0073\u3002
 ```
 
-本文的字符编码中提到了，为了达到跨编码也正常显示的目的，有必要将非 `ASCII`  字符转为  `Unicode`  编码。上面的中文资源文件就是中文转为  `Unicode`  的结果。
+本文的字符编码中提到了，为了达到跨编码也正常显示的目的，有必要将非 `ASCII` 字符转为 `Unicode` 编码。上面的中文资源文件就是中文转为 `Unicode` 的结果。
 
-怎么将非 `ASCII`  字符转为  `Unicode`  编码呢？
+怎么将非 `ASCII` 字符转为 `Unicode` 编码呢？
 
 JDK 在 bin 目录下为我们提供了一个转换工具：**native2ascii**。
 
@@ -170,7 +164,7 @@ JDK 在 bin 目录下为我们提供了一个转换工具：**native2ascii**。
 native2ascii [-reverse] [-encoding 编码] [输入文件 [输出文件]]
 ```
 
-假设**content_zh_CN.properties**  在 `d:\`  目录。执行以下命令可以新建一个名为  **content_zh_CN_new.properties** 的文件，其中的内容就中文字符转为  `UTF-8`  编码格式的结果。
+假设**content_zh_CN.properties** 在 `d:\` 目录。执行以下命令可以新建一个名为 **content_zh_CN_new.properties** 的文件，其中的内容就中文字符转为 `UTF-8` 编码格式的结果。
 
 ```
 native2ascii -encoding utf-8 d:\content_zh_CN.properties d:\content_zh_CN_new.properties
@@ -209,7 +203,7 @@ Locale locale4 = Locale.SIMPLIFIED_CHINESE;
 
 Java 为我们提供了用于加载本地化资源文件的工具类：`java.util.ResourceBoundle`。
 
-`ResourceBoundle` 提供了多个名为 `getBundle` 的静态重载方法，这些方法的作用是用来根据资源名、Locale 选择指定语种的资源文件。需要说明的是： `getBundle` 方法的第一个参数一般都是`baseName` ，这个参数表示资源文件名。
+`ResourceBoundle` 提供了多个名为 `getBundle` 的静态重载方法，这些方法的作用是用来根据资源名、Locale 选择指定语种的资源文件。需要说明的是： `getBundle` 方法的第一个参数一般都是`baseName` ，这个参数表示资源文件名。
 
 `ResourceBoundle` 还提供了名为 `getString` 的方法，用来获取资源文件中 key 对应的 value。
 
@@ -243,15 +237,15 @@ default：世界，你好！
 default：当前时间是08:00。
 ```
 
-注：在加载资源时，如果指定的本地化资源文件不存在，它会尝试按下面的顺序加载其他的资源：本地系统默认本地化对象对应的资源 ->  默认的资源。如果指定错误，Java 会提示找不到资源文件。
+注：在加载资源时，如果指定的本地化资源文件不存在，它会尝试按下面的顺序加载其他的资源：本地系统默认本地化对象对应的资源 -> 默认的资源。如果指定错误，Java 会提示找不到资源文件。
 
 ## 支持本地化的工具类
 
-Java  中也提供了几个支持本地化的格式化工具类。例如：`NumberFormat`、`DateFormat`、`MessageFormat`
+Java 中也提供了几个支持本地化的格式化工具类。例如：`NumberFormat`、`DateFormat`、`MessageFormat`
 
 ### NumberFormat
 
-`NumberFormat`  是所有数字格式类的基类。它提供格式化和解析数字的接口。它也提供了决定数字所属语言类型的方法。
+`NumberFormat` 是所有数字格式类的基类。它提供格式化和解析数字的接口。它也提供了决定数字所属语言类型的方法。
 
 ```java
 public static void main(String[] args) {
@@ -263,7 +257,7 @@ public static void main(String[] args) {
 
 ### DateFormat
 
-DateFormat  是日期、时间格式化类的抽象类。它支持基于语言习惯的日期、时间格式。
+DateFormat 是日期、时间格式化类的抽象类。它支持基于语言习惯的日期、时间格式。
 
 ```java
 public static void main(String[] args) {
@@ -277,7 +271,7 @@ public static void main(String[] args) {
 
 ### MessageFormat
 
-Messageformat  提供一种与语言无关的拼接消息的方式。通过这种拼接方式，将最终呈现返回给使用者。
+Messageformat 提供一种与语言无关的拼接消息的方式。通过这种拼接方式，将最终呈现返回给使用者。
 
 ```java
 public static void main(String[] args) {

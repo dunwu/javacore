@@ -10,27 +10,28 @@
 
 > [Java 基础](docs/basic) 总结 Java 的一些基础特性。
 
-- [Java 简介](docs/basic/1-Java简介.md) - **关键词：** JDK、JRE、JSR、JVM、Java SE、Java EE、Java ME
-- [Java 开发环境](docs/basic/2-Java开发环境.md) - **关键词：** JAVA_HOME、CLASSPATH、Path、环境变量、IDE
-- Java 基础语法
-- [Java 数据类型](docs/basic/Java数据类型.md)
-- [Java 操作符](docs/basic/Java操作符.md)
-- [Java 控制语句](docs/basic/Java控制语句.md) - **关键词：** `if`、`else if`、`else`、`switch`、`while`、`do while`、`for`、`break`、`continue`、`return`
-- Java 方法
+- [Java 开发环境](docs/basic/Java开发环境.md)
+- [Java 基础语法特性](docs/basic/Java基础语法特性.md)
+- [Java 基本数据类型](docs/basic/Java基本数据类型.md)
+- [Java 类和对象](docs/basic/Java类和对象.md)
+- [Java 方法](docs/basic/Java方法.md)
 - [Java 数组](docs/basic/Java数组.md)
-- [Java 枚举](docs/basic/Java枚举.md) - **关键词：** `enum`
-- [Java 异常](docs/basic/Java异常.md) - **关键词：** `Throwable`、`Error`、`Exception`
+- [Java 枚举](docs/basic/Java枚举.md)
+- [Java 控制语句](docs/basic/Java控制语句.md)
+- [Java 异常](docs/basic/Java异常.md)
+- [Java 泛型](docs/basic/Java泛型.md)
+- [Java 反射](docs/basic/Java反射.md)
+- [Java 注解](docs/basic/Java注解.md)
+- [Java 序列化](docs/basic/Java序列化.md)
 
 ## :two: Java 进阶
 
 > [Java 进阶](docs/advanced) 总结 Java 的一些高级特性。
 
 - [Java 正则](docs/advanced/Java正则.md)
-- [Java 泛型](docs/advanced/Java泛型.md)
-- [Java 反射和动态代理](docs/advanced/Java反射和动态代理.md)
-- [Java 动态代理](docs/advanced/Java动态代理.md)
-- [Java 注解](docs/advanced/Java注解.md)
+- [Java 编码和加密](docs/advanced/Java编码和加密.md)
 - [Java 本地化](docs/advanced/Java本地化.md)
+- [Java JDK8](docs/advanced/Java8.md)
 
 ## :three: Java 容器
 

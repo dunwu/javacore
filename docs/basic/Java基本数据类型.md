@@ -1,109 +1,77 @@
 ---
-title: Java 基本数据类型
-date: 2017/11/14
-categories:
-  - javacore
-tags:
-  - javacore
-  - basics
+title: 深入理解 Java 基本数据类型
+categories: ['java', 'javacore']
+tags: ['java', 'javacore', 'basics', 'datatype']
+date: 2018-04-24 19:45
 ---
 
-> :pushpin: **关键词：** `byte`、`short`、`int`、`long`、`float`、`double`、`char`、`boolean`、包装类
+# 深入理解 Java 基本数据类型
 
-# Java 基本数据类型
-
-目录
----
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [数据类型分类](#数据类型分类)
-    - [值类型和引用类型的区别](#值类型和引用类型的区别)
     - [值类型](#值类型)
+    - [值类型和引用类型的区别](#值类型和引用类型的区别)
 - [数据转换](#数据转换)
     - [自动转换](#自动转换)
     - [强制转换](#强制转换)
 - [装箱和拆箱](#装箱和拆箱)
-    - [包装类](#包装类)
-    - [装箱](#装箱)
-    - [拆箱](#拆箱)
-    - [使用装箱的场景](#使用装箱的场景)
+    - [包装类、装箱、拆箱](#包装类装箱拆箱)
     - [自动装箱、自动拆箱](#自动装箱自动拆箱)
+    - [装箱、拆箱的应用和注意点](#装箱拆箱的应用和注意点)
+- [小结](#小结)
+- [参考资料](#参考资料)
 
 <!-- /TOC -->
-
-![数据类型.png](https://upload-images.jianshu.io/upload_images/3101171-58d48d5d2e4a1e92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ## 数据类型分类
 
 Java 中的数据类型有两类：
 
 - 值类型（又叫内置数据类型，基本数据类型）
-- 引用类型
+- 引用类型（除值类型以外，都是引用类型，包括 `String`、数组）
+
+### 值类型
+
+Java 语言提供了 **8** 种基本类型，大致分为 **4** 类
+
+- **整数型**
+  - `byte` - 8 位。
+  - `short` - 16 位。
+  - `int` - 32 位。
+  - `long` - 64 位，赋值时一般在数字后加上 `l` 或 `L`。
+- **浮点型**
+  - `float` - 32 位，直接赋值时必须在数字后加上 `f` 或 `F`。
+  - `double` - 64 位，赋值时一般在数字后加 `d` 或 `D` 。
+- **字符型**
+  - `char` - 16 位，存储 Unicode 码，用单引号赋值。
+- **布尔型**
+  - `boolean` - 只有 true 和 false 两个取值。
 
 ### 值类型和引用类型的区别
 
 - 从概念方面来说
   - 基本类型：变量名指向具体的数值。
   - 引用类型：变量名指向存数据对象的内存地址。
-- 从内存构建方面来说
+- 从内存方面来说
   - 基本类型：变量在声明之后，Java 就会立刻分配给他内存空间。
   - 引用类型：它以特殊的方式（类似 C 指针）向对象实体（具体的值），这类变量声明时不会分配内存，只是存储了一个内存地址。
 - 从使用方面来说
   - 基本类型：使用时需要赋具体值,判断时使用 `==` 号。
   - 引用类型：使用时可以赋 null，判断时使用 `equals` 方法。
 
-### 值类型
-
-​Java 的每种基本类型所占存储空间的大小是固定的。它们的大小不像其他大多数语言那样随机器硬件架构的变化而变化。这种不变性是 Java 程序相对其他大多数语言而言，更容易移植的原因之一。
-
-所有数值类型都有正负号，所以不要去寻找无符号的数值类型。
-
-与绝大多数编程语言类似，Java 也支持数值型、字符型、布尔型数据。
-
-Java 语言提供了 **8** 种基本类型，大致分为 **4** 类
-
-- **整数型**
-  - `byte` - 8 位，最大存储数据量是 255，存放的数据范围是 -128 ~ 127 之间。
-  - `short` - 16 位，最大数据存储量是 65536，数据范围是 -32768 ~ 32767 之间。
-  - `int` - 32 位，最大数据存储容量是 2 的 32 次方减 1，数据范围是负的 2 的 31 次方到正的 2 的 31 次方减 1。
-  - `long` - 64 位，最大数据存储容量是 2 的 64 次方减 1，数据范围为负的 2 的 63 次方到正的 2 的 63 次方减 1。
-- **浮点型**
-  - `float` - 32 位，数据范围在 3.4e-45 ~ 1.4e38，直接赋值时必须在数字后加上 f 或 F。
-  - `double` - 64 位，数据范围在 4.9e-324 ~ 1.8e308，赋值时可以加 d 或 D 也可以不加。
-- **字符型**
-  - `char` - 16 位，存储 Unicode 码，用单引号赋值。
-- **布尔型**
-  - `boolean` - 只有 true 和 false 两个取值。
-
-对于数值类型的基本类型的取值范围，我们无需强制去记忆，因为它们的值都已经以常量的形式定义在对应的包装类中了。
-
-示例：
-
-```java
-public class DataTypeScopeDemo {
-
-    public static void main(String[] args) {
-        // byte
-        System.out.println("基本类型：byte 二进制位数：" + Byte.SIZE);
-        System.out.println("包装类：java.lang.Byte");
-        System.out.println("最小值：Byte.MIN_VALUE=" + Byte.MIN_VALUE);
-        System.out.println("最大值：Byte.MAX_VALUE=" + Byte.MAX_VALUE);
-        System.out.println();
-    }
-};
-```
-
-输出：
-
-```
-基本类型：byte 二进制位数：8
-包装类：java.lang.Byte
-最小值：Byte.MIN_VALUE=-128
-最大值：Byte.MAX_VALUE=127
-```
+> :point_right: 扩展阅读：[Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
+>
+> 这篇文章对于基本数据类型和引用类型的内存存储讲述比较生动。
 
 ## 数据转换
+
+Java 中，数据类型转换有两种方式：
+
+- 自动转换
+- 强制转换
 
 ### 自动转换
 
@@ -111,7 +79,7 @@ public class DataTypeScopeDemo {
 
 如果符合以下条件，则 JAVA 将会自动做类型转换：
 
-- 由“小”数据转换为“大”数据
+- **由小数据转换为大数据**
 
   显而易见的是，“小”数据类型的数值表示范围小于“大”数据类型的数值表示范围，即精度小于“大”数据类型。
 
@@ -123,24 +91,24 @@ public class DataTypeScopeDemo {
 
   这里我们所说的“大”与“小”，并不是指占用字节的多少，而是指表示值的范围的大小。
 
-- 转换前后的数据类型要兼容
+- **转换前后的数据类型要兼容**
 
   由于 boolean 类型只能存放 true 或 false，这与整数或字符是不兼容的，因此不可以做类型转换。
 
-- 整型类型和浮点型进行计算后，结果会转为浮点类型
+- **整型类型和浮点型进行计算后，结果会转为浮点类型**
 
 示例：
 
 ```java
-long x = 30;
-float y = 14.3f;
-System.out.println("x/y = " + x/y);
+long x = 30;
+float y = 14.3f;
+System.out.println("x/y = " + x/y);
 ```
 
 输出：
 
 ```
-x/y = 1.9607843
+x/y = 1.9607843
 ```
 
 可见 long 虽然精度大于 float 类型，但是结果为浮点数类型。
@@ -149,67 +117,50 @@ x/y = 1.9607843
 
 在不符合自动转换条件时或者根据用户的需要，可以对数据类型做强制的转换。
 
-转换方式为：在数值的前面用一个括号 `()` 把要强制转换的类型标注出来。
+**强制转换使用括号 `()` 。**
+
+引用类型也可以使用强制转换。
 
 示例：
 
 ```java
-float f = 25.5f;
-int x = (int)f;
-System.out.println("x = " + x);
+float f = 25.5f;
+int x = (int)f;
+System.out.println("x = " + x);
 ```
 
 ## 装箱和拆箱
 
-### 包装类
+### 包装类、装箱、拆箱
 
-Java 中基本类型的包装类如下：
+Java 中为每一种基本数据类型提供了相应的包装类，如下：
 
-- Byte <-> byte
-- Short <-> short
-- Integer <-> int
-- Long <-> long
-- Float <-> float
-- Double <-> double
-- Character <-> char
-- Boolean <-> boolean
-
-### 装箱
-
-装箱是将值类型转换为引用类型。
-
-例：
-
-```java
-Integer i1 = new Integer(10); // 非自动装箱
-Integer i2 = 10; // 自动装箱
-System.out.println("i1 = " + i1);
-System.out.println("i2 = " + i2);
+```
+Byte <-> byte
+Short <-> short
+Integer <-> int
+Long <-> long
+Float <-> float
+Double <-> double
+Character <-> char
+Boolean <-> boolean
 ```
 
-### 拆箱
+**引入包装类的目的**就是：提供一种机制，使得**基本数据类型可以与引用类型互相转换**。
 
-拆箱是将引用类型转换为值类型。
+基本数据类型与包装类的转换被称为`装箱`和`拆箱`。
 
-例：
-
-```java
-int i1 = new Integer(10); // 自动拆箱
-Integer tmp = new Integer(20);
-int i2 = tmp.intValue(); // 非自动拆箱
-System.out.println("i1 = " + i1);
-System.out.println("i2 = " + i2);
-```
-
-### 使用装箱的场景
-
-一种最普通的场景是：调用一个含类型为 Object 参数的方法，该 Object 可支持任意类型（因为 Object 是所有类的父类），以便通用。当你需要将一个值类型（如 Integer）传入时，需要装箱。
-
-另一种用法是，一个非泛型的容器，同样是为了保证通用，而将元素类型定义为 Object。于是，要将值类型数据加入容器时，需要装箱。
+- **`装箱`（boxing）是将值类型转换为引用类型**。例如：`int` 转 `Integer`
+  - 装箱过程是通过调用包装类的 `valueOf` 方法实现的。
+- **`拆箱`（unboxing）是将引用类型转换为值类型**。例如：`Integer` 转 `int`
+  - 拆箱过程是通过调用包装类的 `xxxValue` 方法实现的。（xxx 代表对应的基本数据类型）。
 
 ### 自动装箱、自动拆箱
 
 基本数据（Primitive）型的自动装箱（boxing）拆箱（unboxing）自 JDK 5 开始提供的功能。
+
+自动装箱与拆箱的机制可以让我们在 Java 的变量赋值或者是方法调用等情况下使用原始类型或者对象类型更加简单直接。
+因为自动装箱会隐式地创建对象，如果在一个循环体中，会创建无用的中间对象，这样会增加 GC 压力，拉低程序的性能。所以在写循环时一定要注意代码，避免引入不必要的自动装箱操作。
 
 JDK 5 之前的形式：
 
@@ -224,3 +175,65 @@ Integer i2 = 10; // 自动装箱
 ```
 
 Java 对于自动装箱和拆箱的设计，依赖于一种叫做享元模式的设计模式（有兴趣的朋友可以去了解一下源码，这里不对设计模式展开详述）。
+
+> 👉 扩展阅读：[深入剖析 Java 中的装箱和拆箱](https://www.cnblogs.com/dolphin0520/p/3780005.html)
+>
+> 结合示例，一步步阐述装箱和拆箱原理。
+
+### 装箱、拆箱的应用和注意点
+
+#### 装箱、拆箱应用场景
+
+- 一种最普通的场景是：调用一个**含类型为 `Object` 参数的方法**，该 `Object` 可支持任意类型（因为 `Object` 是所有类的父类），以便通用。当你需要将一个值类型（如 int）传入时，需要使用 `Integer` 装箱。
+- 另一种用法是：一个**非泛型的容器**，同样是为了保证通用，而将元素类型定义为 `Object`。于是，要将值类型数据加入容器时，需要装箱。
+- 当 `==` 运算符的两个操作，一个操作数是包装类，另一个操作数是表达式（即包含算术运算）则比较的是数值（即会触发自动拆箱的过程）。
+
+示例：
+
+```java
+Integer i1 = 10; // 自动装箱
+Integer i2 = new Integer(10); // 非自动装箱
+Integer i3 = Integer.valueOf(10); // 非自动装箱
+int i4 = new Integer(10); // 自动拆箱
+int i5 = i2.intValue(); // 非自动拆箱
+System.out.println("i1 = [" + i1 + "]");
+System.out.println("i2 = [" + i2 + "]");
+System.out.println("i3 = [" + i3 + "]");
+System.out.println("i4 = [" + i4 + "]");
+System.out.println("i5 = [" + i5 + "]");
+System.out.println("i1 == i2 is [" + (i1 == i2) + "]");
+System.out.println("i1 == i4 is [" + (i1 == i4) + "]"); // 自动拆箱
+// Output:
+// i1 = [10]
+// i2 = [10]
+// i3 = [10]
+// i4 = [10]
+// i5 = [10]
+// i1 == i2 is [false]
+// i1 == i4 is [true]
+```
+
+> 示例说明：
+>
+> 上面的例子，虽然简单，但却隐藏了自动装箱、拆箱和非自动装箱、拆箱的应用。从例子中可以看到，明明所有变量都初始化为数值 10 了，但为何会出现 `i1 == i2 is [false` 而 `i1 == i4 is [true]` ？
+>
+> 原因在于：
+>
+> - i1、i2 都是包装类，使用 `==` 时，Java 将它们当做两个对象，而非两个 int 值来比较，所以两个对象自然是不相等的。正确的比较操作应该使用 `equals` 方法。
+> - i1 是包装类，i4 是基础数据类型，使用 `==` 时，Java 会将两个 i1 这个包装类对象自动拆箱为一个 `int` 值，再代入到 `==` 运算表达式中计算；最终，相当于两个 `int` 进行比较，由于值相同，所以结果相等。
+
+#### 装箱、拆箱应用注意点
+
+1. 装箱操作会创建对象，频繁的装箱操作会造成不必要的内存消耗，影响性能。所以**应该尽量避免装箱。**
+2. 基础数据类型的比较操作使用 `==`，包装类的比较操作使用 `equals` 方法。
+
+## 小结
+
+<div align="center"><img src="https://raw.githubusercontent.com/dunwu/images/master/snap/1553754196283.png"/></div>
+
+## 参考资料
+
+- [Java 编程思想](https://book.douban.com/subject/2130190/)
+- [JAVA 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
+- [深入剖析 Java 中的装箱和拆箱](https://www.cnblogs.com/dolphin0520/p/3780005.html)

@@ -1,24 +1,59 @@
 ---
 title: Java 控制语句
-date: 2015/05/28
-categories:
-- javacore
-tags:
-- javacore
-- basics
+categories: ['java', 'javacore']
+tags: ['java', 'javacore', 'basics', 'datatype']
+date: 2015-05-28 10:58
 ---
 
 # Java 控制语句
 
-## 知识点
+> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+>
+> :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/control)」
 
-![控制语句.png](https://upload-images.jianshu.io/upload_images/3101171-a4b447bc6fef43e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [选择语句](#选择语句)
+    - [if 语句](#if-语句)
+    - [if...else 语句](#ifelse-语句)
+    - [if...else if...else 语句](#ifelse-ifelse-语句)
+    - [嵌套的 if…else 语句](#嵌套的-ifelse-语句)
+    - [switch 语句](#switch-语句)
+- [循环语句](#循环语句)
+    - [while 循环](#while-循环)
+    - [do while 循环](#do-while-循环)
+    - [for 循环](#for-循环)
+    - [foreach 循环](#foreach-循环)
+- [中断语句](#中断语句)
+    - [break 关键字](#break-关键字)
+    - [continue 关键字](#continue-关键字)
+    - [return 关键字](#return-关键字)
+- [最佳实践](#最佳实践)
+- [小结](#小结)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
+
+Java 控制语句大致可分为三大类：
+
+- 选择语句
+  - if, else-if, else
+  - switch
+- 循环语句
+  - while
+  - do...while
+  - for
+  - foreach
+- 终端语句
+  - break
+  - continue
+  - return
 
 ## 选择语句
 
 ### if 语句
 
-if 语句会判断括号中的条件是否成立，如果成立则执行 if 语句中的代码块，否则跳过代码块继续执行。
+`if` 语句会判断括号中的条件是否成立，如果成立则执行 `if` 语句中的代码块，否则跳过代码块继续执行。
 
 **语法**
 
@@ -45,7 +80,7 @@ public class IfDemo {
 
 ### if...else 语句
 
-if 语句后面可以跟 else 语句，当 if 语句的布尔表达式值为 false 时，else 语句块会被执行。
+`if` 语句后面可以跟 `else` 语句，当 `if` 语句的布尔表达式值为 `false` 时，`else` 语句块会被执行。
 
 **语法**
 
@@ -76,9 +111,9 @@ public class IfElseDemo {
 
 ### if...else if...else 语句
 
-* if 语句至多有 1 个 else 语句，else 语句在所有的 elseif 语句之后。
-* If 语句可以有若干个 elseif 语句，它们必须在 else 语句之前。
-* 一旦其中一个 else if 语句检测为 true，其他的 else if 以及 else 语句都将跳过执行。
+- `if` 语句至多有 1 个 `else` 语句，`else` 语句在所有的 `else if` 语句之后。
+- `If` 语句可以有若干个 `else if` 语句，它们必须在 `else` 语句之前。
+- 一旦其中一个 `else if` 语句检测为 `true`，其他的 `else if` 以及 `else` 语句都将跳过执行。
 
 **语法**
 
@@ -118,7 +153,7 @@ public class IfElseifElseDemo {
 
 ### 嵌套的 if…else 语句
 
-使用嵌套的 if-else 语句是合法的。也就是说你可以在另一个 if 或者 elseif 语句中使用 if 或者 elseif 语句。
+使用嵌套的 `if else` 语句是合法的。也就是说你可以在另一个 `if` 或者 `else if` 语句中使用 `if` 或者 `else if` 语句。
 
 **语法**
 
@@ -150,18 +185,18 @@ public class IfNestDemo {
 // X = 30 and Y = 10
 ```
 
-### **switch 语句**
+### switch 语句
 
-switch 语句判断一个变量与一系列值中某个值是否相等，每个值称为一个分支。
+`switch` 语句判断一个变量与一系列值中某个值是否相等，每个值称为一个分支。
 
-switch 语句有如下规则：
+`switch` 语句有如下规则：
 
-* switch 语句中的变量类型只能为 byte、short、int、char 或者 String。
-* switch 语句可以拥有多个 case 语句。每个 case 后面跟一个要比较的值和冒号。
-* case 语句中的值的数据类型必须与变量的数据类型相同，而且只能是常量或者字面常量。
-* 当变量的值与 case 语句的值相等时，那么 case 语句之后的语句开始执行，直到 break 语句出现才会跳出 switch 语句。
-* 当遇到 break 语句时，switch 语句终止。程序跳转到 switch 语句后面的语句执行。case 语句不必须要包含 break 语句。如果没有 break 语句出现，程序会继续执行下一条 case 语句，直到出现 break 语句。
-* switch 语句可以包含一个 default 分支，该分支必须是 switch 语句的最后一个分支。default 在没有 case 语句的值和变量值相等的时候执行。default 分支不需要 break 语句。
+- `switch` 语句中的变量类型只能为 `byte`、`short`、`int`、`char` 或者 `String`。
+- `switch` 语句可以拥有多个 `case` 语句。每个 `case` 后面跟一个要比较的值和冒号。
+- `case` 语句中的值的数据类型必须与变量的数据类型相同，而且只能是常量或者字面常量。
+- 当变量的值与 `case` 语句的值相等时，那么 `case` 语句之后的语句开始执行，直到 `break` 语句出现才会跳出 `switch` 语句。
+- 当遇到 `break` 语句时，`switch` 语句终止。程序跳转到 `switch` 语句后面的语句执行。`case` 语句不必须要包含 `break` 语句。如果没有 `break` 语句出现，程序会继续执行下一条 `case` 语句，直到出现 `break` 语句。
+- `switch` 语句可以包含一个 `default` 分支，该分支必须是 `switch` 语句的最后一个分支。`default` 在没有 `case` 语句的值和变量值相等的时候执行。`default` 分支不需要 `break` 语句。
 
 **语法**
 
@@ -216,6 +251,8 @@ public class SwitchDemo {
 
 ### while 循环
 
+只要布尔表达式为 `true`，`while` 循环体会一直执行下去。
+
 **语法**
 
 ```java
@@ -223,8 +260,6 @@ while( 布尔表达式 ) {
     //循环内容
 }
 ```
-
-> 只要布尔表达式为 true，循环体会一直执行下去。
 
 **示例**
 
@@ -254,9 +289,9 @@ public class WhileDemo {
 
 ### do while 循环
 
-对于 while 语句而言，如果不满足条件，则不能进入循环。但有时候我们需要即使不满足条件，也至少执行一次。
+对于 `while` 语句而言，如果不满足条件，则不能进入循环。但有时候我们需要即使不满足条件，也至少执行一次。
 
-do…while 循环和 while 循环相似，不同的是，do…while 循环至少会执行一次。
+`do while` 循环和 `while` 循环相似，不同的是，`do while` 循环至少会执行一次。
 
 **语法**
 
@@ -297,8 +332,8 @@ public class DoWhileDemo {
 
 ### for 循环
 
-虽然所有循环结构都可以用 while 或者 do...while 表示，但 Java 提供了另一种语句 —— for 循环，使一些循环结构变得更加简单。
-for 循环执行的次数是在执行前就确定的。
+虽然所有循环结构都可以用 `while` 或者 `do while` 表示，但 Java 提供了另一种语句 —— `for` 循环，使一些循环结构变得更加简单。
+`for` 循环执行的次数是在执行前就确定的。
 
 **语法**
 
@@ -308,10 +343,10 @@ for (初始化; 布尔表达式; 更新) {
 }
 ```
 
-* 最先执行初始化步骤。可以声明一种类型，但可初始化一个或多个循环控制变量，也可以是空语句。
-* 然后，检测布尔表达式的值。如果为 true，循环体被执行。如果为 false，循环终止，开始执行循环体后面的语句。
-* 执行一次循环后，更新循环控制变量。
-* 再次检测布尔表达式。循环执行上面的过程。
+- 最先执行初始化步骤。可以声明一种类型，但可初始化一个或多个循环控制变量，也可以是空语句。
+- 然后，检测布尔表达式的值。如果为 true，循环体被执行。如果为 false，循环终止，开始执行循环体后面的语句。
+- 执行一次循环后，更新循环控制变量。
+- 再次检测布尔表达式。循环执行上面的过程。
 
 **示例**
 
@@ -383,9 +418,9 @@ public class ForeachDemo {
 
 ### break 关键字
 
-break 主要用在循环语句或者 switch 语句中，用来跳出整个语句块。
+`break` 主要用在循环语句或者 `switch` 语句中，用来跳出整个语句块。
 
-break 跳出最里层的循环，并且继续执行该循环下面的语句。
+`break` 跳出最里层的循环，并且继续执行该循环下面的语句。
 
 **示例**
 
@@ -413,7 +448,7 @@ public class BreakDemo {
 
 ### continue 关键字
 
-continue 适用于任何循环控制结构中。作用是让程序立刻跳转到下一次循环的迭代。在 for 循环中，continue 语句使程序立即跳转到更新语句。在 while 或者 do…while 循环中，程序立即跳转到布尔表达式的判断语句。
+`continue` 适用于任何循环控制结构中。作用是让程序立刻跳转到下一次循环的迭代。在 `for` 循环中，`continue` 语句使程序立即跳转到更新语句。在 `while` 或者 `do while` 循环中，程序立即跳转到布尔表达式的判断语句。
 
 **示例**
 
@@ -465,4 +500,21 @@ public class ReturnDemo {
 // 20
 ```
 
-> 注意：请仔细体会一下 return 和 break 的区别。
+> 注意：请仔细体会一下 `return` 和 `break` 的区别。
+
+## 最佳实践
+
+- 选择分支特别多的情况下，`switch` 语句优于 `if...else if...else` 语句。
+- `switch` 语句不要吝啬使用 `default`。
+- `switch` 语句中的 `default` 要放在最后。
+- `foreach` 循环优先于传统的 `for` 循环
+- 不要循环遍历容器元素，然后删除特定元素。正确姿势应该是遍历容器的迭代器（`Iterator`），删除元素。
+
+## 小结
+
+<div align="center"><img src="https://raw.githubusercontent.com/dunwu/images/master/snap/1552361630220.png"/></div>
+
+## 参考资料
+
+- [Java 编程思想](https://book.douban.com/subject/2130190/)
+- [JAVA 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
