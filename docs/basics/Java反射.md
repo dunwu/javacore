@@ -277,7 +277,7 @@ public class NewInstanceDemo {
 ```java
 public class ReflectFieldDemo {
     class FieldSpy<T> {
-        public boolean[][] b = {{false, false}, {true, true}};
+        public boolean[][] b = { {false, false}, {true, true} };
         public String name = "Alice";
         public List<Integer> list;
         public T val;
