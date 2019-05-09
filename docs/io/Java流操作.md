@@ -1,13 +1,6 @@
----
-title: Java 流操作
-date: 2018-07-01 19:04
-categories: ['java', 'javacore', 'io']
-tags: ['java', 'javacore', 'io', 'stream']
----
-
 # Java 流操作
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 

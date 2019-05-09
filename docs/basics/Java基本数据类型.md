@@ -1,13 +1,6 @@
----
-title: 深入理解 Java 基本数据类型
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'basics', 'datatype']
-date: 2018-04-24 19:45
----
-
 # 深入理解 Java 基本数据类型
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

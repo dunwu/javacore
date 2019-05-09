@@ -1,13 +1,6 @@
----
-title: 深入理解 Java 数组
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'basics', 'array']
-date: 2014-10-14 10:15
----
-
 # 深入理解 Java 数组
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/array)」
 

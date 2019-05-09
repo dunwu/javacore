@@ -1,15 +1,8 @@
----
-title: 深入理解 Java 注解
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'basics', 'annotation']
-date: 2017-08-22 10:30
----
-
 # 深入理解 Java 注解
 
 > 本文内容基于 JDK8。注解是 JDK5 引入的，后续 JDK 版本扩展了一些内容，本文中没有明确指明版本的注解都是 JDK5 就已经支持的注解。
 >
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/annotation)」
 

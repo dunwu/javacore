@@ -1,13 +1,6 @@
----
-title: Java 并发面试题总结
-date: 2018-05-10 16:14
-categories: ['java', 'javacore', 'concurrent']
-tags: ['java', 'javacore', 'concurrent', 'interview']
----
-
 # Java 并发面试题总结
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

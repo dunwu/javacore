@@ -1,13 +1,6 @@
----
-title: 深入理解 Java 枚举
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'basics', 'enum']
-date: 2018-04-24 19:45
----
-
 # 深入理解 Java 枚举
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/enumeration)」
 

@@ -2,11 +2,11 @@
 
 > :coffee: JavaCore 是对 Java 核心技术的经验总结。
 
-|            :one:            |            :two:            |            :three:            |            :four:            |          :five:          |              :six:              |                :seven:                |
-|:---------------------------:|:---------------------------:|:-----------------------------:|:----------------------------:|:------------------------:|:-------------------------------:|:-------------------------------------:|
-| [Java 基础](#one-java-基础) | [Java 进阶](#two-java-进阶) | [Java 容器](#three-java-容器) | [Java 并发](#four-java-并发) | [Java IO](#five-java-io) | [Java 虚拟机](#six-java-虚拟机) | [Java 编程规范](#seven-java-编程规范) |
+|          :one:          |          :two:          |         :three:         |         :four:          |       :five:        |            :six:            |             :seven:             |
+| :---------------------: | :---------------------: | :---------------------: | :---------------------: | :-----------------: | :-------------------------: | :-----------------------------: |
+| [Java 基础](#java-基础) | [Java 进阶](#java-进阶) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [Java IO](#java-io) | [Java 虚拟机](#java-虚拟机) | [Java 编程规范](#java-编程规范) |
 
-## :one: Java 基础
+## Java 基础
 
 > [Java 基础](docs/basics) 总结 Java 的一些基础特性。
 
@@ -22,9 +22,8 @@
 - [Java 泛型](docs/basics/Java泛型.md)
 - [Java 反射](docs/basics/Java反射.md)
 - [Java 注解](docs/basics/Java注解.md)
-- [Java 序列化](docs/basics/Java序列化.md)
 
-## :two: Java 进阶
+## Java 进阶
 
 > [Java 进阶](docs/advanced) 总结 Java 的一些高级特性。
 
@@ -33,7 +32,7 @@
 - [Java 本地化](docs/advanced/Java本地化.md)
 - [Java JDK8](docs/advanced/Java8.md)
 
-## :three: Java 容器
+## Java 容器
 
 > [Java 容器](docs/container) 涉及许多数据结构知识点，所以设立专题进行总结。
 
@@ -43,7 +42,7 @@
 - [Java 容器之 Queue](docs/container/java-container-queue.md)
 - [Java 容器之 Map](docs/container/java-container-map.md)
 
-## :four: Java 并发
+## Java 并发
 
 > [Java 并发](docs/concurrent) 知识点庞杂且难懂，特设专题进行总结。
 
@@ -58,7 +57,7 @@
 - [第八章 并发工具类](docs/concurrent/并发工具类.md)
 - [第九章 线程池](docs/concurrent/线程池.md)
 
-## :five: Java IO
+## Java IO
 
 > Java IO 知识点
 
@@ -67,7 +66,7 @@
 - [Java 序列化](docs/io/Java序列化.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`
 - [Java 网络编程](docs/io/Java网络编程.md)
 
-## :six: Java 虚拟机
+## Java 虚拟机
 
 > [Java 虚拟机](docs/jvm) 记录了 JVM 的基本机制。
 
@@ -76,7 +75,7 @@
 - [第三章 类加载机制](docs/jvm/类加载机制.md)
 - [第四章 JVM 调优](docs/jvm/JVM调优.md)
 
-## :seven: Java 编程规范
+## Java 编程规范
 
 > Java 编程规范记录了 Java 编程的规范和最佳实践。
 >

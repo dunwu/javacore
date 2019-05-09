@@ -1,13 +1,6 @@
----
-title: Java 本地化
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'advanced', 'locale']
-date: 2016-01-20 17:46
----
-
 # Java 本地化
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

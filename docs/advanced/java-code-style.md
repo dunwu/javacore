@@ -1,9 +1,3 @@
----
-title: Java 编程规范
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'advanced', 'code style']
-date: 2018-04-13 17:32
----
 # Java 编程规范
 
 > 编程规范就是 Java 开发的最佳实践。帮助开发人员少走弯路。

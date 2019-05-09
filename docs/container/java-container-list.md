@@ -1,13 +1,6 @@
----
-title: Java 容器之 List
-date: 2018-06-27 23:12
-categories: ['java', 'javacore', 'container']
-tags: ['java', 'javacore', 'container']
----
-
 # Java 容器之 List
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > `List` 是 `Collection` 的子接口，其中可以保存各个重复的内容。
 

@@ -1,13 +1,6 @@
----
-title: 深入理解 Java 异常
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'basics', 'exception']
-date: 2015-04-25 20:43
----
-
 # 深入理解 Java 异常
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/exception)」
 

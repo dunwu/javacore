@@ -1,13 +1,6 @@
----
-title: JVM 调优
-date: 2018-05-29 15:32
-categories: ['java', 'javacore', 'jvm']
-tags: ['java', 'javacore', 'jvm']
----
-
 # JVM 调优
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

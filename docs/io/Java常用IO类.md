@@ -1,13 +1,6 @@
----
-title: Java 常用 IO 类
-date: 2018-08-06 17:30
-categories: ['java', 'javacore', 'io']
-tags: ['java', 'javacore', 'io']
----
-
 # Java 常用 IO 类
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
 

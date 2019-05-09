@@ -1,13 +1,3 @@
----
-title: Java 开发环境
-date: 2017/12/06
-categories:
-  - javacore
-tags:
-  - java
-  - javacore
----
-
 # Java 开发环境
 
 > :pushpin: **关键词：** JAVA_HOME、CLASSPATH、Path、环境变量、IDE

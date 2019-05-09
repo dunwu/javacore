@@ -1,13 +1,6 @@
----
-title: Java 基础语法特性
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'basics']
-date: 2019-03-10 22:28
----
-
 # Java 基础语法特性
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

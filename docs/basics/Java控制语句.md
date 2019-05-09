@@ -1,13 +1,6 @@
----
-title: Java 控制语句
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'basics', 'datatype']
-date: 2015-05-28 10:58
----
-
 # Java 控制语句
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/control)」
 

@@ -1,13 +1,6 @@
----
-title: 深入理解 Java 反射和动态代理
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'basics', 'reflect', 'proxy']
-date: 2018-07-16 14:52
----
-
 # 深入理解 Java 反射和动态代理
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/reflect)」
 

@@ -1,13 +1,6 @@
----
-title: Java 编码和加密
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'advanced', 'encrypt', 'encode']
-date: 2016-07-20 14:46
----
-
 # Java 编码和加密
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

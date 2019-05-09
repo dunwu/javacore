@@ -1,13 +1,6 @@
----
-title: Java 容器之 Map
-date: 2018-05-31 20:21
-categories: ['java', 'javacore', 'container']
-tags: ['java', 'javacore', 'container']
----
-
 # Java 容器之 Map
 
-> :notebook: 本文已归档到：「[blog](https://github.com/dunwu/blog)」
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 <!-- TOC depthFrom:2 depthTo:2 -->
 
