@@ -60,7 +60,7 @@
 
 ### 类加载过程
 
-<div align="center"><img src="https://raw.githubusercontent.com/dunwu/images/master/snap/1553611895164.png"/></div>
+<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553611895164.png"/></div>
 
 类加载的完整过程如下：
 
@@ -472,7 +472,7 @@ class Proxy extends Subject {
 
 在运行状态中，需要代理的地方，根据 Subject 和 RealSubject，动态地创建一个 Proxy，用完之后，就会销毁，这样就可以避免了 Proxy 角色的 class 在系统中冗杂的问题了。
 
-<div align="center"><img src="https://raw.githubusercontent.com/dunwu/images/master/snap/1553614585028.png"/></div>
+<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553614585028.png"/></div>
 
 Java 动态代理基于经典代理模式，引入了一个 InvocationHandler，InvocationHandler 负责统一管理所有的方法调用。
 
@@ -677,9 +677,9 @@ public abstract java.lang.String io.github.dunwu.javacore.reflect.InvocationHand
 
 ## 小结
 
-<div align="center"><img src="https://raw.githubusercontent.com/dunwu/images/master/snap/1553615203764.png"/></div>
+<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553615203764.png"/></div>
 
-<div align="center"><img src="https://raw.githubusercontent.com/dunwu/images/master/snap/1553615153731.png"/></div>
+<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553615153731.png"/></div>
 
 ## 参考资料
 

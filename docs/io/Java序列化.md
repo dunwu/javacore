@@ -31,7 +31,7 @@ date: 2018-06-04 17:59
 
 ## 简介
 
-<div align="center"><img src="https://raw.githubusercontent.com/dunwu/images/master/snap/1553224129484.png"/></div>
+<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553224129484.png"/></div>
 
 - **序列化（serialize）** - 序列化是将对象转换为字节流。
 - **反序列化（deserialize）** - 反序列化是将字节流转换为对象。
@@ -457,7 +457,7 @@ Java 官方的序列化主要体现在以下方面：
 
 ## 小结
 
-<div align="center"><img src="https://raw.githubusercontent.com/dunwu/images/master/snap/1553227663192.png"/></div>
+<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553227663192.png"/></div>
 
 ## 参考资料
 

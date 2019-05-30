@@ -2,20 +2,153 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Javacore</title>
+    <title>JavaCore</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="description" content="Java 核心技术教程" />
     <meta
       name="viewport"
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
+    <link rel="icon" href="http://dunwu.test.upcdn.net/images/others/zp_50_50.png" type="image/x-icon" />
     <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css" title="vue" />
-    <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/dark.css" title="dark" disabled />
-    <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/buble.css" title="buble" disabled />
-    <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/pure.css" title="pure" disabled />
     <style>
-      nav.app-nav li ul {
-        min-width: 100px;
+      h1 + ul {
+        display: block !important;
+      }
+
+      .content img,
+      .sidebar img {
+        border: none;
+        border-radius: 8px;
+        box-shadow: 3px 3px 3px #ddd;
+      }
+
+      .content,
+      .sidebar,
+      .sidebar-toggle,
+      body,
+      .search input {
+        color: #6b615f !important;
+        background-color: #fff4e6 !important;
+      }
+
+      .content strong,
+      .sidebar strong,
+      body strong {
+        color: #5c5869 !important;
+      }
+    </style>
+    <style>
+      .cover-main ul a:hover {
+        color: #fe4165 !important;
+      }
+
+      .cover-main p a:hover {
+        color: white !important;
+      }
+
+      /* content 样式内容 */
+      .sidebar a,
+      .content a {
+        color: #399ab2 !important;
+        text-decoration: none;
+      }
+
+      .sidebar a:hover,
+      .content a:hover {
+        color: #fe4165 !important;
+      }
+
+      .content h1 span {
+        color: #399ab2 !important;
+        font-size: 24px;
+        text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
+      }
+
+      .content h2 span {
+        color: #60497c !important;
+        font-size: 20px;
+        text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
+      }
+
+      .content h3 span {
+        color: #346093 !important;
+        font-size: 18px;
+        text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
+      }
+
+      .content h4 span {
+        font-size: 16px;
+        color: #78943a;
+        text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
+      }
+    </style>
+    <style>
+      .content > p {
+        font-size: 16px !important;
+        line-height: 24px;
+      }
+
+      .content blockquote {
+        display: block;
+        padding: 0 16px;
+        border-left: 8px solid #dddfe4;
+        background: #fff2c9;
+        overflow: auto;
+      }
+
+      .content pre {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        border-radius: 8px;
+        box-shadow: 1px 1px 20px 3px #ddd !important;
+      }
+
+      .content code {
+        background-color: white;
+        border-radius: 6px;
+        box-shadow: 1px 1px 1px whitesmoke;
+      }
+
+      /*表格样式*/
+      .content table {
+        display: table;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        box-shadow: 2px 2px 20px 6px #ddd !important;
+      }
+
+      .content th {
+        font-weight: bold;
+        font-size: 16px;
+        background-color: #cce6b6;
+      }
+    </style>
+    <style>
+      @media (min-width: 600px) {
+        .markdown-section pre > code {
+          font-size: 0.9rem !important;
+        }
+      }
+      @media (max-width: 600px) {
+        .markdown-section pre > code {
+          padding-top: 5px;
+          padding-bottom: 5px;
+        }
+        pre:after {
+          content: "" !important;
+        }
+      }
+      @media (min-width: 600px) {
+        pre code {
+          padding-left: 20px !important;
+        }
+      }
+      @media (max-width: 600px) {
+        pre {
+          padding-left: 0px !important;
+          padding-right: 0px !important;
+        }
       }
     </style>
   </head>
@@ -23,31 +156,32 @@
     <div id="app">正在加载...</div>
     <script>
       window.$docsify = {
-        auto2top: true,
-        loadNavbar: "navbar.md",
-        name: "Java 核心技术教程",
+        name: "JavaCore",
         repo: "https://github.com/dunwu/javacore",
-        maxLevel: 4,
+        auto2top: true,
+        logo: "http://dunwu.test.upcdn.net/images/others/zp_100_100.png",
+        coverpage: "coverpage.md",
         subMaxLevel: 4,
+        maxLevel: 4,
         formatUpdated: "{MM}/{DD} {HH}:{mm}",
-        pagination: {
-          previousText: "上一章节",
-          nextText: "下一章节",
-          crossChapter: true
+        search: {
+          maxAge: 86400000,
+          paths: ["/"],
+          placeholder: "🔍 搜索",
+          noData: "没有结果！",
+          depth: 4
         }
-        // coverpage: true,
-        // 完整配置参数
       };
     </script>
     <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
     <script src="//unpkg.com/docsify/lib/plugins/emoji.js"></script>
     <script src="//unpkg.com/docsify/lib/plugins/zoom-image.js"></script>
-    <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+    <script src="//unpkg.com/docsify/lib/plugins/search.js"></script>
 
     <!--代码高亮-->
+    <script src="//unpkg.com/prismjs/components/prism-basic.min.js"></script>
     <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
     <script src="//unpkg.com/prismjs/components/prism-java.min.js"></script>
     <script src="//unpkg.com/prismjs/components/prism-markdown.min.js"></script>
-    <script src="//unpkg.com/prismjs/components/prism-nginx.min.js"></script>
   </body>
 </html>

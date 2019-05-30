@@ -672,7 +672,7 @@ public class EnumMapDemo {
 
 ## 小结
 
-<div align="center"><img src="https://raw.githubusercontent.com/dunwu/images/master/snap/1553002212154.png"/></div>
+<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553002212154.png"/></div>
 
 ## 参考资料
 

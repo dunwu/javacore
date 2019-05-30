@@ -2,8 +2,8 @@
 
 > :coffee: JavaCore 是对 Java 核心技术的经验总结。
 >
-> - :repeat: 项目同步维护：[Github](https://github.com/dunwu/javacore) | [Gitee](https://gitee.com/turnon/javacore)
-> - :book: 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore)
+> - :repeat: 项目同步维护：[Github](https://github.com/dunwu/javacore/) | [Gitee](https://gitee.com/turnon/javacore/)
+> - :book: 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore/)
 
 |          :one:          |          :two:          |         :three:         |         :four:          |       :five:        |            :six:            |             :seven:             |
 | :---------------------: | :---------------------: | :---------------------: | :---------------------: | :-----------------: | :-------------------------: | :-----------------------------: |

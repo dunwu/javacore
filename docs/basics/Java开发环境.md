@@ -45,7 +45,7 @@ Linux 环境的 jdk 包，解压到本地即可。
 
 添加两行：
 
-```sh
+```bash
 export JAVA_HOME=path/to/java
 export PATH=JAVA_HOME/bin:JAVA_HOME/jre/bin:
 ```
