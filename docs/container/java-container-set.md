@@ -20,7 +20,7 @@
 ## Set 架构
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/dunwu/images/master/images/java/container/Set-diagrams.png" width="400" />
+<img src="https://gitee.com/turnon/images/raw/master/images/java/container/Set-diagrams.png" width="400" />
 </div>
 
 - Set 继承了 Collection 的接口。实际上 Set 就是 Collection，只是行为略有不同：Set 集合不允许有重复元素。

@@ -44,41 +44,72 @@
       }
 
       .cover-main p a:hover {
-        color: white !important;
+        text-align: center;
+        background-image: -webkit-linear-gradient(left, #ffdcb4, #b96972 25%, #e88a57 50%, #804170 75%, #a596cd);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-background-size: 200% 100%;
+        -webkit-animation: masked-animation 1.5s infinite linear;
       }
 
       /* content 样式内容 */
       .sidebar a,
       .content a {
         color: #399ab2 !important;
-        text-decoration: none;
+        text-decoration: none !important;
       }
 
       .sidebar a:hover,
       .content a:hover {
         color: #fe4165 !important;
+        text-decoration: underline !important;
       }
 
+      .content h1 :hover,
+      .content h2 :hover,
+      .content h3 :hover,
+      .content h4 :hover {
+        text-align: center;
+        background-image: -webkit-linear-gradient(left, #ffdcb4, #b96972 25%, #e88a57 50%, #804170 75%, #a596cd);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-background-size: 200% 100%;
+        -webkit-animation: masked-animation 1.5s infinite linear;
+      }
+
+      @-webkit-keyframes masked-animation {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: -100% 0;
+        }
+      }
+
+      .content h1 a,
       .content h1 span {
         color: #399ab2 !important;
-        font-size: 24px;
+        font-size: 30px;
         text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
       }
 
+      .content h2 a,
       .content h2 span {
         color: #60497c !important;
-        font-size: 20px;
+        font-size: 26px;
         text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
       }
 
+      .content h3 a,
       .content h3 span {
         color: #346093 !important;
-        font-size: 18px;
+        font-size: 22px;
         text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
       }
 
+      .content h4 a,
       .content h4 span {
-        font-size: 16px;
+        font-size: 18px;
         color: #78943a;
         text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
       }
@@ -158,11 +189,11 @@
       window.$docsify = {
         name: "JavaCore",
         repo: "https://github.com/dunwu/javacore",
-        auto2top: true,
         logo: "http://dunwu.test.upcdn.net/images/others/zp_100_100.png",
+        auto2top: true,
         coverpage: "coverpage.md",
-        subMaxLevel: 4,
         maxLevel: 4,
+        subMaxLevel: 4,
         formatUpdated: "{MM}/{DD} {HH}:{mm}",
         search: {
           maxAge: 86400000,
