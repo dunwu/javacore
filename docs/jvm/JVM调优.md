@@ -18,6 +18,9 @@
 - [HotSpot VM 参数](#hotspot-vm-参数)
     - [JVM 内存配置](#jvm-内存配置)
     - [GC 类型配置](#gc-类型配置)
+    - [JMX](#jmx)
+    - [远程 DEBUG](#远程-debug)
+    - [HeapDump](#heapdump)GC 类型配置
     - [辅助配置](#辅助配置)
 - [典型配置](#典型配置)
     - [堆大小设置](#堆大小设置)
@@ -35,9 +38,9 @@
 
 ### 性能定义
 
-- 吞吐量 - 指不考虑 GC 引起的停顿时间或内存消耗，垃圾收集器能支撑应用达到的最高性能指标。
-- 延迟 - 其度量标准是缩短由于垃圾啊收集引起的停顿时间或者完全消除因垃圾收集所引起的停顿，避免应用运行时发生抖动。
-- 内存占用 - 垃圾收集器流畅运行所需要的内存数量。
+- `吞吐量` - 指不考虑 GC 引起的停顿时间或内存消耗，垃圾收集器能支撑应用达到的最高性能指标。
+- `延迟` - 其度量标准是缩短由于垃圾啊收集引起的停顿时间或者完全消除因垃圾收集所引起的停顿，避免应用运行时发生抖动。
+- `内存占用` - 垃圾收集器流畅运行所需要的内存数量。
 
 ### 调优原则
 
@@ -215,7 +218,9 @@ PS Perm Generation
 命令格式：
 
 ```
-jstack [option] LVMID
+jstack [option] pid
+jstack [option] executable core
+jstack [option] [server-id@]remote-hostname-or-ip
 ```
 
 option 参数：
@@ -224,9 +229,65 @@ option 参数：
 - `-l` - 除堆栈外，显示关于锁的附加信息
 - `-m` - 如果调用到本地方法的话，可以显示 C/C++的堆栈
 
+实战：找出某 Java 进程中最耗费 CPU 的 Java 线程
+
+（1）找出 Java 进程
+
+假设应用名称为 myapp：
+
+```
+$ ps -ef | grep myapp | grep -v grep
+root     21711     1  1 14:47 pts/3    00:02:10 java -jar myapp.jar
+```
+
+得到进程 ID 为 21711
+
+（2）找出该进程内最耗费 CPU 的线程，可以使用 `ps -Lfp pid` 或者 `ps -mp pid -o THREAD, tid, time` 或者 `top -Hp pid`
+
+<div align="center"><img src="http://static.oschina.net/uploads/space/2014/0128/170402_A57i_111708.png"/></div>
+
+TIME 列就是各个 Java 线程耗费的 CPU 时间，CPU 时间最长的是线程 ID 为 21742 的线程，用
+
+```
+printf "%x\n" 21742
+```
+
+ 得到 21742 的十六进制值为 54ee，下面会用到。
+
+（3）使用 jstack 打印线程堆栈信息
+
+下一步终于轮到 jstack 上场了，它用来输出进程 21711 的堆栈信息，然后根据线程 ID 的十六进制值 grep，如下：
+
+```
+root@ubuntu:/# jstack 21711 | grep 54ee
+"PollIntervalRetrySchedulerThread" prio=10 tid=0x00007f950043e000 nid=0x54ee in Object.wait() [0x00007f94c6eda000]
+```
+
+可以看到 CPU 消耗在 PollIntervalRetrySchedulerThread 这个类的 Object.wait()，我找了下我的代码，定位到下面的代码：
+
+```java
+// Idle wait
+getLog().info("Thread [" + getName() + "] is idle waiting...");
+schedulerThreadState = PollTaskSchedulerThreadState.IdleWaiting;
+long now = System.currentTimeMillis();
+long waitTime = now + getIdleWaitTime();
+long timeUntilContinue = waitTime - now;
+synchronized(sigLock) {
+	try {
+    	if(!halted.get()) {
+    		sigLock.wait(timeUntilContinue);
+    	}
+    }
+	catch (InterruptedException ignore) {
+    }
+}
+```
+
+它是轮询任务的空闲等待代码，上面的 sigLock.wait(timeUntilContinue) 就对应了前面的 Object.wait()。
+
 ### jps
 
-jps(JVM Process Status Tool)，显示指定系统内所有的 HotSpot 虚拟机进程。
+jps(JVM Process Status Tool)，显示指定系统内所有的 HotSpot 虚拟机进程状态信息。
 
 命令格式：
 
@@ -234,11 +295,13 @@ jps(JVM Process Status Tool)，显示指定系统内所有的 HotSpot 虚拟机�
 jps [options] [hostid]
 ```
 
+如果不指定 hostid 就默认为当前主机或服务器。
+
 option 参数：
 
-- `-l` - 输出主类全名或 jar 路径
-- `-q` - 只输出 LVMID
-- `-m` - 输出 JVM 启动时传递给 main()的参数
+- `-l` - 输出 main 类全名或 jar 路径
+- `-q` - 不输出类名、Jar 名和传入 main 方法的参数，只输出 LVMID
+- `-m` - 输出 JVM 启动时传递给 main() 的参数
 - `-v` - 输出 JVM 启动时显示指定的 JVM 参数
 
 其中[option]、[hostid]参数也可以不写。
@@ -321,8 +384,41 @@ option 参数：
 | -XX:+UseParallelGC      | 并行垃圾回收器                            |
 | -XX:+UseParNewGC        | 使用 ParNew + Serial Old 垃圾回收器组合   |
 | -XX:+UseConcMarkSweepGC | 并发标记扫描垃圾回收器                    |
-| -XX:ParallelCMSThreads= | 并发标记扫描垃圾回收器 = 为使用的线程数量 |
+| -XX:ParallelCMSThreads  | 并发标记扫描垃圾回收器 = 为使用的线程数量 |
 | -XX:+UseG1GC            | G1 垃圾回收器                             |
+
+### JMX
+
+开启 JMX 后，可以使用 JConsole 或 Visual VM 进行监控 Java 程序的基本信息和运行情况。
+
+```java
+-Dcom.sun.management.jmxremote=true
+-Dcom.sun.management.jmxremote.ssl=false
+-Dcom.sun.management.jmxremote.authenticate=false
+-Djava.rmi.server.hostname=127.0.0.1
+-Dcom.sun.management.jmxremote.port=18888
+```
+
+`-Djava.rmi.server.hostname` 指定 Java 程序运行的服务器，`-Dcom.sun.management.jmxremote.port` 指定服务监听端口。
+
+### 远程 DEBUG
+
+如果开启 Java 应用的远程 Debug 功能，需要指定如下参数：
+
+```java
+-Xdebug
+-Xnoagent
+-Djava.compiler=NONE
+-Xrunjdwp:transport=dt_socket,address=28888,server=y,suspend=n
+```
+
+address 即为远程 debug 的监听端口。
+
+### HeapDump
+
+```
+-XX:-OmitStackTraceInFastThrow -XX:+HeapDumpOnOutOfMemoryError
+```
 
 ### 辅助配置
 
@@ -520,12 +616,12 @@ public class OOM {
         oom.memoryTotal();
     }
     public void javaHeapSpace(Integer sum){
-        Random random = new Random();  
+        Random random = new Random();
         ArrayList openList = new ArrayList();
         for(int i=0;i<sum;i++){
             String charOrNum = String.valueOf(random.nextInt(10));
             openList.add(charOrNum);
-        }  
+        }
     }
     public void memoryTotal(){
         Runtime run = Runtime.getRuntime();
@@ -585,10 +681,10 @@ Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
 那么能创建多少线程呢？这里有一个公式：
 
 ```
-(MaxProcessMemory - JVMMemory - ReservedOsMemory) / (ThreadStackSize) = Number of threads  
-MaxProcessMemory 指的是一个进程的最大内存  
-JVMMemory         JVM内存  
-ReservedOsMemory  保留的操作系统内存  
+(MaxProcessMemory - JVMMemory - ReservedOsMemory) / (ThreadStackSize) = Number of threads
+MaxProcessMemory 指的是一个进程的最大内存
+JVMMemory         JVM内存
+ReservedOsMemory  保留的操作系统内存
 ThreadStackSize      线程栈的大小
 ```
 
@@ -609,36 +705,36 @@ ThreadStackSize      线程栈的大小
 ```
 jstack 6795
 
-"Low Memory Detector" daemon prio=10 tid=0x081465f8 nid=0x7 runnable [0x00000000..0x00000000]  
-        "CompilerThread0" daemon prio=10 tid=0x08143c58 nid=0x6 waiting on condition [0x00000000..0xfb5fd798]  
-        "Signal Dispatcher" daemon prio=10 tid=0x08142f08 nid=0x5 waiting on condition [0x00000000..0x00000000]  
-        "Finalizer" daemon prio=10 tid=0x08137ca0 nid=0x4 in Object.wait() [0xfbeed000..0xfbeeddb8]  
+"Low Memory Detector" daemon prio=10 tid=0x081465f8 nid=0x7 runnable [0x00000000..0x00000000]
+        "CompilerThread0" daemon prio=10 tid=0x08143c58 nid=0x6 waiting on condition [0x00000000..0xfb5fd798]
+        "Signal Dispatcher" daemon prio=10 tid=0x08142f08 nid=0x5 waiting on condition [0x00000000..0x00000000]
+        "Finalizer" daemon prio=10 tid=0x08137ca0 nid=0x4 in Object.wait() [0xfbeed000..0xfbeeddb8]
 
-        at java.lang.Object.wait(Native Method)  
+        at java.lang.Object.wait(Native Method)
 
-        - waiting on <0xef600848> (a java.lang.ref.ReferenceQueue$Lock)  
+        - waiting on <0xef600848> (a java.lang.ref.ReferenceQueue$Lock)
 
-        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:116)  
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:116)
 
-        - locked <0xef600848> (a java.lang.ref.ReferenceQueue$Lock)  
+        - locked <0xef600848> (a java.lang.ref.ReferenceQueue$Lock)
 
-        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:132)  
+        at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:132)
 
-        at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:159)  
+        at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:159)
 
-        "Reference Handler" daemon prio=10 tid=0x081370f0 nid=0x3 in Object.wait() [0xfbf4a000..0xfbf4aa38]  
+        "Reference Handler" daemon prio=10 tid=0x081370f0 nid=0x3 in Object.wait() [0xfbf4a000..0xfbf4aa38]
 
-        at java.lang.Object.wait(Native Method)  
+        at java.lang.Object.wait(Native Method)
 
-        - waiting on <0xef600758> (a java.lang.ref.Reference$Lock)  
+        - waiting on <0xef600758> (a java.lang.ref.Reference$Lock)
 
-        at java.lang.Object.wait(Object.java:474)  
+        at java.lang.Object.wait(Object.java:474)
 
-        at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:116)  
+        at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:116)
 
-        - locked <0xef600758> (a java.lang.ref.Reference$Lock)  
+        - locked <0xef600758> (a java.lang.ref.Reference$Lock)
 
-        "VM Thread" prio=10 tid=0x08134878 nid=0x2 runnable  
+        "VM Thread" prio=10 tid=0x08134878 nid=0x2 runnable
 
         "VM Periodic Task Thread" prio=10 tid=0x08147768 nid=0x8 waiting on condition
 ```
@@ -682,7 +778,7 @@ KiB Swap:        0 total,        0 used,        0 free.  4497428 cached Mem
 12545 root      20   0 27.299g 0.021t   7172 S  3.9 70.1   6:55.48 java
 23353 root      20   0 27.299g 0.021t   7172 S  3.9 70.1   2:20.55 java
 24868 root      20   0 27.299g 0.021t   7172 S  3.9 70.1   2:12.46 java
- 9146 root      20   0 27.299g 0.021t   7172 S  3.6 70.1   7:42.72 java  
+ 9146 root      20   0 27.299g 0.021t   7172 S  3.6 70.1   7:42.72 java
 ```
 
 由此可以看出占用 CPU 较高的线程，但是这些还不高，无法直接定位到具体的类。nid 是 16 进制的，所以我们要获取线程的 16 进制 ID：
@@ -726,3 +822,4 @@ printf "%x\n" 6800
 - [jvm 系列(九):如何优化 Java GC「译」](http://www.ityouknow.com/jvm/2017/09/21/How-to-optimize-Java-GC.html)
 - [作为测试你应该知道的 JAVA OOM 及定位分析](https://www.jianshu.com/p/28935cbfbae0)
 - [异常、堆内存溢出、OOM 的几种情况](https://blog.csdn.net/sinat_29912455/article/details/51125748)
+- https://my.oschina.net/feichexia/blog/196575

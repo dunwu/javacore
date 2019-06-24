@@ -20,7 +20,7 @@
       .sidebar img {
         border: none;
         border-radius: 8px;
-        box-shadow: 3px 3px 3px #ddd;
+        box-shadow: 0 0 8px grey;
       }
 
       .content,
@@ -39,6 +39,22 @@
       }
     </style>
     <style>
+      .cover-main .anchor span {
+        text-align: center;
+        background-image: -webkit-linear-gradient(left, #ffdcb4, #b96972 25%, #e88a57 50%, #804170 75%, #a596cd);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-background-size: 200% 100%;
+        -webkit-animation: masked-animation 1.5s infinite linear;
+        font-family: "Brush Script MT", 隶书, serif;
+        font-weight: 600;
+      }
+
+      .cover-main blockquote p {
+        color: #5c5869;
+        font-family: "Arial", 隶书, serif;
+      }
+
       .cover-main ul a:hover {
         color: #fe4165 !important;
       }
@@ -75,6 +91,8 @@
         -webkit-background-clip: text;
         -webkit-background-size: 200% 100%;
         -webkit-animation: masked-animation 1.5s infinite linear;
+        font-family: "微软雅黑", serif;
+        font-weight: bold;
       }
 
       @-webkit-keyframes masked-animation {
@@ -86,32 +104,42 @@
         }
       }
 
+      /*.cover-main {*/
+      /*text-shadow: 2px 2px 5px grey;*/
+      /*}*/
+
       .content h1 a,
       .content h1 span {
         color: #399ab2 !important;
         font-size: 30px;
-        text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
+        text-shadow: 2px 2px 5px grey;
       }
 
       .content h2 a,
       .content h2 span {
         color: #60497c !important;
         font-size: 26px;
-        text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
+        text-shadow: 2px 2px 5px grey;
       }
 
       .content h3 a,
       .content h3 span {
         color: #346093 !important;
         font-size: 22px;
-        text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
+        text-shadow: 2px 2px 5px grey;
       }
 
       .content h4 a,
       .content h4 span {
         font-size: 18px;
         color: #78943a;
-        text-shadow: 0 -1px 5px rgba(0, 0, 0, 0.4);
+        text-shadow: 2px 2px 5px grey;
+      }
+
+      img.emoji {
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
       }
     </style>
     <style>
@@ -132,7 +160,7 @@
         padding-left: 0 !important;
         padding-right: 0 !important;
         border-radius: 8px;
-        box-shadow: 1px 1px 20px 3px #ddd !important;
+        box-shadow: 1px 1px 20px 3px #dddddd !important;
       }
 
       .content code {
@@ -141,12 +169,11 @@
         box-shadow: 1px 1px 1px whitesmoke;
       }
 
-      /*表格样式*/
       .content table {
         display: table;
         padding-left: 0 !important;
         padding-right: 0 !important;
-        box-shadow: 2px 2px 20px 6px #ddd !important;
+        box-shadow: 2px 2px 20px 6px #dddddd !important;
       }
 
       .content th {
@@ -161,20 +188,24 @@
           font-size: 0.9rem !important;
         }
       }
+
       @media (max-width: 600px) {
         .markdown-section pre > code {
           padding-top: 5px;
           padding-bottom: 5px;
         }
+
         pre:after {
           content: "" !important;
         }
       }
+
       @media (min-width: 600px) {
         pre code {
           padding-left: 20px !important;
         }
       }
+
       @media (max-width: 600px) {
         pre {
           padding-left: 0px !important;
