@@ -1,4 +1,4 @@
-package io.github.dunwu.jvm.chapter03;
+package io.github.dunwu.jvm.gc;
 
 /**
  * 此代码演示了两点：

@@ -1,4 +1,4 @@
-package io.github.dunwu.jvm.chapter07;
+package io.github.dunwu.jvm.classloader;
 
 /**
  * 非主动使用类字段演示

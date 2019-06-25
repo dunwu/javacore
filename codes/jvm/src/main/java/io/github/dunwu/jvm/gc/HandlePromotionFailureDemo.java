@@ -1,4 +1,4 @@
-package io.github.dunwu.jvm.chapter03;
+package io.github.dunwu.jvm.gc;
 
 /**
  * VM参数：-Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:-HandlePromotionFailure

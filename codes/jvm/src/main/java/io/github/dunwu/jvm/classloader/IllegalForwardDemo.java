@@ -1,4 +1,4 @@
-package io.github.dunwu.jvm.chapter07;
+package io.github.dunwu.jvm.classloader;
 
 @SuppressWarnings("all")
 public class IllegalForwardDemo {

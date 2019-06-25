@@ -1,4 +1,4 @@
-package io.github.dunwu.jvm.chapter07;
+package io.github.dunwu.jvm.classloader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,9 +31,9 @@ public class ClassLoaderDemo {
             }
         };
 
-        Object obj = myLoader.loadClass("io.github.dunwu.jvm.chapter07.ClassLoaderDemo").newInstance();
+        Object obj = myLoader.loadClass("io.github.dunwu.jvm.classloader.ClassLoaderDemo").newInstance();
 
         System.out.println(obj.getClass());
-        System.out.println(obj instanceof io.github.dunwu.jvm.chapter07.ClassLoaderDemo);
+        System.out.println(obj instanceof ClassLoaderDemo);
     }
 }
