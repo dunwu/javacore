@@ -7,6 +7,6 @@ package io.github.dunwu.jvm.classloader;
 public class PassiveRefDemo03 {
 
     public static void main(String[] args) {
-        System.out.println(ConstClass.HELLOWORLD);
+        System.out.println(ConstClass.value);
     }
 }
