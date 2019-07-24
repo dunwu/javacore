@@ -74,9 +74,9 @@
 > [Java 虚拟机](docs/jvm) 记录了 JVM 的基本机制。
 
 - [第一章 运行时数据区域](docs/jvm/运行时数据区域.md)
-- [第二章 垃圾收集](docs/jvm/垃圾收集.md)
-- [第三章 类加载机制](docs/jvm/类加载机制.md)
-- [第四章 JVM 调优](docs/jvm/JVM调优.md)
+- [第二章 垃圾收集](docs/jvm/jvm-gc.md)
+- [第三章 类加载机制](docs/jvm/jvm-class-loader.md)
+- [第四章 JVM 调优](docs/jvm/jvm-performance.md)
 
 ## Java 编程规范
 

@@ -73,10 +73,10 @@
 
 > [Java 虚拟机](jvm) 记录了 JVM 的基本机制。
 
-- [第一章 运行时数据区域](jvm/运行时数据区域.md)
-- [第二章 垃圾收集](jvm/垃圾收集.md)
-- [第三章 类加载机制](jvm/类加载机制.md)
-- [第四章 JVM 调优](jvm/JVM调优.md)
+- [第一章 运行时数据区域](jvm/jvm-memory.md)
+- [第二章 垃圾收集](jvm/jvm-gc.md)
+- [第三章 类加载机制](jvm/jvm-class-loader.md)
+- [第四章 JVM 调优](jvm/jvm-performance.md)
 
 ## Java 编程规范
 

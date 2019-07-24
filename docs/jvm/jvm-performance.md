@@ -1,38 +1,6 @@
 # JVM 调优
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
-
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [JVM 调优概述](#jvm-调优概述)
-    - [性能定义](#性能定义)
-    - [调优原则](#调优原则)
-    - [GC 优化的过程](#gc-优化的过程)
-- [命令](#命令)
-    - [jmap](#jmap)
-    - [jstack](#jstack)
-    - [jps](#jps)
-    - [jstat](#jstat)
-    - [jhat](#jhat)
-    - [jinfo](#jinfo)
-- [HotSpot VM 参数](#hotspot-vm-参数)
-    - [JVM 内存配置](#jvm-内存配置)
-    - [GC 类型配置](#gc-类型配置)
-    - [JMX](#jmx)
-    - [远程 DEBUG](#远程-debug)
-    - [HeapDump](#heapdump)GC 类型配置
-    - [辅助配置](#辅助配置)
-- [典型配置](#典型配置)
-    - [堆大小设置](#堆大小设置)
-    - [回收器选择](#回收器选择)
-- [JVM 实战](#jvm-实战)
-    - [分析 GC 日志](#分析-gc-日志)
-    - [获取 GC 日志](#获取-gc-日志)
-    - [如何分析 GC 日志](#如何分析-gc-日志)
-    - [OutOfMemory(OOM)分析](#outofmemoryoom分析)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
+> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」	
 
 ## JVM 调优概述
 
