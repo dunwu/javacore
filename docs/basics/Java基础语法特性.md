@@ -44,7 +44,7 @@ public class HelloWorld {
 
 ## 基本数据类型
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553754196283.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553754196283.png!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 基本数据类型](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/深入理解Java基本数据类型.md)
 
@@ -81,13 +81,13 @@ Java 支持的变量类型有：
 
 ## 数组
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553753908349.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553753908349.png!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java数组.md)
 
 ## 枚举
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553002212154.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553002212154.png!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java枚举.md)
 
@@ -95,46 +95,46 @@ Java 支持的变量类型有：
 
 Java 中支持的操作符类型如下：
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1552382318465.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552382318465.png!zp"/></div>
 
 > :point_right: 扩展阅读：[Java 操作符](http://www.runoob.com/java/java-operators.html)
 
 ## 方法
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553767582595.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553767582595.png!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 方法](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java方法.md)
 
 ## 控制语句
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1552361630220.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552361630220.png!zp"/></div>
 
 > :point_right: 扩展阅读：[Java 控制语句](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java控制语句.md)
 
 ## 异常
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553752019030.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553752019030.png!zp"/></div>
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553752795010.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553752795010.png!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 异常](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java异常.md)
 
 ## 序列化
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553227663192.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553227663192.png!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 序列化](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java序列化.md)
 
 ## 泛型
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553162401292.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553162401292.png!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 泛型](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java泛型.md)
 
 ## 反射
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553615203764.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553615203764.png!zp"/></div>
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553615153731.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553615153731.png!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 反射和动态代理](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java反射.md)

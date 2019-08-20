@@ -505,7 +505,7 @@ public class ReturnDemo {
 
 ## 小结
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1552361630220.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552361630220.png!zp"/></div>
 
 ## 参考资料
 

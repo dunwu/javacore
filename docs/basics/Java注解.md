@@ -836,7 +836,7 @@ public class RegexValidDemo {
 
 ## 小结
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1554469272396.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1554469272396.png!zp"/></div>
 
 ## 参考资料
 

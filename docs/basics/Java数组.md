@@ -72,7 +72,7 @@ Java 数组在内存中的存储是这样的：
 
 如下图所示：只有当 JVM 执行 `new String[]` 时，才会在堆中开辟相应的内存区域。数组对象 array 可以视为一个指针，指向这块内存的存储地址。
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1552473482942.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552473482942.png!zp"/></div>
 
 ## 声明数组
 
@@ -385,7 +385,7 @@ Java 中，提供了一个很有用的数组工具类：Arrays。
 
 ## 小结
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553753908349.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553753908349.png!zp"/></div>
 
 ## 参考资料
 

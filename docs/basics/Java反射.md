@@ -60,7 +60,7 @@
 
 ### 类加载过程
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553611895164.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553611895164.png!zp"/></div>
 
 类加载的完整过程如下：
 
@@ -425,7 +425,7 @@ public static Object newInstance(Class<?> componentType, int length)
 >
 > **代理模式为其他对象提供一种代理以控制对这个对象的访问。**
 
-<div align="center"><img src="https://upload-images.jianshu.io/upload_images/3101171-6269723ea61527bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240"/></div>
+<div align="center"><img src="https://upload-images.jianshu.io/upload_images/3101171-6269723ea61527bd.png"/></div>
 
 **Subject** 定义了 RealSubject 和 Proxy 的公共接口，这样就在任何使用 RealSubject 的地方都可以使用 Proxy 。
 
@@ -472,7 +472,7 @@ class Proxy extends Subject {
 
 在运行状态中，需要代理的地方，根据 Subject 和 RealSubject，动态地创建一个 Proxy，用完之后，就会销毁，这样就可以避免了 Proxy 角色的 class 在系统中冗杂的问题了。
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553614585028.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553614585028.png!zp"/></div>
 
 Java 动态代理基于经典代理模式，引入了一个 InvocationHandler，InvocationHandler 负责统一管理所有的方法调用。
 
@@ -677,9 +677,9 @@ public abstract java.lang.String io.github.dunwu.javacore.reflect.InvocationHand
 
 ## 小结
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553615203764.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553615203764.png!zp"/></div>
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553615153731.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553615153731.png!zp"/></div>
 
 ## 参考资料
 

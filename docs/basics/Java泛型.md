@@ -392,7 +392,7 @@ Java 泛型的实现方式不太优雅，但这是因为泛型是在 JDK5 时引
 
 > 向上转型是指用子类实例去初始化父类，这是面向对象中多态的重要表现。
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553147778883.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553147778883.png!zp"/></div>
 
 `Integer` 继承了 `Object`；`ArrayList` 继承了 `List`；但是 `List<Interger>` 却并非继承了 `List<Object>`。
 
@@ -678,7 +678,7 @@ public class Example {
 
 ## 小结
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553162401292.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553162401292.png!zp"/></div>
 
 ## 参考资料
 

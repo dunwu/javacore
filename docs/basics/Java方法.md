@@ -488,7 +488,7 @@ public class MethodOverloadDemo {
 
 ## 小结
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553767582595.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553767582595.png!zp"/></div>
 
 ## 参考资料
 

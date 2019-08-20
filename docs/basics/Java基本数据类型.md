@@ -222,7 +222,7 @@ System.out.println("i1 == i4 is [" + (i1 == i4) + "]"); // 自动拆箱
 
 ## 小结
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553754196283.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553754196283.png!zp"/></div>
 
 ## 参考资料
 

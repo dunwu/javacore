@@ -27,7 +27,7 @@
 
 ## 异常框架
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1552274131681.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552274131681.png!zp"/></div>
 
 ### Throwable
 
@@ -458,9 +458,9 @@ public class ExceptionOverrideDemo {
 
 ## 小结
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553752019030.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553752019030.png!zp"/></div>
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1553752795010.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553752795010.png!zp"/></div>
 
 ## 参考资料
 

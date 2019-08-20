@@ -8,7 +8,7 @@ Class 文件是一组以 8 位字节为基础单位的二进制流。
 
 整个 Class 文件本质上就是一张表，由下表中的数据项组成。
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1561452004933.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561452004933.png!zp"/></div>
 
 ### 魔数与 Class 文件的版本
 
@@ -26,13 +26,13 @@ Class 文件是一组以 8 位字节为基础单位的二进制流。
   - 字段的名称和描述符
   - 方法的名称和描述符
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1561473159265.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473159265.png!zp"/></div>
 
 ### 访问标志
 
 常量池之后，紧接着的两个字节代表访问标志，这个标志用于识别一些类或者接口的访问信息，包括：这个 Class 是类还是接口；是否定义为 public 类型；是否定义为 abstract 类型；如果是类的话，是否被声明为 final 等。
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1561473228816.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473228816.png!zp"/></div>
 
 ### 类索引、父类索引和接口索引集合
 
@@ -44,12 +44,12 @@ Class 文件由类索引、父类索引和接口索引集合这 3 项数据来�
 
 - 字段访问标志
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1561473275089.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473275089.png!zp"/></div>
 
 - 名称索引
 - 描述符索引
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1561473423673.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473423673.png!zp"/></div>
 
 - 属性计数器
 - 属性集合
@@ -60,7 +60,7 @@ Class 文件由类索引、父类索引和接口索引集合这 3 项数据来�
 
 - 方法访问标志
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1561473522027.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473522027.png!zp"/></div>
 
 - 并发可见性（volatile）
 - 能否被序列化（transient）
@@ -79,7 +79,7 @@ Class 文件由类索引、父类索引和接口索引集合这 3 项数据来�
 ### 类生命周期
 
 <div align="center">
-<img src="https://gitee.com/turnon/images/raw/master/images/java/jvm/jmm-类加载-生命周期.jpg" />
+<img src="http://dunwu.test.upcdn.net/images/java/jvm/jmm-类加载-生命周期.jpg" />
 </div>
 
 Java 类的完整生命周期包括以下几个阶段：
@@ -255,7 +255,7 @@ System.out.println(ConstClass.HELLOWORLD);
 下图展示的类加载器之间的层次关系，称为类加载器的**双亲委派模型（Parents Delegation Model）**。**该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器**。**这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现**。
 
 <div align="center">
-<img src="https://gitee.com/turnon/images/raw/master/images/java/jvm/jmm-类加载-双亲委派.png" width="500" />
+<img src="http://dunwu.test.upcdn.net/images/java/jvm/jmm-类加载-双亲委派.png" width="500" />
 </div>
 
 **（一）工作过程**

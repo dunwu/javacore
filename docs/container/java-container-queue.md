@@ -20,7 +20,7 @@
 ## Queue 架构
 
 <div align="center">
-<img src="https://gitee.com/turnon/images/raw/master/images/java/container/Queue-diagrams.png" />
+<img src="http://dunwu.test.upcdn.net/images/java/container/Queue-diagrams.png" />
 </div>
 
 ## Queue 接口

@@ -46,7 +46,7 @@ String s = new String("abc");
 
 与大多数面向对象编程语言一样，Java 使用 `class` （类）关键字来表示自定义类型。自定义类型是为了更容易抽象现实事物。
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1552641712126.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552641712126.png!zp"/></div>
 
 在一个类中，可以设置一静一动两种元素：属性（静）和方法（动）。
 
@@ -55,7 +55,7 @@ String s = new String("abc");
 
 类的形式如下：
 
-<div align="center"><img src="https://gitee.com/turnon/images/raw/master/snap/1552640231731.png"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552640231731.png!zp"/></div>
 
 ## 方法
 
