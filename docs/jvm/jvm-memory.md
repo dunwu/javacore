@@ -17,7 +17,7 @@
 
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/jvm/jmm-运行时数据区域.png" width="450"/>
+<img src="http://dunwu.test.upcdn.net/cs/java/jvm/jmm-运行时数据区域.png" width="450"/>
 </div>
 
 ## 程序计数器
@@ -29,7 +29,7 @@
 每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。每一个方法从调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/jvm/jmm-虚拟机栈.png" />
+<img src="http://dunwu.test.upcdn.net/cs/java/jvm/jmm-虚拟机栈.png" />
 </div>
 
 可以通过 -Xss 这个虚拟机参数来指定一个程序的 Java 虚拟机栈内存大小：
@@ -50,7 +50,7 @@ java -Xss=512M HackTheJava
 与 Java 虚拟机栈类似，它们之间的区别只不过是本地方法栈为本地方法服务。
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/jvm/jmm-本地方法栈.gif" width="350" />
+<img src="http://dunwu.test.upcdn.net/cs/java/jvm/jmm-本地方法栈.gif" width="350" />
 </div>
 
 ## 堆
@@ -70,7 +70,7 @@ java -Xss=512M HackTheJava
 - To Survivor
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/jvm/jmm-堆.gif" />
+<img src="http://dunwu.test.upcdn.net/cs/java/jvm/jmm-堆.gif" />
 </div>
 
 Java 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。

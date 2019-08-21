@@ -79,7 +79,7 @@ Class 文件由类索引、父类索引和接口索引集合这 3 项数据来�
 ### 类生命周期
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/jvm/jmm-类加载-生命周期.jpg" />
+<img src="http://dunwu.test.upcdn.net/cs/java/jvm/jmm-类加载-生命周期.jpg" />
 </div>
 
 Java 类的完整生命周期包括以下几个阶段：
@@ -255,7 +255,7 @@ System.out.println(ConstClass.HELLOWORLD);
 下图展示的类加载器之间的层次关系，称为类加载器的**双亲委派模型（Parents Delegation Model）**。**该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器**。**这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现**。
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/images/java/jvm/jmm-类加载-双亲委派.png" width="500" />
+<img src="http://dunwu.test.upcdn.net/cs/java/jvm/jmm-类加载-双亲委派.png" width="500" />
 </div>
 
 **（一）工作过程**
