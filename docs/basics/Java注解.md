@@ -836,7 +836,13 @@ public class RegexValidDemo {
 
 ## 小结
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1554469272396.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/注解简介.svg!zp"/></div>
+
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/元注解.svg!zp"/></div>
+
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/内置注解.svg!zp"/></div>
+
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/自定义注解.svg!zp"/></div>
 
 ## 参考资料
 

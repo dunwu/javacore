@@ -1,10 +1,3 @@
----
-title: 深入理解 Java 序列化
-categories: ['java', 'javacore']
-tags: ['java', 'javacore', 'basics', 'serialize']
-date: 2018-06-04 17:59
----
-
 # 深入理解 Java 序列化
 
 > :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」

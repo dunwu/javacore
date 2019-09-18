@@ -2,10 +2,10 @@
 
 > :coffee: JavaCore 是对 Java 核心技术的经验总结。
 >
-> - :repeat: 项目同步维护：[Github](https://github.com/dunwu/javacore) | [Gitee](https://gitee.com/turnon/javacore)
-> - :book: 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore)
+> - 🔁 项目同步维护：[Github](https://github.com/dunwu/javacore) | [Gitee](https://gitee.com/turnon/javacore)
+> - 📖 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore)
 
-|          :one:          |          :two:          |         :three:         |         :four:          |       :five:        |            :six:            |             :seven:             |
+|          1️⃣          |          2️⃣          |         3️⃣         |         4️⃣          |       5️⃣        |            6️⃣            |             7️⃣             |
 | :---------------------: | :---------------------: | :---------------------: | :---------------------: | :-----------------: | :-------------------------: | :-----------------------------: |
 | [Java 基础](#java-基础) | [Java 进阶](#java-进阶) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [Java IO](#java-io) | [Java 虚拟机](#java-虚拟机) | [Java 编程规范](#java-编程规范) |
 

@@ -677,9 +677,9 @@ public abstract java.lang.String io.github.dunwu.javacore.reflect.InvocationHand
 
 ## 小结
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553615203764.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java反射.svg!zp"/></div>
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553615153731.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java代理.svg!zp"/></div>
 
 ## 参考资料
 

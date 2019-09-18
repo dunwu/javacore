@@ -1,4 +1,4 @@
-- :one: Java 基础
+- 1️⃣ Java 基础
   - [Java 开发环境](basics/Java开发环境.md)
   - [Java 基础语法特性](basics/Java基础语法特性.md)
   - [Java 基本数据类型](basics/Java基本数据类型.md)
@@ -12,18 +12,18 @@
   - [Java 反射](basics/Java反射.md)
   - [Java 注解](basics/Java注解.md)
   - [Java 序列化](basics/Java序列化.md)
-- :two: Java 进阶
+- 2️⃣ Java 进阶
   - [Java 正则](advanced/Java正则.md)
   - [Java 编码和加密](advanced/Java编码和加密.md)
   - [Java 本地化](advanced/Java本地化.md)
   - [Java JDK8](advanced/Java8.md)
-- :three: Java 容器
+- 3️⃣ Java 容器
   - [Java 容器概述](container/java-container.md)
   - [Java 容器之 List](container/java-container-list.md)
   - [Java 容器之 Set](container/java-container-set.md)
   - [Java 容器之 Queue](container/java-container-queue.md)
   - [Java 容器之 Map](container/java-container-map.md)
-- :four: Java 并发
+- 4️⃣ Java 并发
   - [Java 并发面试题集](concurrent/Java并发面试题集.md)
   - [第一章 并发简介](concurrent/并发简介.md)
   - [第二章 线程基础](concurrent/线程基础.md)
@@ -34,12 +34,12 @@
   - [第七章 原子变量类](concurrent/原子变量类.md)
   - [第八章 并发工具类](concurrent/并发工具类.md)
   - [第九章 线程池](concurrent/线程池.md)
-- :five: Java IO
+- 5️⃣ Java IO
   - [Java 常用 IO 类](io/Java常用IO类.md)
   - [Java 流操作](io/Java流操作.md)
   - [Java 序列化](io/Java序列化.md)
   - [Java 网络编程](io/Java网络编程.md)
-- :six: Java 虚拟机
+- 6️⃣ Java 虚拟机
   - [第一章 运行时数据区域](jvm/jvm-memory.md)
   - [第二章 垃圾收集](jvm/jvm-gc.md)
   - [第三章 类加载机制](jvm/jvm-class-loader.md)

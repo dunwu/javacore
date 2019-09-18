@@ -46,7 +46,7 @@ public class HelloWorld {
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553754196283.png!zp"/></div>
 
-> :point_right: 扩展阅读：[深入理解 Java 基本数据类型](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/深入理解Java基本数据类型.md)
+> :point_right: 扩展阅读：[深入理解 Java 基本数据类型](https://github.com/dunwu/javacore/blob/master/docs/basics/深入理解Java基本数据类型.md)
 
 ## 变量
 
@@ -70,26 +70,26 @@ Java 支持的变量类型有：
 |                                                                                                                            |                                                                                                                                                         | 无论一个类创建了多少个对象，类只拥有类变量的一份拷贝。                                                                                                                                          |
 |                                                                                                                            |                                                                                                                                                         | 类变量除了被声明为常量外很少使用。                                                                                                                                                              |
 
-### 变量修饰符
+**变量修饰符**
 
-- 访问级别修饰符
+- **访问级别修饰符**
   - 如果变量是实例变量或类变量，可以添加访问级别修饰符（public/protected/private）
-- 静态修饰符
+- **静态修饰符**
   - 如果变量是类变量，需要添加 static 修饰
-- final
-  - 如果变量使用 fianl 修饰符，就表示这是一个常量，不能被修改。
+- **final**
+  - 如果变量使用 `fianl` 修饰符，就表示这是一个常量，不能被修改。
 
 ## 数组
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553753908349.png!zp"/></div>
 
-> :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java数组.md)
+> :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/Java数组.md)
 
 ## 枚举
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553002212154.png!zp"/></div>
 
-> :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java枚举.md)
+> :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/Java枚举.md)
 
 ## 操作符
 
@@ -103,13 +103,13 @@ Java 中支持的操作符类型如下：
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553767582595.png!zp"/></div>
 
-> :point_right: 扩展阅读：[深入理解 Java 方法](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java方法.md)
+> :point_right: 扩展阅读：[深入理解 Java 方法](https://github.com/dunwu/javacore/blob/master/docs/basics/Java方法.md)
 
 ## 控制语句
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552361630220.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1568816395961.png!zp"/></div>
 
-> :point_right: 扩展阅读：[Java 控制语句](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java控制语句.md)
+> :point_right: 扩展阅读：[Java 控制语句](https://github.com/dunwu/javacore/blob/master/docs/basics/Java控制语句.md)
 
 ## 异常
 
@@ -117,24 +117,36 @@ Java 中支持的操作符类型如下：
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553752795010.png!zp"/></div>
 
-> :point_right: 扩展阅读：[深入理解 Java 异常](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java异常.md)
-
-## 序列化
-
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553227663192.png!zp"/></div>
-
-> :point_right: 扩展阅读：[深入理解 Java 序列化](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java序列化.md)
+> :point_right: 扩展阅读：[深入理解 Java 异常](https://github.com/dunwu/javacore/blob/master/docs/basics/Java异常.md)
 
 ## 泛型
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553162401292.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java泛型.svg!zp"/></div>
 
-> :point_right: 扩展阅读：[深入理解 Java 泛型](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java泛型.md)
+> :point_right: 扩展阅读：[深入理解 Java 泛型](https://github.com/dunwu/javacore/blob/master/docs/basics/Java泛型.md)
 
 ## 反射
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553615203764.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java反射.svg!zp"/></div>
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553615153731.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java代理.svg!zp"/></div>
 
-> :point_right: 扩展阅读：[深入理解 Java 反射和动态代理](https://github.com/dunwu/blog/blob/master/source/_posts/java/javacore/basics/Java反射.md)
+> :point_right: 扩展阅读：[深入理解 Java 反射和动态代理](https://github.com/dunwu/javacore/blob/master/docs/basics/Java反射.md)
+
+## 注解
+
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/注解简介.svg!zp"/></div>
+
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/元注解.svg!zp"/></div>
+
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/内置注解.svg!zp"/></div>
+
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/自定义注解.svg!zp"/></div>
+
+> :point_right: 扩展阅读：[深入理解 Java 注解](https://github.com/dunwu/javacore/blob/master/docs/basics/Java注解.md)
+
+## 序列化
+
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java序列化.svg!zp"/></div>
+
+> :point_right: 扩展阅读：[深入理解 Java 序列化](https://github.com/dunwu/javacore/blob/master/docs/io/Java序列化.md)
