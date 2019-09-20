@@ -7,16 +7,16 @@
 - [注释](#注释)
 - [基本数据类型](#基本数据类型)
 - [变量](#变量)
-    - [变量修饰符](#变量修饰符)
 - [数组](#数组)
 - [枚举](#枚举)
 - [操作符](#操作符)
 - [方法](#方法)
 - [控制语句](#控制语句)
 - [异常](#异常)
-- [序列化](#序列化)
 - [泛型](#泛型)
 - [反射](#反射)
+- [注解](#注解)
+- [序列化](#序列化)
 
 <!-- /TOC -->
 
@@ -44,7 +44,7 @@ public class HelloWorld {
 
 ## 基本数据类型
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553754196283.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java基本数据类型.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 基本数据类型](https://github.com/dunwu/javacore/blob/master/docs/basics/深入理解Java基本数据类型.md)
 
@@ -81,13 +81,13 @@ Java 支持的变量类型有：
 
 ## 数组
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553753908349.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java数组.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/Java数组.md)
 
 ## 枚举
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553002212154.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java枚举.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/Java枚举.md)
 
@@ -95,27 +95,27 @@ Java 支持的变量类型有：
 
 Java 中支持的操作符类型如下：
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552382318465.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java操作符.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[Java 操作符](http://www.runoob.com/java/java-operators.html)
 
 ## 方法
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553767582595.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java方法.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 方法](https://github.com/dunwu/javacore/blob/master/docs/basics/Java方法.md)
 
 ## 控制语句
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1568816395961.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java控制语句.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[Java 控制语句](https://github.com/dunwu/javacore/blob/master/docs/basics/Java控制语句.md)
 
 ## 异常
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553752019030.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java异常框架.svg!zp"/></div>
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553752795010.png!zp"/></div>
+<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java异常.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 异常](https://github.com/dunwu/javacore/blob/master/docs/basics/Java异常.md)
 
