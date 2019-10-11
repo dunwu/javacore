@@ -28,8 +28,9 @@ public class Union {
 		// Set<Number> numbers = union(integers, doubles);
 
 		// Explicit type parameter is necessary here
-		Set<Number> numbers = Union.<Number> union(integers, doubles);
+		Set<Number> numbers = Union.<Number>union(integers, doubles);
 
 		System.out.println(numbers);
 	}
+
 }

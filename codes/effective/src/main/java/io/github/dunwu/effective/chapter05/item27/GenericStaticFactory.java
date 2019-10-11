@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GenericStaticFactory {
+
 	// Generic static factory method
 	public static <K, V> HashMap<K, V> newHashMap() {
 		return new HashMap<K, V>();
@@ -15,4 +16,5 @@ public class GenericStaticFactory {
 		// Parameterized type instance creation with static factory
 		Map<String, List<String>> anagrams = newHashMap();
 	}
+
 }

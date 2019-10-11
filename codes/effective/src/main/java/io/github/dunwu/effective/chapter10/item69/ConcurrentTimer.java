@@ -5,11 +5,11 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 
 public class ConcurrentTimer {
+
 	private ConcurrentTimer() {
 	} // Noninstantiable
 
-	public static long time(Executor executor, int concurrency,
-			final Runnable action) throws InterruptedException {
+	public static long time(Executor executor, int concurrency, final Runnable action) throws InterruptedException {
 		final CountDownLatch ready = new CountDownLatch(concurrency);
 		final CountDownLatch start = new CountDownLatch(1);
 		final CountDownLatch done = new CountDownLatch(concurrency);
@@ -21,9 +21,11 @@ public class ConcurrentTimer {
 					try {
 						start.await(); // Wait till peers are ready
 						action.run();
-					} catch (InterruptedException e) {
+					}
+					catch (InterruptedException e) {
 						Thread.currentThread().interrupt();
-					} finally {
+					}
+					finally {
 						done.countDown(); // Tell timer we're done
 					}
 				}
@@ -36,4 +38,5 @@ public class ConcurrentTimer {
 		done.await(); // Wait for all workers to finish
 		return System.nanoTime() - startNanos;
 	}
+
 }

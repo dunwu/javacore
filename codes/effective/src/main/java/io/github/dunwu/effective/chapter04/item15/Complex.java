@@ -2,6 +2,10 @@
 package io.github.dunwu.effective.chapter04.item15;
 
 public final class Complex {
+
+	public static final Complex ZERO = new Complex(0, 0);
+	public static final Complex ONE = new Complex(1, 0);
+	public static final Complex I = new Complex(0, 1);
 	private final double re;
 	private final double im;
 
@@ -17,10 +21,6 @@ public final class Complex {
 	public static Complex valueOfPolar(double r, double theta) {
 		return new Complex(r * Math.cos(theta), r * Math.sin(theta));
 	}
-
-	public static final Complex ZERO = new Complex(0, 0);
-	public static final Complex ONE = new Complex(1, 0);
-	public static final Complex I = new Complex(0, 1);
 
 	// Accessors with no corresponding mutators
 	public double realPart() {
@@ -45,9 +45,7 @@ public final class Complex {
 
 	public Complex divide(Complex c) {
 		double tmp = c.re * c.re + c.im * c.im;
-		return new Complex((re * c.re + im * c.im) / tmp, (im * c.re - re
-				* c.im)
-				/ tmp);
+		return new Complex((re * c.re + im * c.im) / tmp, (im * c.re - re * c.im) / tmp);
 	}
 
 	@Override
@@ -78,4 +76,5 @@ public final class Complex {
 	public String toString() {
 		return "(" + re + " + " + im + "i)";
 	}
+
 }

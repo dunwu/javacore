@@ -2,6 +2,7 @@ package io.github.dunwu.javacore.control;
 
 /**
  * 循环语句示例
+ *
  * @see WhileDemo
  * @see DoWhileDemo
  * @see ForDemo
@@ -10,16 +11,18 @@ package io.github.dunwu.javacore.control;
  * @author Zhang Peng
  */
 public class ForNestedDemo {
-    public static void main(String[] args) {
-        // 控制行
-        for (int i = 1; i <= 9; i++) {
-            // 控制列
-            for (int j = 1; j <= i; j++) {
-                System.out.print(i + "*" + j + "=" + (i * j) + "\t");
-            }
-            System.out.println();
-        }
-    }
+
+	public static void main(String[] args) {
+		// 控制行
+		for (int i = 1; i <= 9; i++) {
+			// 控制列
+			for (int j = 1; j <= i; j++) {
+				System.out.print(i + "*" + j + "=" + (i * j) + "\t");
+			}
+			System.out.println();
+		}
+	}
+
 };
 // output:
 // 1*1=1

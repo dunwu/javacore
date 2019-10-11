@@ -2,6 +2,7 @@ package io.github.dunwu.javacore.control;
 
 /**
  * 分支语句示例
+ *
  * @see IfDemo
  * @see IfElseDemo
  * @see IfElseifElseDemo
@@ -12,14 +13,17 @@ package io.github.dunwu.javacore.control;
  * @author Zhang Peng
  */
 public class IfElseDemo {
-    public static void main(String[] args) {
-        int x = 3; // 定义整型变量x
-        if (x % 2 == 1) { // 判断于是是否为1
-            System.out.println("x是奇数！"); // 如果余数为1表示奇数
-        } else {
-            System.out.println("x是偶数！"); // 如果余数为0表示是偶数
-        }
-    }
+
+	public static void main(String[] args) {
+		int x = 3; // 定义整型变量x
+		if (x % 2 == 1) { // 判断于是是否为1
+			System.out.println("x是奇数！"); // 如果余数为1表示奇数
+		}
+		else {
+			System.out.println("x是偶数！"); // 如果余数为0表示是偶数
+		}
+	}
+
 };
 // output:
 // x是奇数！

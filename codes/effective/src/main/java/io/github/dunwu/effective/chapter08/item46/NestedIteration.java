@@ -1,31 +1,35 @@
 // Can you spot the bug? - Page 46
 package io.github.dunwu.effective.chapter08.item46;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 enum Suit {
+
 	CLUB, DIAMOND, HEART, SPADE
+
 }
 
 enum Rank {
+
 	ACE, DEUCE, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
+
 }
 
 class Card {
+
 	final Suit suit;
+
 	final Rank rank;
 
 	Card(Suit suit, Rank rank) {
 		this.suit = suit;
 		this.rank = rank;
 	}
+
 }
 
 public class NestedIteration {
+
 	public static void main(String[] args) {
 		Collection<Suit> suits = Arrays.asList(Suit.values());
 		Collection<Rank> ranks = Arrays.asList(Rank.values());
@@ -40,4 +44,5 @@ public class NestedIteration {
 		// for (Rank rank : ranks)
 		// deck.add(new Card(suit, rank));
 	}
+
 }

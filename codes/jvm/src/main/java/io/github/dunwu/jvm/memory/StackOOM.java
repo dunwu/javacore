@@ -10,23 +10,24 @@ package io.github.dunwu.jvm.memory;
  */
 public class StackOOM {
 
-    private volatile int count;
+	private volatile int count;
 
-    private void dontStop() {
-        while (true) {
-            System.out.println(++count);
-        }
-    }
+	public static void main(String[] args) {
+		StackOOM stackOOM = new StackOOM();
+		stackOOM.stackLeakByThread();
+	}
 
-    public void stackLeakByThread() {
-        while (true) {
-            Thread thread = new Thread(() -> dontStop());
-            thread.start();
-        }
-    }
+	private void dontStop() {
+		while (true) {
+			System.out.println(++count);
+		}
+	}
 
-    public static void main(String[] args) {
-        StackOOM stackOOM = new StackOOM();
-        stackOOM.stackLeakByThread();
-    }
+	public void stackLeakByThread() {
+		while (true) {
+			Thread thread = new Thread(() -> dontStop());
+			thread.start();
+		}
+	}
+
 }

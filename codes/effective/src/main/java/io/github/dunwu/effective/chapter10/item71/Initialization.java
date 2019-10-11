@@ -8,24 +8,24 @@ public class Initialization {
 
 	// Lazy initialization of instance field - synchronized accessor - Page 282
 	private FieldType field2;
+	// Double-check idiom for lazy initialization of instance fields - Page 283
+	private volatile FieldType field4;
+	// Single-check idiom - can cause repeated initialization! - Page 284
+	private volatile FieldType field5;
+
+	static FieldType getField3() {
+		return FieldHolder.field;
+	}
+
+	private static FieldType computeFieldValue() {
+		return new FieldType();
+	}
 
 	synchronized FieldType getField2() {
 		if (field2 == null)
 			field2 = computeFieldValue();
 		return field2;
 	}
-
-	// Lazy initialization holder class idiom for static fields - Page 283
-	private static class FieldHolder {
-		static final FieldType field = computeFieldValue();
-	}
-
-	static FieldType getField3() {
-		return FieldHolder.field;
-	}
-
-	// Double-check idiom for lazy initialization of instance fields - Page 283
-	private volatile FieldType field4;
 
 	FieldType getField4() {
 		FieldType result = field4;
@@ -39,9 +39,6 @@ public class Initialization {
 		return result;
 	}
 
-	// Single-check idiom - can cause repeated initialization! - Page 284
-	private volatile FieldType field5;
-
 	private FieldType getField5() {
 		FieldType result = field5;
 		if (result == null)
@@ -49,10 +46,16 @@ public class Initialization {
 		return result;
 	}
 
-	private static FieldType computeFieldValue() {
-		return new FieldType();
+
+	// Lazy initialization holder class idiom for static fields - Page 283
+	private static class FieldHolder {
+
+		static final FieldType field = computeFieldValue();
+
 	}
+
 }
 
 class FieldType {
+
 }

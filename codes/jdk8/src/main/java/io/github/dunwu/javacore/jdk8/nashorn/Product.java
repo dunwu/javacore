@@ -4,40 +4,45 @@ package io.github.dunwu.javacore.jdk8.nashorn;
  * @author Benjamin Winterberg
  */
 public class Product {
-    private String name;
-    private double price;
-    private int stock;
-    private double valueOfGoods;
 
-    public double getValueOfGoods() {
-        return valueOfGoods;
-    }
+	private String name;
 
-    public void setValueOfGoods(double valueOfGoods) {
-        this.valueOfGoods = valueOfGoods;
-    }
+	private double price;
 
-    public String getName() {
-        return name;
-    }
+	private int stock;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	private double valueOfGoods;
 
-    public double getPrice() {
-        return price;
-    }
+	public double getValueOfGoods() {
+		return valueOfGoods;
+	}
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
+	public void setValueOfGoods(double valueOfGoods) {
+		this.valueOfGoods = valueOfGoods;
+	}
 
-    public int getStock() {
-        return stock;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public int getStock() {
+		return stock;
+	}
+
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
 }

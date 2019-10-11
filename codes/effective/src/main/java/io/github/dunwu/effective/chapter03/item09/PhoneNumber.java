@@ -6,8 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class PhoneNumber {
+
 	private final short areaCode;
+
 	private final short prefix;
+
 	private final short lineNumber;
 
 	public PhoneNumber(int areaCode, int prefix, int lineNumber) {
@@ -24,15 +27,10 @@ public final class PhoneNumber {
 			throw new IllegalArgumentException(name + ": " + arg);
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == this)
-			return true;
-		if (!(o instanceof PhoneNumber))
-			return false;
-		PhoneNumber pn = (PhoneNumber) o;
-		return pn.lineNumber == lineNumber && pn.prefix == prefix
-				&& pn.areaCode == areaCode;
+	public static void main(String[] args) {
+		Map<PhoneNumber, String> m = new HashMap<PhoneNumber, String>();
+		m.put(new PhoneNumber(707, 867, 5309), "Jenny");
+		System.out.println(m.get(new PhoneNumber(707, 867, 5309)));
 	}
 
 	// Broken - no hashCode method!
@@ -61,9 +59,14 @@ public final class PhoneNumber {
 	// return result;
 	// }
 
-	public static void main(String[] args) {
-		Map<PhoneNumber, String> m = new HashMap<PhoneNumber, String>();
-		m.put(new PhoneNumber(707, 867, 5309), "Jenny");
-		System.out.println(m.get(new PhoneNumber(707, 867, 5309)));
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof PhoneNumber))
+			return false;
+		PhoneNumber pn = (PhoneNumber) o;
+		return pn.lineNumber == lineNumber && pn.prefix == prefix && pn.areaCode == areaCode;
 	}
+
 }

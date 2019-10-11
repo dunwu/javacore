@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class Person {
+
 	private final Date birthDate;
 
 	public Person(Date birthDate) {
@@ -23,7 +24,7 @@ public class Person {
 		Date boomStart = gmtCal.getTime();
 		gmtCal.set(1965, Calendar.JANUARY, 1, 0, 0, 0);
 		Date boomEnd = gmtCal.getTime();
-		return birthDate.compareTo(boomStart) >= 0
-				&& birthDate.compareTo(boomEnd) < 0;
+		return birthDate.compareTo(boomStart) >= 0 && birthDate.compareTo(boomEnd) < 0;
 	}
+
 }

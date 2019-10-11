@@ -10,34 +10,37 @@ import javax.script.ScriptException;
  */
 public class Nashorn7 {
 
-    public static class Person {
-        private String name;
+	public static void main(String[] args) throws ScriptException, NoSuchMethodException {
+		ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+		engine.eval("function foo(predicate, obj) { return !!(eval(predicate)); };");
 
-        public String getName() {
-            return name;
-        }
+		Invocable invocable = (Invocable) engine;
 
-        public void setName(String name) {
-            this.name = name;
-        }
+		Person person = new Person();
+		person.setName("Hans");
 
-        public int getLengthOfName() {
-            return name.length();
-        }
-    }
+		String predicate = "obj.getLengthOfName() >= 4";
+		Object result = invocable.invokeFunction("foo", predicate, person);
+		System.out.println(result);
+	}
 
-    public static void main(String[] args) throws ScriptException, NoSuchMethodException {
-        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-        engine.eval("function foo(predicate, obj) { return !!(eval(predicate)); };");
 
-        Invocable invocable = (Invocable) engine;
+	public static class Person {
 
-        Person person = new Person();
-        person.setName("Hans");
+		private String name;
 
-        String predicate = "obj.getLengthOfName() >= 4";
-        Object result = invocable.invokeFunction("foo", predicate, person);
-        System.out.println(result);
-    }
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public int getLengthOfName() {
+			return name.length();
+		}
+
+	}
 
 }

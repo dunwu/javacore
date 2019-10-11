@@ -2,10 +2,13 @@
 package io.github.dunwu.effective.chapter04.item14;
 
 public final class Time {
+
 	private static final int HOURS_PER_DAY = 24;
+
 	private static final int MINUTES_PER_HOUR = 60;
 
 	public final int hour;
+
 	public final int minute;
 
 	public Time(int hour, int minute) {
@@ -17,4 +20,5 @@ public final class Time {
 		this.minute = minute;
 	}
 	// Remainder omitted
+
 }

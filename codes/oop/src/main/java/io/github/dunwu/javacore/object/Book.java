@@ -1,36 +1,41 @@
 package io.github.dunwu.javacore.object;
 
-class Book { // 定义Book类
-    private String title; // 标题
-    private float price; // 价格
-    private Person2 person; // 一本书属于一个人
+class Book {
 
-    public Book(String title, float price) {
-        this.setTitle(title);
-        this.setPrice(price);
-    }
+// 定义Book类
+	private String title; // 标题
 
-    public void setTitle(String t) {
-        title = t;
-    }
+	private float price; // 价格
 
-    public void setPrice(float p) {
-        price = p;
-    }
+	private Person2 person; // 一本书属于一个人
 
-    public String getTitle() {
-        return title;
-    }
+	public Book(String title, float price) {
+		this.setTitle(title);
+		this.setPrice(price);
+	}
 
-    public float getPrice() {
-        return price;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setPerson2(Person2 p) {
-        person = p;
-    }
+	public void setTitle(String t) {
+		title = t;
+	}
 
-    public Person2 getPerson2() {
-        return person;
-    }
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float p) {
+		price = p;
+	}
+
+	public Person2 getPerson2() {
+		return person;
+	}
+
+	public void setPerson2(Person2 p) {
+		person = p;
+	}
+
 };

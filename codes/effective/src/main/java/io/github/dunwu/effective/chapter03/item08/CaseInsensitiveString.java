@@ -2,6 +2,7 @@
 package io.github.dunwu.effective.chapter03.item08;
 
 public final class CaseInsensitiveString {
+
 	private final String s;
 
 	public CaseInsensitiveString(String s) {
@@ -9,6 +10,18 @@ public final class CaseInsensitiveString {
 			throw new NullPointerException();
 		this.s = s;
 	}
+
+	public static void main(String[] args) {
+		CaseInsensitiveString cis = new CaseInsensitiveString("Polish");
+		String s = "polish";
+		System.out.println(cis.equals(s) + "  " + s.equals(cis));
+	}
+
+	// This version is correct.
+	// @Override public boolean equals(Object o) {
+	// return o instanceof CaseInsensitiveString &&
+	// ((CaseInsensitiveString) o).s.equalsIgnoreCase(s);
+	// }
 
 	// Broken - violates symmetry!
 	@Override
@@ -20,15 +33,4 @@ public final class CaseInsensitiveString {
 		return false;
 	}
 
-	// This version is correct.
-	// @Override public boolean equals(Object o) {
-	// return o instanceof CaseInsensitiveString &&
-	// ((CaseInsensitiveString) o).s.equalsIgnoreCase(s);
-	// }
-
-	public static void main(String[] args) {
-		CaseInsensitiveString cis = new CaseInsensitiveString("Polish");
-		String s = "polish";
-		System.out.println(cis.equals(s) + "  " + s.equals(cis));
-	}
 }

@@ -2,7 +2,9 @@
 package io.github.dunwu.effective.chapter03.item08;
 
 public class Point {
+
 	private final int x;
+
 	private final int y;
 
 	public Point(int x, int y) {
@@ -31,4 +33,5 @@ public class Point {
 	public int hashCode() {
 		return 31 * x + y;
 	}
+
 }

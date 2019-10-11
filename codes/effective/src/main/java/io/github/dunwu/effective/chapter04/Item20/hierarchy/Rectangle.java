@@ -1,7 +1,9 @@
 package io.github.dunwu.effective.chapter04.Item20.hierarchy;
 
 class Rectangle extends Figure {
+
 	final double length;
+
 	final double width;
 
 	Rectangle(double length, double width) {
@@ -12,4 +14,5 @@ class Rectangle extends Figure {
 	double area() {
 		return length * width;
 	}
+
 }

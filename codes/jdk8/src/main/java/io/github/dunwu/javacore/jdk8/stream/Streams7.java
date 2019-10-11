@@ -9,53 +9,49 @@ import java.util.stream.IntStream;
  */
 public class Streams7 {
 
-    static class Foo {
-        String name;
-        List<Bar> bars = new ArrayList<>();
+	public static void main(String[] args) {
+		// test1();
+		test2();
+	}
 
-        Foo(String name) {
-            this.name = name;
-        }
-    }
+	static void test2() {
+		IntStream.range(1, 4).mapToObj(num -> new Foo("Foo" + num)).peek(
+				f -> IntStream.range(1, 4).mapToObj(num -> new Bar("Bar" + num + " <- " + f.name)).forEach(f.bars::add))
+				.flatMap(f -> f.bars.stream()).forEach(b -> System.out.println(b.name));
+	}
 
-    static class Bar {
-        String name;
+	static void test1() {
+		List<Foo> foos = new ArrayList<>();
 
-        Bar(String name) {
-            this.name = name;
-        }
-    }
+		IntStream.range(1, 4).forEach(num -> foos.add(new Foo("Foo" + num)));
 
-    public static void main(String[] args) {
-        //        test1();
-        test2();
-    }
+		foos.forEach(f -> IntStream.range(1, 4).forEach(num -> f.bars.add(new Bar("Bar" + num + " <- " + f.name))));
 
-    static void test2() {
-        IntStream.range(1, 4)
-            .mapToObj(num -> new Foo("Foo" + num))
-            .peek(f -> IntStream.range(1, 4)
-                .mapToObj(num -> new Bar("Bar" + num + " <- " + f.name))
-                .forEach(f.bars::add))
-            .flatMap(f -> f.bars.stream())
-            .forEach(b -> System.out.println(b.name));
-    }
+		foos.stream().flatMap(f -> f.bars.stream()).forEach(b -> System.out.println(b.name));
+	}
 
-    static void test1() {
-        List<Foo> foos = new ArrayList<>();
 
-        IntStream
-            .range(1, 4)
-            .forEach(num -> foos.add(new Foo("Foo" + num)));
+	static class Foo {
 
-        foos.forEach(f ->
-            IntStream
-                .range(1, 4)
-                .forEach(num -> f.bars.add(new Bar("Bar" + num + " <- " + f.name))));
+		String name;
 
-        foos.stream()
-            .flatMap(f -> f.bars.stream())
-            .forEach(b -> System.out.println(b.name));
-    }
+		List<Bar> bars = new ArrayList<>();
+
+		Foo(String name) {
+			this.name = name;
+		}
+
+	}
+
+
+	static class Bar {
+
+		String name;
+
+		Bar(String name) {
+			this.name = name;
+		}
+
+	}
 
 }

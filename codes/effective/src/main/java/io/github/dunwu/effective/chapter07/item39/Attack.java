@@ -4,6 +4,7 @@ package io.github.dunwu.effective.chapter07.item39;
 import java.util.Date;
 
 public class Attack {
+
 	public static void main(String[] args) {
 		// Attack the internals of a Period instance - Page 185
 		Date start = new Date();
@@ -19,4 +20,5 @@ public class Attack {
 		p.end().setYear(78); // Modifies internals of p!
 		System.out.println(p);
 	}
+
 }

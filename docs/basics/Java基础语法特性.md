@@ -20,7 +20,7 @@
 
 <!-- /TOC -->
 
-## 注释
+## 1. 注释
 
 空白行，或者注释的内容，都会被 Java 编译器忽略掉。
 
@@ -42,13 +42,13 @@ public class HelloWorld {
 }
 ```
 
-## 基本数据类型
+## 2. 基本数据类型
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java基本数据类型.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 基本数据类型](https://github.com/dunwu/javacore/blob/master/docs/basics/深入理解Java基本数据类型.md)
 
-## 变量
+## 3. 变量
 
 Java 支持的变量类型有：
 
@@ -79,19 +79,19 @@ Java 支持的变量类型有：
 - **final**
   - 如果变量使用 `fianl` 修饰符，就表示这是一个常量，不能被修改。
 
-## 数组
+## 4. 数组
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java数组.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/Java数组.md)
 
-## 枚举
+## 5. 枚举
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java枚举.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/Java枚举.md)
 
-## 操作符
+## 6. 操作符
 
 Java 中支持的操作符类型如下：
 
@@ -99,19 +99,19 @@ Java 中支持的操作符类型如下：
 
 > :point_right: 扩展阅读：[Java 操作符](http://www.runoob.com/java/java-operators.html)
 
-## 方法
+## 7. 方法
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java方法.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 方法](https://github.com/dunwu/javacore/blob/master/docs/basics/Java方法.md)
 
-## 控制语句
+## 8. 控制语句
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java控制语句.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[Java 控制语句](https://github.com/dunwu/javacore/blob/master/docs/basics/Java控制语句.md)
 
-## 异常
+## 9. 异常
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java异常框架.svg!zp"/></div>
 
@@ -119,13 +119,13 @@ Java 中支持的操作符类型如下：
 
 > :point_right: 扩展阅读：[深入理解 Java 异常](https://github.com/dunwu/javacore/blob/master/docs/basics/Java异常.md)
 
-## 泛型
+## 10. 泛型
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java泛型.svg!zp"/></div>
 
 > :point_right: 扩展阅读：[深入理解 Java 泛型](https://github.com/dunwu/javacore/blob/master/docs/basics/Java泛型.md)
 
-## 反射
+## 11. 反射
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java反射.svg!zp"/></div>
 
@@ -133,7 +133,7 @@ Java 中支持的操作符类型如下：
 
 > :point_right: 扩展阅读：[深入理解 Java 反射和动态代理](https://github.com/dunwu/javacore/blob/master/docs/basics/Java反射.md)
 
-## 注解
+## 12. 注解
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/注解简介.svg!zp"/></div>
 
@@ -145,7 +145,7 @@ Java 中支持的操作符类型如下：
 
 > :point_right: 扩展阅读：[深入理解 Java 注解](https://github.com/dunwu/javacore/blob/master/docs/basics/Java注解.md)
 
-## 序列化
+## 13. 序列化
 
 <div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java序列化.svg!zp"/></div>
 

@@ -14,12 +14,17 @@ import java.util.List;
  * @since 2019-06-25
  */
 public class HeapOutOfMemoryDemo01 {
-    static class OomObject {}
 
-    public static void main(String[] args) {
-        List<OomObject> list = new ArrayList<>();
-        while (true) {
-            list.add(new OomObject());
-        }
-    }
+	public static void main(String[] args) {
+		List<OomObject> list = new ArrayList<>();
+		while (true) {
+			list.add(new OomObject());
+		}
+	}
+
+
+	static class OomObject {
+
+	}
+
 }

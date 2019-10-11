@@ -12,40 +12,48 @@ package io.github.dunwu.jvm.memory;
  * @since 2019-06-25
  */
 public class StackOverflowDemo02 {
-    static class A {
-        private int value;
-        private B instance;
 
-        public A() {
-            value = 0;
-            instance = new B();
-        }
-
-        @Override
-        public String toString() {
-            return "<" + value + ", " + instance + ">";
-        }
-    }
+	public static void main(String[] args) {
+		A obj = new A();
+		System.out.println(obj.toString());
+	}
 
 
-    static class B {
-        private int value;
-        private A instance;
+	static class A {
 
-        public B() {
-            value = 10;
-            instance = new A();
-        }
+		private int value;
 
-        @Override
-        public String toString() {
-            return "<" + value + ", " + instance + ">";
-        }
-    }
+		private B instance;
+
+		public A() {
+			value = 0;
+			instance = new B();
+		}
+
+		@Override
+		public String toString() {
+			return "<" + value + ", " + instance + ">";
+		}
+
+	}
 
 
-    public static void main(String[] args) {
-        A obj = new A();
-        System.out.println(obj.toString());
-    }
+	static class B {
+
+		private int value;
+
+		private A instance;
+
+		public B() {
+			value = 10;
+			instance = new A();
+		}
+
+		@Override
+		public String toString() {
+			return "<" + value + ", " + instance + ">";
+		}
+
+	}
+
 }

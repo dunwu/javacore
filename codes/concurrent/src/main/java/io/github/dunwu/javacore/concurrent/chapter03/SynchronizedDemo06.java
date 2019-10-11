@@ -8,26 +8,28 @@ import io.github.dunwu.javacore.concurrent.annotation.ThreadSafe;
  */
 @ThreadSafe
 public class SynchronizedDemo06 implements Runnable {
-    static int i = 0;
 
-    @Override
-    public void run() {
-        synchronized (SynchronizedDemo06.class) {
-            for (int j = 0; j < 100000; j++) {
-                i++;
-            }
-        }
-    }
+	static int i = 0;
 
-    public static void main(String[] args) throws InterruptedException {
-        Thread t1 = new Thread(new SynchronizedDemo06());
-        Thread t2 = new Thread(new SynchronizedDemo06());
-        t1.start();
-        t2.start();
-        t1.join();
-        t2.join();
-        System.out.println(i);
-    }
+	public static void main(String[] args) throws InterruptedException {
+		Thread t1 = new Thread(new SynchronizedDemo06());
+		Thread t2 = new Thread(new SynchronizedDemo06());
+		t1.start();
+		t2.start();
+		t1.join();
+		t2.join();
+		System.out.println(i);
+	}
+
+	@Override
+	public void run() {
+		synchronized (SynchronizedDemo06.class) {
+			for (int j = 0; j < 100000; j++) {
+				i++;
+			}
+		}
+	}
+
 }
 // 输出结果:
 // 200000

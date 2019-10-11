@@ -6,23 +6,26 @@ package io.github.dunwu.jvm.classloader;
  */
 public class ParentAndSon {
 
-    static class Parent {
+	public static void main(String[] args) {
+		System.out.println(Sub.B);
+	}
 
-        public static int A = 1;
 
-        static {
-            A = 2;
-        }
-    }
+	static class Parent {
 
-    static class Sub extends Parent {
+		public static int A = 1;
 
-        public static int B = A;
-    }
+		static {
+			A = 2;
+		}
 
-    public static void main(String[] args) {
-        System.out.println(Sub.B);
-    }
+	}
 
+
+	static class Sub extends Parent {
+
+		public static int B = A;
+
+	}
 
 }

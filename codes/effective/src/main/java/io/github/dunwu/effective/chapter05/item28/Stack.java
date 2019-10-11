@@ -6,9 +6,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 public class Stack<E> {
+
+	private static final int DEFAULT_INITIAL_CAPACITY = 16;
 	private E[] elements;
 	private int size = 0;
-	private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
 	// The elements array will contain only E instances from push(E).
 	// This is sufficient to ensure type safety, but the runtime
@@ -16,6 +17,18 @@ public class Stack<E> {
 	@SuppressWarnings("unchecked")
 	public Stack() {
 		elements = (E[]) new Object[DEFAULT_INITIAL_CAPACITY];
+	}
+
+	// Little program to exercise our generic Stack
+	public static void main(String[] args) {
+		Stack<Number> numberStack = new Stack<Number>();
+		Iterable<Integer> integers = Arrays.asList(3, 1, 4, 1, 5, 9);
+		numberStack.pushAll(integers);
+
+		Collection<Object> objects = new ArrayList<Object>();
+		numberStack.popAll(objects);
+
+		System.out.println(objects);
 	}
 
 	public void push(E e) {
@@ -35,21 +48,15 @@ public class Stack<E> {
 		return size == 0;
 	}
 
-	private void ensureCapacity() {
-		if (elements.length == size)
-			elements = Arrays.copyOf(elements, 2 * size + 1);
-	}
-
 	// pushAll method without wildcard type - deficient!
 	// public void pushAll(Iterable<E> src) {
 	// for (E e : src)
 	// push(e);
 	// }
 
-	// Wildcard type for parameter that serves as an E producer
-	public void pushAll(Iterable<? extends E> src) {
-		for (E e : src)
-			push(e);
+	private void ensureCapacity() {
+		if (elements.length == size)
+			elements = Arrays.copyOf(elements, 2 * size + 1);
 	}
 
 	// popAll method without wildcard type - deficient!
@@ -58,21 +65,16 @@ public class Stack<E> {
 	// dst.add(pop());
 	// }
 
+	// Wildcard type for parameter that serves as an E producer
+	public void pushAll(Iterable<? extends E> src) {
+		for (E e : src)
+			push(e);
+	}
+
 	// Wildcard type for parameter that serves as an E consumer
 	public void popAll(Collection<? super E> dst) {
 		while (!isEmpty())
 			dst.add(pop());
 	}
 
-	// Little program to exercise our generic Stack
-	public static void main(String[] args) {
-		Stack<Number> numberStack = new Stack<Number>();
-		Iterable<Integer> integers = Arrays.asList(3, 1, 4, 1, 5, 9);
-		numberStack.pushAll(integers);
-
-		Collection<Object> objects = new ArrayList<Object>();
-		numberStack.popAll(objects);
-
-		System.out.println(objects);
-	}
 }

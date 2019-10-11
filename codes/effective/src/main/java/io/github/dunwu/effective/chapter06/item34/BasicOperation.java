@@ -2,6 +2,7 @@
 package io.github.dunwu.effective.chapter06.item34;
 
 public enum BasicOperation implements Operation {
+
 	PLUS("+") {
 		public double apply(double x, double y) {
 			return x + y;
@@ -32,4 +33,5 @@ public enum BasicOperation implements Operation {
 	public String toString() {
 		return symbol;
 	}
+
 }

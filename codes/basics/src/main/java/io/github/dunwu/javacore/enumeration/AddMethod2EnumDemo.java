@@ -12,38 +12,43 @@ package io.github.dunwu.javacore.enumeration;
  * @see org.zp.javase.enumeration.ErrorCodeEn
  */
 public enum AddMethod2EnumDemo {
-    OK(0) {
-        @Override public String getDescription() {
-            return "成功";
-        }
-    },
-    ERROR_A(100) {
-        @Override public String getDescription() {
-            return "错误A";
-        }
-    },
-    ERROR_B(200) {
-        @Override public String getDescription() {
-            return "错误B";
-        }
-    };
 
-    private int code;
+	OK(0) {
+		@Override
+		public String getDescription() {
+			return "成功";
+		}
+	},
+	ERROR_A(100) {
+		@Override
+		public String getDescription() {
+			return "错误A";
+		}
+	},
+	ERROR_B(200) {
+		@Override
+		public String getDescription() {
+			return "错误B";
+		}
+	};
 
-    // 构造方法：enum的构造方法只能被声明为private权限或不声明权限
-    private AddMethod2EnumDemo(int number) { // 构造方法
-        this.code = number;
-    }
+	private int code;
 
-    public int getCode() { // 普通方法
-        return code;
-    } // 普通方法
+	// 构造方法：enum的构造方法只能被声明为private权限或不声明权限
+	private AddMethod2EnumDemo(int number) { // 构造方法
+		this.code = number;
+	}
 
-    public abstract String getDescription(); // 抽象方法
+	public static void main(String[] args) { // 静态方法
+		for (AddMethod2EnumDemo item : AddMethod2EnumDemo.values()) {
+			System.out.println("code: " + item.getCode() + ", description: " + item.getDescription());
+		}
+	}
 
-    public static void main(String[] args) { // 静态方法
-        for (AddMethod2EnumDemo item : AddMethod2EnumDemo.values()) {
-            System.out.println("code: " + item.getCode() + ", description: " + item.getDescription());
-        }
-    }
+	public int getCode() { // 普通方法
+		return code;
+	} // 普通方法
+
+	public abstract String getDescription(); // 抽象方法
+
 }

@@ -2,7 +2,9 @@
 package io.github.dunwu.effective.chapter03.item08.composition;
 
 public class ColorPoint {
+
 	private final Point point;
+
 	private final Color color;
 
 	public ColorPoint(int x, int y, Color color) {
@@ -31,4 +33,5 @@ public class ColorPoint {
 	public int hashCode() {
 		return point.hashCode() * 33 + color.hashCode();
 	}
+
 }

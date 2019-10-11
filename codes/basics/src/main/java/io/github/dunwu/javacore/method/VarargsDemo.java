@@ -5,18 +5,20 @@ package io.github.dunwu.javacore.method;
  * @date 2019-03-16
  */
 public class VarargsDemo {
-    public static void method(String... params) {
-        System.out.println("params.length = " + params.length);
-        for (String param : params) {
-            System.out.println("params = [" + param + "]");
-        }
-    }
 
-    public static void main(String[] args) {
-        method("red");
-        method("red", "yellow");
-        method("red", "yellow", "blue");
-    }
+	public static void method(String... params) {
+		System.out.println("params.length = " + params.length);
+		for (String param : params) {
+			System.out.println("params = [" + param + "]");
+		}
+	}
+
+	public static void main(String[] args) {
+		method("red");
+		method("red", "yellow");
+		method("red", "yellow", "blue");
+	}
+
 }
 // Output:
 // params.length = 1

@@ -2,6 +2,7 @@
 package io.github.dunwu.effective.chapter10.item72;
 
 public class SlowCountDownLatch {
+
 	private int count;
 
 	public SlowCountDownLatch(int count) {
@@ -23,4 +24,5 @@ public class SlowCountDownLatch {
 		if (count != 0)
 			count--;
 	}
+
 }

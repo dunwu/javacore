@@ -2,20 +2,23 @@ package io.github.dunwu.javacore.control;
 
 /**
  * 中断语句示例
+ *
  * @see BreakDemo
  * @see ContinueDemo
  * @see ReturnDemo
  * @author Zhang Peng
  */
 public class ContinueDemo {
-    public static void main(String[] args) {
-        for (int i = 0; i < 10; i++) {
-            if (i == 3) {
-                continue;
-            }
-            System.out.println("i = " + i);
-        }
-    }
+
+	public static void main(String[] args) {
+		for (int i = 0; i < 10; i++) {
+			if (i == 3) {
+				continue;
+			}
+			System.out.println("i = " + i);
+		}
+	}
+
 };
 // output:
 // i = 0

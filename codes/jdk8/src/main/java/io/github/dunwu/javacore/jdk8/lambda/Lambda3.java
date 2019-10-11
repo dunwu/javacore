@@ -11,66 +11,69 @@ import java.util.function.Supplier;
 
 /**
  * Common standard functions from the Java API.
+ *
  * @author Benjamin Winterberg
  */
 public class Lambda3 {
 
-    @FunctionalInterface
-    interface Fun {
-        void foo();
-    }
+	public static void main(String[] args) throws Exception {
 
-    public static void main(String[] args) throws Exception {
+		// Predicates
 
-        // Predicates
+		Predicate<String> predicate = (s) -> s.length() > 0;
 
-        Predicate<String> predicate = (s) -> s.length() > 0;
+		predicate.test("foo"); // true
+		predicate.negate().test("foo"); // false
 
-        predicate.test("foo");              // true
-        predicate.negate().test("foo");     // false
+		Predicate<Boolean> nonNull = Objects::nonNull;
+		Predicate<Boolean> isNull = Objects::isNull;
 
-        Predicate<Boolean> nonNull = Objects::nonNull;
-        Predicate<Boolean> isNull = Objects::isNull;
+		Predicate<String> isEmpty = String::isEmpty;
+		Predicate<String> isNotEmpty = isEmpty.negate();
 
-        Predicate<String> isEmpty = String::isEmpty;
-        Predicate<String> isNotEmpty = isEmpty.negate();
+		// Functions
 
-        // Functions
+		Function<String, Integer> toInteger = Integer::valueOf;
+		Function<String, String> backToString = toInteger.andThen(String::valueOf);
 
-        Function<String, Integer> toInteger = Integer::valueOf;
-        Function<String, String> backToString = toInteger.andThen(String::valueOf);
+		backToString.apply("123"); // "123"
 
-        backToString.apply("123");     // "123"
+		// Suppliers
 
-        // Suppliers
+		Supplier<Person> personSupplier = Person::new;
+		personSupplier.get(); // new Person
 
-        Supplier<Person> personSupplier = Person::new;
-        personSupplier.get();   // new Person
+		// Consumers
 
-        // Consumers
+		Consumer<Person> greeter = (p) -> System.out.println("Hello, " + p.firstName);
+		greeter.accept(new Person("Luke", "Skywalker"));
 
-        Consumer<Person> greeter = (p) -> System.out.println("Hello, " + p.firstName);
-        greeter.accept(new Person("Luke", "Skywalker"));
+		// Comparators
 
-        // Comparators
+		Comparator<Person> comparator = (p1, p2) -> p1.firstName.compareTo(p2.firstName);
 
-        Comparator<Person> comparator = (p1, p2) -> p1.firstName.compareTo(p2.firstName);
+		Person p1 = new Person("John", "Doe");
+		Person p2 = new Person("Alice", "Wonderland");
 
-        Person p1 = new Person("John", "Doe");
-        Person p2 = new Person("Alice", "Wonderland");
+		comparator.compare(p1, p2); // > 0
+		comparator.reversed().compare(p1, p2); // < 0
 
-        comparator.compare(p1, p2);             // > 0
-        comparator.reversed().compare(p1, p2);  // < 0
+		// Runnables
 
-        // Runnables
+		Runnable runnable = () -> System.out.println(UUID.randomUUID());
+		runnable.run();
 
-        Runnable runnable = () -> System.out.println(UUID.randomUUID());
-        runnable.run();
+		// Callables
 
-        // Callables
+		Callable<UUID> callable = UUID::randomUUID;
+		callable.call();
+	}
 
-        Callable<UUID> callable = UUID::randomUUID;
-        callable.call();
-    }
+	@FunctionalInterface
+	interface Fun {
+
+		void foo();
+
+	}
 
 }

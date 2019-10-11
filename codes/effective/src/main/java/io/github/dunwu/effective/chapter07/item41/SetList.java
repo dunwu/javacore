@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class SetList {
+
 	public static void main(String[] args) {
 		Set<Integer> set = new TreeSet<Integer>();
 		List<Integer> list = new ArrayList<Integer>();
@@ -23,4 +24,5 @@ public class SetList {
 
 		System.out.println(set + " " + list);
 	}
+
 }

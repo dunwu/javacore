@@ -8,11 +8,13 @@ import io.github.dunwu.javacore.generics.entity.MyMap;
  * @date 2019-03-20
  */
 public class GenericsClassDemo03 {
-    public static void main(String[] args) {
-        Info<String> info = new Info("Hello");
-        MyMap<Integer, Info<String>> map = new MyMap<>(1, info);
-        System.out.println(map);
-    }
+
+	public static void main(String[] args) {
+		Info<String> info = new Info("Hello");
+		MyMap<Integer, Info<String>> map = new MyMap<>(1, info);
+		System.out.println(map);
+	}
+
 }
 // Output:
 // MyMap{key=1, value=Info{value=Hello}}

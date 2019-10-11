@@ -7,18 +7,16 @@ import java.io.Serializable;
 import java.util.Date;
 
 public final class Period implements Serializable {
+
 	private final Date start;
+
 	private final Date end;
 
 	/**
-	 * @param start
-	 *            the beginning of the period
-	 * @param end
-	 *            the end of the period; must not precede start
-	 * @throws IllegalArgumentException
-	 *             if start is after end
-	 * @throws NullPointerException
-	 *             if start or end is null
+	 * @param start the beginning of the period
+	 * @param end the end of the period; must not precede start
+	 * @throws IllegalArgumentException if start is after end
+	 * @throws NullPointerException if start or end is null
 	 */
 	public Period(Date start, Date end) {
 		this.start = new Date(start.getTime());
@@ -39,8 +37,21 @@ public final class Period implements Serializable {
 		return start + " - " + end;
 	}
 
+	// writeReplace method for the serialization proxy pattern - page 312
+	private Object writeReplace() {
+		return new SerializationProxy(this);
+	}
+
+	// readObject method for the serialization proxy pattern - Page 313
+	private void readObject(ObjectInputStream stream) throws InvalidObjectException {
+		throw new InvalidObjectException("Proxy required");
+	}
+
+
 	// Serialization proxy for Period class - page 312
 	private static class SerializationProxy implements Serializable {
+
+		private static final long serialVersionUID = 234098243823485285L; // Any
 		private final Date start;
 		private final Date end;
 
@@ -48,8 +59,6 @@ public final class Period implements Serializable {
 			this.start = p.start;
 			this.end = p.end;
 		}
-
-		private static final long serialVersionUID = 234098243823485285L; // Any
 																			// number
 																			// will
 																			// do
@@ -60,16 +69,7 @@ public final class Period implements Serializable {
 		private Object readResolve() {
 			return new Period(start, end); // Uses public constructor
 		}
+
 	}
 
-	// writeReplace method for the serialization proxy pattern - page 312
-	private Object writeReplace() {
-		return new SerializationProxy(this);
-	}
-
-	// readObject method for the serialization proxy pattern - Page 313
-	private void readObject(ObjectInputStream stream)
-			throws InvalidObjectException {
-		throw new InvalidObjectException("Proxy required");
-	}
 }

@@ -2,9 +2,9 @@
 package io.github.dunwu.effective.chapter06.item30;
 
 enum PayrollDay {
-	MONDAY(PayType.WEEKDAY), TUESDAY(PayType.WEEKDAY), WEDNESDAY(
-			PayType.WEEKDAY), THURSDAY(PayType.WEEKDAY), FRIDAY(PayType.WEEKDAY), SATURDAY(
-			PayType.WEEKEND), SUNDAY(PayType.WEEKEND);
+
+	MONDAY(PayType.WEEKDAY), TUESDAY(PayType.WEEKDAY), WEDNESDAY(PayType.WEEKDAY), THURSDAY(PayType.WEEKDAY), FRIDAY(
+			PayType.WEEKDAY), SATURDAY(PayType.WEEKEND), SUNDAY(PayType.WEEKEND);
 
 	private final PayType payType;
 
@@ -18,10 +18,10 @@ enum PayrollDay {
 
 	// The strategy enum type
 	private enum PayType {
+
 		WEEKDAY {
 			double overtimePay(double hours, double payRate) {
-				return hours <= HOURS_PER_SHIFT ? 0 : (hours - HOURS_PER_SHIFT)
-						* payRate / 2;
+				return hours <= HOURS_PER_SHIFT ? 0 : (hours - HOURS_PER_SHIFT) * payRate / 2;
 			}
 		},
 		WEEKEND {
@@ -37,5 +37,7 @@ enum PayrollDay {
 			double basePay = hoursWorked * payRate;
 			return basePay + overtimePay(hoursWorked, payRate);
 		}
+
 	}
+
 }

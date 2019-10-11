@@ -5,67 +5,73 @@ package io.github.dunwu.javacore.enumeration;
  * @date 2019-03-19
  */
 public class EnumInInterfaceDemo {
-    public interface INumberEnum {
-        int getCode();
-        String getDescription();
-    }
 
+	public static void main(String[] args) {
+		for (Plant.Fruit f : Plant.Fruit.values()) {
+			System.out.println(f.getDescription());
+		}
+	}
 
-    public interface Plant {
-        enum Vegetable implements INumberEnum {
-            POTATO(0, "土豆"),
-            TOMATO(0, "西红柿");
+	public interface INumberEnum {
 
-            Vegetable(int number, String description) {
-                this.code = number;
-                this.description = description;
-            }
+		int getCode();
 
-            private int code;
-            private String description;
+		String getDescription();
 
-            @Override
-            public int getCode() {
-                return this.code;
-            }
+	}
 
-            @Override
-            public String getDescription() {
-                return this.description;
-            }
-        }
+	public interface Plant {
 
+		enum Vegetable implements INumberEnum {
 
-        enum Fruit implements INumberEnum {
-            APPLE(0, "苹果"),
-            ORANGE(0, "桔子"),
-            BANANA(0, "香蕉");
+			POTATO(0, "土豆"), TOMATO(0, "西红柿");
 
-            Fruit(int number, String description) {
-                this.code = number;
-                this.description = description;
-            }
+			private int code;
+			private String description;
 
-            private int code;
-            private String description;
+			Vegetable(int number, String description) {
+				this.code = number;
+				this.description = description;
+			}
 
-            @Override
-            public int getCode() {
-                return this.code;
-            }
+			@Override
+			public int getCode() {
+				return this.code;
+			}
 
-            @Override
-            public String getDescription() {
-                return this.description;
-            }
-        }
-    }
+			@Override
+			public String getDescription() {
+				return this.description;
+			}
 
-    public static void main(String[] args) {
-        for (Plant.Fruit f : Plant.Fruit.values()) {
-            System.out.println(f.getDescription());
-        }
-    }
+		}
+
+		enum Fruit implements INumberEnum {
+
+			APPLE(0, "苹果"), ORANGE(0, "桔子"), BANANA(0, "香蕉");
+
+			private int code;
+			private String description;
+
+			Fruit(int number, String description) {
+				this.code = number;
+				this.description = description;
+			}
+
+			@Override
+			public int getCode() {
+				return this.code;
+			}
+
+			@Override
+			public String getDescription() {
+				return this.description;
+			}
+
+		}
+
+	}
+
 }
 // Output:
 // 苹果

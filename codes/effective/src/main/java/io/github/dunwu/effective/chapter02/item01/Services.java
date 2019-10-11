@@ -7,12 +7,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Services {
-	private Services() {
-	} // 私有构造器，阻止实例化 (Item 4)
 
+	public static final String DEFAULT_PROVIDER_NAME = "<def>";
 	// 根据名称映射Provider的实现类
 	private static final Map<String, Provider> providers = new ConcurrentHashMap<String, Provider>();
-	public static final String DEFAULT_PROVIDER_NAME = "<def>";
+
+	private Services() {
+	} // 私有构造器，阻止实例化 (Item 4)
 
 	// Provider 注册接口
 	public static void registerDefaultProvider(Provider p) {
@@ -31,8 +32,8 @@ public class Services {
 	public static Service newInstance(String name) {
 		Provider p = providers.get(name);
 		if (p == null)
-			throw new IllegalArgumentException(
-					"No provider registered with name: " + name);
+			throw new IllegalArgumentException("No provider registered with name: " + name);
 		return p.newService();
 	}
+
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sample2 {
+
 	@ExceptionTest(ArithmeticException.class)
 	public static void m1() { // Test should pass
 		int i = 0;
@@ -22,8 +23,7 @@ public class Sample2 {
 	} // Should fail (no exception)
 
 	// Code containing an annotation with an array parameter - Page 174
-	@ExceptionTest({ IndexOutOfBoundsException.class,
-			NullPointerException.class })
+	@ExceptionTest({ IndexOutOfBoundsException.class, NullPointerException.class })
 	public static void doublyBad() {
 		List<String> list = new ArrayList<String>();
 
@@ -31,4 +31,5 @@ public class Sample2 {
 		// IndexOutOfBoundsException or NullPointerException
 		list.addAll(5, null);
 	}
+
 }

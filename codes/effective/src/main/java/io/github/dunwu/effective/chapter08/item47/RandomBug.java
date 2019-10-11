@@ -21,4 +21,5 @@ public class RandomBug {
 
 		System.out.println(low);
 	}
+
 }

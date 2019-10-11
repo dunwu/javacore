@@ -11,8 +11,10 @@ package io.github.dunwu.jvm.memory;
  * @since 2019-06-25
  */
 public class HeapOutOfMemoryDemo02 {
-    public static void main(String[] args) {
-        Double[] array = new Double[999999999];
-        System.out.println("array length = [" + array.length + "]");
-    }
+
+	public static void main(String[] args) {
+		Double[] array = new Double[999999999];
+		System.out.println("array length = [" + array.length + "]");
+	}
+
 }

@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.TreeSet;
 
 public final class PhoneNumber implements Cloneable, Comparable<PhoneNumber> {
+
+	private static final Random rnd = new Random();
 	private final short areaCode;
 	private final short prefix;
 	private final short lineNumber;
@@ -24,6 +26,17 @@ public final class PhoneNumber implements Cloneable, Comparable<PhoneNumber> {
 			throw new IllegalArgumentException(name + ": " + arg);
 	}
 
+	public static void main(String[] args) {
+		NavigableSet<PhoneNumber> s = new TreeSet<PhoneNumber>();
+		for (int i = 0; i < 10; i++)
+			s.add(randomPhoneNumber());
+		System.out.println(s);
+	}
+
+	private static PhoneNumber randomPhoneNumber() {
+		return new PhoneNumber((short) rnd.nextInt(1000), (short) rnd.nextInt(1000), (short) rnd.nextInt(10000));
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == this)
@@ -31,45 +44,7 @@ public final class PhoneNumber implements Cloneable, Comparable<PhoneNumber> {
 		if (!(o instanceof PhoneNumber))
 			return false;
 		PhoneNumber pn = (PhoneNumber) o;
-		return pn.lineNumber == lineNumber && pn.prefix == prefix
-				&& pn.areaCode == areaCode;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = 17;
-		result = 31 * result + areaCode;
-		result = 31 * result + prefix;
-		result = 31 * result + lineNumber;
-		return result;
-	}
-
-	/**
-	 * Returns the string representation of this phone number. The string
-	 * consists of fourteen characters whose format is "(XXX) YYY-ZZZZ", where
-	 * XXX is the area code, YYY is the prefix, and ZZZZ is the line number.
-	 * (Each of the capital letters represents a single decimal digit.)
-	 *
-	 * If any of the three parts of this phone number is too small to fill up
-	 * its field, the field is padded with leading zeros. For example, if the
-	 * value of the line number is 123, the last four characters of the string
-	 * representation will be "0123".
-	 *
-	 * Note that there is a single space separating the closing parenthesis
-	 * after the area code from the first digit of the prefix.
-	 */
-	@Override
-	public String toString() {
-		return String.format("(%03d) %03d-%04d", areaCode, prefix, lineNumber);
-	}
-
-	@Override
-	public PhoneNumber clone() {
-		try {
-			return (PhoneNumber) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new AssertionError(); // Can't happen
-		}
+		return pn.lineNumber == lineNumber && pn.prefix == prefix && pn.areaCode == areaCode;
 	}
 
 	// Works fine, but can be made faster
@@ -95,6 +70,44 @@ public final class PhoneNumber implements Cloneable, Comparable<PhoneNumber> {
 	// return 0; // All fields are equal
 	// }
 
+	@Override
+	public int hashCode() {
+		int result = 17;
+		result = 31 * result + areaCode;
+		result = 31 * result + prefix;
+		result = 31 * result + lineNumber;
+		return result;
+	}
+
+	/**
+	 * Returns the string representation of this phone number. The string consists of
+	 * fourteen characters whose format is "(XXX) YYY-ZZZZ", where XXX is the area code,
+	 * YYY is the prefix, and ZZZZ is the line number. (Each of the capital letters
+	 * represents a single decimal digit.)
+	 *
+	 * If any of the three parts of this phone number is too small to fill up its field,
+	 * the field is padded with leading zeros. For example, if the value of the line
+	 * number is 123, the last four characters of the string representation will be
+	 * "0123".
+	 *
+	 * Note that there is a single space separating the closing parenthesis after the area
+	 * code from the first digit of the prefix.
+	 */
+	@Override
+	public String toString() {
+		return String.format("(%03d) %03d-%04d", areaCode, prefix, lineNumber);
+	}
+
+	@Override
+	public PhoneNumber clone() {
+		try {
+			return (PhoneNumber) super.clone();
+		}
+		catch (CloneNotSupportedException e) {
+			throw new AssertionError(); // Can't happen
+		}
+	}
+
 	public int compareTo(PhoneNumber pn) {
 		// Compare area codes
 		int areaCodeDiff = areaCode - pn.areaCode;
@@ -110,17 +123,4 @@ public final class PhoneNumber implements Cloneable, Comparable<PhoneNumber> {
 		return lineNumber - pn.lineNumber;
 	}
 
-	public static void main(String[] args) {
-		NavigableSet<PhoneNumber> s = new TreeSet<PhoneNumber>();
-		for (int i = 0; i < 10; i++)
-			s.add(randomPhoneNumber());
-		System.out.println(s);
-	}
-
-	private static final Random rnd = new Random();
-
-	private static PhoneNumber randomPhoneNumber() {
-		return new PhoneNumber((short) rnd.nextInt(1000),
-				(short) rnd.nextInt(1000), (short) rnd.nextInt(10000));
-	}
 }

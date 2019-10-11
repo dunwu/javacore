@@ -7,11 +7,12 @@ import java.util.List;
 import java.util.Set;
 
 public class ObservableSet<E> extends ForwardingSet<E> {
+
+	private final List<SetObserver<E>> observers = new ArrayList<SetObserver<E>>();
+
 	public ObservableSet(Set<E> set) {
 		super(set);
 	}
-
-	private final List<SetObserver<E>> observers = new ArrayList<SetObserver<E>>();
 
 	public void addObserver(SetObserver<E> observer) {
 		synchronized (observers) {
@@ -74,4 +75,5 @@ public class ObservableSet<E> extends ForwardingSet<E> {
 			result |= add(element); // calls notifyElementAdded
 		return result;
 	}
+
 }

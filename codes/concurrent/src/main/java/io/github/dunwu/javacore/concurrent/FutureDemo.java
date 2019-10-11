@@ -7,30 +7,34 @@ import java.util.concurrent.Future;
 
 /**
  * Callable 示例
+ *
  * @author Zhang Peng
  */
 public class FutureDemo {
-    public static void main(String[] args) {
-        ExecutorService executor = Executors.newCachedThreadPool();
-        CallableDemo task = new CallableDemo();
-        Future<Integer> result = executor.submit(task);
-        executor.shutdown();
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }
+	public static void main(String[] args) {
+		ExecutorService executor = Executors.newCachedThreadPool();
+		CallableDemo task = new CallableDemo();
+		Future<Integer> result = executor.submit(task);
+		executor.shutdown();
 
-        System.out.println("主线程在执行任务");
+		try {
+			Thread.sleep(1000);
+		}
+		catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 
-        try {
-            System.out.println("task运行结果" + result.get());
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+		System.out.println("主线程在执行任务");
 
-        System.out.println("所有任务执行完毕");
-    }
+		try {
+			System.out.println("task运行结果" + result.get());
+		}
+		catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("所有任务执行完毕");
+	}
+
 }
-

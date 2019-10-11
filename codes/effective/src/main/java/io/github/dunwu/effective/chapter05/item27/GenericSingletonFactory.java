@@ -2,6 +2,7 @@
 package io.github.dunwu.effective.chapter05.item27;
 
 public class GenericSingletonFactory {
+
 	// Generic singleton factory pattern
 	private static UnaryFunction<Object> IDENTITY_FUNCTION = new UnaryFunction<Object>() {
 		public Object apply(Object arg) {
@@ -28,4 +29,5 @@ public class GenericSingletonFactory {
 		for (Number n : numbers)
 			System.out.println(sameNumber.apply(n));
 	}
+
 }

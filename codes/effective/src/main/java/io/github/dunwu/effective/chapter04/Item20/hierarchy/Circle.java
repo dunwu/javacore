@@ -1,6 +1,7 @@
 package io.github.dunwu.effective.chapter04.Item20.hierarchy;
 
 class Circle extends Figure {
+
 	final double radius;
 
 	Circle(double radius) {
@@ -10,4 +11,5 @@ class Circle extends Figure {
 	double area() {
 		return Math.PI * (radius * radius);
 	}
+
 }

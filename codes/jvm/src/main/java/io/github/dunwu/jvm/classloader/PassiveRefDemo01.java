@@ -5,7 +5,8 @@ package io.github.dunwu.jvm.classloader;
  **/
 public class PassiveRefDemo01 {
 
-    public static void main(String[] args) {
-        System.out.println(SubClass.value);
-    }
+	public static void main(String[] args) {
+		System.out.println(SubClass.value);
+	}
+
 }

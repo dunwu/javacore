@@ -9,19 +9,23 @@ import java.util.Map;
  * @date 2019-03-19
  */
 public class EnumMapDemo {
-    public enum Signal {
-        GREEN, YELLOW, RED
-    }
 
-    public static void main(String[] args) {
-        System.out.println("EnumMap展示");
-        EnumMap<Signal, String> errMap = new EnumMap(Signal.class);
-        errMap.put(Signal.RED, "红灯");
-        errMap.put(Signal.YELLOW, "黄灯");
-        errMap.put(Signal.GREEN, "绿灯");
-        for (Iterator<Map.Entry<Signal, String>> iter = errMap.entrySet().iterator(); iter.hasNext();) {
-            Map.Entry<Signal, String> entry = iter.next();
-            System.out.println(entry.getKey().name() + " : " + entry.getValue());
-        }
-    }
+	public static void main(String[] args) {
+		System.out.println("EnumMap展示");
+		EnumMap<Signal, String> errMap = new EnumMap(Signal.class);
+		errMap.put(Signal.RED, "红灯");
+		errMap.put(Signal.YELLOW, "黄灯");
+		errMap.put(Signal.GREEN, "绿灯");
+		for (Iterator<Map.Entry<Signal, String>> iter = errMap.entrySet().iterator(); iter.hasNext();) {
+			Map.Entry<Signal, String> entry = iter.next();
+			System.out.println(entry.getKey().name() + " : " + entry.getValue());
+		}
+	}
+
+	public enum Signal {
+
+		GREEN, YELLOW, RED
+
+	}
+
 }

@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class RecursiveTypeBound {
+
 	// Returns the maximum value in a list - uses recursive type bound
 	public static <T extends Comparable<T>> T max(List<T> list) {
 		Iterator<T> i = list.iterator();
@@ -22,4 +23,5 @@ public class RecursiveTypeBound {
 		List<String> argList = Arrays.asList(args);
 		System.out.println(max(argList));
 	}
+
 }

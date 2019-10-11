@@ -5,8 +5,11 @@ import java.util.EnumSet;
 import java.util.Set;
 
 public class Text {
-	public enum Style {
-		BOLD, ITALIC, UNDERLINE, STRIKETHROUGH
+
+	// Sample use
+	public static void main(String[] args) {
+		Text text = new Text();
+		text.applyStyles(EnumSet.of(Style.BOLD, Style.ITALIC));
 	}
 
 	// Any Set could be passed in, but EnumSet is clearly best
@@ -14,9 +17,10 @@ public class Text {
 		// Body goes here
 	}
 
-	// Sample use
-	public static void main(String[] args) {
-		Text text = new Text();
-		text.applyStyles(EnumSet.of(Style.BOLD, Style.ITALIC));
+	public enum Style {
+
+		BOLD, ITALIC, UNDERLINE, STRIKETHROUGH
+
 	}
+
 }

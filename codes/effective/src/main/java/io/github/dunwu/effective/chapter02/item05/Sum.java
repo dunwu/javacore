@@ -1,6 +1,7 @@
 package io.github.dunwu.effective.chapter02.item05;
 
 public class Sum {
+
 	// Hideously slow program! Can you spot the object creation?
 	public static void main(String[] args) {
 		Long sum = 0L;
@@ -9,4 +10,5 @@ public class Sum {
 		}
 		System.out.println(sum);
 	}
+
 }

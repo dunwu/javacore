@@ -7,10 +7,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class InstrumentedSet<E> extends ForwardingSet<E> {
+
 	private int addCount = 0;
 
 	public InstrumentedSet(Set<E> s) {
 		super(s);
+	}
+
+	public static void main(String[] args) {
+		InstrumentedSet<String> s = new InstrumentedSet<String>(new HashSet<String>());
+		s.addAll(Arrays.asList("Snap", "Crackle", "Pop"));
+		System.out.println(s.getAddCount());
 	}
 
 	@Override
@@ -29,10 +36,4 @@ public class InstrumentedSet<E> extends ForwardingSet<E> {
 		return addCount;
 	}
 
-	public static void main(String[] args) {
-		InstrumentedSet<String> s = new InstrumentedSet<String>(
-				new HashSet<String>());
-		s.addAll(Arrays.asList("Snap", "Crackle", "Pop"));
-		System.out.println(s.getAddCount());
-	}
 }

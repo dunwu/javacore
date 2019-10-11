@@ -35,4 +35,5 @@ public class Varargs {
 		System.out.println(sum(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 		System.out.println(min(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
 	}
+
 }

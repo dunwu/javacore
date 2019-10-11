@@ -1,6 +1,7 @@
 package io.github.dunwu.effective.chapter04.item17;
 
 public class Super {
+
 	// Broken - constructor invokes an overridable method
 	public Super() {
 		overrideMe();
@@ -8,4 +9,5 @@ public class Super {
 
 	public void overrideMe() {
 	}
+
 }

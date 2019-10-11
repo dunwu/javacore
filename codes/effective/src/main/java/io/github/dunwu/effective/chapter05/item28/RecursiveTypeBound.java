@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class RecursiveTypeBound {
+
 	public static <T extends Comparable<? super T>> T max(List<? extends T> list) {
 		Iterator<? extends T> i = list.iterator();
 		T result = i.next();
@@ -21,4 +22,5 @@ public class RecursiveTypeBound {
 		List<String> argList = Arrays.asList(args);
 		System.out.println(max(argList));
 	}
+
 }

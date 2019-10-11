@@ -11,18 +11,19 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtomicIntegerDemo {
 
-    public static void main(String[] args) throws InterruptedException {
-        ExecutorService executorService = Executors.newFixedThreadPool(5);
-        AtomicInteger count = new AtomicInteger(0);
-        for (int i = 0; i < 1000; i++) {
-            executorService.submit((Runnable) () -> {
-                System.out.println(Thread.currentThread().getName() + " count=" + count.get());
-                count.incrementAndGet();
-            });
-        }
+	public static void main(String[] args) throws InterruptedException {
+		ExecutorService executorService = Executors.newFixedThreadPool(5);
+		AtomicInteger count = new AtomicInteger(0);
+		for (int i = 0; i < 1000; i++) {
+			executorService.submit((Runnable) () -> {
+				System.out.println(Thread.currentThread().getName() + " count=" + count.get());
+				count.incrementAndGet();
+			});
+		}
 
-        executorService.shutdown();
-        executorService.awaitTermination(30, TimeUnit.SECONDS);
-        System.out.println("Final Count is : " + count.get());
-    }
+		executorService.shutdown();
+		executorService.awaitTermination(30, TimeUnit.SECONDS);
+		System.out.println("Final Count is : " + count.get());
+	}
+
 }

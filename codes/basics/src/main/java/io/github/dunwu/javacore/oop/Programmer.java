@@ -6,31 +6,32 @@ package io.github.dunwu.javacore.oop;
  */
 public class Programmer {
 
-    public static final String CORE_SKILL;
+	public static final String CORE_SKILL;
 
-    static {
-        CORE_SKILL = "programming";
-    }
+	static {
+		CORE_SKILL = "programming";
+	}
 
-    private String name;
+	private String name;
 
-    public Programmer() {
-        name = "unknown";
-    }
+	public Programmer() {
+		name = "unknown";
+	}
 
-    public String getName() {
-        return name;
-    }
+	public static void main(String[] args) {
+		Programmer programmer = new Programmer();
+		programmer.setName("zp");
+		System.out.println("I am a programmer");
+		System.out.println("My name is " + programmer.getName());
+		System.out.println("My core skill is " + Programmer.CORE_SKILL);
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public static void main(String[] args) {
-        Programmer programmer = new Programmer();
-        programmer.setName("zp");
-        System.out.println("I am a programmer");
-        System.out.println("My name is " + programmer.getName());
-        System.out.println("My core skill is " + Programmer.CORE_SKILL);
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

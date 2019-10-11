@@ -16,11 +16,10 @@ public class Union {
 
 	// Simple program to exercise generic method
 	public static void main(String[] args) {
-		Set<String> guys = new HashSet<String>(Arrays.asList("Tom", "Dick",
-				"Harry"));
-		Set<String> stooges = new HashSet<String>(Arrays.asList("Larry", "Moe",
-				"Curly"));
+		Set<String> guys = new HashSet<String>(Arrays.asList("Tom", "Dick", "Harry"));
+		Set<String> stooges = new HashSet<String>(Arrays.asList("Larry", "Moe", "Curly"));
 		Set<String> aflCio = union(guys, stooges);
 		System.out.println(aflCio);
 	}
+
 }

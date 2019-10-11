@@ -2,6 +2,7 @@
 package io.github.dunwu.effective.chapter06.item35;
 
 public class Sample {
+
 	@Test
 	public static void m1() {
 	} // Test should pass
@@ -17,10 +18,6 @@ public class Sample {
 	public static void m4() {
 	}
 
-	@Test
-	public void m5() {
-	} // INVALID USE: nonstatic method
-
 	public static void m6() {
 	}
 
@@ -31,4 +28,9 @@ public class Sample {
 
 	public static void m8() {
 	}
+
+	@Test
+	public void m5() {
+	} // INVALID USE: nonstatic method
+
 }

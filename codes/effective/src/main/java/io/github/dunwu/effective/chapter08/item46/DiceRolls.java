@@ -6,10 +6,13 @@ import java.util.Collection;
 import java.util.Iterator;
 
 enum Face {
+
 	ONE, TWO, THREE, FOUR, FIVE, SIX
+
 }
 
 public class DiceRolls {
+
 	public static void main(String[] args) {
 		Collection<Face> faces = Arrays.asList(Face.values());
 
@@ -22,4 +25,5 @@ public class DiceRolls {
 		// for (Face face2 : faces)
 		// System.out.println(face1 + " " + face2);
 	}
+
 }

@@ -7,8 +7,15 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Foo extends AbstractFoo implements Serializable {
-	private void readObject(ObjectInputStream s) throws IOException,
-			ClassNotFoundException {
+
+	private static final long serialVersionUID = 1856835860954L;
+
+	// Constructor does not use the fancy mechanism
+	public Foo(int x, int y) {
+		super(x, y);
+	}
+
+	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
 		s.defaultReadObject();
 
 		// Manually deserialize and initialize superclass state
@@ -25,10 +32,4 @@ public class Foo extends AbstractFoo implements Serializable {
 		s.writeInt(getY());
 	}
 
-	// Constructor does not use the fancy mechanism
-	public Foo(int x, int y) {
-		super(x, y);
-	}
-
-	private static final long serialVersionUID = 1856835860954L;
 }

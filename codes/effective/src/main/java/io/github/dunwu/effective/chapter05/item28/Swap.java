@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Swap {
+
 	public static void swap(List<?> list, int i, int j) {
 		swapHelper(list, i, j);
 	}
@@ -20,4 +21,5 @@ public class Swap {
 		swap(argList, 0, argList.size() - 1);
 		System.out.println(argList);
 	}
+
 }

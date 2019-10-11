@@ -5,41 +5,49 @@ package io.github.dunwu.javacore.jdk8.lambda;
  */
 public class Lambda2 {
 
-    @FunctionalInterface
-    public static interface Converter<F, T> {
-        T convert(F from);
-    }
+	public static void main(String[] args) {
+		Converter<String, Integer> integerConverter1 = (from) -> Integer.valueOf(from);
+		Integer converted1 = integerConverter1.convert("123");
+		System.out.println(converted1); // result: 123
 
-    static class Something {
-        String startsWith(String s) {
-            return String.valueOf(s.charAt(0));
-        }
-    }
+		// method reference
 
-    interface PersonFactory<P extends Person> {
-        P create(String firstName, String lastName);
-    }
+		Converter<String, Integer> integerConverter2 = Integer::valueOf;
+		Integer converted2 = integerConverter2.convert("123");
+		System.out.println(converted2); // result: 123
 
-    public static void main(String[] args) {
-        Converter<String, Integer> integerConverter1 = (from) -> Integer.valueOf(from);
-        Integer converted1 = integerConverter1.convert("123");
-        System.out.println(converted1);   // result: 123
+		Something something = new Something();
 
-        // method reference
+		Converter<String, String> stringConverter = something::startsWith;
+		String converted3 = stringConverter.convert("Java");
+		System.out.println(converted3); // result J
 
-        Converter<String, Integer> integerConverter2 = Integer::valueOf;
-        Integer converted2 = integerConverter2.convert("123");
-        System.out.println(converted2);   // result: 123
+		// constructor reference
 
-        Something something = new Something();
+		PersonFactory<Person> personFactory = Person::new;
+		Person person = personFactory.create("Peter", "Parker");
+	}
 
-        Converter<String, String> stringConverter = something::startsWith;
-        String converted3 = stringConverter.convert("Java");
-        System.out.println(converted3);    // result J
+	@FunctionalInterface
+	public static interface Converter<F, T> {
 
-        // constructor reference
+		T convert(F from);
 
-        PersonFactory<Person> personFactory = Person::new;
-        Person person = personFactory.create("Peter", "Parker");
-    }
+	}
+
+	interface PersonFactory<P extends Person> {
+
+		P create(String firstName, String lastName);
+
+	}
+
+
+	static class Something {
+
+		String startsWith(String s) {
+			return String.valueOf(s.charAt(0));
+		}
+
+	}
+
 }

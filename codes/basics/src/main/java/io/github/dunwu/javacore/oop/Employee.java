@@ -1,46 +1,50 @@
 package io.github.dunwu.javacore.oop;
 
 public abstract class Employee {
-    private String name;
-    private String address;
-    private int number;
 
-    public Employee(String name, String address, int number) {
-        System.out.println("Constructing an Employee");
-        this.name = name;
-        this.address = address;
-        this.number = number;
-    }
+	private String name;
 
-    public double computePay() {
-        System.out.println("Inside Employee computePay");
-        return 0.0;
-    }
+	private String address;
 
-    public abstract double computePay2();
+	private int number;
 
-    public void mailCheck() {
-        System.out.println("Mailing a check to " + this.name + " " + this.address);
-    }
+	public Employee(String name, String address, int number) {
+		System.out.println("Constructing an Employee");
+		this.name = name;
+		this.address = address;
+		this.number = number;
+	}
 
-    @Override
-    public String toString() {
-        return name + " " + address + " " + number;
-    }
+	public double computePay() {
+		System.out.println("Inside Employee computePay");
+		return 0.0;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public abstract double computePay2();
 
-    public String getAddress() {
-        return address;
-    }
+	public void mailCheck() {
+		System.out.println("Mailing a check to " + this.name + " " + this.address);
+	}
 
-    public void setAddress(String newAddress) {
-        address = newAddress;
-    }
+	@Override
+	public String toString() {
+		return name + " " + address + " " + number;
+	}
 
-    public int getNumber() {
-        return number;
-    }
+	public String getName() {
+		return name;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String newAddress) {
+		address = newAddress;
+	}
+
+	public int getNumber() {
+		return number;
+	}
+
 }

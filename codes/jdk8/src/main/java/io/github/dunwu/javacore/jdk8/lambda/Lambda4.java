@@ -5,37 +5,36 @@ package io.github.dunwu.javacore.jdk8.lambda;
  */
 public class Lambda4 {
 
-    static int outerStaticNum;
+	static int outerStaticNum;
 
-    int outerNum;
+	int outerNum;
 
-    void testScopes() {
-        int num = 1;
+	public static void main(String[] args) {
+		new Lambda4().testScopes();
+	}
 
-        Lambda2.Converter<Integer, String> stringConverter =
-            (from) -> String.valueOf(from + num);
+	void testScopes() {
+		int num = 1;
 
-        String convert = stringConverter.convert(2);
-        System.out.println(convert);    // 3
+		Lambda2.Converter<Integer, String> stringConverter = (from) -> String.valueOf(from + num);
 
-        Lambda2.Converter<Integer, String> stringConverter2 = (from) -> {
-            outerNum = 13;
-            return String.valueOf(from);
-        };
+		String convert = stringConverter.convert(2);
+		System.out.println(convert); // 3
 
-        String[] array = new String[1];
-        Lambda2.Converter<Integer, String> stringConverter3 = (from) -> {
-            array[0] = "Hi there";
-            return String.valueOf(from);
-        };
+		Lambda2.Converter<Integer, String> stringConverter2 = (from) -> {
+			outerNum = 13;
+			return String.valueOf(from);
+		};
 
-        stringConverter3.convert(23);
+		String[] array = new String[1];
+		Lambda2.Converter<Integer, String> stringConverter3 = (from) -> {
+			array[0] = "Hi there";
+			return String.valueOf(from);
+		};
 
-        System.out.println(array[0]);
-    }
+		stringConverter3.convert(23);
 
-    public static void main(String[] args) {
-        new Lambda4().testScopes();
-    }
+		System.out.println(array[0]);
+	}
 
 }

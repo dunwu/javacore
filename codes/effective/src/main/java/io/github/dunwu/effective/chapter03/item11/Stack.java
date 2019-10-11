@@ -4,12 +4,26 @@ package io.github.dunwu.effective.chapter03.item11;
 import java.util.Arrays;
 
 public class Stack implements Cloneable {
+
+	private static final int DEFAULT_INITIAL_CAPACITY = 16;
 	private Object[] elements;
 	private int size = 0;
-	private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
 	public Stack() {
 		this.elements = new Object[DEFAULT_INITIAL_CAPACITY];
+	}
+
+	// To see that clone works, call with several command line arguments
+	public static void main(String[] args) {
+		Stack stack = new Stack();
+		for (String arg : args)
+			stack.push(arg);
+		Stack copy = stack.clone();
+		while (!stack.isEmpty())
+			System.out.print(stack.pop() + " ");
+		System.out.println();
+		while (!copy.isEmpty())
+			System.out.print(copy.pop() + " ");
 	}
 
 	public void push(Object e) {
@@ -35,7 +49,8 @@ public class Stack implements Cloneable {
 			Stack result = (Stack) super.clone();
 			result.elements = elements.clone();
 			return result;
-		} catch (CloneNotSupportedException e) {
+		}
+		catch (CloneNotSupportedException e) {
 			throw new AssertionError();
 		}
 	}
@@ -46,16 +61,4 @@ public class Stack implements Cloneable {
 			elements = Arrays.copyOf(elements, 2 * size + 1);
 	}
 
-	// To see that clone works, call with several command line arguments
-	public static void main(String[] args) {
-		Stack stack = new Stack();
-		for (String arg : args)
-			stack.push(arg);
-		Stack copy = stack.clone();
-		while (!stack.isEmpty())
-			System.out.print(stack.pop() + " ");
-		System.out.println();
-		while (!copy.isEmpty())
-			System.out.print(copy.pop() + " ");
-	}
 }

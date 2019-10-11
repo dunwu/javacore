@@ -4,6 +4,7 @@ package io.github.dunwu.effective.chapter10.item66.fixedstopthread1;
 import java.util.concurrent.TimeUnit;
 
 public class StopThread {
+
 	private static boolean stopRequested;
 
 	private static synchronized void requestStop() {
@@ -27,4 +28,5 @@ public class StopThread {
 		TimeUnit.SECONDS.sleep(1);
 		requestStop();
 	}
+
 }

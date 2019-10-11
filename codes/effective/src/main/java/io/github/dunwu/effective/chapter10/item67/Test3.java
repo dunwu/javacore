@@ -7,17 +7,16 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Test3 {
+
 	public static void main(String[] args) {
-		ObservableSet<Integer> set = new ObservableSet<Integer>(
-				new HashSet<Integer>());
+		ObservableSet<Integer> set = new ObservableSet<Integer>(new HashSet<Integer>());
 
 		// Observer that uses a background thread needlessly
 		set.addObserver(new SetObserver<Integer>() {
 			public void added(final ObservableSet<Integer> s, Integer e) {
 				System.out.println(e);
 				if (e == 23) {
-					ExecutorService executor = Executors
-							.newSingleThreadExecutor();
+					ExecutorService executor = Executors.newSingleThreadExecutor();
 					final SetObserver<Integer> observer = this;
 					try {
 						executor.submit(new Runnable() {
@@ -25,11 +24,14 @@ public class Test3 {
 								s.removeObserver(observer);
 							}
 						}).get();
-					} catch (ExecutionException ex) {
+					}
+					catch (ExecutionException ex) {
 						throw new AssertionError(ex.getCause());
-					} catch (InterruptedException ex) {
+					}
+					catch (InterruptedException ex) {
 						throw new AssertionError(ex.getCause());
-					} finally {
+					}
+					finally {
 						executor.shutdown();
 					}
 				}
@@ -39,4 +41,5 @@ public class Test3 {
 		for (int i = 0; i < 100; i++)
 			set.add(i);
 	}
+
 }

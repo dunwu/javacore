@@ -4,6 +4,7 @@ package io.github.dunwu.effective.chapter10.item66.brokenstopthread;
 import java.util.concurrent.TimeUnit;
 
 public class StopThread {
+
 	private static boolean stopRequested;
 
 	public static void main(String[] args) throws InterruptedException {
@@ -19,4 +20,5 @@ public class StopThread {
 		TimeUnit.SECONDS.sleep(1);
 		stopRequested = true;
 	}
+
 }

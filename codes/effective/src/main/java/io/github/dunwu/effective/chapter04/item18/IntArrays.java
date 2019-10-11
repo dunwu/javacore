@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class IntArrays {
+
 	static List<Integer> intArrayAsList(final int[] a) {
 		if (a == null)
 			throw new NullPointerException();
@@ -37,4 +38,5 @@ public class IntArrays {
 		Collections.shuffle(list);
 		System.out.println(list);
 	}
+
 }

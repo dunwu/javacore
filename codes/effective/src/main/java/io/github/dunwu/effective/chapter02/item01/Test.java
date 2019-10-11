@@ -7,6 +7,38 @@ import java.util.List;
 import java.util.Map;
 
 public class Test {
+
+	private static Provider DEFAULT_PROVIDER = new Provider() {
+		public Service newService() {
+			return new Service() {
+				@Override
+				public String toString() {
+					return "Default service";
+				}
+			};
+		}
+	};
+	private static Provider COMP_PROVIDER = new Provider() {
+		public Service newService() {
+			return new Service() {
+				@Override
+				public String toString() {
+					return "Complementary service";
+				}
+			};
+		}
+	};
+	private static Provider ARMED_PROVIDER = new Provider() {
+		public Service newService() {
+			return new Service() {
+				@Override
+				public String toString() {
+					return "Armed service";
+				}
+			};
+		}
+	};
+
 	public static void main(String[] args) {
 		// Providers would execute these lines
 		Services.registerDefaultProvider(DEFAULT_PROVIDER);
@@ -38,36 +70,4 @@ public class Test {
 		}
 	}
 
-	private static Provider DEFAULT_PROVIDER = new Provider() {
-		public Service newService() {
-			return new Service() {
-				@Override
-				public String toString() {
-					return "Default service";
-				}
-			};
-		}
-	};
-
-	private static Provider COMP_PROVIDER = new Provider() {
-		public Service newService() {
-			return new Service() {
-				@Override
-				public String toString() {
-					return "Complementary service";
-				}
-			};
-		}
-	};
-
-	private static Provider ARMED_PROVIDER = new Provider() {
-		public Service newService() {
-			return new Service() {
-				@Override
-				public String toString() {
-					return "Armed service";
-				}
-			};
-		}
-	};
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Raw {
+
 	// Uses raw type (List) - fails at runtime! - Page 112
 	public static void main(String[] args) {
 		List<String> strings = new ArrayList<String>();
@@ -33,4 +34,5 @@ public class Raw {
 				result++;
 		return result;
 	}
+
 }

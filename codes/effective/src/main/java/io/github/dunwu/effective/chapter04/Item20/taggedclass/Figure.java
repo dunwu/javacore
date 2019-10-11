@@ -2,17 +2,12 @@
 package io.github.dunwu.effective.chapter04.Item20.taggedclass;
 
 class Figure {
-	enum Shape {
-		RECTANGLE, CIRCLE
-	};
 
-	// Tag field - the shape of this figure
-	final Shape shape;
-
+		// Tag field - the shape of this figure
+	final Shape shape;;
 	// These fields are used only if shape is RECTANGLE
 	double length;
 	double width;
-
 	// This field is used only if shape is CIRCLE
 	double radius;
 
@@ -39,4 +34,11 @@ class Figure {
 			throw new AssertionError();
 		}
 	}
+
+enum Shape {
+
+		RECTANGLE, CIRCLE
+
+	}
+
 }

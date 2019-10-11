@@ -4,15 +4,9 @@ package io.github.dunwu.effective.chapter11.item74;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class AbstractFoo {
-	private int x, y; // Our state
 
-	// This enum and field are used to track initialization
-	private enum State {
-		NEW, INITIALIZING, INITIALIZED
-	};
-
-	private final AtomicReference<State> init = new AtomicReference<State>(
-			State.NEW);
+	private final AtomicReference<State> init = new AtomicReference<State>(State.NEW);
+	private int x, y; // Our state;
 
 	public AbstractFoo(int x, int y) {
 		initialize(x, y);
@@ -49,5 +43,13 @@ public abstract class AbstractFoo {
 		if (init.get() != State.INITIALIZED)
 			throw new IllegalStateException("Uninitialized");
 	}
+
+// This enum and field are used to track initialization
+	private enum State {
+
+		NEW, INITIALIZING, INITIALIZED
+
+	}
 	// Remainder omitted
+
 }

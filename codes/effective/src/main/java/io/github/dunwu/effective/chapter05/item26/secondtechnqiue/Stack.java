@@ -4,12 +4,22 @@ package io.github.dunwu.effective.chapter05.item26.secondtechnqiue;
 import java.util.Arrays;
 
 public class Stack<E> {
+
+	private static final int DEFAULT_INITIAL_CAPACITY = 16;
 	private Object[] elements;
 	private int size = 0;
-	private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
 	public Stack() {
 		elements = new Object[DEFAULT_INITIAL_CAPACITY];
+	}
+
+	// Little program to exercise our generic Stack
+	public static void main(String[] args) {
+		Stack<String> stack = new Stack<String>();
+		for (String arg : args)
+			stack.push(arg);
+		while (!stack.isEmpty())
+			System.out.println(stack.pop().toUpperCase());
 	}
 
 	public void push(E e) {
@@ -39,12 +49,4 @@ public class Stack<E> {
 			elements = Arrays.copyOf(elements, 2 * size + 1);
 	}
 
-	// Little program to exercise our generic Stack
-	public static void main(String[] args) {
-		Stack<String> stack = new Stack<String>();
-		for (String arg : args)
-			stack.push(arg);
-		while (!stack.isEmpty())
-			System.out.println(stack.pop().toUpperCase());
-	}
 }

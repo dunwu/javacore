@@ -5,35 +5,41 @@ package io.github.dunwu.javacore.annotation.custom;
  * @date 2019-03-31
  */
 public class NotNullDemo {
-    static class MyBean {
-        @NotNull
-        private Integer id;
-        private String name;
 
-        public MyBean(Integer id, String name) {
-            this.id = id;
-            this.name = name;
-        }
+	public static void main(String[] args) throws IllegalAccessException {
+		MyBean myBean = new MyBean(null, "jack");
+		NotNullUtil.check(myBean);
+	}
 
-        public Integer getId() {
-            return id;
-        }
 
-        public void setId(Integer id) {
-            this.id = id;
-        }
+	static class MyBean {
 
-        public String getName() {
-            return name;
-        }
+		@NotNull
+		private Integer id;
 
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
+		private String name;
 
-    public static void main(String[] args) throws IllegalAccessException {
-        MyBean myBean = new MyBean(null, "jack");
-        NotNullUtil.check(myBean);
-    }
+		public MyBean(Integer id, String name) {
+			this.id = id;
+			this.name = name;
+		}
+
+		public Integer getId() {
+			return id;
+		}
+
+		public void setId(Integer id) {
+			this.id = id;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+	}
+
 }

@@ -10,34 +10,33 @@ import java.util.stream.IntStream;
  */
 public class LongAdder1 {
 
-    private static final int NUM_INCREMENTS = 10000;
+	private static final int NUM_INCREMENTS = 10000;
 
-    private static LongAdder adder = new LongAdder();
+	private static LongAdder adder = new LongAdder();
 
-    public static void main(String[] args) {
-        testIncrement();
-        testAdd();
-    }
+	public static void main(String[] args) {
+		testIncrement();
+		testAdd();
+	}
 
-    private static void testAdd() {
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+	private static void testAdd() {
+		ExecutorService executor = Executors.newFixedThreadPool(2);
 
-        IntStream.range(0, NUM_INCREMENTS)
-                .forEach(i -> executor.submit(() -> adder.add(2)));
+		IntStream.range(0, NUM_INCREMENTS).forEach(i -> executor.submit(() -> adder.add(2)));
 
-        ConcurrentUtils.stop(executor);
+		ConcurrentUtils.stop(executor);
 
-        System.out.format("Add: %d\n", adder.sumThenReset());
-    }
+		System.out.format("Add: %d\n", adder.sumThenReset());
+	}
 
-    private static void testIncrement() {
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+	private static void testIncrement() {
+		ExecutorService executor = Executors.newFixedThreadPool(2);
 
-        IntStream.range(0, NUM_INCREMENTS)
-                .forEach(i -> executor.submit(adder::increment));
+		IntStream.range(0, NUM_INCREMENTS).forEach(i -> executor.submit(adder::increment));
 
-        ConcurrentUtils.stop(executor);
+		ConcurrentUtils.stop(executor);
 
-        System.out.format("Increment: Expected=%d; Is=%d\n", NUM_INCREMENTS, adder.sumThenReset());
-    }
+		System.out.format("Increment: Expected=%d; Is=%d\n", NUM_INCREMENTS, adder.sumThenReset());
+	}
+
 }

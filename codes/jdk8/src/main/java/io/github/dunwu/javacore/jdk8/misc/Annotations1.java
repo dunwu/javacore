@@ -1,47 +1,49 @@
 package io.github.dunwu.javacore.jdk8.misc;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Repeatable;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * @author Benjamin Winterberg
  */
 public class Annotations1 {
 
-    @Target({ElementType.TYPE_PARAMETER, ElementType.TYPE_USE})
-    @interface MyAnnotation {
+	public static void main(String[] args) {
+		Hint hint = Person.class.getAnnotation(Hint.class);
+		System.out.println(hint); // null
 
-    }
+		Hints hints1 = Person.class.getAnnotation(Hints.class);
+		System.out.println(hints1.value().length); // 2
 
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface Hints {
-        Hint[] value();
-    }
+		Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);
+		System.out.println(hints2.length); // 2
 
-    @Repeatable(Hints.class)
-    @Retention(RetentionPolicy.RUNTIME)
-    @interface Hint {
-        String value();
-    }
+	}
 
-    @Hint("hint1")
-    @Hint("hint2")
-    class Person {
+	@Target({ ElementType.TYPE_PARAMETER, ElementType.TYPE_USE })
+	@interface MyAnnotation {
 
-    }
+	}
 
-    public static void main(String[] args) {
-        Hint hint = Person.class.getAnnotation(Hint.class);
-        System.out.println(hint);   // null
+	@Retention(RetentionPolicy.RUNTIME)
+	@interface Hints {
 
-        Hints hints1 = Person.class.getAnnotation(Hints.class);
-        System.out.println(hints1.value().length);  // 2
+		Hint[] value();
 
-        Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);
-        System.out.println(hints2.length);  // 2
+	}
 
-    }
+	@Repeatable(Hints.class)
+	@Retention(RetentionPolicy.RUNTIME)
+	@interface Hint {
+
+		String value();
+
+	}
+
+
+	@Hint("hint1")
+	@Hint("hint2")
+	class Person {
+
+	}
+
 }

@@ -4,6 +4,7 @@ package io.github.dunwu.effective.chapter07.item49;
 import java.util.Comparator;
 
 public class BrokenComparator {
+
 	public static void main(String[] args) {
 
 		// Broken comparator - can you spot the flaw? - Page 221
@@ -25,4 +26,5 @@ public class BrokenComparator {
 		int result = naturalOrder.compare(new Integer(42), new Integer(42));
 		System.out.println(result);
 	}
+
 }

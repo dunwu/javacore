@@ -10,11 +10,12 @@ import java.io.PrintStream;
  */
 public class SystemErrDemo {
 
-    public static void main(String args[]) throws IOException {
-        OutputStream bos = new ByteArrayOutputStream();        // 实例化
-        PrintStream ps = new PrintStream(bos);        // 实例化
-        System.setErr(ps);    // 输出重定向
-        System.err.print("此处有误");
-        System.out.println(bos);    // 输出内存中的数据
-    }
+	public static void main(String args[]) throws IOException {
+		OutputStream bos = new ByteArrayOutputStream(); // 实例化
+		PrintStream ps = new PrintStream(bos); // 实例化
+		System.setErr(ps); // 输出重定向
+		System.err.print("此处有误");
+		System.out.println(bos); // 输出内存中的数据
+	}
+
 }
