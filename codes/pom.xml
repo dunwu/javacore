@@ -1,51 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.github.dunwu</groupId>
-  <artifactId>javacore</artifactId>
-  <version>1.0.1</version>
-  <name>JavaCore</name>
-  <packaging>pom</packaging>
-  <description>JavaCore 经验总结</description>
+	<groupId>io.github.dunwu.javacore</groupId>
+	<artifactId>codes</artifactId>
+	<version>1.0.1</version>
+	<name>JavaCore</name>
+	<packaging>pom</packaging>
+	<description>JavaCore 经验总结</description>
 
-  <modules>
-    <module>basics</module>
-    <module>advanced</module>
-    <module>effective</module>
-    <module>jdk8</module>
-    <module>jvm</module>
-    <module>container</module>
-    <module>concurrent</module>
-    <module>utils</module>
-    <module>oop</module>
-  </modules>
+	<modules>
+		<module>javacore-basics</module>
+		<module>javacore-advanced</module>
+		<module>javacore-effective</module>
+		<module>javacore-jdk8</module>
+		<module>javacore-jvm</module>
+		<module>javacore-container</module>
+		<module>javacore-concurrent</module>
+		<module>javacore-utils</module>
+		<module>javacore-oop</module>
+	</modules>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>${java.version}</maven.compiler.source>
-    <maven.compiler.target>${java.version}</maven.compiler.target>
-  </properties>
-
-  <url>https://github.com/dunwu/JavaCore</url>
-  <inceptionYear>2016-2017</inceptionYear>
-  <developers>
-    <developer>
-      <name>Zhang Peng</name>
-      <email>forbreak@163.com</email>
-      <timezone>+8</timezone>
-    </developer>
-  </developers>
-  <issueManagement>
-    <system>Github</system>
-    <url>https://github.com/dunwu/JavaCore/issues</url>
-  </issueManagement>
-  <scm>
-    <url>https://github.com/dunwu/JavaCore</url>
-    <connection>scm:git:git://github.com/dunwu/JavaCore.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com:dunwu/JavaCore.git</developerConnection>
-  </scm>
+	<url>https://github.com/dunwu/javacore</url>
+	<inceptionYear>2016-2017</inceptionYear>
+	<developers>
+		<developer>
+			<name>Zhang Peng</name>
+			<email>forbreak@163.com</email>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/dunwu/javacore/issues</url>
+	</issueManagement>
+	<scm>
+		<url>https://github.com/dunwu/javacore</url>
+		<connection>scm:git:git://github.com/dunwu/javacore.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com:dunwu/javacore.git</developerConnection>
+	</scm>
 </project>
