@@ -1,6 +1,6 @@
 # JVM 调优
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」	
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」	
 
 ## JVM 调优概述
 
@@ -60,7 +60,7 @@ GC 优化的过程和大多数常见的提升性能的过程相似，下面是�
 
 但是，如果你已经分配了大约 10GB 内存给 Java，并且这些内存无法省下，那么就无法进行 GC 优化了。在进行 GC 优化之前，你需要考虑为什么你需要分配这么大的内存空间，如果你分配了 1GB 或 2GB 大小的内存并且出现了`OutOfMemoryError`，那你就应该执行**堆快照（heap dump）**来消除导致异常的原因。
 
-> 注意：
+> 🔔 注意：
 
 > **堆快照（heap dump）**是一个用来检查 Java 内存中的对象和数据的内存文件。该文件可以通过执行 JDK 中的`jmap`命令来创建。在创建文件的过程中，所有 Java 程序都将暂停，因此，不要在系统执行过程中创建该文件。
 
@@ -519,7 +519,7 @@ Perm 区主要用于存放 Class 和 Meta 信息的，Class 在被 Loader 时就
 - JDK7 以前使用 `-XX:PermSize` 和 `-XX:MaxPermSize` 来控制永久代大小。
 - JDK8 以后把原本放在永久代的字符串常量池移出, 放在 Java 堆中(元空间 Metaspace)中，元数据并不在虚拟机中，使用的是本地的内存。使用 `-XX:MetaspaceSize` 和 `-XX:MaxMetaspaceSize` 控制元空间大小。
 
-> 注意：`-XX:PermSize` 一般设为 64M
+> 🔔 注意：`-XX:PermSize` 一般设为 64M
 
 （2）清理应用程序中 `WEB-INF/lib` 下的 jar，用不上的 jar 删除掉，多个应用公共的 jar 移动到 Tomcat 的 lib 目录，减少重复加载。
 

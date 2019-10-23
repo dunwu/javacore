@@ -1,8 +1,8 @@
 # 深入理解 Java 反射和动态代理
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
-> :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/reflect)」
+> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/reflect)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

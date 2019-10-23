@@ -1,6 +1,6 @@
 # Java 流操作
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 

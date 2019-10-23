@@ -1,8 +1,8 @@
 # 深入理解 Java 数组
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
-> :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/array)」
+> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/array)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -121,7 +121,7 @@ public class ArrayDemo {
 // 2
 ```
 
-> :bulb: **说明**
+> 💡 **说明**
 > 请注意数组 array1 中的元素虽然没有初始化，但是 length 和指定的数组维度是一样的。这表明**指定数组维度后，无论后面是否初始化数组中的元素，数组都已经开辟了相应的内存**。
 >
 > 数组 array1 中的元素都被设为默认值。
@@ -156,7 +156,7 @@ public class ArrayDemo2 {
 // io.github.dunwu.javacore.array.ArrayDemo2$User@68f7aae2
 ```
 
-> :bulb: **说明**
+> 💡 **说明**
 >
 > 请将本例与示例 1 比较，可以发现：如果使用指定数组维度方式创建数组，且数组元素为引用类型，则数组中的元素元素值为 `null`。
 

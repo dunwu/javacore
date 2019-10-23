@@ -1,8 +1,8 @@
 # Java 常用工具类
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
-> :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/tool)」
+> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/tool)」
 >
 > 并发、IO、容器的工具类不会在本文提及，后面会有专题一一道来。
 

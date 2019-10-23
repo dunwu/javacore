@@ -1,8 +1,8 @@
 # 深入理解 Java 泛型
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
-> :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/generics)」
+> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/generics)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -452,7 +452,7 @@ public class GenericsExtendsDemo01 {
 <T extends B1 & B2 & B3>
 ```
 
-> 注意：extends 关键字后面的第一个类型参数可以是类或接口，其他类型参数只能是接口。
+> 🔔 注意：extends 关键字后面的第一个类型参数可以是类或接口，其他类型参数只能是接口。
 
 示例：
 
@@ -506,7 +506,7 @@ public class GenericsUpperBoundedWildcardDemo {
 
 **`下界通配符`**将未知类型限制为该类型的特定类型或超类类型。
 
-> 注意：**上界通配符和下界通配符不能同时使用**。
+> 🔔 注意：**上界通配符和下界通配符不能同时使用**。
 
 它的语法形式为：`<? super Number>`
 

@@ -1,6 +1,6 @@
 # Java 常用 IO 类
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
 

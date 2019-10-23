@@ -1,6 +1,6 @@
 # JavaCore
 
-> :coffee: JavaCore 是对 Java 核心技术的经验总结。
+> ☕ JavaCore 是对 Java 核心技术的经验总结。
 >
 > - 🔁 项目同步维护：[Github](https://github.com/dunwu/javacore/) | [Gitee](https://gitee.com/turnon/javacore/)
 > - 📖 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore/)
@@ -73,7 +73,7 @@
 
 > [Java 虚拟机](docs/jvm) 记录了 JVM 的基本机制。
 
-- [第一章 运行时数据区域](docs/jvm/运行时数据区域.md)
+- [第一章 运行时数据区域](docs/jvm/jvm-memory.md)
 - [第二章 垃圾收集](docs/jvm/jvm-gc.md)
 - [第三章 类加载机制](docs/jvm/jvm-class-loader.md)
 - [第四章 JVM 调优](docs/jvm/jvm-performance.md)

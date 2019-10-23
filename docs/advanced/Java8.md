@@ -2,7 +2,7 @@
 
 > JDK8 升级常见问题章节是我个人的经验整理。其他内容基本翻译自 [java8-tutorial](https://github.com/winterbe/java8-tutorial)
 >
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 <!-- TOC depthFrom:2 depthTo:2 -->
 

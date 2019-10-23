@@ -1,8 +1,8 @@
 # Java 控制语句
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
-> :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/control)」
+> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/control)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -493,7 +493,7 @@ public class ReturnDemo {
 // 20
 ```
 
-> 注意：请仔细体会一下 `return` 和 `break` 的区别。
+> 🔔 注意：请仔细体会一下 `return` 和 `break` 的区别。
 
 ## 最佳实践
 

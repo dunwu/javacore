@@ -1,6 +1,6 @@
 # Java 容器之 List
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
 > `List` 是 `Collection` 的子接口，其中可以保存各个重复的内容。
 

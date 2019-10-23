@@ -1,8 +1,8 @@
 # 深入理解 Java 枚举
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 >
-> :keyboard: 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/basics/src/main/java/io/github/dunwu/javacore/enumeration)」
+> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/enumeration)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -78,7 +78,7 @@ public final class io.github.dunwu.javacore.enumeration.ColorEn extends java.lan
 }
 ```
 
-> :bulb: 说明：
+> 💡 说明：
 >
 > 从上面的例子可以看出：
 >

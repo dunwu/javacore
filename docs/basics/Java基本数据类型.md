@@ -1,6 +1,6 @@
 # 深入理解 Java 基本数据类型
 
-> :notebook: 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -55,7 +55,7 @@ Java 语言提供了 **8** 种基本类型，大致分为 **4** 类
   - 基本类型：使用时需要赋具体值,判断时使用 `==` 号。
   - 引用类型：使用时可以赋 null，判断时使用 `equals` 方法。
 
-> :point_right: 扩展阅读：[Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
+> 👉 扩展阅读：[Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
 >
 > 这篇文章对于基本数据类型和引用类型的内存存储讲述比较生动。
 
