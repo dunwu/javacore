@@ -1,8 +1,18 @@
-# 垃圾收集
+# JVM 垃圾收集
 
 > 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
 > 程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后也会消失，因此不需要对这三个区域进行垃圾回收。**垃圾回收主要是针对 Java 堆和方法区进行**。
+
+<!-- TOC depthFrom:2 depthTo:2 -->
+
+- [对象死了吗](#对象死了吗)
+- [垃圾收集算法](#垃圾收集算法)
+- [垃圾收集器](#垃圾收集器)
+- [内存分配与回收策略](#内存分配与回收策略)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 
 ## 对象死了吗
 
@@ -25,7 +35,7 @@ public class ReferenceCountingGC {
 }
 ```
 
-正因为循环引用的存在，因此 Java 虚拟机不适用引用计数算法。
+因为循环引用的存在，所以 **Java 虚拟机不适用引用计数算法**。
 
 ### 可达性分析算法
 
@@ -49,7 +59,7 @@ Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC
 
 Java 具有四种强度不同的引用类型。
 
-（一）强引用
+#### （一）强引用
 
 **被强引用关联的对象不会被垃圾收集器回收。**
 
@@ -59,7 +69,7 @@ Java 具有四种强度不同的引用类型。
 Object obj = new Object();
 ```
 
-（二）软引用
+#### （二）软引用
 
 **被软引用关联的对象，只有在内存不够的情况下才会被回收。**
 
@@ -71,7 +81,7 @@ SoftReference<Object> sf = new SoftReference<Object>(obj);
 obj = null; // 使对象只被软引用关联
 ```
 
-（三）弱引用
+#### （三）弱引用
 
 **被弱引用关联的对象一定会被垃圾收集器回收，也就是说它只能存活到下一次垃圾收集发生之前。**
 
@@ -126,7 +136,7 @@ public final class ConcurrentCache<K, V> {
 }
 ```
 
-（四）虚引用
+#### （四）虚引用
 
 又称为幽灵引用或者幻影引用。一个对象是否有虚引用的存在，完全不会对其生存时间构成影响，也无法通过虚引用取得一个对象实例。
 
@@ -333,7 +343,6 @@ CMS 收集器运行步骤如下：
 **（1）堆空间被分割为三块空间**
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide1.png"/></div>
-
 年轻代分割成一个 Eden 区和两个 Survivor 区。年老代一个连续的空间。就地完成对象收集。除非有 FullGC 否则不会压缩。
 
 **（2）CMS 年轻代垃圾收集如何工作**
@@ -341,7 +350,6 @@ CMS 收集器运行步骤如下：
 年轻代被标为浅绿色，年老代被标记为蓝色。如果你的应用已经运行了一段时间，CMS 的堆看起来应该是这个样子。对象分散在年老代区域里。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide2.png"/></div>
-
 使用 CMS，年老代对象就地释放。它们不会被来回移动。这个空间不会被压缩除非发生 FullGC。
 
 **（3）年轻代收集**
@@ -349,13 +357,11 @@ CMS 收集器运行步骤如下：
 从 Eden 和 Survivor 区复制活跃对象到另一个 Survivor 区。所有达到他们的年龄阈值的对象会晋升到年老代。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide3.png"/></div>
-
 **（4）年轻代回收之后**
 
 一次年轻代垃圾收集之后，Eden 区和其中一个 Survivor 区被清空。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide4.png"/></div>
-
 最近晋升的对象以深蓝色显示在上图中，绿色的对象是年轻代幸免的还没有晋升到老年代对象。
 
 ##### CMS 回收年老代详细步骤
@@ -365,7 +371,6 @@ CMS 收集器运行步骤如下：
 发生两次 stop the world 事件：初始标记和重新标记。当年老代达到特定的占用比例时，CMS 开始执行。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide5.png"/></div>
-
 - 初始标记是一个短暂暂停的、可达对象被标记的阶段。
 - 并发标记寻找活跃对象在应用连续执行时。
 - 最后，在重新标记阶段，寻找在之前并发标记阶段中丢失的对象。
@@ -375,7 +380,6 @@ CMS 收集器运行步骤如下：
 在之前阶段没有被标记的对象会被就地释放。不进行压缩操作。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide6.png"/></div>
-
 **注意：**未被标记的对象等于死亡对象
 
 **（3）年老代收集-清除之后**
@@ -383,7 +387,6 @@ CMS 收集器运行步骤如下：
 清除阶段之后，你可以看到大量内存被释放。你还可以注意到没有进行压缩操作。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide7.png"/></div>
-
 最后，CMS 收集器会再次进入重新设置阶段，等待下一次垃圾收集时机的到来。
 
 ##### CMS 特点
@@ -524,31 +527,26 @@ Java虚拟机启动时选定区域大小。Java虚拟机通常会指定2000个�
 年轻代垃圾收集肩负着活跃对象初始标记的任务。在日志文件中被标为*GC pause (young)(inital-mark)*
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide13.png"/></div>
-
 **（2）并发标记阶段**
 
 如果发现空区域(“X”标示的)，在重新标记阶段它们会被马上清除掉。当然，决定活性的审计信息也在此时被计算。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide14.png"/></div>
-
 **（3）重新标记阶段**
 
 空的区域被清除和回收掉。所有区域的活性在此时计算。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide15.png"/></div>
-
 **（4）复制/清理阶段**
 
 G1 选择活性最低的区域，这些区域能够以最快的速度回收。然后这些区域会在年轻代垃圾回收过程中被回收。在日志中被指示为*[GC pause (mixed)]*。所以年轻代和年老代在同一时间被回收。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide16.png"/></div>
-
 **（5）复制/清理阶段之后**
 
 被选择的区域已经被回收和压缩到图中显示的深蓝色区和深绿色区中。
 
 <div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide17.png"/></div>
-
 ### 总结
 
 |        收集器         | 串行/并行/并发 |  年轻代/老年代  |       收集算法       |     目标     |                   适用场景                    |
@@ -602,19 +600,19 @@ G1 选择活性最低的区域，这些区域能够以最快的速度回收。�
 
 对于 Minor GC，其触发条件非常简单，当 Eden 区空间满时，就将触发一次 Minor GC。而 Full GC 则相对复杂，有以下条件：
 
-**（一）调用 System.gc()**
+**（1）调用 System.gc()**
 
 此方法的调用是建议虚拟机进行 Full GC，虽然只是建议而非一定，但很多情况下它会触发 Full GC，从而增加 Full GC 的频率，也即增加了间歇性停顿的次数。因此强烈建议能不使用此方法就不要使用，让虚拟机自己去管理它的内存。可通过 -XX:DisableExplicitGC 来禁止 RMI 调用 System.gc()。
 
-**（二）老年代空间不足**
+**（2）老年代空间不足**
 
 老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等，当执行 Full GC 后空间仍然不足，则抛出 Java.lang.OutOfMemoryError。为避免以上原因引起的 Full GC，调优时应尽量做到让对象在 Minor GC 阶段被回收、让对象在年轻代多存活一段时间以及不要创建过大的对象及数组。
 
-**（三）空间分配担保失败**
+**（3）空间分配担保失败**
 
 使用复制算法的 Minor GC 需要老年代的内存空间作担保，如果出现了 HandlePromotionFailure 担保失败，则会触发 Full GC。
 
-**（四）JDK 1.7 及以前的永久代空间不足**
+**（4）JDK 1.7 及以前的永久代空间不足**
 
 在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 java.lang.OutOfMemoryError，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
 

@@ -1,6 +1,6 @@
 # Java 开发环境
 
-> :pushpin: **关键词：** JAVA_HOME、CLASSPATH、Path、环境变量、IDE
+> 📌 **关键词：** JAVA_HOME、CLASSPATH、Path、环境变量、IDE
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

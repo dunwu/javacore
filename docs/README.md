@@ -2,10 +2,10 @@
 
 > ☕ JavaCore 是对 Java 核心技术的经验总结。
 >
-> - 🔁 项目同步维护：[Github](https://github.com/dunwu/javacore) | [Gitee](https://gitee.com/turnon/javacore)
-> - 📖 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore)
+> - 🔁 项目同步维护：[Github](https://github.com/dunwu/javacore/) | [Gitee](https://gitee.com/turnon/javacore/)
+> - 📖 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore/)
 
-|          1️⃣          |          2️⃣          |         3️⃣         |         4️⃣          |       5️⃣        |            6️⃣            |             7️⃣             |
+|           1️⃣           |           2️⃣           |           3️⃣           |           4️⃣           |         5️⃣         |             6️⃣             |               7️⃣               |
 | :---------------------: | :---------------------: | :---------------------: | :---------------------: | :-----------------: | :-------------------------: | :-----------------------------: |
 | [Java 基础](#java-基础) | [Java 进阶](#java-进阶) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [Java IO](#java-io) | [Java 虚拟机](#java-虚拟机) | [Java 编程规范](#java-编程规范) |
 
@@ -73,10 +73,12 @@
 
 > [Java 虚拟机](jvm) 记录了 JVM 的基本机制。
 
-- [第一章 运行时数据区域](jvm/jvm-memory.md)
-- [第二章 垃圾收集](jvm/jvm-gc.md)
-- [第三章 类加载机制](jvm/jvm-class-loader.md)
-- [第四章 JVM 调优](jvm/jvm-performance.md)
+- [JVM 内存区域](jvm/jvm-memory.md)
+- [JVM 垃圾收集](jvm/jvm-gc.md)
+- [JVM 字节码](jvm/jvm-bytecode.md)
+- [JVM 类加载](jvm/jvm-class-loader.md)
+- [JVM 工具](jvm/jvm-tools.md)
+- [JVM 实战](jvm/jvm-action.md)
 
 ## Java 编程规范
 

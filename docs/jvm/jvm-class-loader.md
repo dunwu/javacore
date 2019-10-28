@@ -1,76 +1,14 @@
-# 类加载机制
+# JVM 类加载
 
 > 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
 
-## 类文件结构
+<!-- TOC depthFrom:2 depthTo:2 -->
 
-Class 文件是一组以 8 位字节为基础单位的二进制流。
+- [类加载机制](#类加载机制)
+- [类加载器](#类加载器)
+- [参考资料](#参考资料)
 
-整个 Class 文件本质上就是一张表，由下表中的数据项组成。
-
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561452004933.png!zp"/></div>
-
-### 魔数与 Class 文件的版本
-
-每个 Class 文件的头 4 个字节称为魔数（magic number），它的唯一作用是确定这个文件是否为一个能被虚拟机接收的 Class 文件。
-
-紧接着魔数的 4 个字节存储的是 Class 文件的版本号：第 5 和第 6 个字节是次版本号（Minor Version）；第 7 和第 8 个字节是主版本号（Major Version）。
-
-### 常量池
-
-常量池主要存放两类常量：
-
-- **字面量** - 如文本字符串、声明为 final 的常量值。
-- **符号引用**
-  - 类和接口的全限定名
-  - 字段的名称和描述符
-  - 方法的名称和描述符
-
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473159265.png!zp"/></div>
-
-### 访问标志
-
-常量池之后，紧接着的两个字节代表访问标志，这个标志用于识别一些类或者接口的访问信息，包括：这个 Class 是类还是接口；是否定义为 public 类型；是否定义为 abstract 类型；如果是类的话，是否被声明为 final 等。
-
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473228816.png!zp"/></div>
-
-### 类索引、父类索引和接口索引集合
-
-Class 文件由类索引、父类索引和接口索引集合这 3 项数据来确定这个类的继承关系。
-
-### 字段表集合
-
-字段表用于描述接口或者类中声明的变量。字段包括类级变量以及实例级变量，但不包括在方法内部声明的局部变量。包含的信息如下：
-
-- 字段访问标志
-
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473275089.png!zp"/></div>
-
-- 名称索引
-- 描述符索引
-
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473423673.png!zp"/></div>
-
-- 属性计数器
-- 属性集合
-
-### 方法表集合
-
-方法表包含的信息如下：
-
-- 方法访问标志
-
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1561473522027.png!zp"/></div>
-
-- 并发可见性（volatile）
-- 能否被序列化（transient）
-- 字段数据类型（基本类型、对象、数组）
-- 名称索引
-- 描述符索引
-- 属性计数器
-- 属性集合
-
-### 属性表集合
+<!-- /TOC -->
 
 ## 类加载机制
 
@@ -258,17 +196,17 @@ System.out.println(ConstClass.HELLOWORLD);
 <img src="http://dunwu.test.upcdn.net/cs/java/jvm/jmm-类加载-双亲委派.png" width="500" />
 </div>
 
-**（一）工作过程**
+**（1）工作过程**
 
 一个类加载器首先将类加载请求传送到父类加载器，只有当父类加载器无法完成类加载请求时才尝试加载。
 
-**（二）好处**
+**（2）好处**
 
 **使得 Java 类随着它的类加载器一起具有一种带有优先级的层次关系**，从而使得基础类得到统一。
 
 例如 `java.lang.Object` 存放在 rt.jar 中，如果编写另外一个 `java.lang.Object` 的类并放到 ClassPath 中，程序可以编译通过。因为双亲委派模型的存在，所以在 rt.jar 中的 Object 比在 ClassPath 中的 Object 优先级更高，因为 rt.jar 中的 Object 使用的是启动类加载器，而 ClassPath 中的 Object 使用的是应用程序类加载器。正因为 rt.jar 中的 Object 优先级更高，因为程序中所有的 Object 都是这个 Object。
 
-**（三）实现**
+**（3）实现**
 
 以下是抽象类 `java.lang.ClassLoader` 的代码片段，其中的 `loadClass()` 方法运行过程如下：
 
@@ -371,4 +309,3 @@ public class FileSystemClassLoader extends ClassLoader {
 ## 参考资料
 
 - [深入理解 Java 虚拟机：JVM 高级特性与最佳实践（第 2 版）](https://item.jd.com/11252778.html)
-- [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
