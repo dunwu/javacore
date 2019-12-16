@@ -217,7 +217,7 @@ $ jps | grep myapp
 
 b) 找出该进程内最耗费 CPU 的线程，可以使用 `ps -Lfp pid` 或者 `ps -mp pid -o THREAD, tid, time` 或者 `top -Hp pid`
 
-<div align="center"><img src="http://static.oschina.net/uploads/space/2014/0128/170402_A57i_111708.png"/></div>
+![img](http://static.oschina.net/uploads/space/2014/0128/170402_A57i_111708.png)
 TIME 列就是各个 Java 线程耗费的 CPU 时间，CPU 时间最长的是线程 ID 为 21742 的线程，用
 
 ```bash

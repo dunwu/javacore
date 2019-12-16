@@ -391,6 +391,6 @@ ThreadPoolExecutor 提供了动态调整线程池容量大小的方法：setCore
 
 ## 资料
 
-- [Java 并发编程实战](https://item.jd.com/10922250.html)
-- [Java 并发编程的艺术](https://item.jd.com/11740734.html)
+- [Java并发编程实战](https://item.jd.com/10922250.html)
+- [Java并发编程的艺术](https://item.jd.com/11740734.html)
 - https://www.cnblogs.com/MOBIN/p/5436482.html

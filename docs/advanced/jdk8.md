@@ -333,7 +333,7 @@ optional.ifPresent((s) -> System.out.println(s.charAt(0)));     // "b"
 
 `java.util.Stream` 表示可以在其上执行一个或多个操作的元素序列。流操作是中间或终端。当终端操作返回一个特定类型的结果时，中间操作返回流本身，所以你可以链接多个方法调用。流在源上创建，例如一个 `java.util.Collection` 像列表或集合（不支持映射）。流操作既可以按顺序执行，也可以并行执行。
 
-> 流是非常强大的，所以，我写了一个独立的 [Java 8 Streams 教程](http://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/) 。**您还应该查看 Sequent，将其作为 Web 的类似库。**
+> 流是非常强大的，所以，我写了一个独立的 [Java8 Streams 教程](http://winterbe.com/posts/2014/07/31/java8-stream-tutorial-examples/) 。**您还应该查看 Sequent，将其作为 Web 的类似库。**
 
 我们先来看看顺序流如何工作。首先，我们以字符串列表的形式创建一个示例源代码：
 

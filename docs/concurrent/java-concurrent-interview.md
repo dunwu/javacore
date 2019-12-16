@@ -150,8 +150,8 @@
   - `LockSupport.parkUntil(timeout)`
 - **终止(Terminated)** - 线程 `run()` 方法执行结束，或者因异常退出了 `run()` 方法，则该线程结束生命周期。死亡的线程不可再次复生。
 
-> 👉 参考阅读：[Java `Thread` Methods and `Thread` States](https://www.w3resource.com/java-tutorial/java-threadclass-methods-and-threadstates.php)
-> 👉 参考阅读：[Java 线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
+> 👉 参考阅读：[Java`Thread` Methods and `Thread` States](https://www.w3resource.com/java-tutorial/java-threadclass-methods-and-threadstates.php)
+> 👉 参考阅读：[Java线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
 
 ### 2.2. 创建线程有哪些方式？这些方法各自利弊是什么？
 
@@ -181,7 +181,7 @@
 - 实现 `Runnable` 接口优于继承 `Thread` 类，因为根据开放封闭原则——实现接口更便于扩展；
 - 实现 `Runnable` 接口的线程没有返回值；而使用 `Callable` / `Future` 方式可以让线程有返回值。
 
-> 👉 参考阅读：[java 创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
+> 👉 参考阅读：[Java创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
 
 ### 2.3. 什么是 `Callable` 和 `Future`？什么是 `FutureTask`？
 
@@ -195,7 +195,7 @@ Java 5 在 concurrency 包中引入了 `Callable` 接口，它和 `Runnable` 接
 
 `FutureTask` 是 `Future` 的一个基础实现，我们可以将它同 `Executors` 使用处理异步任务。通常我们不需要使用 `FutureTask` 类，单当我们打算重写 `Future` 接口的一些方法并保持原来基础的实现是，它就变得非常有用。我们可以仅仅继承于它并重写我们需要的方法。阅读 Java `FutureTask` 例子，学习如何使用它。
 
-> 👉 参考阅读：[Java 并发编程：Callable、Future 和 FutureTask](http://www.cnblogs.com/dolphin0520/p/3949310.html)
+> 👉 参考阅读：[Java并发编程：Callable、Future 和 FutureTask](http://www.cnblogs.com/dolphin0520/p/3949310.html)
 
 ### 2.4. `start()` 和 `run()` 有什么区别？可以直接调用 `Thread` 类的 `run()` 方法么？
 
@@ -228,7 +228,7 @@ Java 5 在 concurrency 包中引入了 `Callable` 接口，它和 `Runnable` 接
 
 - `Thread` 类的 `sleep()` 和 `yield()` 方法将处理 **Running** 状态的线程。所以在其他处于非 **Running** 状态的线程上执行这两个方法是没有意义的。这就是为什么这些方法是静态的。它们可以在当前正在执行的线程中工作，并避免程序员错误的认为可以在其他非运行线程调用这些方法。
 
-> 👉 参考阅读：[Java 线程中 yield 与 join 方法的区别](http://www.importnew.com/14958.html)
+> 👉 参考阅读：[Java线程中 yield 与 join 方法的区别](http://www.importnew.com/14958.html)
 > 👉 参考阅读：[sleep()，wait()，yield()和 join()方法的区别](https://blog.csdn.net/xiangwanpeng/article/details/54972952)
 
 ### 2.6. Java 的线程优先级如何控制？高优先级的 Java 线程一定先执行吗？
@@ -262,13 +262,13 @@ Java 5 在 concurrency 包中引入了 `Callable` 接口，它和 `Runnable` 接
   - 一个守护线程创建的子线程依然是守护线程。
   - 不要认为所有的应用都可以分配给守护线程来进行服务，比如读写操作或者计算逻辑。
 
-> 👉 参考阅读：[Java 中守护线程的总结](https://blog.csdn.net/shimiso/article/details/8964414)
+> 👉 参考阅读：[Java中守护线程的总结](https://blog.csdn.net/shimiso/article/details/8964414)
 
 ### 2.8. 线程间是如何通信的？
 
 当线程间是可以共享资源时，线程间通信是协调它们的重要的手段。`Object` 类中 `wait()`, `notify()` 和 `notifyAll()` 方法可以用于线程间通信关于资源的锁的状态。
 
-> 👉 参考阅读：[Java 并发编程：线程间协作的两种方式：wait、notify、notifyAll 和 Condition](http://www.cnblogs.com/dolphin0520/p/3920385.html)
+> 👉 参考阅读：[Java并发编程：线程间协作的两种方式：wait、notify、notifyAll 和 Condition](http://www.cnblogs.com/dolphin0520/p/3920385.html)
 
 ### 2.9. 为什么线程通信的方法 `wait()`, `notify()` 和 `notifyAll()` 被定义在 Object 类里？
 
@@ -297,7 +297,7 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
   - 它会强制将对缓存的修改操作立即写入主存；
   - 如果是写操作，它会导致其他 CPU 中对应的缓存行无效。
 
-> 👉 参考阅读：[Java 并发编程：`volatile` 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
+> 👉 参考阅读：[Java并发编程：`volatile` 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
 
 ### 3.2. `synchronized` 有什么作用？它的实现原理是什么？同步方法和同步块，哪个更好？
 
@@ -322,7 +322,7 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
 - 同步块是更好的选择。
 - 因为它不会锁住整个对象（当然你也可以让它锁住整个对象）。同步方法会锁住整个对象，哪怕这个类中有多个不相关联的同步块，这通常会导致他们停止执行并需要等待获得这个对象上的锁。
 
-> 👉 参考阅读：[Java 并发编程：synchronized](http://www.cnblogs.com/dolphin0520/p/3923737.html)
+> 👉 参考阅读：[Java并发编程：synchronized](http://www.cnblogs.com/dolphin0520/p/3923737.html)
 
 ### 3.3. `volatile` 和 `synchronized` 的区别？
 
@@ -358,7 +358,7 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
 
 需要注意的是：`ThreadLocalMap.Entry` 继承了 `WeakReference`。ThreadLocalMap 使用它的目的是：当 threadLocal 实例可以被 GC 回收时，系统可以检测到该 threadLocal 对应的 Entry 是否已经过期（根据 `reference.get() == null` 来判断，如果为 true 则表示过期，程序内部称为 stale slots）来自动做一些清除工作，否则如果不清除的话容易产生内存无法释放的问题：value 对应的对象即使不再使用，但由于被 threadLocalMap 所引用导致无法被 GC 回收。实际代码中，ThreadLocalMap 会在 set，get 以及 resize 等方法中对 stale slots 做自动删除（set 以及 get 不保证所有过期 slots 会在操作中会被删除，而 resize 则会删除 threadLocalMap 中所有的过期 slots）。当然将 threadLocal 对象设置为 null 并不能完全避免内存泄露对象，最安全的办法仍然是调用 ThreadLocal 的 remove 方法，来彻底避免可能的内存泄露。
 
-> 👉 参考阅读：[Java 并发编程：深入剖析 ThreadLocal](https://www.cnblogs.com/dolphin0520/p/3920407.html)
+> 👉 参考阅读：[Java并发编程：深入剖析 ThreadLocal](https://www.cnblogs.com/dolphin0520/p/3920407.html)
 
 ## 4. 内存模型
 
@@ -408,7 +408,7 @@ for(int i=0;i<vector.size();i++)
     vector.remove(i);
 ```
 
-> 👉 参考阅读：[Java 并发编程：同步容器](https://www.cnblogs.com/dolphin0520/p/3933404.html)
+> 👉 参考阅读：[Java并发编程：同步容器](https://www.cnblogs.com/dolphin0520/p/3933404.html)
 
 ### 5.2. 什么是并发容器的实现？
 
@@ -470,7 +470,7 @@ int++并不是一个原子操作，所以当一个线程读取它的值并加 1 
 
 CyclicBarrier 和 CountDownLatch 都可以用来让一组线程等待其它线程。与 CyclicBarrier 不同的是，CountdownLatch 不能重用。
 
-> 👉 参考阅读：[Java 并发编程：CountDownLatch、CyclicBarrier 和 Semaphore](http://www.cnblogs.com/dolphin0520/p/3920397.html)
+> 👉 参考阅读：[Java并发编程：CountDownLatch、CyclicBarrier 和 Semaphore](http://www.cnblogs.com/dolphin0520/p/3920397.html)
 
 ## 9. 线程池
 
@@ -480,7 +480,7 @@ CyclicBarrier 和 CountDownLatch 都可以用来让一组线程等待其它线�
 
 java.util.concurrent.Executors 提供了一个 java.util.concurrent.Executor 接口的实现用于创建线程池。线程池例子展现了如何创建和使用线程池，或者阅读 ScheduledThreadPoolExecutor 例子，了解如何创建一个周期任务。
 
-> 👉 参考阅读：[Java 并发编程：线程池的使用](http://www.cnblogs.com/dolphin0520/p/3932921.html)
+> 👉 参考阅读：[Java并发编程：线程池的使用](http://www.cnblogs.com/dolphin0520/p/3932921.html)
 
 ### 9.2. 什么是 Executors 框架？
 
@@ -542,17 +542,17 @@ ThreadPoolExecutor 有四个构造方法，前三个都是基于第四个实现�
 ## 10. 资料
 
 - **文章**
-  - [Java 线程面试题 Top 50](http://www.importnew.com/12773.html)
-  - [JAVA 多线程和并发基础面试问答](http://ifeve.com/java-multi-threading-concurrency-interview-questions-with-answers/)
+  - [Java线程面试题 Top 50](http://www.importnew.com/12773.html)
+  - [Java多线程和并发基础面试问答](http://ifeve.com/java-multi-threading-concurrency-interview-questions-with-answers/)
   - [进程和线程关系及区别](https://blog.csdn.net/yaosiming2011/article/details/44280797)
-  - [Java Thread Methods and Thread States](https://www.w3resource.com/java-tutorial/java-threadclass-methods-and-threadstates.php)
-  - [Java 线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
-  - [Java 中守护线程的总结](https://blog.csdn.net/shimiso/article/details/8964414)
-  - [java 创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
-  - [Java 线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
-  - [java 线程方法 join 的简单总结](https://www.cnblogs.com/lcplcpjava/p/6896904.html)
-  - [Java 并发编程：线程间协作的两种方式：wait、notify、notifyAll 和 Condition](http://www.cnblogs.com/dolphin0520/p/3920385.html)
-  - [Java 并发编程：volatile 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
-  - [Java 并发编程：Callable、Future 和 FutureTask](http://www.cnblogs.com/dolphin0520/p/3949310.html)
-  - [Java 并发编程：线程池的使用](http://www.cnblogs.com/dolphin0520/p/3932921.html)
+  - [JavaThread Methods and Thread States](https://www.w3resource.com/java-tutorial/java-threadclass-methods-and-threadstates.php)
+  - [Java线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
+  - [Java中守护线程的总结](https://blog.csdn.net/shimiso/article/details/8964414)
+  - [Java创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
+  - [Java线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
+  - [Java线程方法 join 的简单总结](https://www.cnblogs.com/lcplcpjava/p/6896904.html)
+  - [Java并发编程：线程间协作的两种方式：wait、notify、notifyAll 和 Condition](http://www.cnblogs.com/dolphin0520/p/3920385.html)
+  - [Java并发编程：volatile 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
+  - [Java并发编程：Callable、Future 和 FutureTask](http://www.cnblogs.com/dolphin0520/p/3949310.html)
+  - [Java并发编程：线程池的使用](http://www.cnblogs.com/dolphin0520/p/3932921.html)
   - [Java并发编程](https://www.jianshu.com/p/0256c2995cec)

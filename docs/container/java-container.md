@@ -59,7 +59,7 @@ list.add(123);
 
 如果没有泛型技术，如示例中的代码那样，容器中就可能存储任意数据类型，这是很危险的行为。
 
-> 想了解泛型技术的细节可以参考我的另一篇博文：[Java 泛型](https://github.com/dunwu/javacore/blob/master/docs/advanced/Java泛型.md)
+> 想了解泛型技术的细节可以参考我的另一篇博文：[Java泛型](https://github.com/dunwu/javacore/blob/master/docs/advanced/Java泛型.md)
 
 ### Iterable
 
@@ -122,8 +122,8 @@ fail-fast 是 Java 容器的一种错误检测机制。当多个线程对容器�
 
 ## 资料
 
-- [Java 编程思想（第 4 版）](https://item.jd.com/10058164.html)
+- [Java编程思想（第 4 版）](https://item.jd.com/10058164.html)
 - [由浅入深理解java集合(一)——集合框架 Collection、Map](https://www.jianshu.com/p/589d58033841)
 - [由浅入深理解java集合(二)——集合 Set](https://www.jianshu.com/p/9081017a2d67)
-- [java 提高篇（三十）-----Iterator](https://www.cnblogs.com/chenssy/p/3821328.html)
-- [Java 提高篇（三四）-----fail-fast 机制](https://blog.csdn.net/chenssy/article/details/38151189)
+- [Java提高篇（三十）-----Iterator](https://www.cnblogs.com/chenssy/p/3821328.html)
+- [Java提高篇（三四）-----fail-fast 机制](https://blog.csdn.net/chenssy/article/details/38151189)

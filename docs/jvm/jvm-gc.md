@@ -342,26 +342,26 @@ CMS 收集器运行步骤如下：
 
 **（1）堆空间被分割为三块空间**
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide1.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide1.png)
 年轻代分割成一个 Eden 区和两个 Survivor 区。年老代一个连续的空间。就地完成对象收集。除非有 FullGC 否则不会压缩。
 
 **（2）CMS 年轻代垃圾收集如何工作**
 
 年轻代被标为浅绿色，年老代被标记为蓝色。如果你的应用已经运行了一段时间，CMS 的堆看起来应该是这个样子。对象分散在年老代区域里。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide2.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide2.png)
 使用 CMS，年老代对象就地释放。它们不会被来回移动。这个空间不会被压缩除非发生 FullGC。
 
 **（3）年轻代收集**
 
 从 Eden 和 Survivor 区复制活跃对象到另一个 Survivor 区。所有达到他们的年龄阈值的对象会晋升到年老代。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide3.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide3.png)
 **（4）年轻代回收之后**
 
 一次年轻代垃圾收集之后，Eden 区和其中一个 Survivor 区被清空。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide4.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide4.png)
 最近晋升的对象以深蓝色显示在上图中，绿色的对象是年轻代幸免的还没有晋升到老年代对象。
 
 ##### CMS 回收年老代详细步骤
@@ -370,7 +370,7 @@ CMS 收集器运行步骤如下：
 
 发生两次 stop the world 事件：初始标记和重新标记。当年老代达到特定的占用比例时，CMS 开始执行。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide5.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide5.png)
 - 初始标记是一个短暂暂停的、可达对象被标记的阶段。
 - 并发标记寻找活跃对象在应用连续执行时。
 - 最后，在重新标记阶段，寻找在之前并发标记阶段中丢失的对象。
@@ -379,14 +379,14 @@ CMS 收集器运行步骤如下：
 
 在之前阶段没有被标记的对象会被就地释放。不进行压缩操作。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide6.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide6.png)
 **注意：**未被标记的对象等于死亡对象
 
 **（3）年老代收集-清除之后**
 
 清除阶段之后，你可以看到大量内存被释放。你还可以注意到没有进行压缩操作。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide7.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide7.png)
 最后，CMS 收集器会再次进入重新设置阶段，等待下一次垃圾收集时机的到来。
 
 ##### CMS 特点
@@ -475,14 +475,14 @@ G1 把年轻代和老年代划分成多个大小相等的独立区域（Region�
 
 堆空间是一个被分成许多固定大小区域的内存块。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide8.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide8.png)
 Java虚拟机启动时选定区域大小。Java虚拟机通常会指定2000个左右的大小相等、每个大小范围在1到32M的区域。
 
 **（2）G1 堆空间分配**
 
 实际上，这些区域被映射成 Eden、Survivor、年老代空间的逻辑表述形式。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide9.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide9.png)
 图片中的颜色表明了哪个区域被关联上什么角色。活跃对象从一个区域疏散（复制、移动）到另一个区域。区域被设计为并行的方式收集，可以暂停或者不暂停所有的其它用户线程。
 
 明显的区域可以被分配成 Eden、Survivor、Old 区域。另外，有第四种类型的区域叫做*极大区域(Humongous regions)*。这些区域被设计成保持标准区域大小的 50%或者更大的对象。它们被保存在一个连续的区域集合里。最后，最后一个类型的区域就是堆空间里没有使用的区域。
@@ -493,14 +493,14 @@ Java虚拟机启动时选定区域大小。Java虚拟机通常会指定2000个�
 
 堆空间被分割成大约 2000 个区域。最小 1M，最大 32M，蓝色区域保持年老代对象，绿色区域保持年轻代对象。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide10.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide10.png)
 **注意：**区域没有必要像旧的收集器一样是保持连续的。
 
 **（4）G1 的年轻代收集**
 
 活跃对象会被疏散（复制、移动）到一个或多个 survivor 区域。如果达到晋升总阈值，对象会晋升到年老代区域。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide11.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide11.png)
 这是一个stop the world暂停。为下一次年轻代垃圾回收计算Eden和Survivor的大小。保留审计信息有助于计算大小。类似目标暂停时间的事情会被考虑在内。
 
 这个方法使重调区域大小变得很容易，按需把它们调大或调小。
@@ -509,7 +509,7 @@ Java虚拟机启动时选定区域大小。Java虚拟机通常会指定2000个�
 
 活跃对象被疏散到 Survivor 或者年老代区域。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide12.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide12.png)
 最近晋升的对象显示为深蓝色。Survivor区域显示为绿色。
 
 关于 G1 的年轻代回收做以下总结：
@@ -526,27 +526,27 @@ Java虚拟机启动时选定区域大小。Java虚拟机通常会指定2000个�
 
 年轻代垃圾收集肩负着活跃对象初始标记的任务。在日志文件中被标为*GC pause (young)(inital-mark)*
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide13.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide13.png)
 **（2）并发标记阶段**
 
 如果发现空区域(“X”标示的)，在重新标记阶段它们会被马上清除掉。当然，决定活性的审计信息也在此时被计算。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide14.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide14.png)
 **（3）重新标记阶段**
 
 空的区域被清除和回收掉。所有区域的活性在此时计算。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide15.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide15.png)
 **（4）复制/清理阶段**
 
 G1 选择活性最低的区域，这些区域能够以最快的速度回收。然后这些区域会在年轻代垃圾回收过程中被回收。在日志中被指示为*[GC pause (mixed)]*。所以年轻代和年老代在同一时间被回收。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide16.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide16.png)
 **（5）复制/清理阶段之后**
 
 被选择的区域已经被回收和压缩到图中显示的深蓝色区和深绿色区中。
 
-<div align="center"><img src="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide17.png"/></div>
+![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide17.png)
 ### 总结
 
 |        收集器         | 串行/并行/并发 |  年轻代/老年代  |       收集算法       |     目标     |                   适用场景                    |

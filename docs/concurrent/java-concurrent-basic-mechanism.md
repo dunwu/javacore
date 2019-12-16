@@ -208,7 +208,7 @@ synchronized 实现同步的基础是：Java 中的每一个对象都可以作�
 - 对于静态同步方法，锁是当前类的 Class 对象。
 - 对于同步方法块，锁是 Synchonized 括号里配置的对象。
 
-> 👉 参考阅读：[Java 并发编程：synchronized](http://www.cnblogs.com/dolphin0520/p/3923737.html)
+> 👉 参考阅读：[Java并发编程：synchronized](http://www.cnblogs.com/dolphin0520/p/3923737.html)
 > 👉 参考阅读：[深入理解 Java 并发之 synchronized 实现原理](https://blog.csdn.net/javazejian/article/details/72828483)
 
 ## volatile
@@ -281,7 +281,7 @@ class Singleton {
 }
 ```
 
-> 👉 参考阅读：[Java 并发编程：volatile 关键字解析](https://www.cnblogs.com/dolphin0520/p/3920373.html)
+> 👉 参考阅读：[Java并发编程：volatile 关键字解析](https://www.cnblogs.com/dolphin0520/p/3920373.html)
 
 ## CAS
 
@@ -424,8 +424,8 @@ CAS 通过调用 JNI（JNI:Java Native Interface 为 Java 本地调用，允许 
 
 ## 资料
 
-- [Java 并发编程实战](https://item.jd.com/10922250.html)
-- [Java 并发编程的艺术](https://item.jd.com/11740734.html)：第 2 章 Java 并发机制的底层实现原理
+- [Java并发编程实战](https://item.jd.com/10922250.html)
+- [Java并发编程的艺术](https://item.jd.com/11740734.html)：第 2 章 Java 并发机制的底层实现原理
 - https://www.jianshu.com/p/473e14d5ab2d
 - https://blog.csdn.net/ls5718/article/details/52563959
 - http://tutorials.jenkov.com/java-concurrency/non-blocking-algorithms.html

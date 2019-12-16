@@ -9,16 +9,16 @@
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [字符串](#字符串)
-    - [String](#string)
-    - [StringBuffer](#stringbuffer)
-    - [StringBuilder](#stringbuilder)
+  - [String](#string)
+  - [StringBuffer](#stringbuffer)
+  - [StringBuilder](#stringbuilder)
 - [日期时间](#日期时间)
-    - [Date](#date)
-    - [SimpleDateFormat](#simpledateformat)
-    - [Calendar](#calendar)
+  - [Date](#date)
+  - [SimpleDateFormat](#simpledateformat)
+  - [Calendar](#calendar)
 - [数学](#数学)
-    - [Number](#number)
-    - [Math](#math)
+  - [Number](#number)
+  - [Math](#math)
 - [参考资料](#参考资料)
 
 <!-- /TOC -->
@@ -47,5 +47,5 @@
 
 ## 参考资料
 
-- [Java 编程思想](https://book.douban.com/subject/2130190/)
-- [JAVA 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [Java编程思想](https://book.douban.com/subject/2130190/)
+- [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)

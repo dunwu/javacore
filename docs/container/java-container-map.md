@@ -740,5 +740,5 @@ WeakHashMap 的 key 是**弱键**，即是 WeakReference 类型的；ReferenceQu
 
 - [Java-HashMap 工作原理及实现](https://yikun.github.io/2015/04/01/Java-HashMap工作原理及实现)
 - [Map 综述（二）：彻头彻尾理解 LinkedHashMap](https://blog.csdn.net/justloveyou_/article/details/71713781)
-- [Java 集合系列 09 之 Map 架构](http://www.cnblogs.com/skywang12345/p/3308931.html)
-- [Java 集合系列13之 WeakHashMap详细介绍(源码解析)和使用示例](http://www.cnblogs.com/skywang12345/p/3311092.html)
+- [Java集合系列 09 之 Map 架构](http://www.cnblogs.com/skywang12345/p/3308931.html)
+- [Java集合系列13之 WeakHashMap详细介绍(源码解析)和使用示例](http://www.cnblogs.com/skywang12345/p/3311092.html)

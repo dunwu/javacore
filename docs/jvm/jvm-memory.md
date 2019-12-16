@@ -5,13 +5,13 @@
 <!-- TOC depthFrom:2 depthTo:2 -->
 
 - [程序计数器](#程序计数器)
-- [Java 虚拟机栈](#java-虚拟机栈)
+- [Java虚拟机栈](#java-虚拟机栈)
 - [本地方法栈](#本地方法栈)
-- [Java 堆](#java-堆)
+- [Java堆](#java-堆)
 - [方法区](#方法区)
 - [运行时常量池](#运行时常量池)
 - [直接内存](#直接内存)
-- [Java 内存区域对比](#java-内存区域对比)
+- [Java内存区域对比](#java-内存区域对比)
 - [OutOfMemoryError 异常](#outofmemoryerror-异常)
 - [参考资料](#参考资料)
 

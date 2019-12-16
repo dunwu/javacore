@@ -9,13 +9,13 @@
 - [简介](#简介)
 - [序列化和反序列化](#序列化和反序列化)
 - [Serializable 接口](#serializable-接口)
-    - [serialVersionUID](#serialversionuid)
+  - [serialVersionUID](#serialversionuid)
 - [默认序列化机制](#默认序列化机制)
 - [非默认序列化机制](#非默认序列化机制)
-    - [transient 关键字](#transient-关键字)
-    - [Externalizable 接口](#externalizable-接口)
-    - [Externalizable 接口的替代方法](#externalizable-接口的替代方法)
-    - [readResolve() 方法](#readresolve-方法)
+  - [transient 关键字](#transient-关键字)
+  - [Externalizable 接口](#externalizable-接口)
+  - [Externalizable 接口的替代方法](#externalizable-接口的替代方法)
+  - [readResolve() 方法](#readresolve-方法)
 - [序列化工具](#序列化工具)
 - [小结](#小结)
 - [参考资料](#参考资料)
@@ -24,7 +24,8 @@
 
 ## 简介
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553224129484.png!zp"/></div>
+![img](http://dunwu.test.upcdn.net/snap/1553224129484.png)
+
 - **序列化（serialize）** - 序列化是将对象转换为字节流。
 - **反序列化（deserialize）** - 反序列化是将字节流转换为对象。
 - **序列化用途**
@@ -449,13 +450,14 @@ Java 官方的序列化主要体现在以下方面：
 
 ## 小结
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1553227663192.png!zp"/></div>
+![img](http://dunwu.test.upcdn.net/snap/1553227663192.png!zp)
+
 ## 参考资料
 
-- [Java 编程思想](https://book.douban.com/subject/2130190/)
-- [JAVA 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [Java编程思想](https://book.douban.com/subject/2130190/)
+- [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)
 - http://www.hollischuang.com/archives/1140
 - http://www.codenuclear.com/serialization-deserialization-java/
 - http://www.blogjava.net/jiangshachina/archive/2012/02/13/369898.html
-- [Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
+- [Java序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
 - https://agapple.iteye.com/blog/859052

@@ -84,7 +84,7 @@ GC 优化的过程和大多数常见的提升性能的过程相似，下面是�
 
 ## HotSpot VM 参数
 
-> 详细参数说明请参考官方文档：[Java HotSpot VM Options](http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html)，这里仅列举常用参数。
+> 详细参数说明请参考官方文档：[JavaHotSpot VM Options](http://www.oracle.com/technetwork/java/javase/tech/vmoptions-jsp-140102.html)，这里仅列举常用参数。
 
 ### JVM 内存配置
 
@@ -252,8 +252,8 @@ Full GC 回收日志:
 
 通过两张图非常明显看出 gc 日志构成：
 
-<div align="center"><img src="http://ityouknow.com/assets/images/2017/jvm/Young%20GC.png"/></div>
-<div align="center"><img src="http://ityouknow.com/assets/images/2017/jvm/Full%20GC.png"/></div>
+![img](http://ityouknow.com/assets/images/2017/jvm/Young%20GC.png)
+![img](http://ityouknow.com/assets/images/2017/jvm/Full%20GC.png)
 ### 如何分析 OutOfMemory(OOM)
 
 OutOfMemory ，即内存溢出，是一个常见的 JVM 问题。那么分析 OOM 的思路是什么呢？
@@ -545,8 +545,8 @@ printf "%x\n" 6800
 - [深入理解 Java 虚拟机：JVM 高级特性与最佳实践（第 2 版）](https://item.jd.com/11252778.html)
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [JVM（4）：Jvm 调优-命令篇](http://www.importnew.com/23761.html)
-- [Java 系列笔记(4) - JVM 监控与调优](https://www.cnblogs.com/zhguang/p/Java-JVM-GC.html)
-- [Java 服务 GC 参数调优案例](https://segmentfault.com/a/1190000005174819)
+- [Java系列笔记(4) - JVM 监控与调优](https://www.cnblogs.com/zhguang/p/Java-JVM-GC.html)
+- [Java服务 GC 参数调优案例](https://segmentfault.com/a/1190000005174819)
 - [JVM 调优总结（5）：典型配置](http://www.importnew.com/19264.html)
 - [如何合理的规划一次 jvm 性能调优](https://juejin.im/post/59f02f406fb9a0451869f01c)
 - [jvm 系列(九):如何优化 Java GC「译」](http://www.ityouknow.com/jvm/2017/09/21/How-to-optimize-Java-GC.html)

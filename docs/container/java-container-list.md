@@ -226,6 +226,6 @@ private static class Node<E> {
 
 ## 资料
 
-- [Java 编程思想（第 4 版）](https://item.jd.com/10058164.html)
+- [Java编程思想（第 4 版）](https://item.jd.com/10058164.html)
 - https://www.cnblogs.com/skywang12345/p/3308556.html
 - http://www.cnblogs.com/skywang12345/p/3308807.html

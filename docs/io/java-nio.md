@@ -22,8 +22,8 @@
 
 <!-- /TOC -->
 
-- [Java NIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
-- [Java NIO 浅析](https://tech.meituan.com/nio.html)
+- [JavaNIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
+- [JavaNIO 浅析](https://tech.meituan.com/nio.html)
 - [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
 
 新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的，弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。

@@ -130,7 +130,7 @@ JMM 为程序中所有的操作定义了一个偏序关系，称之为 Happens-B
 
 ## 资料
 
-- [Java 并发编程实战](https://item.jd.com/10922250.html)：第 16 章 Java 内存模型
-- [Java 并发编程的艺术](https://item.jd.com/11740734.html)：第 3 章 Java 内存模型
+- [Java并发编程实战](https://item.jd.com/10922250.html)：第 16 章 Java 内存模型
+- [Java并发编程的艺术](https://item.jd.com/11740734.html)：第 3 章 Java 内存模型
 - [深入理解 Java 虚拟机](https://item.jd.com/11252778.html)：第 12 章 Java 内存模型与线程
 - http://tutorials.jenkov.com/java-concurrency/java-memory-model.html

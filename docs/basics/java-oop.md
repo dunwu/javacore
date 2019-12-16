@@ -41,7 +41,7 @@
 
 狗和鸟都是动物。如果将狗、鸟作为类，它们可以继承动物类。
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/snap/1552641712126.png!zp"/></div>
+![img](http://dunwu.test.upcdn.net/snap/1552641712126.png!zp)
 
 类的继承形式：
 
@@ -53,7 +53,7 @@ class 子类 extends 父类 {}
 
 #### 继承类型
 
-<div align="center"><img src="http://www.runoob.com/wp-content/uploads/2013/12/types_of_inheritance.png"/></div>
+![img](http://www.runoob.com/wp-content/uploads/2013/12/types_of_inheritance.png)
 
 #### 继承的特性
 
@@ -92,8 +92,8 @@ Java 中提供的基本数据类型，只能表示单一的数值，这用于数
 ## 参考资料
 
 - 书
-  - [Java 编程思想](https://book.douban.com/subject/2130190/)
-  - [JAVA 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+  - [Java编程思想](https://book.douban.com/subject/2130190/)
+  - [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)
   - [Head First Java](https://book.douban.com/subject/4496038/)
 - 文章
   - [面向对象编程的弊端是什么？ - invalid s 的回答](https://www.zhihu.com/question/20275578/answer/26577791)

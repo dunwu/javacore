@@ -251,8 +251,8 @@ public class AtomicStampedReferenceDemo {
 
 ## 资料
 
-- [Java 并发编程实战](https://item.jd.com/10922250.html)
-- [Java 并发编程的艺术](https://item.jd.com/11740734.html)
+- [Java并发编程实战](https://item.jd.com/10922250.html)
+- [Java并发编程的艺术](https://item.jd.com/11740734.html)
 - http://tutorials.jenkov.com/java-util-concurrent/atomicinteger.html
 - http://tutorials.jenkov.com/java-util-concurrent/atomicintegerarray.html
 - http://tutorials.jenkov.com/java-util-concurrent/atomicreference.html

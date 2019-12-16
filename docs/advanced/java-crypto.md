@@ -158,11 +158,11 @@ public class Base64Demo {
 
 一种是把明文信息划分为不同的组（或块）结构，分别对每个组（或块）进行加密、解密，称为分组密码。
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/advanced/symmetric-encryption.png!zp"/></div>
+![img](http://dunwu.test.upcdn.net/cs/java/advanced/symmetric-encryption.png!zp)
 
 假设甲乙方作为通信双方。假定甲乙双方在消息传递前已商定加密算法，欲完成一次消息传递需要经过如下步骤。
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/advanced/symmetric-encryption-progress.png!zp"/></div>
+![img](http://dunwu.test.upcdn.net/cs/java/advanced/symmetric-encryption-progress.png!zp)
 
 #### 工作模式
 
@@ -415,7 +415,7 @@ PBE 没有密钥概念，密钥在其他对称加密算法中是经过计算得�
 
 流程：
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/advanced/password-based-encryption-progress.png!zp"/></div>
+![img](http://dunwu.test.upcdn.net/cs/java/advanced/password-based-encryption-progress.png!zp)
 
 步骤如下：
 
@@ -468,7 +468,7 @@ byte[] ciphertext = cipher.doFinal(plaintext);
 
 #### 原理
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/advanced/asymmetric-encryption.png!zp"/></div>
+![img](http://dunwu.test.upcdn.net/cs/java/advanced/asymmetric-encryption.png!zp)
 
 非对称加密算法实现机密信息交换的基本过程是：甲方生成一对密钥并将其中的一把作为公用密钥向其它方公开；得到该公用密钥的乙方使用该密钥对机密信息进行加密后再发送给甲方；甲方再用自己保存的另一把专用密钥对加密后的信息进行解密。
 
@@ -724,7 +724,7 @@ public class HmacCoder{
 
 签名时要使用私钥和待签名数据，验证时则需要公钥、签名值和待签名数据，其核心算法主要是消息摘要算法。
 
-<div align="center"><img src="http://dunwu.test.upcdn.net/cs/java/advanced/java-message-digest-process.jpg!zp"/></div>
+![img](http://dunwu.test.upcdn.net/cs/java/advanced/java-message-digest-process.jpg!zp)
 
 #### 常用算法
 

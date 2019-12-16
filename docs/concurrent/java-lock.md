@@ -789,8 +789,8 @@ tryAcquireSharedNanos 方法与 tryAcquireNanos 几乎一致，不再赘述。
 
 ## 资料
 
-- [Java 并发编程实战](https://item.jd.com/10922250.html)
-- [Java 并发编程的艺术](https://item.jd.com/11740734.html)
+- [Java并发编程实战](https://item.jd.com/10922250.html)
+- [Java并发编程的艺术](https://item.jd.com/11740734.html)
 - http://www.cnblogs.com/dolphin0520/p/3923167.html
 - https://zhuanlan.zhihu.com/p/27134110
 - https://t.hao0.me/java/2016/04/01/aqs.html
