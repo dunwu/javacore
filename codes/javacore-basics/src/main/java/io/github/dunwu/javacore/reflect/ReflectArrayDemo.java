@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-26
+ * @since 2019-03-26
  */
 public class ReflectArrayDemo {
 

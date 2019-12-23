@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
 
 /**
  * @author Zhang Peng
- * @date 2018/5/24
+ * @since 2018/5/24
  */
 public class AtomicIntegerArrayDemo {
 

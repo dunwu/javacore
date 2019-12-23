@@ -4,7 +4,7 @@ package io.github.dunwu.javacore.enumeration;
  * 错误码常量集（通用方式）
  *
  * @author Zhang Peng
- * @date 2016/11/24.
+ * @since 2016/11/24.
  */
 public enum ErrorCodeEn {
 

@@ -4,7 +4,7 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Zhang Peng
- * @date 2018/5/15
+ * @since 2018/5/15
  */
 public class CountDownLatchDemo02 {
 

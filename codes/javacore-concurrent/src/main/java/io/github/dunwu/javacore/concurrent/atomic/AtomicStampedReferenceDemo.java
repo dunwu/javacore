@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicStampedReference;
  * AtomicStampedReference 可以解决 CAS 中的 ABA 问题
  *
  * @author Zhang Peng
- * @date 2018/5/24
+ * @since 2018/5/24
  */
 public class AtomicStampedReferenceDemo {
 

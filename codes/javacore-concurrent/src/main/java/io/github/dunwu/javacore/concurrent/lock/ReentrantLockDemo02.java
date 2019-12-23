@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * ReentrantLock tryLock() 示例
  *
  * @author Zhang Peng
- * @date 2018/5/11
+ * @since 2018/5/11
  */
 @SuppressWarnings("all")
 public class ReentrantLockDemo02 {

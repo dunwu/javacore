@@ -7,7 +7,7 @@ package io.github.dunwu.javacore.effective.chapter04.Item20.sample;
  * 局部内部类 类似于局部变量，不能定义为public，protected，private或者static类型。 定义方法中，只能方法中声明为final类型的变量。
  *
  * @author Zhang Peng
- * @date 2016/11/22.
+ * @since 2016/11/22.
  */
 public class LocalInner {
 

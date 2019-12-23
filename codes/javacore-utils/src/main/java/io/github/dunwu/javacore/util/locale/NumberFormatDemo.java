@@ -10,7 +10,7 @@ import java.util.Locale;
  * NumberFormat 是所有数字格式类的基类。它提供格式化和解析数字的接口。它也提供了决定数字所属语言类型的方法。
  *
  * @author Zhang Peng
- * @date 2016/11/25.
+ * @since 2016/11/25.
  */
 public class NumberFormatDemo {
 

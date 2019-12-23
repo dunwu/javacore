@@ -6,7 +6,7 @@ import java.io.*;
  * 序列化示例
  *
  * @author Zhang Peng
- * @date 2018/6/4
+ * @since 2018/6/4
  */
 @SuppressWarnings("all")
 public class SerializeDemo01 {

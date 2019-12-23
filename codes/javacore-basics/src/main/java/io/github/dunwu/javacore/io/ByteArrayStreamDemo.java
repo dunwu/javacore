@@ -8,7 +8,7 @@ import java.io.IOException;
  * 内存操作流
  *
  * @author Zhang Peng
- * @date 2018/4/26
+ * @since 2018/4/26
  */
 public class ByteArrayStreamDemo {
 

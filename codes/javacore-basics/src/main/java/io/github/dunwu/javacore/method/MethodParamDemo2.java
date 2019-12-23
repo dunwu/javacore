@@ -2,7 +2,7 @@ package io.github.dunwu.javacore.method;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-16
+ * @since 2019-03-16
  */
 public class MethodParamDemo2 {
 

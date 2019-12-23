@@ -6,7 +6,7 @@ import java.io.*;
  * 序列化、反序列化的范例
  *
  * @author Zhang Peng
- * @date 2016年8月5日
+ * @since 2016年8月5日
  */
 public class SerializeDemo {
 

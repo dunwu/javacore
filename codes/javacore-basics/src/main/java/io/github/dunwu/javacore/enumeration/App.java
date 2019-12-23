@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  * @author Zhang Peng
- * @date 2016/11/24.
+ * @since 2016/11/24.
  * @see org.zp.javase.enumeration.PayrollDay
  */
 public class App {

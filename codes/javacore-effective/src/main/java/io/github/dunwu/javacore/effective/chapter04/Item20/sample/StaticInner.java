@@ -7,7 +7,7 @@ package io.github.dunwu.javacore.effective.chapter04.Item20.sample;
  * 静态内部类 只能访问外部类的静态成员变量与静态方法。
  *
  * @author Zhang Peng
- * @date 2016/11/22.
+ * @since 2016/11/22.
  */
 public class StaticInner {
 

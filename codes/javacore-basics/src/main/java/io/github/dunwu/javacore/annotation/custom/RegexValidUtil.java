@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-31
+ * @since 2019-03-31
  */
 public class RegexValidUtil {
 

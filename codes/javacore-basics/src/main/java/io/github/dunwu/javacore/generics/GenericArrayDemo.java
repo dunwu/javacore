@@ -4,7 +4,7 @@ package io.github.dunwu.javacore.generics;
  * 泛型数组示例
  *
  * @author Zhang Peng
- * @date 2019-03-20
+ * @since 2019-03-20
  */
 public class GenericArrayDemo {
 

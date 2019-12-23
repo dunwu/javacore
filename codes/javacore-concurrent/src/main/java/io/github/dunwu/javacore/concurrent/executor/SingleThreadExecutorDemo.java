@@ -11,22 +11,17 @@ import java.util.concurrent.Executors;
  */
 public class SingleThreadExecutorDemo {
 
-	public static void main(String[] args) {
-		ExecutorService executorService = Executors.newSingleThreadExecutor();
-		for (int i = 0; i < 10; i++) {
-			final int index = i;
-			executorService.execute(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						System.out.println(Thread.currentThread().getName() + " 执行，i = " + index);
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			});
-		}
-	}
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        for (int i = 0; i < 100; i++) {
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName() + " 执行");
+                }
+            });
+        }
+        executorService.shutdown();
+    }
 
 }

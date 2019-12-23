@@ -4,7 +4,7 @@ package io.github.dunwu.javacore.enumeration;
  * 利用枚举实现单例
  *
  * @author Zhang Peng
- * @date 2019-03-19
+ * @since 2019-03-19
  */
 public class SingleEnumDemo {
 

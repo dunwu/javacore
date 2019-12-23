@@ -7,7 +7,7 @@ import java.io.IOException;
  * File 类常用方法示例
  *
  * @author Zhang Peng
- * @date 2018/4/26
+ * @since 2018/4/26
  */
 public class FileDemo {
 

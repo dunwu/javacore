@@ -7,7 +7,7 @@ package io.github.dunwu.javacore.effective.chapter04.Item20.sample;
  * 成员内部类 成员内部类可以访问外部类的静态与非静态的方法和成员变量。
  *
  * @author Zhang Peng
- * @date 2016/11/22.
+ * @since 2016/11/22.
  */
 public class MemberInner {
 

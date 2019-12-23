@@ -4,7 +4,7 @@ import io.github.dunwu.javacore.generics.entity.Content;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-20
+ * @since 2019-03-20
  */
 public class GenericsInterfaceDemo02<T> implements Content<T> {
 

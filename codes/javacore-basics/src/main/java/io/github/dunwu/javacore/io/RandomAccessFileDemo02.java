@@ -8,7 +8,7 @@ import java.io.RandomAccessFile;
  * RandomAccessFile 读操作示例 注：RandomAccessFile 读写文件操作较为麻烦，更建议使用字节流或字符流方法。
  *
  * @author Zhang Peng
- * @date 2018/4/26
+ * @since 2018/4/26
  * @see RandomAccessFileDemo01
  */
 public class RandomAccessFileDemo02 {

@@ -2,7 +2,7 @@ package io.github.dunwu.javacore.annotation.custom;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-31
+ * @since 2019-03-31
  */
 public class RegexValidDemo {
 

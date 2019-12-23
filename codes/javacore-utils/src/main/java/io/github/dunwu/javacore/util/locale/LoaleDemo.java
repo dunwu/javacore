@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  * 通过ResourceBundle加载定义好的多语言文件来实现本地化
  *
  * @author Zhang Peng
- * @date 2016/11/25.
+ * @since 2016/11/25.
  */
 public class LoaleDemo {
 

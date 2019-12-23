@@ -4,7 +4,7 @@ package io.github.dunwu.javacore.oop;
  * 通过类的完全限定名使用其它包的类
  *
  * @author Zhang Peng
- * @date 2019-03-16
+ * @since 2019-03-16
  */
 public class PackageDemo {
 

@@ -6,7 +6,7 @@ import io.github.dunwu.javacore.generics.entity.Info;
  * 泛型中无法向上转型
  *
  * @author Zhang Peng
- * @date 2019-03-20
+ * @since 2019-03-20
  */
 public class GenericsClassDemo04 {
 

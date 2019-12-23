@@ -15,7 +15,7 @@ public class ReflectDemo {
 	/**
 	 * @description 展示获取Class的不同方式
 	 * @author Zhang Peng
-	 * @date 2016年8月5日
+	 * @since 2016年8月5日
 	 */
 	public static void testGetClassObject() throws Exception {
 		// 方法一
@@ -40,7 +40,7 @@ public class ReflectDemo {
 	 * @title testGetObjectByClass
 	 * @description 通过Class实例化对象
 	 * @author Zhang Peng
-	 * @date 2016年8月5日
+	 * @since 2016年8月5日
 	 */
 	public static void testGetObjectByClass() throws Exception {
 		Class<?> clazz = Class.forName("io.github.dunwu.javacore.reflect.ReflectDemo$Person");
@@ -56,7 +56,7 @@ public class ReflectDemo {
 	 * @title testGetFieldsByClass
 	 * @description 获取类的所有的属性
 	 * @author Zhang Peng
-	 * @date 2016年8月5日
+	 * @since 2016年8月5日
 	 */
 	public static void testPrintClassInfo() throws Exception {
 		StringBuffer sb = new StringBuffer();

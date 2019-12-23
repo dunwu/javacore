@@ -4,7 +4,7 @@ package io.github.dunwu.javacore.exception;
  * 自定义异常示例
  *
  * @author Zhang Peng
- * @date 2019-03-11
+ * @since 2019-03-11
  */
 public class MyExceptionDemo {
 

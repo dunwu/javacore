@@ -8,7 +8,7 @@ import java.util.List;
  * Java 容器 fail-fast 机制示例
  *
  * @author Zhang Peng
- * @date 2018/6/29
+ * @since 2018/6/29
  */
 public class FailFastDemo {
 

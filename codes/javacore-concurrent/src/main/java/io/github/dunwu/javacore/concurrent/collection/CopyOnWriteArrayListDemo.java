@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
  * CopyOnWriteArrayList 示例
  *
  * @author Zhang Peng
- * @date 2018/5/16
+ * @since 2018/5/16
  */
 public class CopyOnWriteArrayListDemo {
 

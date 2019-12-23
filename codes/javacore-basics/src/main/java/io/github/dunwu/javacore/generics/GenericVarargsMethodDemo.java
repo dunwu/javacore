@@ -8,7 +8,7 @@ import java.util.List;
  * 泛型方法与可变参数
  *
  * @author Zhang Peng
- * @date 2019-03-20
+ * @since 2019-03-20
  */
 public class GenericVarargsMethodDemo {
 

@@ -7,7 +7,7 @@ import java.lang.reflect.Proxy;
  * @author Zhang Peng
  * @title App
  * @description 动态代理范例
- * @date 2016年8月5日
+ * @since 2016年8月5日
  */
 public class App {
 

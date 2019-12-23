@@ -4,7 +4,7 @@ package io.github.dunwu.javacore.annotation;
  * "@Override" 示例
  *
  * @author Zhang Peng
- * @date 2019-03-30
+ * @since 2019-03-30
  */
 public class OverrideAnnotationDemo {
 

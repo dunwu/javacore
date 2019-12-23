@@ -7,7 +7,7 @@ import java.util.List;
  * 不使用泛型的隐患示例
  *
  * @author Zhang Peng
- * @date 2019-03-20
+ * @since 2019-03-20
  */
 public class NoGenericsDemo {
 

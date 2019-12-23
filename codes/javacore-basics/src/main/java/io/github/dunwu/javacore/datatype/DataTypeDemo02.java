@@ -2,7 +2,7 @@ package io.github.dunwu.javacore.datatype;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-26
+ * @since 2019-03-26
  */
 public class DataTypeDemo02 {
 

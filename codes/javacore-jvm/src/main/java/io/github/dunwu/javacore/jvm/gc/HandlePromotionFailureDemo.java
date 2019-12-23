@@ -4,7 +4,7 @@ package io.github.dunwu.javacore.jvm.gc;
  * VM参数：-Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:-HandlePromotionFailure
  *
  * @author Zhang Peng
- * @date 2018/4/13
+ * @since 2018/4/13
  */
 public class HandlePromotionFailureDemo {
 

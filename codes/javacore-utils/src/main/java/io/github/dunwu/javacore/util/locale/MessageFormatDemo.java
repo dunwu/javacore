@@ -11,7 +11,7 @@ import java.util.Locale;
  * Messageformat 提供一种与语言无关的拼接消息的方式。通过这种拼接方式，将最终呈现返回给使用者。
  *
  * @author Zhang Peng
- * @date 2016/11/25.
+ * @since 2016/11/25.
  */
 public class MessageFormatDemo {
 

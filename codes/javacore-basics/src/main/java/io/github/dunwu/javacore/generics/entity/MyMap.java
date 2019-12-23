@@ -2,7 +2,7 @@ package io.github.dunwu.javacore.generics.entity;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-20
+ * @since 2019-03-20
  */
 public class MyMap<K, V> {
 

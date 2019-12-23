@@ -4,7 +4,7 @@ import java.util.EnumSet;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-19
+ * @since 2019-03-19
  */
 public class EnumSetDemo {
 

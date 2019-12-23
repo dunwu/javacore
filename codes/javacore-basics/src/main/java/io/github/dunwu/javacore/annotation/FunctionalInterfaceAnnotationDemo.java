@@ -2,7 +2,7 @@ package io.github.dunwu.javacore.annotation;
 
 /**
  * @author Zhang Peng
- * @date 2019-04-05
+ * @since 2019-04-05
  */
 public class FunctionalInterfaceAnnotationDemo {
 

@@ -9,7 +9,7 @@ import java.util.concurrent.Exchanger;
  * 第二个线程的数据结构进入到第一个线程中。
  *
  * @author Zhang Peng
- * @date 2018/5/10
+ * @since 2018/5/10
  * @see java.util.concurrent.Exchanger
  */
 public class ExchangerDemo {

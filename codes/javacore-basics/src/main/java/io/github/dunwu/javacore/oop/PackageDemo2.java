@@ -6,7 +6,7 @@ import java.util.Date;
  * 通过 import 导入其它包的类到当前类
  *
  * @author Zhang Peng
- * @date 2019-03-16
+ * @since 2019-03-16
  */
 public class PackageDemo2 {
 

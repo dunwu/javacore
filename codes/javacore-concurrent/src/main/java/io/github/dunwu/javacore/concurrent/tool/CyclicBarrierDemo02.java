@@ -7,7 +7,7 @@ import java.util.concurrent.CyclicBarrier;
  * CyclicBarrier 示例 字面意思回环栅栏，通过它可以实现让一组线程等待至某个状态之后再全部同时执行。 叫做回环是因为当所有等待线程都被释放以后，CyclicBarrier可以被重用。
  *
  * @author Zhang Peng
- * @date 2018/5/10
+ * @since 2018/5/10
  * @see CyclicBarrier
  */
 public class CyclicBarrierDemo02 {

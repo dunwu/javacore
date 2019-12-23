@@ -11,32 +11,35 @@ import java.util.concurrent.TimeUnit;
  */
 public class ScheduledThreadPoolDemo {
 
-	public static void main(String[] args) {
-		delay();
-		cycle();
-	}
+    public static void main(String[] args) {
+        schedule();
+        scheduleAtFixedRate();
+    }
 
-	private static void delay() {
-		ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(5);
-		scheduledThreadPool.schedule(new Runnable() {
-										 @Override
-										 public void run() {
-											 System.out.println(Thread.currentThread().getName() + " 延迟 3 秒");
-										 }
-									 }, 3,
-			TimeUnit.SECONDS);
-	}
+    private static void schedule() {
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5);
+        for (int i = 0; i < 100; i++) {
+            executorService.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName() + " 执行");
+                }
+            }, 1, TimeUnit.SECONDS);
+        }
+        executorService.shutdown();
+    }
 
-	private static void cycle() {
-		ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(5);
-		scheduledThreadPool.scheduleAtFixedRate(
-			new Runnable() {
-				@Override
-				public void run() {
-					System.out.println(Thread.currentThread().getName() + " 延迟 1 秒，每 3 秒执行一次");
-				}
-			}, 1, 3,
-			TimeUnit.SECONDS);
-	}
+    private static void scheduleAtFixedRate() {
+        ScheduledExecutorService executorService = Executors.newScheduledThreadPool(5);
+        for (int i = 0; i < 100; i++) {
+            executorService.scheduleAtFixedRate(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName() + " 执行");
+                }
+            }, 1, 1, TimeUnit.SECONDS);
+        }
+        executorService.shutdown();
+    }
 
 }

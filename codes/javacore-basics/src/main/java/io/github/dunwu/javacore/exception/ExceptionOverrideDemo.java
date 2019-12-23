@@ -6,7 +6,7 @@ import java.io.IOException;
  * 因为 Son 类抛出异常的实质是 SQLException，而 IOException 无法处理它。 那么这里的 try catch 就不能处理 Son 中的异常了。多态就不能实现了。
  *
  * @author Zhang Peng
- * @date 2019-03-11
+ * @since 2019-03-11
  */
 public class ExceptionOverrideDemo {
 

@@ -6,7 +6,7 @@ import java.io.*;
  * 合并流示例 合并流的主要功能是将多个 InputStream 合并为一个 InputStream 流。
  *
  * @author Zhang Peng
- * @date 2018/4/26
+ * @since 2018/4/26
  */
 public class SequenceInputStreamDemo {
 

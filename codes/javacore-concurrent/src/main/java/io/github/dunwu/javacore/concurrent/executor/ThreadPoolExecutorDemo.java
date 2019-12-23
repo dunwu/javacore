@@ -1,46 +1,43 @@
 package io.github.dunwu.javacore.concurrent.executor;
 
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * 使用 ThreadPoolExecutor 创建线程池示例
+ *
  * @author Zhang Peng
  */
 public class ThreadPoolExecutorDemo {
 
-	public static void main(String[] args) {
-		ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 200, TimeUnit.MILLISECONDS,
-			new ArrayBlockingQueue<Runnable>(5));
+    public static void main(String[] args) {
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 10, 500, TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>(),
+            Executors.defaultThreadFactory(),
+            new ThreadPoolExecutor.AbortPolicy());
 
-		for (int i = 0; i < 15; i++) {
-			MyTask myTask = new MyTask(i);
-			executor.execute(myTask);
-			System.out.println("线程池中线程数目：" + executor.getPoolSize() + "，队列中等待执行的任务数目：" + executor.getQueue().size()
-				+ "，已执行玩别的任务数目：" + executor.getCompletedTaskCount());
-		}
-		executor.shutdown();
-	}
+        for (int i = 0; i < 100; i++) {
+            threadPoolExecutor.execute(new MyThread());
+            String info = String.format("线程池中线程数目：%s，队列中等待执行的任务数目：%s，已执行玩别的任务数目：%s",
+                threadPoolExecutor.getPoolSize(),
+                threadPoolExecutor.getQueue().size(),
+                threadPoolExecutor.getCompletedTaskCount());
+            System.out.println(info);
+        }
+        threadPoolExecutor.shutdown();
+    }
 
-}
+    static class MyThread implements Runnable {
 
-class MyTask implements Runnable {
+        @Override
+        public void run() {
+            System.out.println(Thread.currentThread().getName() + " 执行");
+        }
 
-	private int taskNum;
-
-	public MyTask(int num) {
-		this.taskNum = num;
-	}
-
-	@Override
-	public void run() {
-		System.out.println("正在执行task " + taskNum);
-		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		System.out.println("task " + taskNum + "执行完毕");
-	}
+    }
 
 }
+
+

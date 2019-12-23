@@ -2,7 +2,7 @@ package io.github.dunwu.javacore.annotation;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-30
+ * @since 2019-03-30
  */
 @SuppressWarnings({"uncheck", "deprecation"})
 public class InternalAnnotationDemo {

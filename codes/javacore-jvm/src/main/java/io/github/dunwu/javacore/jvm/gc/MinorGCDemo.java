@@ -2,7 +2,7 @@ package io.github.dunwu.javacore.jvm.gc;
 
 /**
  * @author Zhang Peng
- * @date 2018/4/13
+ * @since 2018/4/13
  */
 public class MinorGCDemo {
 

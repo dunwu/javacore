@@ -5,7 +5,7 @@ package io.github.dunwu.javacore.jvm.gc;
  * -XX:+PrintTenuringDistribution
  *
  * @author Zhang Peng
- * @date 2018/4/13
+ * @since 2018/4/13
  */
 public class TenuringThresholdDemo {
 

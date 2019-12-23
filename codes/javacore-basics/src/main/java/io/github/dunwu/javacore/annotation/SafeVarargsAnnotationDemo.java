@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author Zhang Peng
- * @date 2019-03-30
+ * @since 2019-03-30
  */
 public class SafeVarargsAnnotationDemo {
 
