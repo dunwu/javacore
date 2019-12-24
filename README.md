@@ -50,15 +50,15 @@
 > [Java 并发](docs/concurrent) 知识点庞杂且难懂，特设专题进行总结。
 
 - [Java 并发面试题集](docs/concurrent/java-concurrent-interview.md)
-- [第一章 并发简介](docs/concurrent/java-concurrent-introduction.md)
-- [第二章 线程基础](docs/concurrent/java-thread.md)
-- [第三章 并发机制的底层实现](docs/concurrent/java-concurrent-basic-mechanism.md)
-- [第四章 内存模型](docs/concurrent/java-memory-model.md)
-- [第五章 同步容器和并发容器](docs/concurrent/java-concurrent-container.md)
-- [第六章 锁](docs/concurrent/java-lock.md)
-- [第七章 原子变量类](docs/concurrent/java-atomic-class.md)
-- [第八章 并发工具类](docs/concurrent/java-concurrent-tools.md)
-- [第九章 线程池](docs/concurrent/java-thread-pool.md)
+- [Java 并发简介](docs/concurrent/java-concurrent-introduction.md)
+- [Java 线程基础](docs/concurrent/java-thread.md)
+- [Java 并发底层机制](docs/concurrent/java-concurrent-basic-mechanism.md)
+- [Java 内存模型](docs/concurrent/java-memory-model.md)
+- [Java 并发容器](docs/concurrent/java-concurrent-container.md)
+- [Java 并发锁](docs/concurrent/java-lock.md)
+- [Java 原子类](docs/concurrent/java-atomic-class.md)
+- [Java 线程池](docs/concurrent/java-thread-pool.md)
+- [Java 并发工具](docs/concurrent/java-concurrent-tools.md)
 
 ## Java IO
 

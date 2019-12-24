@@ -66,8 +66,6 @@
   - 线程比进程划分更细，所以执行开销更小，并发性更高。
   - 进程是一个实体，拥有独立的资源；而同一个进程中的多个线程共享进程的资源。
 
-> 👉 参考阅读：[进程和线程关系及区别](https://blog.csdn.net/yaosiming2011/article/details/44280797)
-
 ### 1.2. 并发（多线程）编程的好处是什么？
 
 - 更有效率的利用多处理器核心
@@ -128,7 +126,7 @@
 ### 2.1. Java 线程生命周期中有哪些状态？各状态之间如何切换？
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/thread-state.png">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread_1.png">
 </p>
 
 `java.lang.Thread.State` 中定义了 **6** 种不同的线程状态，在给定的一个时刻，线程只能处于其中的一个状态。
@@ -539,7 +537,7 @@ ThreadPoolExecutor 有四个构造方法，前三个都是基于第四个实现�
 
 如何解决资源限制问题：可以使用集群并行执行程序，既然单机的资源有限，那么可以让程序在多机上运行，比如使用 ODPS、Hadoop 或者自己搭个服务器集群，不同的机器处理不同的数据，可以通过“数据 ID%机器数”，计算得到一个机器编号，然后由对应编号的机器处理这个数据，对于软件资源受限，可以使用资源池来复用如使用连接池将数据库和 Socket 连接复用，或者在调用对方 webservice 接口获取数据只建立一个连接。
 
-## 10. 资料
+## 10. 参考资料
 
 - **文章**
   - [Java线程面试题 Top 50](http://www.importnew.com/12773.html)
