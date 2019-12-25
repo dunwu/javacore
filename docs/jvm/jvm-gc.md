@@ -1,6 +1,6 @@
 # JVM 垃圾收集
 
-> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
 
 > 程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后也会消失，因此不需要对这三个区域进行垃圾回收。**垃圾回收主要是针对 Java 堆和方法区进行**。
 

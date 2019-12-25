@@ -1,5 +1,7 @@
 # Java 并发工具类
 
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
+>
 > JDK 的 `java.util.concurrent` 包（即 J.U.C）中提供了几个非常有用的并发工具类。
 
 <!-- TOC depthFrom:2 depthTo:3 -->

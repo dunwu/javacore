@@ -1,6 +1,6 @@
 # 原子变量类
 
-> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
 >
 > 本文内容基于 JDK1.8。
 
@@ -257,3 +257,7 @@ public class AtomicStampedReferenceDemo {
 - http://tutorials.jenkov.com/java-util-concurrent/atomicintegerarray.html
 - http://tutorials.jenkov.com/java-util-concurrent/atomicreference.html
 - http://tutorials.jenkov.com/java-util-concurrent/atomicstampedreference.html
+
+---
+
+**📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**

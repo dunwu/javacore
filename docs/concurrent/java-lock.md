@@ -1,6 +1,6 @@
 # 锁
 
-> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
 >
 > 本文内容基于 JDK1.8。
 
@@ -173,7 +173,7 @@ public ReentrantLock(boolean fair) {}
   - `NonfairSync` - 非公平锁版本。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/ReentrantLock-diagram.png">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/ReentrantLock-diagram.png">
 </p>
 
 ### 示例
@@ -224,7 +224,7 @@ ReentrantReadWriteLock 实现了 ReadWriteLock 接口，所以它是一个读写
 “读-写”线程、“写-写”线程之间存在互斥关系。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/ReadWriteLock.jpg">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/ReadWriteLock.jpg">
 </p>
 
 ### 源码
@@ -449,7 +449,7 @@ final boolean acquireQueued(final Node node, int arg) {
 acquireQueued Before
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/aqs-acquireQueued-before.png">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs-acquireQueued-before.png">
 </p>
 
 `setHead` 方法
@@ -465,7 +465,7 @@ private void setHead(Node node) {
 将当前节点通过 setHead 方法设置为队列的头结点，然后将之前的头结点的 next 域设置为 null，并且 pre 域也为 null，即与队列断开，无任何引用方便 GC 时能够将内存进行回收。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/aqs-acquireQueued-after.png">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs-acquireQueued-after.png">
 </p>
 
 ##### shouldParkAfterFailedAcquire
@@ -507,7 +507,7 @@ private final boolean parkAndCheckInterrupt() {
 综上所述，就是 acquire 的完整流程。可以以一幅图来说明：
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/aqs-acquire-flow.png">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs-acquire-flow.png">
 </p>
 
 #### 释放独占锁
@@ -687,7 +687,7 @@ private boolean doAcquireNanos(int arg, long nanosTimeout)
 ```
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/aqs-doAcquireNanos-flow.png">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs-doAcquireNanos-flow.png">
 </p>
 
 #### 获取共享锁

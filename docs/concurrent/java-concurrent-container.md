@@ -1,6 +1,6 @@
 # 同步容器和并发容器
 
-> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
 >
 > 本文内容基于 JDK1.8。
 
@@ -172,7 +172,7 @@ JDK 的 `java.util.concurrent` 包（即 juc）中提供了几个非常有用的
 ConcurrentHashMap 类在 jdk1.7 中的设计，其基本结构如图所示：
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/ConcurrentHashMap-jdk7.png">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/ConcurrentHashMap-jdk7.png">
 </p>
 
 每一个 segment 都是一个 HashEntry<K,V>[] table， table 中的每一个元素本质上都是一个 HashEntry 的单向队列。比如 table[3]为首节点，table[3]->next 为节点 1，之后为节点 2，依次类推。
@@ -323,7 +323,7 @@ public class ConcurrentHashMapDemo {
   - 写时复制集合返回的迭代器不会抛出 ConcurrentModificationException，因为它们在数组的快照上工作，并且无论后续的修改（2,4）如何，都会像迭代器创建时那样完全返回元素。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/CopyOnWriteArrayList.png">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/CopyOnWriteArrayList.png">
 </p>
 
 #### 源码

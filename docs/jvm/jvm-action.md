@@ -1,6 +1,6 @@
 # JVM 实战
 
-> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
 
 ## JVM 调优概述
 

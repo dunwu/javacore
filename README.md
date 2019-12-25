@@ -53,12 +53,12 @@
 - [Java 并发简介](docs/concurrent/java-concurrent-introduction.md)
 - [Java 线程基础](docs/concurrent/java-thread.md)
 - [Java 并发底层机制](docs/concurrent/java-concurrent-basic-mechanism.md)
-- [Java 内存模型](docs/concurrent/java-memory-model.md)
 - [Java 并发容器](docs/concurrent/java-concurrent-container.md)
 - [Java 并发锁](docs/concurrent/java-lock.md)
 - [Java 原子类](docs/concurrent/java-atomic-class.md)
 - [Java 线程池](docs/concurrent/java-thread-pool.md)
-- [Java 并发工具](docs/concurrent/java-concurrent-tools.md)
+- [Java 并发工具类](docs/concurrent/java-concurrent-tools.md)
+- [Java 内存模型](docs/concurrent/java-memory-model.md)
 
 ## Java IO
 

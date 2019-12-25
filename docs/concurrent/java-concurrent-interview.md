@@ -1,6 +1,6 @@
 # Java 并发夺命连环问
 
-> 📓 本文已归档到：「[javacore](https://github.com/dunwu/javacore)」
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -385,7 +385,7 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
   - 对于一个对象的成员变量，不管它是原始类型还是包装类型，都会被存储到堆区。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/concurrent/jmm-model.png" alt="thread-states">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/jmm-model.png" alt="thread-states">
 </p>
 
 > 👉 参考阅读：[全面理解 Java 内存模型](https://blog.csdn.net/suifeng3051/article/details/52611310)

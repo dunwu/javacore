@@ -1,5 +1,7 @@
 # Java 线程池
 
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
+
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [一、简介](#一简介)
