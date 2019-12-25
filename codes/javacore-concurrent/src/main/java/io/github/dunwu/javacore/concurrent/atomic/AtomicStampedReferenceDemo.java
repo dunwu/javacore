@@ -6,42 +6,47 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicStampedReference;
 
 /**
- * AtomicStampedReference 可以解决 CAS 中的 ABA 问题
+ * 使用 {@link java.util.concurrent.atomic.AtomicStampedReference} 解决 CAS 中的 ABA 问题
  *
  * @author Zhang Peng
  * @since 2018/5/24
  */
 public class AtomicStampedReferenceDemo {
 
-	private final static String INIT_REF = "abc";
+    private final static String INIT_REF = "pool-1-thread-3";
 
-	public static void main(String[] args) throws InterruptedException {
+    private final static AtomicStampedReference<String> asr = new AtomicStampedReference<>(INIT_REF, 0);
 
-		final AtomicStampedReference<String> asr = new AtomicStampedReference<>(INIT_REF, 0);
-		System.out.println("初始对象为：" + asr.getReference());
-		final int stamp = asr.getStamp();
+    public static void main(String[] args) throws InterruptedException {
 
-		ExecutorService executorService = Executors.newFixedThreadPool(100);
-		for (int i = 0; i < 100; i++) {
-			executorService.submit(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						Thread.sleep(Math.abs((int) (Math.random() * 100)));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+        System.out.println("初始对象为：" + asr.getReference());
 
-					if (asr.compareAndSet(INIT_REF, Thread.currentThread().getName(), stamp, stamp + 1)) {
-						System.out.println(Thread.currentThread().getName() + " 修改了对象！");
-						System.out.println("新的对象为：" + asr.getReference());
-					}
-				}
-			});
-		}
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        for (int i = 0; i < 3; i++) {
+            executorService.execute(new MyThread());
+        }
 
-		executorService.shutdown();
-		executorService.awaitTermination(60, TimeUnit.SECONDS);
-	}
+        executorService.shutdown();
+        executorService.awaitTermination(3, TimeUnit.SECONDS);
+    }
+
+    static class MyThread implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(Math.abs((int) (Math.random() * 100)));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            final int stamp = asr.getStamp();
+            if (asr.compareAndSet(INIT_REF, Thread.currentThread().getName(), stamp, stamp + 1)) {
+                System.out.println(Thread.currentThread().getName() + " 修改了对象！");
+                System.out.println("新的对象为：" + asr.getReference());
+            }
+        }
+
+    }
 
 }

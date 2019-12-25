@@ -6,39 +6,41 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicMarkableReference;
 
 /**
+ * {@link AtomicMarkableReference} 示例
+ *
  * @author Zhang Peng
  * @since 2018/5/24
  */
 public class AtomicMarkableReferenceDemo {
 
-	private final static String INIT_REF = "abc";
+    private final static String INIT_TEXT = "abc";
 
-	public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
 
-		final AtomicMarkableReference<String> amr = new AtomicMarkableReference<>("abc", false);
+        final AtomicMarkableReference<String> amr = new AtomicMarkableReference<>(INIT_TEXT, false);
 
-		ExecutorService executorService = Executors.newFixedThreadPool(100);
-		for (int i = 0; i < 100; i++) {
-			executorService.submit(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						Thread.sleep(Math.abs((int) (Math.random() * 100)));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        for (int i = 0; i < 10; i++) {
+            executorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(Math.abs((int) (Math.random() * 100)));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-					if (amr
-						.compareAndSet(INIT_REF, Thread.currentThread().getName(), amr.isMarked(), !amr.isMarked())) {
-						System.out.println(Thread.currentThread().getName() + " 修改了对象！");
-						System.out.println("新的对象为：" + amr.getReference());
-					}
-				}
-			});
-		}
+                    String name = Thread.currentThread().getName();
+                    if (amr.compareAndSet(INIT_TEXT, name, amr.isMarked(), !amr.isMarked())) {
+                        System.out.println(Thread.currentThread().getName() + " 修改了对象！");
+                        System.out.println("新的对象为：" + amr.getReference());
+                    }
+                }
+            });
+        }
 
-		executorService.shutdown();
-		executorService.awaitTermination(60, TimeUnit.SECONDS);
-	}
+        executorService.shutdown();
+        executorService.awaitTermination(3, TimeUnit.SECONDS);
+    }
 
 }

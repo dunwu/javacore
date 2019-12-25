@@ -1,52 +1,39 @@
 package io.github.dunwu.javacore.concurrent;
 
 /**
- * 在main线程中，没有先set，直接get的话，运行时会报空指针异常。
+ * {@link ThreadLocal} 示例
  *
  * @author Zhang Peng
- * @see ThreadLocalDemo03
  */
 public class ThreadLocalDemo02 {
 
-	private ThreadLocal<Long> longLocal = new ThreadLocal<>();
+    private static ThreadLocal<Long> longLocal = new ThreadLocal<>();
 
-	private ThreadLocal<String> stringLocal = new ThreadLocal<>();
+    private static ThreadLocal<String> stringLocal = new ThreadLocal<>();
 
-	public static void main(String[] args) throws InterruptedException {
-		final ThreadLocalDemo02 threadLocalDemo = new ThreadLocalDemo02();
+    public static void main(String[] args) throws InterruptedException {
 
-		System.out.println(threadLocalDemo.getLong());
-		System.out.println(threadLocalDemo.getString());
+        Thread thread = new Thread(new MyThread());
+        thread.start();
+        thread.join();
 
-		Thread thread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				threadLocalDemo.set();
-				System.out.println(threadLocalDemo.getLong());
-				System.out.println(threadLocalDemo.getString());
-			}
-		});
-		thread.start();
-		thread.join();
+        System.out.println(longLocal.get());
+        System.out.println(stringLocal.get());
 
-		System.out.println(threadLocalDemo.getLong());
-		System.out.println(threadLocalDemo.getString());
+        longLocal.remove();
+        stringLocal.remove();
+    }
 
-		threadLocalDemo.longLocal.remove();
-		threadLocalDemo.stringLocal.remove();
-	}
+    static class MyThread implements Runnable {
 
-	private long getLong() {
-		return longLocal.get();
-	}
+        @Override
+        public void run() {
+            longLocal.set(Thread.currentThread().getId());
+            stringLocal.set(Thread.currentThread().getName());
+            System.out.println(longLocal.get());
+            System.out.println(stringLocal.get());
+        }
 
-	public String getString() {
-		return stringLocal.get();
-	}
-
-	private void set() {
-		longLocal.set(Thread.currentThread().getId());
-		stringLocal.set(Thread.currentThread().getName());
-	}
+    }
 
 }

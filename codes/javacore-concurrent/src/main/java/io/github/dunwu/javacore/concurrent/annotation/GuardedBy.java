@@ -41,6 +41,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface GuardedBy {
 
-	String value();
+    String value();
 
 }

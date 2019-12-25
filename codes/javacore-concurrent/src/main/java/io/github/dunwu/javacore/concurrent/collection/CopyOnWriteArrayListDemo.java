@@ -13,60 +13,60 @@ import java.util.concurrent.Executors;
  */
 public class CopyOnWriteArrayListDemo {
 
-	public static void main(String[] args) {
-		new CopyOnWriteArrayListDemo().run();
-	}
+    public static void main(String[] args) {
+        new CopyOnWriteArrayListDemo().run();
+    }
 
-	public void run() {
-		final int NUM = 10;
-		// ArrayList 在并发迭代访问时会抛出 ConcurrentModificationException 异常
-		// List<String> list = new ArrayList<>();
-		CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
-		for (int i = 0; i < NUM; i++) {
-			list.add("main_" + i);
-		}
-		ExecutorService executorService = Executors.newFixedThreadPool(NUM);
-		for (int i = 0; i < NUM; i++) {
-			executorService.execute(new ReadTask(list));
-			executorService.execute(new WriteTask(list, i));
-		}
-		executorService.shutdown();
-	}
+    public void run() {
+        final int NUM = 10;
+        // ArrayList 在并发迭代访问时会抛出 ConcurrentModificationException 异常
+        // List<String> list = new ArrayList<>();
+        CopyOnWriteArrayList<String> list = new CopyOnWriteArrayList<>();
+        for (int i = 0; i < NUM; i++) {
+            list.add("main_" + i);
+        }
+        ExecutorService executorService = Executors.newFixedThreadPool(NUM);
+        for (int i = 0; i < NUM; i++) {
+            executorService.execute(new ReadTask(list));
+            executorService.execute(new WriteTask(list, i));
+        }
+        executorService.shutdown();
+    }
 
-	static class ReadTask implements Runnable {
+    static class ReadTask implements Runnable {
 
-		List<String> list;
+        List<String> list;
 
-		ReadTask(List<String> list) {
-			this.list = list;
-		}
+        ReadTask(List<String> list) {
+            this.list = list;
+        }
 
-		@Override
-		public void run() {
-			for (String str : list) {
-				System.out.println(str);
-			}
-		}
+        @Override
+        public void run() {
+            for (String str : list) {
+                System.out.println(str);
+            }
+        }
 
-	}
+    }
 
-	static class WriteTask implements Runnable {
+    static class WriteTask implements Runnable {
 
-		List<String> list;
+        List<String> list;
 
-		int index;
+        int index;
 
-		WriteTask(List<String> list, int index) {
-			this.list = list;
-			this.index = index;
-		}
+        WriteTask(List<String> list, int index) {
+            this.list = list;
+            this.index = index;
+        }
 
-		@Override
-		public void run() {
-			list.remove(index);
-			list.add(index, "write_" + index);
-		}
+        @Override
+        public void run() {
+            list.remove(index);
+            list.add(index, "write_" + index);
+        }
 
-	}
+    }
 
 }

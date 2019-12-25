@@ -11,33 +11,33 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ConcurrentHashMapDemo {
 
-	public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
 
-		// HashMap 在并发迭代访问时会抛出 ConcurrentModificationException 异常
-		// Map<Integer, Character> map = new HashMap<>();
-		final Map<Integer, Character> map = new ConcurrentHashMap<>();
+        // HashMap 在并发迭代访问时会抛出 ConcurrentModificationException 异常
+        // Map<Integer, Character> map = new HashMap<>();
+        final Map<Integer, Character> map = new ConcurrentHashMap<>();
 
-		Thread wthread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				System.out.println("写操作线程开始执行");
-				for (int i = 0; i < 26; i++) {
-					map.put(i, (char) ('a' + i));
-				}
-			}
-		});
-		Thread rthread = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				System.out.println("读操作线程开始执行");
-				for (Integer key : map.keySet()) {
-					System.out.println(key + " - " + map.get(key));
-				}
-			}
-		});
-		wthread.start();
-		rthread.start();
-		Thread.sleep(1000);
-	}
+        Thread wthread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("写操作线程开始执行");
+                for (int i = 0; i < 26; i++) {
+                    map.put(i, (char) ('a' + i));
+                }
+            }
+        });
+        Thread rthread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("读操作线程开始执行");
+                for (Integer key : map.keySet()) {
+                    System.out.println(key + " - " + map.get(key));
+                }
+            }
+        });
+        wthread.start();
+        rthread.start();
+        Thread.sleep(1000);
+    }
 
 }
