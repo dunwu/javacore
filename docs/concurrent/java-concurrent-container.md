@@ -1,8 +1,6 @@
 # 同步容器和并发容器
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
->
-> 本文内容基于 JDK1.8。
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -470,10 +468,10 @@ public class CopyOnWriteArrayListDemo {
 }
 ```
 
-### 资料
+## 参考资料
 
-- [Java并发编程实战](https://item.jd.com/10922250.html)
-- [Java并发编程的艺术](https://item.jd.com/11740734.html)
+- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
+- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
 - https://blog.csdn.net/u010425776/article/details/54890215
 - https://blog.csdn.net/wangxiaotongfan/article/details/52074160
 - https://my.oschina.net/hosee/blog/675884

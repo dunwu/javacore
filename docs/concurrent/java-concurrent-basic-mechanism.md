@@ -1,5 +1,7 @@
-# Java 并发基础机制
+# Java 并发核心机制
 
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
+>
 > Java 对于并发的支持主要汇聚在 `java.util.concurrent`，即 J.U.C。而 J.U.C 的核心是 `AQS`。
 
 <!-- TOC depthFrom:2 depthTo:3 -->
@@ -27,7 +29,7 @@
 
 ## 一、J.U.C 简介
 
-Java 的 `java.util.concurrent` 包（简称 J.U.C）中提供了大量并发相关的工具类。从功能上，大致可以分为：
+Java 的 `java.util.concurrent` 包（简称 J.U.C）中提供了大量并发工具类，是 Java 并发能力的主要体现（注意，不是全部，有部分并发能力的支持在其他包中）。从功能上，大致可以分为：
 
 - 原子类 - 如：`AtomicInteger`、`AtomicIntegerArray`、`AtomicReference`、`AtomicStampedReference` 等。
 - 锁 - 如：`ReentrantLock`、`ReentrantReadWriteLock` 等。
@@ -36,15 +38,22 @@ Java 的 `java.util.concurrent` 包（简称 J.U.C）中提供了大量并发相
 - 非阻塞队列 - 如： `ConcurrentLinkedQueue` 、`LinkedTransferQueue` 等。
 - `Executor` 框架（线程池）- 如：`ThreadPoolExecutor`、`Executors` 等。
 
-这些工具类，本质上也是基于一些 Java 并发基础机制实现的。其框架大致如下：
+我个人理解，Java 并发框架可以分为以下层次。
 
 ![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-concurrent-basic-mechanism.png)
+
+由 Java 并发框架图不难看出，J.U.C 包中的工具类是基于 `synchronized`、`volatile`、`CAS`、`ThreadLocal` 这样的并发核心机制打造的。所以，要想深入理解 J.U.C 工具类的特性、为什么具有这样那样的特性，就必须先理解这些核心机制。
 
 ## 二、synchronized
 
 > `synchronized` 是 Java 中的关键字，是 **利用锁的机制来实现互斥同步的**。
 >
 > **`synchronized` 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块**。
+>
+> 如果不需要 `Lock` 、`ReadWriteLock` 所提供的高级同步特性，应该优先考虑使用 `synchronized` ，理由如下：
+>
+> - Java 1.6 以后，`synchronized` 做了大量的优化，其性能已经与 `Lock` 、`ReadWriteLock` 基本上持平。从趋势来看，Java 未来仍将继续优化 `synchronized` ，而不是 `ReentrantLock` 。
+> - `ReentrantLock` 是 Oracle JDK 的 API，在其他版本的 JDK 中不一定支持；而 `synchronized` 是 JVM 的内置特性，所有 JDK 版本都提供支持。
 
 ### synchronized 的用法
 
@@ -244,7 +253,7 @@ public class SynchronizedDemo3 implements Runnable {
 
 ### synchronized 的优化
 
-> Java 1.6 以后，`synchronized` 做了大量的优化，其性能已经与 `ReentrantLock` 基本上持平。因此，如果不需要 `ReentrantLock` 所提供的等待可中断、公平锁、绑定多条件（`Condition`）这些特性，应该优先考虑使用 `synchronized` 。
+> Java 1.6 以后，`synchronized` 做了大量的优化，其性能已经与 `Lock` 、`ReadWriteLock` 基本上持平。
 
 #### 自旋锁
 
@@ -327,7 +336,7 @@ volatile 是轻量级的 synchronized，它在多处理器开发中保证了共�
 通常来说，**使用 `volatile` 必须具备以下 2 个条件**：
 
 - 对变量的写操作不依赖于当前值
-- 该变量没有包含在具有其他变量的不变式中
+- 该变量没有包含在具有其他变量的不变式中 
 
 示例：状态标记量
 
@@ -365,9 +374,9 @@ class Singleton {
 
 ### volatile 的原理
 
-观察加入 volatile 关键字和没有加入 volatile 关键字时所生成的汇编代码发现，加入 volatile 关键字时，会多出一个 lock 前缀指令。
+观察加入 volatile 关键字和没有加入 volatile 关键字时所生成的汇编代码发现，**加入 `volatile` 关键字时，会多出一个 `lock` 前缀指令**。
 
-lock 前缀指令实际上相当于一个内存屏障（也成内存栅栏），内存屏障会提供 3 个功能：
+**`lock` 前缀指令实际上相当于一个内存屏障**（也成内存栅栏），内存屏障会提供 3 个功能：
 
 - 它确保指令重排序时不会把其后面的指令排到内存屏障之前的位置，也不会把前面的指令排到内存屏障的后面；即在执行到内存屏障这句指令时，在它前面的操作已经全部完成；
 - 它会强制将对缓存的修改操作立即写入主存；

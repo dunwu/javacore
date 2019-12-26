@@ -52,7 +52,7 @@
 - [Java 并发面试题集](docs/concurrent/java-concurrent-interview.md)
 - [Java 并发简介](docs/concurrent/java-concurrent-introduction.md)
 - [Java 线程基础](docs/concurrent/java-thread.md)
-- [Java 并发底层机制](docs/concurrent/java-concurrent-basic-mechanism.md)
+- [Java 并发核心机制](docs/concurrent/java-concurrent-basic-mechanism.md)
 - [Java 并发容器](docs/concurrent/java-concurrent-container.md)
 - [Java 并发锁](docs/concurrent/java-lock.md)
 - [Java 原子类](docs/concurrent/java-atomic-class.md)

@@ -37,7 +37,7 @@
 - [Java 并发面试题集](concurrent/java-concurrent-interview.md)
 - [Java 并发简介](concurrent/java-concurrent-introduction.md)
 - [Java 线程基础](concurrent/java-thread.md)
-- [Java 并发底层机制](concurrent/java-concurrent-basic-mechanism.md)
+- [Java 并发核心机制](concurrent/java-concurrent-basic-mechanism.md)
 - [Java 内存模型](concurrent/java-memory-model.md)
 - [Java 并发容器](concurrent/java-concurrent-container.md)
 - [Java 并发锁](concurrent/java-lock.md)
