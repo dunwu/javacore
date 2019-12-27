@@ -33,7 +33,6 @@ public class ReentrantLockDemo04 {
 
         @Override
         public void run() {
-            super.run();
             task.execute();
         }
 
@@ -44,7 +43,6 @@ public class ReentrantLockDemo04 {
         private ReentrantLock lock = new ReentrantLock();
 
         public void execute() {
-
             try {
                 lock.lockInterruptibly();
 

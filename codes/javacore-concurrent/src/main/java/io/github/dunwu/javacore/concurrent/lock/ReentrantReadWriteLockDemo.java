@@ -10,36 +10,32 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class ReentrantReadWriteLockDemo {
 
-    private ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private static ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     public static void main(String[] args) {
-        final ReentrantReadWriteLockDemo demo = new ReentrantReadWriteLockDemo();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                demo.get(Thread.currentThread());
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                demo.get(Thread.currentThread());
-            }
-        }).start();
+        new Thread(new MyThread()).start();
+        new Thread(new MyThread()).start();
     }
 
-    public synchronized void get(Thread thread) {
-        rwl.readLock().lock();
-        try {
-            long start = System.currentTimeMillis();
+    static class MyThread implements Runnable {
 
-            while (System.currentTimeMillis() - start <= 1) {
-                System.out.println(thread.getName() + "正在进行读操作");
+        @Override
+        public void run() {
+            synchronized (this) {
+                lock.readLock().lock();
+                try {
+                    long start = System.currentTimeMillis();
+
+                    while (System.currentTimeMillis() - start <= 1) {
+                        System.out.println(Thread.currentThread().getName() + "正在进行读操作");
+                    }
+                    System.out.println(Thread.currentThread().getName() + "读操作完毕");
+                } finally {
+                    lock.readLock().unlock();
+                }
             }
-            System.out.println(thread.getName() + "读操作完毕");
-        } finally {
-            rwl.readLock().unlock();
         }
+
     }
 
 }

@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.concurrent.collection;
+package io.github.dunwu.javacore.concurrent.container;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

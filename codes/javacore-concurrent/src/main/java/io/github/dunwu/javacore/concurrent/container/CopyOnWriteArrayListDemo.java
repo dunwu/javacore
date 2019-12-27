@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.concurrent.collection;
+package io.github.dunwu.javacore.concurrent.container;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
