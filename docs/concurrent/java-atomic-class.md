@@ -8,11 +8,9 @@
   - [为何需要原子变量类](#为何需要原子变量类)
   - [原子变量类的作用](#原子变量类的作用)
 - [二、基本类型](#二基本类型)
-  - [`AtomicInteger` 用法](#atomicinteger-用法)
-  - [`AtomicInteger` 实现](#atomicinteger-实现)
 - [三、引用类型](#三引用类型)
 - [四、数组类型](#四数组类型)
-- [五、原子字段更新器类](#五原子字段更新器类)
+- [五、属性更新器类型](#五属性更新器类型)
 - [参考资料](#参考资料)
 
 <!-- /TOC -->
@@ -441,7 +439,7 @@ public class AtomicReferenceFieldUpdaterDemo {
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
-- [JUC中的原子类](http://www.itsoku.com/article/182)
+- [JUC 中的原子类](http://www.itsoku.com/article/182)
 - http://tutorials.jenkov.com/java-util-concurrent/atomicinteger.html
 - http://tutorials.jenkov.com/java-util-concurrent/atomicintegerarray.html
 - http://tutorials.jenkov.com/java-util-concurrent/atomicreference.html

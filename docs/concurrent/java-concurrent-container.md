@@ -1,82 +1,102 @@
-# 同步容器和并发容器
+# Java 并发容器
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [同步容器](#同步容器)
-    - [同步容器的缺陷](#同步容器的缺陷)
-- [并发容器](#并发容器)
-    - [ConcurrentHashMap](#concurrenthashmap)
-    - [CopyOnWriteArrayList](#copyonwritearraylist)
-    - [资料](#资料)
+- [一、同步容器](#一同步容器)
+  - [同步容器简介](#同步容器简介)
+  - [同步容器的问题](#同步容器的问题)
+- [二、并发容器](#二并发容器)
+  - [ConcurrentHashMap](#concurrenthashmap)
+  - [CopyOnWriteArrayList](#copyonwritearraylist)
+- [参考资料](#参考资料)
 
 <!-- /TOC -->
 
-## 同步容器
+## 一、同步容器
+
+### 同步容器简介
 
 在 Java 中，同步容器主要包括 2 类：
 
-- Vector、Stack、HashTable
-  - Vector 实现了 List 接口，Vector 实际上就是一个数组，和 ArrayList 类似，但是 Vector 中的方法都是 synchronized 方法，即进行了同步措施。
-  - Stack 也是一个同步容器，它的方法也用 synchronized 进行了同步，它实际上是继承于 Vector 类。
-  - HashTable 实现了 Map 接口，它和 HashMap 很相似，但是 HashTable 进行了同步处理，而 HashMap 没有。
-- Collections 类中提供的静态工厂方法创建的类（由 Collections.synchronizedXxxx 等方法）
+- `Vector`、`Stack`、`Hashtable`
+  - `Vector` - `Vector` 实现了 `List` 接口。`Vector` 实际上就是一个数组，和 `ArrayList` 类似。但是 `Vector` 中的方法都是 `synchronized` 方法，即进行了同步措施。
+  - `Stack` - `Stack` 也是一个同步容器，它的方法也用 `synchronized` 进行了同步，它实际上是继承于 `Vector` 类。
+  - `Hashtable`- `Hashtable` 实现了 `Map` 接口，它和 `HashMap` 很相似，但是 `Hashtable` 进行了同步处理，而 `HashMap` 没有。
+- `Collections` 类中提供的静态工厂方法创建的类（由 `Collections.synchronizedXxxx` 等方法）
 
-### 同步容器的缺陷
+### 同步容器的问题
 
-同步容器的同步原理就是在方法上用 `synchronized` 修饰。那么，这些方法每次只允许一个线程调用执行。
+同步容器的同步原理就是在方法上用 `synchronized` 修饰。 **`synchronized` 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块**。
+
+> 想详细了解 `synchronized` 用法和原理可以参考：[Java 并发核心机制之 synchronized](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md#%E4%BA%8Csynchronized)
 
 #### 性能问题
 
-由于被 `synchronized` 修饰的方法，每次只允许一个线程执行，其他试图访问这个方法的线程只能等待。显然，这种方式比没有使用 `synchronized` 的容器性能要差。
+`synchronized` 的互斥同步会产生阻塞和唤醒线程的开销。显然，这种方式比没有使用 `synchronized` 的容器性能要差。
 
 #### 安全问题
 
-同步容器真的一定安全吗？
+同步容器真的绝对安全吗？
 
-答案是：未必。同步容器未必真的安全。在做复合操作时，仍然需要加锁来保护。
+其实也未必。在做复合操作（非原子操作）时，仍然需要加锁来保护。常见复合操作如下：
 
-常见复合操作如下：
+- **迭代**：反复访问元素，直到遍历完全部元素；
+- **跳转**：根据指定顺序寻找当前元素的下一个（下 n 个）元素；
+- **条件运算**：例如若没有则添加等；
 
-- 迭代：反复访问元素，直到遍历完全部元素；
-- 跳转：根据指定顺序寻找当前元素的下一个（下 n 个）元素；
-- 条件运算：例如若没有则添加等；
-
-##### 不安全的示例
+❌ 不安全的示例
 
 ```java
-public class Test {
-    static Vector<Integer> vector = new Vector<Integer>();
-    public static void main(String[] args) throws InterruptedException {
-        while(true) {
-            for(int i=0;i<10;i++)
+public class VectorDemo {
+
+    static Vector<Integer> vector = new Vector<>();
+
+    public static void main(String[] args) {
+        while (true) {
+            vector.clear();
+
+            for (int i = 0; i < 10; i++) {
                 vector.add(i);
-            Thread thread1 = new Thread(){
+            }
+
+            Thread thread1 = new Thread() {
+                @Override
                 public void run() {
-                    for(int i=0;i<vector.size();i++)
+                    for (int i = 0; i < vector.size(); i++) {
                         vector.remove(i);
-                };
+                    }
+                }
             };
-            Thread thread2 = new Thread(){
+
+            Thread thread2 = new Thread() {
+                @Override
                 public void run() {
-                    for(int i=0;i<vector.size();i++)
+                    for (int i = 0; i < vector.size(); i++) {
                         vector.get(i);
-                };
+                    }
+                }
             };
+
             thread1.start();
             thread2.start();
-            while(Thread.activeCount()>10)   {
 
+            while (Thread.activeCount() > 10) {
+                System.out.println("同时存在 10 个以上线程，退出");
+                return;
             }
         }
     }
+
 }
 ```
 
-执行时可能会出现数组越界错误。
+以上程序执行时可能会出现数组越界错误。
 
-Vector 是线程安全的，为什么还会报这个错？很简单，对于 Vector，虽然能保证每一个时刻只能有一个线程访问它，但是不排除这种可能：
+`Vector` 是线程安全的，那为什么还会报这个错？
+
+这是因为，对于 Vector，虽然能保证每一个时刻只能有一个线程访问它，但是不排除这种可能：
 
 当某个线程在某个时刻执行这句时：
 
@@ -98,63 +118,78 @@ for(int i=0;i<vector.size();i++)
 
 那么通过 get 方法访问下标为 9 的元素肯定就会出问题了。
 
-##### 安全示例
+✔ 安全示例
 
 因此为了保证线程安全，必须在方法调用端做额外的同步措施，如下面所示：
 
 ```java
-public class Test {
+public class VectorDemo2 {
+
     static Vector<Integer> vector = new Vector<Integer>();
-    public static void main(String[] args) throws InterruptedException {
-        while(true) {
-            for(int i=0;i<10;i++)
+
+    public static void main(String[] args) {
+        while (true) {
+            for (int i = 0; i < 10; i++) {
                 vector.add(i);
-            Thread thread1 = new Thread(){
+            }
+
+            Thread thread1 = new Thread() {
+                @Override
                 public void run() {
-                    synchronized (Test.class) {   //进行额外的同步
-                        for(int i=0;i<vector.size();i++)
+                    synchronized (VectorDemo2.class) {   //进行额外的同步
+                        for (int i = 0; i < vector.size(); i++) {
                             vector.remove(i);
+                        }
                     }
-                };
+                }
             };
-            Thread thread2 = new Thread(){
+
+            Thread thread2 = new Thread() {
+                @Override
                 public void run() {
-                    synchronized (Test.class) {
-                        for(int i=0;i<vector.size();i++)
+                    synchronized (VectorDemo2.class) {
+                        for (int i = 0; i < vector.size(); i++) {
                             vector.get(i);
+                        }
                     }
-                };
+                }
             };
+
             thread1.start();
             thread2.start();
-            while(Thread.activeCount()>10)   {
 
+            while (Thread.activeCount() > 10) {
+                System.out.println("同时存在 10 个以上线程，退出");
+                return;
             }
         }
     }
+
 }
 ```
 
-##### ConcurrentModificationException 异常
+`ConcurrentModificationException` 异常
 
-在对 Vector 等容器并发地进行迭代修改时，会报 ConcurrentModificationException 异常，关于这个异常将会在后续文章中讲述。
+在对 Vector 等容器并发地进行迭代修改时，会报 `ConcurrentModificationException` 异常，关于这个异常将会在后续文章中讲述。
 
 但是在并发容器中不会出现这个问题。
 
-## 并发容器
+## 二、并发容器
 
-JDK 的 `java.util.concurrent` 包（即 juc）中提供了几个非常有用的并发容器。
+从前文可以知道，同步容器性能不高，也不能根本上保证线程安全，所以现代 Java 程序已经基本上将其弃用了。在并发场景下，取而代之的是并发容器。
 
-- CopyOnWriteArrayList - 线程安全的 ArrayList
-- CopyOnWriteArraySet - 线程安全的 Set，它内部包含了一个 CopyOnWriteArrayList，因此本质上是由 CopyOnWriteArrayList 实现的。
-- ConcurrentSkipListSet - 相当于线程安全的 TreeSet。它是有序的 Set。它由 ConcurrentSkipListMap 实现。
-- ConcurrentHashMap - 线程安全的 HashMap。采用分段锁实现高效并发。
-- ConcurrentSkipListMap - 线程安全的有序 Map。使用跳表实现高效并发。
-- ConcurrentLinkedQueue - 线程安全的无界队列。底层采用单链表。支持 FIFO。
-- ConcurrentLinkedDeque - 线程安全的无界双端队列。底层采用双向链表。支持 FIFO 和 FILO。
-- ArrayBlockingQueue - 数组实现的阻塞队列。
-- LinkedBlockingQueue - 链表实现的阻塞队列。
-- LinkedBlockingDeque - 双向链表实现的双端阻塞队列。
+J.U.C 包中提供了几个非常有用的并发容器。
+
+- `CopyOnWriteArrayList` - 线程安全的 `ArrayList`。
+- `CopyOnWriteArraySet` - 线程安全的 Set，它内部包含了一个 `CopyOnWriteArrayList`，因此本质上是由 `CopyOnWriteArrayList` 实现的。
+- `ConcurrentSkipListSet` - 相当于线程安全的 `TreeSet`。它是有序的 Set。它由 `ConcurrentSkipListMap` 实现。
+- `ConcurrentHashMap` - 线程安全的 `HashMap`。采用分段锁实现高效并发。
+- `ConcurrentSkipListMap` - 线程安全的有序 Map。使用跳表实现高效并发。
+- `ConcurrentLinkedQueue` - 线程安全的无界队列。底层采用单链表。支持 FIFO。
+- `ConcurrentLinkedDeque` - 线程安全的无界双端队列。底层采用双向链表。支持 FIFO 和 FILO。
+- `ArrayBlockingQueue` - 数组实现的阻塞队列。
+- `LinkedBlockingQueue` - 链表实现的阻塞队列。
+- `LinkedBlockingDeque` - 双向链表实现的双端阻塞队列。
 
 ### ConcurrentHashMap
 
