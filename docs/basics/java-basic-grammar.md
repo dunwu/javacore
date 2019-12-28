@@ -97,7 +97,7 @@ Java 中支持的操作符类型如下：
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java操作符.svg!zp)
 
-> 👉 扩展阅读：[Java操作符](http://www.runoob.com/java/java-operators.html)
+> 👉 扩展阅读：[Java 操作符](http://www.runoob.com/java/java-operators.html)
 
 ## 7. 方法
 
@@ -109,7 +109,7 @@ Java 中支持的操作符类型如下：
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java控制语句.svg!zp)
 
-> 👉 扩展阅读：[Java控制语句](https://github.com/dunwu/javacore/blob/master/docs/basics/Java控制语句.md)
+> 👉 扩展阅读：[Java 控制语句](https://github.com/dunwu/javacore/blob/master/docs/basics/Java控制语句.md)
 
 ## 9. 异常
 

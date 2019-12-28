@@ -17,7 +17,7 @@
 ### 类生命周期
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/jvm/jmm-类加载-生命周期.jpg" />
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jmm-类加载-生命周期.jpg" />
 </div>
 
 Java 类的完整生命周期包括以下几个阶段：
@@ -193,7 +193,7 @@ System.out.println(ConstClass.HELLOWORLD);
 下图展示的类加载器之间的层次关系，称为类加载器的**双亲委派模型（Parents Delegation Model）**。**该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器**。**这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现**。
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/jvm/jmm-类加载-双亲委派.png" width="500" />
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jmm-类加载-双亲委派.png" width="500" />
 </div>
 
 **（1）工作过程**
@@ -308,4 +308,4 @@ public class FileSystemClassLoader extends ClassLoader {
 
 ## 参考资料
 
-- [深入理解 Java 虚拟机：JVM 高级特性与最佳实践（第 2 版）](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)

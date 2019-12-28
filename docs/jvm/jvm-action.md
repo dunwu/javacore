@@ -542,7 +542,7 @@ printf "%x\n" 6800
 
 ## 参考资料
 
-- [深入理解 Java 虚拟机：JVM 高级特性与最佳实践（第 2 版）](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [JVM（4）：Jvm 调优-命令篇](http://www.importnew.com/23761.html)
 - [Java系列笔记(4) - JVM 监控与调优](https://www.cnblogs.com/zhguang/p/Java-JVM-GC.html)

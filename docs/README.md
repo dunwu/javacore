@@ -49,16 +49,16 @@
 
 > [Java 并发](concurrent) 知识点庞杂且难懂，特设专题进行总结。
 
-- [Java 并发面试题集](concurrent/java-concurrent-interview.md)
-- [Java 并发简介](concurrent/java-concurrent-introduction.md)
-- [Java 线程基础](concurrent/java-thread.md)
-- [Java 并发核心机制](concurrent/java-concurrent-basic-mechanism.md)
-- [Java 内存模型](concurrent/java-memory-model.md)
-- [Java 并发容器](concurrent/java-concurrent-container.md)
-- [Java 并发锁](concurrent/java-lock.md)
-- [Java 原子类](concurrent/java-atomic-class.md)
-- [Java 线程池](concurrent/java-thread-pool.md)
-- [Java 并发工具](concurrent/java-concurrent-tools.md)
+- [Java 并发面试题集 💯](concurrent/java-concurrent-interview.md)
+- [Java 并发简介](concurrent/java-concurrent-introduction.md) - 关键词：`进程`、`线程`
+- [Java 线程基础](concurrent/java-thread.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`
+- [Java 内存模型](concurrent/java-memory-model.md) - 关键词：`JMM`、`原子性`、`可见性`、`有序性`、`Happens-Before`
+- [Java 并发核心机制](concurrent/java-concurrent-basic-mechanism.md) - 关键词：`synchronized`、`volatile`、`CAS`、`ThreadLocal`
+- [Java 并发锁](concurrent/java-lock.md) - 关键词：`synchronized`、`volatile`、`CAS`、`ThreadLocal`
+- [Java 原子类](concurrent/java-atomic-class.md) - 关键词：`CAS`、`atomic`
+- [Java 并发容器](concurrent/java-concurrent-container.md) - 关键词：`ConcurrentHashMap`、`CopyOnWriteArrayList`
+- [Java 线程池](concurrent/java-thread-pool.md) - 关键词：`Executor`、`ExecutorService`、`ThreadPoolExecutor`、`Executors`
+- [Java 并发工具类](concurrent/java-concurrent-tools.md) - 关键词：`CountDownLatch`、`CyclicBarrier`、`Semaphore`
 
 ## Java IO
 

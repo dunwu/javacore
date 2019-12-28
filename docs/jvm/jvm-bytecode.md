@@ -169,7 +169,7 @@ Asm Tree API 可以类比解析 XML 文件中的 DOM 方式，把整个类的结
 
 ## 参考资料
 
-- [深入理解 Java 虚拟机：JVM 高级特性与最佳实践（第 2 版）](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - [一文让你明白 Java 字节码](https://www.jianshu.com/p/252f381a6bc4)
 - [Java字节码增强探秘](https://juejin.im/post/5d773ae1518825058772843c)
 - [Asm 4.0 官方文档](https://asm.ow2.io/asm4-guide.pdf)

@@ -125,9 +125,7 @@
 
 ### 2.1. Java 线程生命周期中有哪些状态？各状态之间如何切换？
 
-<p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread_1.png">
-</p>
+![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread_1.png!zp)
 
 `java.lang.Thread.State` 中定义了 **6** 种不同的线程状态，在给定的一个时刻，线程只能处于其中的一个状态。
 
@@ -384,9 +382,7 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
   - 对于一个对象的成员方法，这些方法中包含本地变量，仍需要存储在栈区，即使它们所属的对象在堆区。
   - 对于一个对象的成员变量，不管它是原始类型还是包装类型，都会被存储到堆区。
 
-<p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/jmm-model.png" alt="thread-states">
-</p>
+![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_3.png)
 
 > 👉 参考阅读：[全面理解 Java 内存模型](https://blog.csdn.net/suifeng3051/article/details/52611310)
 

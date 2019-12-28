@@ -344,6 +344,6 @@ Java 应用开启 JMX 后，可以使用 `jconsole` 或 `jvisualvm` 进行监控
 
 ## 参考资料
 
-- [深入理解 Java 虚拟机：JVM 高级特性与最佳实践（第 2 版）](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - [jconsole 官方文档](https://docs.oracle.com/javase/8/docs/technotes/guides/management/jconsole.html)
 - [jconsole 工具使用](https://www.cnblogs.com/kongzhongqijing/articles/3621441.html)
