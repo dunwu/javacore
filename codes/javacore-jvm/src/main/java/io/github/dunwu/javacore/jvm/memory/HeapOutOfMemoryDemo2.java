@@ -10,11 +10,11 @@ package io.github.dunwu.javacore.jvm.memory;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25
  */
-public class HeapOutOfMemoryDemo02 {
+public class HeapOutOfMemoryDemo2 {
 
-	public static void main(String[] args) {
-		Double[] array = new Double[999999999];
-		System.out.println("array length = [" + array.length + "]");
-	}
+    public static void main(String[] args) {
+        Double[] array = new Double[999999999];
+        System.out.println("array length = [" + array.length + "]");
+    }
 
 }

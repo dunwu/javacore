@@ -13,17 +13,15 @@ import java.util.List;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25
  */
-public class HeapOutOfMemoryDemo01 {
+public class HeapOutOfMemoryDemo {
 
-	public static void main(String[] args) {
-		List<OomObject> list = new ArrayList<>();
-		while (true) {
-			list.add(new OomObject());
-		}
-	}
+    public static void main(String[] args) {
+        List<OomObject> list = new ArrayList<>();
+        while (true) {
+            list.add(new OomObject());
+        }
+    }
 
-	static class OomObject {
-
-	}
+    static class OomObject {}
 
 }

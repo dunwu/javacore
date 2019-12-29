@@ -5,13 +5,13 @@ package io.github.dunwu.javacore.jvm.memory;
  * <p>
  * VM 参数：
  * <ul>
- * <li>-Xss32k - 设置栈大小为 128k</li>
+ * <li>-Xss128k - 设置栈大小为 128k</li>
  * </ul>
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25
  */
-public class StackOverflowDemo02 {
+public class StackOverflowDemo2 {
 
 	public static void main(String[] args) {
 		A obj = new A();

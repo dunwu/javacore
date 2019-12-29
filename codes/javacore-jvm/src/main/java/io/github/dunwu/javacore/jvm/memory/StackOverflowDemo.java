@@ -19,22 +19,23 @@ package io.github.dunwu.javacore.jvm.memory;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25
  */
-public class StackOverflowDemo01 {
+public class StackOverflowDemo {
 
-	private static int count = 0;
+    private int stackLength = 1;
 
-	public static void recursion() {
-		count++;
-		recursion();
-	}
+    public void recursion() {
+        stackLength++;
+        recursion();
+    }
 
-	public static void main(String[] args) {
-		try {
-			recursion();
-		} catch (Throwable e) {
-			System.out.println("counts = " + count);
-			e.printStackTrace();
-		}
-	}
+    public static void main(String[] args) {
+        StackOverflowDemo obj = new StackOverflowDemo();
+        try {
+            obj.recursion();
+        } catch (Throwable e) {
+            System.out.println("栈深度：" + obj.stackLength);
+            e.printStackTrace();
+        }
+    }
 
 }
