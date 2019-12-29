@@ -20,7 +20,7 @@
 ## Queue 架构
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/container/Queue-diagrams.png" />
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/Queue-diagrams.png" />
 </div>
 
 ## Queue 接口

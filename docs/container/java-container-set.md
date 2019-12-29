@@ -20,7 +20,7 @@
 ## Set 架构
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/container/Set-diagrams.png" width="400" />
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/Set-diagrams.png" width="400" />
 </div>
 
 - Set 继承了 Collection 的接口。实际上 Set 就是 Collection，只是行为略有不同：Set 集合不允许有重复元素。
@@ -232,4 +232,4 @@ public abstract class EnumSet<E extends Enum<E>> extends AbstractSet<E>
 
 ## 资料
 
-- [Java编程思想（Thinking in java）](https://item.jd.com/10058164.html)
+- [Java 编程思想（Thinking in java）](https://item.jd.com/10058164.html)

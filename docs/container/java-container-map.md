@@ -4,25 +4,21 @@
 
 <!-- TOC depthFrom:2 depthTo:2 -->
 
-- [Map 架构](#map-架构)
-- [Map 接口](#map-接口)
-- [Map.Entry 接口](#mapentry-接口)
-- [AbstractMap 抽象类](#abstractmap-抽象类)
-- [SortedMap 接口](#sortedmap-接口)
-- [NavigableMap 接口](#navigablemap-接口)
-- [Dictionary 抽象类](#dictionary-抽象类)
+- [Map 家族简介](#map-家族简介)
 - [HashMap 类](#hashmap-类)
 - [LinkedHashMap 类](#linkedhashmap-类)
 - [TreeMap 类](#treemap-类)
 - [WeakHashMap](#weakhashmap)
-- [资料](#资料)
+- [参考资料](#参考资料)
 
 <!-- /TOC -->
 
-## Map 架构
+## Map 家族简介
+
+### Map 架构
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/container/Map-diagrams.png" />
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/Map-diagrams.png" />
 </div>
 
 1.  Map 是映射接口，Map 中存储的内容是键值对(key-value)。
@@ -34,7 +30,7 @@
 7.  Hashtable 虽然不是继承于 AbstractMap，但它继承于 Dictionary(Dictionary 也是键值对的接口)，而且也实现 Map 接口；因此，Hashtable 的内容也是“键值对，也不保证次序”。但和 HashMap 相比，Hashtable 是线程安全的，而且它支持通过 Enumeration 去遍历。
 8.  WeakHashMap 继承于 AbstractMap。它和 HashMap 的键类型不同，WeakHashMap 的键是**弱键**。
 
-## Map 接口
+#### Map 接口
 
 Map 的定义如下：
 
@@ -55,13 +51,13 @@ Map 的实现类应该提供 2 个“标准的”构造方法：
 
 实际上，后一个构造方法允许用户复制任意映射，生成所需类的一个等价映射。尽管无法强制执行此建议（因为接口不能包含构造方法），但是 JDK 中所有通用的映射实现都遵从它。
 
-## Map.Entry 接口
+### Map.Entry 接口
 
 Map.Entry 一般用于迭代访问 Map。
 
 Map.Entry 是 Map 中内部的一个接口，Map.Entry 是**键值对**，Map 通过 `entrySet()` 获取 Map.Entry 的键值对集合，从而通过该集合实现对键值对的操作。
 
-## AbstractMap 抽象类
+### AbstractMap 抽象类
 
 AbstractMap 的定义如下：
 
@@ -75,7 +71,7 @@ AbstractMap 类提供 Map 接口的骨干实现，以最大限度地减少实现
 
 要实现可修改的映射，编程人员必须另外重写此类的 put 方法（否则将抛出 `UnsupportedOperationException`），`entrySet().iterator()` 返回的迭代器也必须另外实现其 `remove()` 方法。
 
-## SortedMap 接口
+### SortedMap 接口
 
 SortedMap 的定义如下：
 
@@ -94,7 +90,7 @@ SortedMap 的排序方式有两种：**自然排序**或者**用户指定比较�
 3.  **带有一个 Map 类型参数的构造方法**，它创建一个新的有序映射，其键-值映射关系与参数相同，按照键的自然顺序进行排序。
 4.  **带有一个 SortedMap 类型参数的构造方法**，它创建一个新的有序映射，其键-值映射关系和排序方法与输入的有序映射相同。无法保证强制实施此建议，因为接口不能包含构造方法。
 
-## NavigableMap 接口
+### NavigableMap 接口
 
 NavigableMap 的定义如下：
 
@@ -117,7 +113,7 @@ NavigableMap 除了继承 SortedMap 的特性外，它的提供的功能可以�
     - navigableKeySet、descendingKeySet 分别获取正序/反序的键集。
 4.  **获取键-值对的子集。**
 
-## Dictionary 抽象类
+### Dictionary 抽象类
 
 Dictionary 的定义如下：
 
@@ -302,7 +298,7 @@ final Node<K,V> getNode(int hash, Object key) {
 在 get 和 put 的过程中，计算下标时，先对 hashCode 进行 hash 操作，然后再通过 hash 值进一步计算下标，如下图所示：
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/container/HashMap-hash.png" />
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/HashMap-hash.png" />
 </div>
 
 在对 hashCode() 计算 hash 时具体实现是这样的：
@@ -349,19 +345,19 @@ static final int hash(Object key) {
 怎么理解呢？例如我们从 16 扩展为 32 时，具体的变化如下所示：
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/container/HashMap-resize-01.png" />
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/HashMap-resize-01.png" />
 </div>
 
 因此元素在重新计算 hash 之后，因为 n 变为 2 倍，那么 n-1 的 mask 范围在高位多 1bit(红色)，因此新的 index 就会发生这样的变化：
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/container/HashMap-resize-02.png" />
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/HashMap-resize-02.png" />
 </div>
 
 因此，我们在扩充 HashMap 的时候，不需要重新计算 hash，只需要看看原来的 hash 值新增的那个 bit 是 1 还是 0 就好了，是 0 的话索引没变，是 1 的话索引变成“原索引+oldCap”。可以看看下图为 16 扩充为 32 的 resize 示意图：
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/container/HashMap-resize-03.png" />
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/HashMap-resize-03.png" />
 </div>
 
 这个设计确实非常的巧妙，既省去了重新计算 hash 值的时间，而且同时，由于新增的 1bit 是 0 还是 1 可以认为是随机的，因此 resize 的过程，均匀的把之前的冲突的节点分散到新的 bucket 了。
@@ -736,9 +732,9 @@ WeakHashMap 的 key 是**弱键**，即是 WeakReference 类型的；ReferenceQu
 
 和 HashMap 一样，WeakHashMap 是不同步的。可以使用 Collections.synchronizedMap 方法来构造同步的 WeakHashMap。
 
-## 资料
+## 参考资料
 
 - [Java-HashMap 工作原理及实现](https://yikun.github.io/2015/04/01/Java-HashMap工作原理及实现)
 - [Map 综述（二）：彻头彻尾理解 LinkedHashMap](https://blog.csdn.net/justloveyou_/article/details/71713781)
-- [Java集合系列 09 之 Map 架构](http://www.cnblogs.com/skywang12345/p/3308931.html)
-- [Java集合系列13之 WeakHashMap详细介绍(源码解析)和使用示例](http://www.cnblogs.com/skywang12345/p/3311092.html)
+- [Java 集合系列 09 之 Map 架构](http://www.cnblogs.com/skywang12345/p/3308931.html)
+- [Java 集合系列 13 之 WeakHashMap 详细介绍(源码解析)和使用示例](http://www.cnblogs.com/skywang12345/p/3311092.html)
