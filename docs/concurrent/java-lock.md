@@ -1,4 +1,4 @@
-# Java 锁
+# 深入理解 Java 并发锁
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
 
@@ -6,7 +6,7 @@
 
 - [一、Java 锁简介](#一java-锁简介)
   - [锁分类](#锁分类)
-  - [`synchronized` 和 `Lock`、`ReadWriteLock`](#synchronized-和-lockreadwritelock)
+  - [synchronized 和 Lock、ReadWriteLock](#synchronized-和-lockreadwritelock)
 - [二、AQS](#二aqs)
   - [AQS 的要点](#aqs-的要点)
   - [AQS 的原理](#aqs-的原理)
@@ -28,13 +28,13 @@
 
 ### 锁分类
 
-> :bulb: 基于不同维度，业界对于锁有多种分类。了解锁的分类，有助于我们理解锁的特性和设计原理。
+> :bulb: 在工作、面试中，经常会听到各种五花八门的锁，听的人云里雾里。锁的概念术语很多，它们是针对不同的问题所提出的，通过简单的梳理，也不难理解。
 
 #### 可重入锁
 
 可重入锁又名递归锁，是指 **同一个线程在外层方法获取了锁，在进入内层方法会自动获取锁**。
 
-- **`ReentrantLock` 是一个可重入锁**。这点，从其命名也不难看出。
+- **`ReentrantLock` 、`ReentrantReadWriteLock` 是可重入锁**。这点，从其命名也不难看出。
 - **`synchronized` 也是一个可重入锁**。
 
 **可重入锁可以在一定程度上避免死锁**。
@@ -50,53 +50,44 @@ synchronized void setB() throws Exception{
 }
 ```
 
-上面的代码就是一个可重入锁的一个特点，如果不是可重入锁的话，setB 可能不会被当前线程执行，可能造成死锁。
+上面的代码就是一个典型场景：如果使用的锁不是可重入锁的话，`setB` 可能不会被当前线程执行，从而造成死锁。
 
 #### 公平锁与非公平锁
 
 - **公平锁** - 公平锁是指 **多线程按照申请锁的顺序来获取锁**。
-- **非公平锁** - 非公平锁是指 **多线程不按照申请锁的顺序来获取锁** 。有可能后申请的线程比先申请的线程优先获取锁。有可能，会造成优先级反转或者饥饿现象。
+- **非公平锁** - 非公平锁是指 **多线程不按照申请锁的顺序来获取锁** 。这就可能会出现优先级反转（后来者居上）或者饥饿现象（某线程总是抢不过别的线程，导致始终无法执行）。
 
-公平锁要保证线程申请顺序，势必要付出一定代价，自然效率上比非公平锁要低一些。
+公平锁为了保证线程申请顺序，势必要付出一定的性能代价，因此其吞吐量一般低于非公平锁。
 
-公平锁与非公平锁 在 Java 中的实现：
+公平锁与非公平锁 在 Java 中的典型实现：
 
 - **`synchronized` 是非公平锁**。
-- Java 中的 **`ReentrantLock` ，默认是非公平锁，但可以在构造函数中指定该锁为公平锁**。
+- Java 中的 **`ReentrantLock` 、`ReentrantReadWriteLock`，默认都是非公平锁，但都可以在构造函数中指定该锁为公平锁**。
 
 #### 独享锁与共享锁
+
+独享锁与共享锁是一种广义上的说法，从实际用途上来看，也常被称为互斥锁与读写锁。
 
 - **独享锁** - 独享锁是指 **锁一次只能被一个线程所持有**。
 - **共享锁** - 共享锁是指 **锁可被多个线程所持有**。
 
-独享锁与共享锁在 Java 中的实现：
+独享锁与共享锁在 Java 中的典型实现：
 
-- **`synchronized` 是独享锁**。
-- **`ReentrantLock` 是独享锁**。
-- **`ReadWriteLock` 其读锁是共享锁，其写锁是独享锁**。读锁的共享锁可保证并发读是非常高效的，读写，写读 ，写写的过程是互斥的。
-
-独享锁与共享锁是通过 `AQS` 来实现的，通过实现不同的方法，来实现独享或者共享。
-
-#### 互斥锁与读写锁
-
-上面讲的独享锁与共享锁就是一种广义的说法，互斥锁与读写锁就是具体的实现。
-
-- **`synchronized` 是互斥锁**。
-- **`ReentrantLock` 是互斥锁**。
-- **`ReadWriteLock` 是读写锁**。
+- **`synchronized` 、`ReentrantLock` 是独享锁**。
+- **`ReentrantReadWriteLock` 其写锁是独享锁，其读锁是共享锁**。读锁是共享锁使得并发读是非常高效的，读写，写读 ，写写的过程是互斥的。
 
 #### 悲观锁与乐观锁
 
 乐观锁与悲观锁不是指具体的什么类型的锁，而是处理并发同步的策略。
 
 - **悲观锁** - 悲观锁对于并发采取悲观的态度，认为：**不加锁的并发操作一定会出问题**。**悲观锁适合写操作频繁的场景**。
-- **乐观锁** - 乐观锁对于并发采取乐观的态度，认为：不加锁的并发操作也没什么问题。对于同一个数据的并发操作，是不会发生修改的。在更新数据的时候，会采用不断尝试更新的方式更新数据。**乐观锁适合读多写少的场景**。
+- **乐观锁** - 乐观锁对于并发采取乐观的态度，认为：**不加锁的并发操作也没什么问题。对于同一个数据的并发操作，是不会发生修改的**。在更新数据的时候，会采用不断尝试更新的方式更新数据。**乐观锁适合读多写少的场景**。
 
-悲观锁与乐观锁在 Java 中的实现：
+悲观锁与乐观锁在 Java 中的典型实现：
 
-悲观锁在 Java 中的应用就是通过使用 `synchronized` 和 `Lock` 显示加锁来进行互斥同步，这是一种阻塞同步。
+- 悲观锁在 Java 中的应用就是通过使用 `synchronized` 和 `Lock` 显示加锁来进行互斥同步，这是一种阻塞同步。
 
-乐观锁在 Java 中的应用就是采用 CAS 机制（CAS 操作通过 `Unsafe` 类提供，但这个类不直接暴露为 API，所以都是间接使用。如各种原子类）。
+- 乐观锁在 Java 中的应用就是采用 CAS 机制（CAS 操作通过 `Unsafe` 类提供，但这个类不直接暴露为 API，所以都是间接使用，如各种原子类）。
 
 #### 轻量级锁、重量级锁与偏向锁
 
@@ -104,7 +95,7 @@ synchronized void setB() throws Exception{
 
 Java 1.6 以前，重量级锁一般指的是 `synchronized` ，而轻量级锁指的是 `volatile`。
 
-Java 1.6 以后，针对 `synchronized` 做了大量优化，引入 4 种锁状态： 无锁状态、偏向锁、轻量级锁和重量级锁。锁可以单向的从偏向锁升级到轻量级锁，再从升级的重量级锁 。
+Java 1.6 以后，针对 `synchronized` 做了大量优化，引入 4 种锁状态： 无锁状态、偏向锁、轻量级锁和重量级锁。锁可以单向的从偏向锁升级到轻量级锁，再从轻量级锁升级到重量级锁 。
 
 - **偏向锁** - 偏向锁是指一段同步代码一直被一个线程所访问，那么该线程会自动获取锁。降低获取锁的代价。
 - **轻量级锁** - 是指当锁是偏向锁的时候，被另一个线程所访问，偏向锁就会升级为轻量级锁，其他线程会通过自旋的形式尝试获取锁，不会阻塞，提高性能。
@@ -113,18 +104,26 @@ Java 1.6 以后，针对 `synchronized` 做了大量优化，引入 4 种锁状�
 
 #### 分段锁
 
-分段锁其实是一种锁的设计，并不是具体的一种锁。
+分段锁其实是一种锁的设计，并不是具体的一种锁。所谓分段锁，就是把锁的对象分成多段，每段独立控制，使得锁粒度更细，减少阻塞开销，从而提高并发性。这其实很好理解，就像高速公路上的收费站，如果只有一个收费口，那所有的车只能排成一条队缴费；如果有多个收费口，就可以分流了。
 
-例如：Java 1.7 以前，`ConcurrentHashMap` 通过分段锁设计，使得锁粒度更细，减少阻塞开销，从而提高并发性。
+`Hashtable` 使用 `synchronized` 修饰方法来保证线程安全性，那么面对线程的访问，Hashtable 就会锁住整个对象，所有的其它线程只能等待，这种阻塞方式的吞吐量显然很低。
 
-### `synchronized` 和 `Lock`、`ReadWriteLock`
+Java 1.7 以前的 `ConcurrentHashMap` 就是分段锁的典型案例。`ConcurrentHashMap` 维护了一个 `Segment` 数组，一般称为分段桶。
 
-在 [锁分类](#锁分类) 中，我们零零散散也提到了，`synchronized` 锁的限制比较多。在这里，汇总一下 `Lock` 、`ReadWriteLock` 相较于 `synchronized` 的优点：
+```java
+final Segment<K,V>[] segments;
+```
 
-- `synchronized` 获取锁和释放锁都是自动的，无法主动控制；`Lock` 可以手动获取锁、释放锁（但这也是一个定时炸弹，如果忘记释放锁，就可能产生死锁）。
+当有线程访问 `ConcurrentHashMap` 的数据时，`ConcurrentHashMap` 会先根据 hashCode 计算出数据在哪个桶（即哪个 Segment），然后锁住这个 `Segment`。
+
+### synchronized 和 Lock、ReadWriteLock
+
+在 [锁分类](#锁分类) 中，我们零零散散也提到了，`synchronized` 锁的限制比较多。 这里，汇总一下 `Lock` 、`ReadWriteLock` 和 `synchronized` 的区别：
+
+- `synchronized` 获取锁和释放锁都是自动的，无法主动控制；`Lock` 可以手动获取锁、释放锁（如果忘记释放锁，就可能产生死锁）。
 - `synchronized` 不能响应中断；`Lock` 可以响应中断。
 - `synchronized` 没有超时机制；`Lock` 可以设置超时时间，超时后自动释放锁，避免一直等待。
-- `synchronized` 只能是非公平锁；`Lock` 可以选择公平锁或非公平锁两种模式。
+- `synchronized` 是非公平锁；`Lock` 可以选择公平锁或非公平锁两种模式。
 - 被 `synchronized` 修饰的方法或代码块，只能被一个线程访问。如果这个线程被阻塞，其他线程也只能等待；`Lock` 可以基于 `Condition` 灵活的控制同步条件。
 - `synchronized` 不支持读写锁分离；`ReadWriteLock` 支持读写锁，从而使阻塞读写的操作分开，有效提高并发性。
 
@@ -177,7 +176,7 @@ public final boolean releaseShared(int arg)
 
 ### AQS 的原理
 
-#### 数据结构
+#### AQS 的数据结构
 
 阅读 AQS 的源码，可以发现：AQS 继承自 `AbstractOwnableSynchronize`。
 
@@ -199,7 +198,7 @@ public abstract class AbstractQueuedSynchronizer
   - 这个整数状态的意义由子类来赋予，如`ReentrantLock` 中该状态值表示所有者线程已经重复获取该锁的次数，`Semaphore` 中该状态值表示剩余的许可数量。
 - `head` 和 `tail` - AQS **维护了一个 `Node` 类型（AQS 的内部类）的双链表来完成同步状态的管理**。这个双链表是一个双向的 FIFO 队列，通过 head 和 tail 指针进行访问。当 **有线程获取锁失败后，就被添加到队列末尾**。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_1.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_1.png!zp)
 
 再来看一下 `Node` 的源码
 
@@ -244,13 +243,13 @@ AQS 中使用 `acquire(int arg)` 方法获取独占锁，其大致流程如下�
 2. 如果获取同步状态不成功，AQS 会不断尝试利用 CAS 操作将当前线程插入等待同步队列的队尾，直到成功为止。
 3. 接着，不断尝试为等待队列中的线程节点获取独占锁。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_2.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_2.png!zp)
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_3.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_3.png!zp)
 
 详细流程可以用下图来表示，请结合源码来理解（一图胜千言）：
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_4.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_4.png!zp)
 
 ##### 释放独占锁
 
@@ -304,7 +303,7 @@ AQS 中使用 `tryAcquireSharedNanos(int arg)` 方法获取超时等待式的共
 
 `tryAcquireSharedNanos` 方法与 `tryAcquireNanos` 几乎一致，不再赘述。
 
-## 三、Lock 接口
+## 三、Lock
 
 > 与内置锁 `synchronized` 不同，`Lock` 提供了一组无条件的、可轮询的、定时的以及可中断的锁操作，所有获取锁、释放锁操作都是显示的。
 
@@ -323,18 +322,10 @@ public interface Lock {
 }
 ```
 
-:bulb: 说明：
-
-- `lock()` - 用于 **获取锁**。如果锁已被其他线程获取，则等待。
-- `tryLock()` - 用于 **尝试获取锁，如果成功，则返回 true；如果失败，则返回 false**。也就是说，这个方法无论如何都会立即返回，获取不到锁（锁已被其他线程获取）时不会一直等待。
-- `tryLock(long time, TimeUnit unit)` - 和 `tryLock()` 类似，区别仅在于这个方法在**获取不到锁时会等待一定的时间**，在时间期限之内如果还获取不到锁，就返回 false。如果如果一开始拿到锁或者在等待期间内拿到了锁，则返回 true。
-- `lockInterruptibly()` - 当通过这个方法去获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即**中断线程的等待状态**。也就使说，当两个线程同时通过 `lock.lockInterruptibly()` 想获取某个锁时，假若此时线程 A 获取到了锁，而线程 B 只有在等待，那么对线程 B 调用 `threadB.interrupt()` 方法能够中断线程 B 的等待过程。由于 `lockInterruptibly()` 的声明中抛出了异常，所以 `lock.lockInterruptibly()` 必须放在 try 块中或者在调用 `lockInterruptibly()` 的方法外声明抛出 `InterruptedException`。
-- `unlock()` - 用于**释放锁**。
-
 :bell: 注意：
 
-- 如果采用 `Lock`，必须主动去释放锁，并且在发生异常时，不会自动释放锁。因此一般来说，使用 `Lock` 必须在 `try catch` 块中进行，并且将释放锁的操作放在 `finally` 块中进行，以保证锁一定被被释放，防止死锁的发生。
-- 当一个线程获取了锁之后，是不会被 `interrupt()` 方法中断的。因为本身在前面的文章中讲过单独调用 `interrupt()` 方法不能中断正在运行过程中的线程，只能中断阻塞过程中的线程。因此当通过 `lockInterruptibly()` 方法获取某个锁时，如果不能获取到，只有进行等待的情况下，是可以响应中断的。
+- 如果采用 `Lock`，**必须主动去释放锁** 。发生异常时，Java 并不会自动释放锁。因此一般来说，使用 `Lock` 必须在 `try catch` 块中进行，并且将释放锁的操作放在 `finally` 块中进行，以保证锁一定被被释放，防止死锁的发生。
+- 当一个线程获取了锁之后，是不会被 `interrupt()` 方法中断的。单独调用 `interrupt()` 方法不能中断正在运行过程中的线程，只能中断阻塞过程中的线程。因此当通过 `lockInterruptibly()` 方法获取某个锁时，如果不能获取到，只有进行等待的情况下，是可以响应中断的。
 
 ### ReentrantLock 的用法
 
@@ -346,6 +337,8 @@ public interface Lock {
 
 #### 构造方法
 
+`ReentrantLock` 有两个构造方法：
+
 ```java
 // 默认初始化 sync 的实例为非公平锁（NonfairSync）
 public ReentrantLock() {}
@@ -353,19 +346,24 @@ public ReentrantLock() {}
 public ReentrantLock(boolean fair) {}
 ```
 
-ReentrantLock 有两个构造方法：
-
 - `ReentrantLock()` - 默认构造方法会初始化一个非公平锁；
 - `ReentrantLock(boolean)` - `new ReentrantLock(true)` 会初始化一个公平锁。
+
+#### lock 和 unlock 方法
+
+- `lock()` - 用于 **获取锁**。如果锁已被其他线程获取，则等待。
+- `unlock()` - 用于**释放锁**。
+
+示例：`ReentrantLock` 的基本使用
 
 ```java
 public class ReentrantLockDemo {
 
     public static void main(String[] args) {
-        Task service = new Task();
-        MyThread tA = new MyThread("Thread-A", service);
-        MyThread tB = new MyThread("Thread-B", service);
-        MyThread tC = new MyThread("Thread-C", service);
+        Task task = new Task();
+        MyThread tA = new MyThread("Thread-A", task);
+        MyThread tB = new MyThread("Thread-B", task);
+        MyThread tC = new MyThread("Thread-C", task);
         tA.start();
         tB.start();
         tC.start();
@@ -382,7 +380,6 @@ public class ReentrantLockDemo {
 
         @Override
         public void run() {
-            super.run();
             task.execute();
         }
 
@@ -396,16 +393,22 @@ public class ReentrantLockDemo {
             lock.lock();
             try {
                 for (int i = 0; i < 3; i++) {
-                    System.out.println(Thread.currentThread().getName());
+                    System.out.println(lock.toString());
 
-                    // 查询当前线程保持此锁的次数
+                    // 查询当前线程 hold 住此锁的次数
                     System.out.println("\t holdCount: " + lock.getHoldCount());
 
-                    // 返回正等待获取此锁的线程估计数
+                    // 查询正等待获取此锁的线程数
                     System.out.println("\t queuedLength: " + lock.getQueueLength());
 
-                    // 如果此锁的公平设置为 true，则返回 true
+                    // 是否为公平锁
                     System.out.println("\t isFair: " + lock.isFair());
+
+                    // 是否被锁住
+                    System.out.println("\t isLocked: " + lock.isLocked());
+
+                    // 是否被当前线程持有锁
+                    System.out.println("\t isHeldByCurrentThread: " + lock.isHeldByCurrentThread());
 
                     try {
                         Thread.sleep(500);
@@ -423,18 +426,184 @@ public class ReentrantLockDemo {
 }
 ```
 
+输出结果：
+
+```
+java.util.concurrent.locks.ReentrantLock@64fcd88a[Locked by thread Thread-A]
+	 holdCount: 1
+	 queuedLength: 2
+	 isFair: false
+	 isLocked: true
+	 isHeldByCurrentThread: true
+java.util.concurrent.locks.ReentrantLock@64fcd88a[Locked by thread Thread-C]
+	 holdCount: 1
+	 queuedLength: 1
+	 isFair: false
+	 isLocked: true
+	 isHeldByCurrentThread: true
+// ...
+```
+
+#### tryLock 方法
+
+- `tryLock()` - 用于 **尝试获取锁，如果成功，则返回 true；如果失败，则返回 false**。也就是说，这个方法无论如何都会立即返回，获取不到锁（锁已被其他线程获取）时不会一直等待。
+- `tryLock(long time, TimeUnit unit)` - 和 `tryLock()` 类似，区别仅在于这个方法在**获取不到锁时会等待一定的时间**，在时间期限之内如果还获取不到锁，就返回 false。如果如果一开始拿到锁或者在等待期间内拿到了锁，则返回 true。
+
+示例：`ReentrantLock` 的 `tryLock()` 操作
+
+修改“`ReentrantLock` 的基本使用”示例中的 `execute()` 方法
+
+```java
+public void execute() {
+    if (lock.tryLock()) {
+        try {
+            for (int i = 0; i < 3; i++) {
+               // 略...
+            }
+        } finally {
+            lock.unlock();
+        }
+    } else {
+        System.out.println(Thread.currentThread().getName() + " 获取锁失败");
+    }
+}
+```
+
+示例：`ReentrantLock` 的 `tryLock(long time, TimeUnit unit)` 操作
+
+修改“`ReentrantLock` 的基本使用”示例中的 `execute()` 方法
+
+```java
+public void execute() {
+    try {
+        if (lock.tryLock(2, TimeUnit.SECONDS)) {
+            try {
+                for (int i = 0; i < 3; i++) {
+                    // 略...
+                }
+            } finally {
+                lock.unlock();
+            }
+        } else {
+            System.out.println(Thread.currentThread().getName() + " 获取锁失败");
+        }
+    } catch (InterruptedException e) {
+        System.out.println(Thread.currentThread().getName() + " 获取锁超时");
+        e.printStackTrace();
+    }
+}
+```
+
+#### lockInterruptibly 方法
+
+- `lockInterruptibly()` - 当通过这个方法去获取锁时，如果线程正在等待获取锁，则这个线程能够响应中断，即**中断线程的等待状态**。也就使说，当两个线程同时通过 `lock.lockInterruptibly()` 想获取某个锁时，假若此时线程 A 获取到了锁，而线程 B 只有在等待，那么对线程 B 调用 `threadB.interrupt()` 方法能够中断线程 B 的等待过程。由于 `lockInterruptibly()` 的声明中抛出了异常，所以 `lock.lockInterruptibly()` 必须放在 try 块中或者在调用 `lockInterruptibly()` 的方法外声明抛出 `InterruptedException`。
+
+示例：`ReentrantLock` 的 `lockInterruptibly()` 操作
+
+修改“`ReentrantLock` 的基本使用”示例中的 `execute()` 方法
+
+```java
+public void execute() {
+    try {
+        lock.lockInterruptibly();
+
+        for (int i = 0; i < 3; i++) {
+            // 略...
+        }
+    } catch (InterruptedException e) {
+        System.out.println(Thread.currentThread().getName() + "被中断");
+        e.printStackTrace();
+    } finally {
+        lock.unlock();
+    }
+}
+```
+
 ### ReentrantLock 的原理
 
-`ReentrantLock` 维护了一个 `Sync` 对象，这是它实现 `Lock` 的关键。
+#### ReentrantLock 的数据结构
 
-`Sync` 是 `ReentrantLock` 的内部抽象类，它继承自 AQS。
+阅读 `ReentrantLock` 的源码，可以发现它有一个核心字段：
 
-`Sync` 有两个子类：
+```java
+private final Sync sync;
+```
 
-- `FairSync` - 公平锁。
-- `NonfairSync` - 非公平锁。
+- `sync` - 内部抽象类 `ReentrantLock.Sync` 对象，`Sync` 继承自 AQS。它有两个子类：
+- `ReentrantLock.FairSync` - 公平锁。
+- `ReentrantLock.NonfairSync` - 非公平锁。
 
-## 四、ReadWriteLock 接口
+查看源码可以发现，`ReentrantLock` 实现 `Lock` 接口其实是调用 `ReentrantLock.FairSync` 或 `ReentrantLock.NonfairSync` 中各自的实现，这里不一一列举。
+
+#### ReentrantLock 的获取锁和释放锁
+
+ReentrantLock 获取锁和释放锁的接口，从表象看，是调用 `ReentrantLock.FairSync` 或 `ReentrantLock.NonfairSync` 中各自的实现；从本质上看，是基于 AQS 的实现。
+
+仔细阅读源码很容易发现：
+
+- `void lock()` 调用 Sync 的 lock() 方法。
+- `void lockInterruptibly()` 直接调用 AQS 的 [获取可中断的独占锁](#获取可中断的独占锁) 方法 `lockInterruptibly()`。
+
+- `boolean tryLock()` 调用 Sync 的 `nonfairTryAcquire()` 。
+- `boolean tryLock(long time, TimeUnit unit)` 直接调用 AQS 的 [获取超时等待式的独占锁](#获取超时等待式的独占锁) 方法 `tryAcquireNanos(int arg, long nanosTimeout)`。
+- `void unlock()` 直接调用 AQS 的 [释放独占锁](#释放独占锁) 方法 `release(int arg)` 。
+
+直接调用 AQS 接口的方法就不再赘述了，其原理在 [AQS 的原理](#AQS 的原理) 中已经用很大篇幅进行过讲解。
+
+`nonfairTryAcquire` 方法源码如下：
+
+```java
+// 公平锁和非公平锁都会用这个方法区尝试获取锁
+final boolean nonfairTryAcquire(int acquires) {
+    final Thread current = Thread.currentThread();
+    int c = getState();
+    if (c == 0) {
+        if (compareAndSetState(0, acquires)) {
+         // 如果同步状态为0，将其设为 acquires，并设置当前线程为排它线程
+            setExclusiveOwnerThread(current);
+            return true;
+        }
+    }
+    else if (current == getExclusiveOwnerThread()) {
+        int nextc = c + acquires;
+        if (nextc < 0) // overflow
+            throw new Error("Maximum lock count exceeded");
+        setState(nextc);
+        return true;
+    }
+    return false;
+}
+```
+
+处理流程很简单：
+
+- 如果同步状态为 0，设置同步状态设为 acquires，并设置当前线程为排它线程，然后返回 true，获取锁成功。
+- 如果同步状态不为 0 且当前线程为排它线程，设置同步状态为当前状态值+acquires 值，然后返回 true，获取锁成功。
+- 否则，返回 false，获取锁失败。
+
+lock 方法在公平锁和非公平锁中的实现：
+
+二者的区别仅在于申请非公平锁时，如果同步状态为 0，尝试将其设为 1，如果成功，直接将当前线程置为排它线程；否则和公平锁一样，调用 AQS 获取独占锁方法 `acquire`。
+
+```java
+// 非公平锁实现
+final void lock() {
+    if (compareAndSetState(0, 1))
+    // 如果同步状态为0，将其设为1，并设置当前线程为排它线程
+        setExclusiveOwnerThread(Thread.currentThread());
+    else
+    // 调用 AQS 获取独占锁方法 acquire
+        acquire(1);
+}
+
+// 公平锁实现
+final void lock() {
+    // 调用 AQS 获取独占锁方法 acquire
+    acquire(1);
+}
+```
+
+## 四、ReadWriteLock
 
 ### ReadWriteLock 的要点
 
@@ -450,52 +619,192 @@ public interface ReadWriteLock {
 - `readLock` - 返回用于读操作的锁。
 - `writeLock` - 返回用于写操作的锁。
 
+`ReadWriteLock` 维护一对相关的锁。一个是读锁；一个是写锁。将读写锁分开，有利于提高并发效率。对于特定的资源，`ReadWriteLock` **允许多个线程同时对其执行读操作，但是只允许一个线程对其执行写操作**。概括来说：
+
+- 读读线程间不互斥。
+- 读写、写写线程间互斥。
+
 ### ReentrantReadWriteLock 的用法
 
 `ReentrantReadWriteLock` 类是 `ReadWriteLock` 的具体实现。它是一个**可重入的读写锁**。
 
+`ReentrantReadWriteLock` 实现了 `ReadWriteLock` 接口，除了 `ReadWriteLock` 接口所定义的能力，它还有以下特性：
+
+- 提供了与 `synchronized` 相同的可重入性。
+- 支持公平锁和非公平锁（默认）两种模式。
+
+示例：基于 `ReentrantReadWriteLock` 实现一个简单的本地缓存
+
+```java
+/**
+ * 简单的本地缓存实现
+ * <p>
+ * 使用 WeakHashMap 存储键值对。WeakHashMap 中存储的对象是弱引用，JVM GC 时会自动清除没有被引用的弱引用对象。
+ */
+static class MyCache<K, V> {
+
+    private final Map<K, V> cacheMap = new WeakHashMap<>();
+
+    private final ReentrantReadWriteLock cacheLock = new ReentrantReadWriteLock();
+
+    public V get(K key) {
+        cacheLock.readLock().lock();
+        V value;
+        try {
+            value = cacheMap.get(key);
+            String log = String.format("%s 读数据 %s:%s", Thread.currentThread().getName(), key, value);
+            System.out.println(log);
+        } finally {
+            cacheLock.readLock().unlock();
+        }
+        return value;
+    }
+
+    public V put(K key, V value) {
+        cacheLock.writeLock().lock();
+        try {
+            cacheMap.put(key, value);
+            String log = String.format("%s 写入数据 %s:%s", Thread.currentThread().getName(), key, value);
+            System.out.println(log);
+        } finally {
+            cacheLock.writeLock().unlock();
+        }
+        return value;
+    }
+
+    public V remove(K key) {
+        cacheLock.writeLock().lock();
+        try {
+            return cacheMap.remove(key);
+        } finally {
+            cacheLock.writeLock().unlock();
+        }
+    }
+
+    public void clear() {
+        cacheLock.writeLock().lock();
+        try {
+            this.cacheMap.clear();
+        } finally {
+            cacheLock.writeLock().unlock();
+        }
+    }
+
+}
+```
+
+说明：
+
+- 使用 `WeakHashMap` 而不是 `HashMap` 来存储键值对。`WeakHashMap` 中存储的对象是弱引用，JVM GC 时会自动清除没有被引用的弱引用对象。
+- 向 Map 写数据前加写锁，写完后，释放写锁。
+- 向 Map 读数据前加读锁，读完后，释放读锁。
+
+测试其线程安全性：
+
 ```java
 public class ReentrantReadWriteLockDemo {
 
-    private ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    static MyCache<Integer, Integer> cache = new MyCache<>();
 
     public static void main(String[] args) {
-        final ReentrantReadWriteLockDemo demo = new ReentrantReadWriteLockDemo();
-        new Thread(() -> demo.get(Thread.currentThread())).start();
-        new Thread(() -> demo.get(Thread.currentThread())).start();
-    }
-
-    public synchronized void get(Thread thread) {
-        rwl.readLock().lock();
-        try {
-            long start = System.currentTimeMillis();
-
-            while (System.currentTimeMillis() - start <= 1) {
-                System.out.println(thread.getName() + "正在进行读操作");
-            }
-            System.out.println(thread.getName() + "读操作完毕");
-        } finally {
-            rwl.readLock().unlock();
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        for (int i = 0; i < 20; i++) {
+            executorService.execute(new MyThread());
+            cache.get(0);
         }
+        executorService.shutdown();
     }
+
+    /** 线程任务每次向缓存中写入 3 个随机值，key 固定 */
+    static class MyThread implements Runnable {
+
+        @Override
+        public void run() {
+            Random random = new Random();
+            for (int i = 0; i < 3; i++) {
+                cache.put(i, random.nextInt(100));
+            }
+        }
+
+    }
+
 }
+```
+
+说明：示例中，通过线程池启动 20 个并发任务。任务每次向缓存中写入 3 个随机值，key 固定；然后主线程每次固定读取缓存中第一个 key 的值。
+
+输出结果：
+
+```
+main 读数据 0:null
+pool-1-thread-1 写入数据 0:16
+pool-1-thread-1 写入数据 1:58
+pool-1-thread-1 写入数据 2:50
+main 读数据 0:16
+pool-1-thread-1 写入数据 0:85
+pool-1-thread-1 写入数据 1:76
+pool-1-thread-1 写入数据 2:46
+pool-1-thread-2 写入数据 0:21
+pool-1-thread-2 写入数据 1:41
+pool-1-thread-2 写入数据 2:63
+main 读数据 0:21
+main 读数据 0:21
+// ...
 ```
 
 ### ReentrantReadWriteLock 的原理
 
-对于特定的资源，ReadWriteLock 允许多个线程同时对其执行读操作，但是只允许一个线程对其执行写操作。
+前面了解了 `ReentrantLock` 的原理，理解 `ReentrantReadWriteLock` 就容易多了。
 
-ReadWriteLock 维护一对相关的锁。一个是读锁；一个是写锁。将读写锁分开，有利于提高并发效率。
+#### ReentrantReadWriteLock 的数据结构
 
-ReentrantReadWriteLock 实现了 ReadWriteLock 接口，所以它是一个读写锁。
+阅读 ReentrantReadWriteLock 的源码，可以发现它有三个核心字段：
 
-“读-读”线程之间不存在互斥关系。
+```java
+/** Inner class providing readlock */
+private final ReentrantReadWriteLock.ReadLock readerLock;
+/** Inner class providing writelock */
+private final ReentrantReadWriteLock.WriteLock writerLock;
+/** Performs all synchronization mechanics */
+final Sync sync;
 
-“读-写”线程、“写-写”线程之间存在互斥关系。
+public ReentrantReadWriteLock.WriteLock writeLock() { return writerLock; }
+public ReentrantReadWriteLock.ReadLock  readLock()  { return readerLock; }
+```
 
-<p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/ReadWriteLock.jpg">
-</p>
+- `sync` - 内部类 `ReentrantReadWriteLock.Sync` 对象。与 `ReentrantLock` 类似，它有两个子类：`ReentrantReadWriteLock.FairSync` 和 `ReentrantReadWriteLock.NonfairSync` ，分别表示公平锁和非公平锁的实现。
+- `readerLock` - 内部类 `ReentrantReadWriteLock.ReadLock` 对象，这是一把读锁。
+- `writerLock` - 内部类 `ReentrantReadWriteLock.WriteLock` 对象，这是一把写锁。
+
+#### ReentrantReadWriteLock 的获取锁和释放锁
+
+```java
+public static class ReadLock implements Lock, java.io.Serializable {
+
+    // 调用 AQS 获取共享锁方法
+    public void lock() {
+        sync.acquireShared(1);
+    }
+
+    // 调用 AQS 释放共享锁方法
+    public void unlock() {
+        sync.releaseShared(1);
+    }
+}
+
+public static class WriteLock implements Lock, java.io.Serializable {
+
+    // 调用 AQS 获取独占锁方法
+    public void lock() {
+        sync.acquire(1);
+    }
+
+    // 调用 AQS 释放独占锁方法
+    public void unlock() {
+        sync.release(1);
+    }
+}
+```
 
 ## 参考资料
 
