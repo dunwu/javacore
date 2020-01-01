@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 2018/5/11
  */
 @SuppressWarnings("all")
-public class ReentrantLockDemo03 {
+public class ReentrantLockDemo3 {
 
     public static void main(String[] args) {
         Task service = new Task();
@@ -47,16 +47,22 @@ public class ReentrantLockDemo03 {
                 if (lock.tryLock(2, TimeUnit.SECONDS)) {
                     try {
                         for (int i = 0; i < 3; i++) {
-                            System.out.println(Thread.currentThread().getName());
+                            System.out.println(lock.toString());
 
-                            // 查询当前线程保持此锁的次数
+                            // 查询当前线程 hold 住此锁的次数
                             System.out.println("\t holdCount: " + lock.getHoldCount());
 
-                            // 返回正等待获取此锁的线程估计数
+                            // 查询正等待获取此锁的线程数
                             System.out.println("\t queuedLength: " + lock.getQueueLength());
 
-                            // 如果此锁的公平设置为 true，则返回 true
+                            // 是否为公平锁
                             System.out.println("\t isFair: " + lock.isFair());
+
+                            // 是否被锁住
+                            System.out.println("\t isLocked: " + lock.isLocked());
+
+                            // 是否被当前线程持有锁
+                            System.out.println("\t isHeldByCurrentThread: " + lock.isHeldByCurrentThread());
 
                             try {
                                 Thread.sleep(500);
