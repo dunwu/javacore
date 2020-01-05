@@ -1,6 +1,6 @@
 # Java 并发容器
 
-> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
+> **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

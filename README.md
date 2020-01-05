@@ -1,6 +1,16 @@
-# JavaCore
+<p align="center">
+    <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener noreferrer">
+        <img src="http://dunwu.test.upcdn.net/common/logo/linux.svg" alt="logo" width="100px">
+    </a>
+</p>
 
-> ☕ JavaCore 是对 Java 核心技术的经验总结。
+<p align="center">
+    <img src="https://badgen.net/github/license/dunwu/linux-tutorial" alt="license">
+</p>
+
+<h1 align="center">JavaCore</h1>
+
+> ☕ **JavaCore** 是一个 Java 核心技术教程。
 >
 > - 🔁 项目同步维护：[Github](https://github.com/dunwu/javacore/) | [Gitee](https://gitee.com/turnon/javacore/)
 > - 📖 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore/)

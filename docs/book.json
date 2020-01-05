@@ -1,6 +1,6 @@
 {
   "gitbook": "3.2.2",
-  "title": "JavaCore",
+  "title": "javacore",
   "language": "zh-hans",
   "root": "./",
   "structure": {
@@ -58,9 +58,7 @@
     },
     "sharing": {
       "weibo": true,
-      "all": [
-        "weibo"
-      ]
+      "all": ["weibo"]
     },
     "tbfed-pagefooter": {
       "copyright": "Copyright © Zhang Peng 2017",

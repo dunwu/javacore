@@ -1,20 +1,20 @@
 # 深入理解 Java 并发锁
 
-> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore)**
+> **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、Java 锁简介](#一java-锁简介)
+- [一、简介](#一简介)
   - [锁分类](#锁分类)
   - [synchronized 和 Lock、ReadWriteLock](#synchronized-和-lockreadwritelock)
 - [二、AQS](#二aqs)
   - [AQS 的要点](#aqs-的要点)
   - [AQS 的原理](#aqs-的原理)
-- [三、Lock 接口](#三lock-接口)
+- [三、Lock](#三lock)
   - [Lock 的要点](#lock-的要点)
   - [ReentrantLock 的用法](#reentrantlock-的用法)
   - [ReentrantLock 的原理](#reentrantlock-的原理)
-- [四、ReadWriteLock 接口](#四readwritelock-接口)
+- [四、ReadWriteLock](#四readwritelock)
   - [ReadWriteLock 的要点](#readwritelock-的要点)
   - [ReentrantReadWriteLock 的用法](#reentrantreadwritelock-的用法)
   - [ReentrantReadWriteLock 的原理](#reentrantreadwritelock-的原理)
@@ -22,7 +22,7 @@
 
 <!-- /TOC -->
 
-## 一、Java 锁简介
+## 一、简介
 
 确保线程安全最常见的做法是利用锁机制（`Lock`、`sychronized`）来对共享数据做互斥同步，这样在同一个时刻，只有一个线程可以执行某个方法或者某个代码块，那么操作必然是原子性的，线程安全的。
 
@@ -34,10 +34,10 @@
 
 可重入锁又名递归锁，是指 **同一个线程在外层方法获取了锁，在进入内层方法会自动获取锁**。
 
+**可重入锁可以在一定程度上避免死锁**。
+
 - **`ReentrantLock` 、`ReentrantReadWriteLock` 是可重入锁**。这点，从其命名也不难看出。
 - **`synchronized` 也是一个可重入锁**。
-
-**可重入锁可以在一定程度上避免死锁**。
 
 ```java
 synchronized void setA() throws Exception{
@@ -61,8 +61,8 @@ synchronized void setB() throws Exception{
 
 公平锁与非公平锁 在 Java 中的典型实现：
 
-- **`synchronized` 是非公平锁**。
-- Java 中的 **`ReentrantLock` 、`ReentrantReadWriteLock`，默认都是非公平锁，但都可以在构造函数中指定该锁为公平锁**。
+- **`synchronized` 只支持非公平锁**。
+- **`ReentrantLock` 、`ReentrantReadWriteLock`，默认是非公平锁，但支持公平锁**。
 
 #### 独享锁与共享锁
 
@@ -73,12 +73,12 @@ synchronized void setB() throws Exception{
 
 独享锁与共享锁在 Java 中的典型实现：
 
-- **`synchronized` 、`ReentrantLock` 是独享锁**。
+- **`synchronized` 、`ReentrantLock` 只支持独享锁**。
 - **`ReentrantReadWriteLock` 其写锁是独享锁，其读锁是共享锁**。读锁是共享锁使得并发读是非常高效的，读写，写读 ，写写的过程是互斥的。
 
 #### 悲观锁与乐观锁
 
-乐观锁与悲观锁不是指具体的什么类型的锁，而是处理并发同步的策略。
+乐观锁与悲观锁不是指具体的什么类型的锁，而是**处理并发同步的策略**。
 
 - **悲观锁** - 悲观锁对于并发采取悲观的态度，认为：**不加锁的并发操作一定会出问题**。**悲观锁适合写操作频繁的场景**。
 - **乐观锁** - 乐观锁对于并发采取乐观的态度，认为：**不加锁的并发操作也没什么问题。对于同一个数据的并发操作，是不会发生修改的**。在更新数据的时候，会采用不断尝试更新的方式更新数据。**乐观锁适合读多写少的场景**。
@@ -120,10 +120,18 @@ final Segment<K,V>[] segments;
 
 在 [锁分类](#锁分类) 中，我们零零散散也提到了，`synchronized` 锁的限制比较多。 这里，汇总一下 `Lock` 、`ReadWriteLock` 和 `synchronized` 的区别：
 
-- `synchronized` 获取锁和释放锁都是自动的，无法主动控制；`Lock` 可以手动获取锁、释放锁（如果忘记释放锁，就可能产生死锁）。
-- `synchronized` 不能响应中断；`Lock` 可以响应中断。
-- `synchronized` 没有超时机制；`Lock` 可以设置超时时间，超时后自动释放锁，避免一直等待。
-- `synchronized` 是非公平锁；`Lock` 可以选择公平锁或非公平锁两种模式。
+- 主动获取锁和释放锁
+  - `synchronized` 不能主动获取锁和释放锁。获取锁和释放锁都是 JVM 控制的。
+  - `Lock` 可以主动获取锁和释放锁。（如果忘记释放锁，就可能产生死锁）。
+- 响应中断
+  - `synchronized` 不能响应中断。
+  - `Lock` 可以响应中断。
+- 超时机制
+  - `synchronized` 没有超时机制。
+  - `Lock` 有超时机制。`Lock` 可以设置超时时间，超时后自动释放锁，避免一直等待。
+- 支持公平锁
+  - `synchronized` 只支持非公平锁。
+  - `Lock` 支持非公平锁和公平锁。
 - 被 `synchronized` 修饰的方法或代码块，只能被一个线程访问。如果这个线程被阻塞，其他线程也只能等待；`Lock` 可以基于 `Condition` 灵活的控制同步条件。
 - `synchronized` 不支持读写锁分离；`ReadWriteLock` 支持读写锁，从而使阻塞读写的操作分开，有效提高并发性。
 
@@ -805,6 +813,10 @@ public static class WriteLock implements Lock, java.io.Serializable {
     }
 }
 ```
+
+## 五、总结
+
+![](http://dunwu.test.upcdn.net/snap/20200105234810.png)
 
 ## 参考资料
 
