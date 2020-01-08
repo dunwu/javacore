@@ -10,3 +10,11 @@
 - [Java 并发容器](java-concurrent-container.md) - 关键词：`ConcurrentHashMap`、`CopyOnWriteArrayList`
 - [Java 线程池](java-thread-pool.md) - 关键词：`Executor`、`ExecutorService`、`ThreadPoolExecutor`、`Executors`
 - [Java 并发工具类](java-concurrent-tools.md) - 关键词：`CountDownLatch`、`CyclicBarrier`、`Semaphore`
+
+## 资源
+
+- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
+- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
+- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《Effective Java 中文版》](https://item.jd.com/12507084.html)
+

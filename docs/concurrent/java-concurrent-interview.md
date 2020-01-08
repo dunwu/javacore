@@ -412,7 +412,7 @@ Java 集合类都是快速失败的，这就意味着当集合被改变且一个
 
 主要的类有 ConcurrentHashMap, CopyOnWriteArrayList 和 CopyOnWriteArraySet，阅读这篇文章了解如何避免 ConcurrentModificationException。
 
-## 6. 锁
+## 6. 并发锁
 
 ### 6.1. 如何避免死锁？
 
@@ -535,6 +535,10 @@ ThreadPoolExecutor 有四个构造方法，前三个都是基于第四个实现�
 
 ## 10. 参考资料
 
+- **书**
+  - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
+  - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
+  - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - **文章**
   - [Java线程面试题 Top 50](http://www.importnew.com/12773.html)
   - [Java多线程和并发基础面试问答](http://ifeve.com/java-multi-threading-concurrency-interview-questions-with-answers/)

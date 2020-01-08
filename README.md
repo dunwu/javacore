@@ -1,11 +1,11 @@
 <p align="center">
-    <a href="https://spring.io/projects/spring-boot" target="_blank" rel="noopener noreferrer">
-        <img src="http://dunwu.test.upcdn.net/common/logo/linux.svg" alt="logo" width="100px">
+    <a href="https://dunwu.github.io/javacore/#/" target="_blank" rel="noopener noreferrer">
+        <img src="http://dunwu.test.upcdn.net/common/logo/java-logo.png" alt="logo" width="100px">
     </a>
 </p>
 
 <p align="center">
-    <img src="https://badgen.net/github/license/dunwu/linux-tutorial" alt="license">
+    <img src="https://badgen.net/github/license/dunwu/javacore" alt="license">
 </p>
 
 <h1 align="center">JavaCore</h1>
@@ -15,9 +15,9 @@
 > - 🔁 项目同步维护：[Github](https://github.com/dunwu/javacore/) | [Gitee](https://gitee.com/turnon/javacore/)
 > - 📖 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore/)
 
-|           1️⃣            |           2️⃣            |           3️⃣            |           4️⃣            |         5️⃣         |             6️⃣              |               7️⃣                |
-| :---------------------: | :---------------------: | :---------------------: | :---------------------: | :----------------: | :-------------------------: | :-----------------------------: |
-| [Java 基础](#java-基础) | [Java 高级](#java-高级) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [JavaIO](#java-io) | [Java 虚拟机](#java-虚拟机) | [Java 编程规范](#java-编程规范) |
+|           1️⃣            |           2️⃣            |           3️⃣            |           4️⃣            |         5️⃣         |             6️⃣              |
+| :---------------------: | :---------------------: | :---------------------: | :---------------------: | :----------------: | :-------------------------: |
+| [Java 基础](#java-基础) | [Java 高级](#java-高级) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [JavaIO](#java-io) | [Java 虚拟机](#java-虚拟机) |
 
 ## Java 基础
 
@@ -89,13 +89,3 @@
 - [JVM 类加载](docs/jvm/jvm-class-loader.md)
 - [JVM 工具](docs/jvm/jvm-tools.md)
 - [JVM 实战](docs/jvm/jvm-action.md)
-
-## Java 编程规范
-
-> Java 编程规范记录了 Java 编程的规范和最佳实践。
->
-> 待整理。。。
->
-> - Effective-Java
-> - 阿里巴巴编程规范
-> - google-java-code-style
