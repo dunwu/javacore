@@ -13,7 +13,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class ReentrantReadWriteLockDemo {
 
-    static MyCache<Integer, Integer> cache = new MyCache<>();
+    static UnboundedCache<Integer, Integer> cache = new UnboundedCache<>();
 
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -25,11 +25,11 @@ public class ReentrantReadWriteLockDemo {
     }
 
     /**
-     * 简单的本地缓存实现
+     * 简单的无界缓存实现
      * <p>
      * 使用 WeakHashMap 存储键值对。WeakHashMap 中存储的对象是弱引用，JVM GC 时会自动清除没有被引用的弱引用对象。
      */
-    static class MyCache<K, V> {
+    static class UnboundedCache<K, V> {
 
         private final Map<K, V> cacheMap = new WeakHashMap<>();
 

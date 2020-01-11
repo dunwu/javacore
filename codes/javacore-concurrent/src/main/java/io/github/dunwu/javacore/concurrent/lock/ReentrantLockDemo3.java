@@ -4,7 +4,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * ReentrantLock tryLock(long timeout, TimeUnit unit) 示例
+ * ReentrantLock 可定时获取锁 {@link java.util.concurrent.locks.ReentrantLock#tryLock(long, java.util.concurrent.TimeUnit)}
+ * 示例
  *
  * @author Zhang Peng
  * @since 2018/5/11

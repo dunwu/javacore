@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.concurrent.lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * ReentrantLock tryLock() 示例
+ * ReentrantLock 可轮询获取锁 {@link java.util.concurrent.locks.ReentrantLock#tryLock()} 示例
  *
  * @author Zhang Peng
  * @since 2018/5/11

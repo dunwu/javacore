@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.concurrent.lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * ReentrantLock lockInterruptibly() 示例
+ * ReentrantLock 可中断获取锁 {@link java.util.concurrent.locks.ReentrantLock#lockInterruptibly()} 示例
  *
  * @author Zhang Peng
  * @since 2018/5/18

@@ -3,7 +3,8 @@ package io.github.dunwu.javacore.concurrent.lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * ReentrantLock lock() 示例
+ * ReentrantLock 的基本操作：{@link java.util.concurrent.locks.ReentrantLock#lock()} 和 {@link
+ * java.util.concurrent.locks.ReentrantLock#unlock()} 方法
  *
  * @author Zhang Peng
  * @since 2018/5/11
