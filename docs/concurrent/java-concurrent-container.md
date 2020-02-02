@@ -24,13 +24,13 @@
   - `Vector` - `Vector` 实现了 `List` 接口。`Vector` 实际上就是一个数组，和 `ArrayList` 类似。但是 `Vector` 中的方法都是 `synchronized` 方法，即进行了同步措施。
   - `Stack` - `Stack` 也是一个同步容器，它的方法也用 `synchronized` 进行了同步，它实际上是继承于 `Vector` 类。
   - `Hashtable`- `Hashtable` 实现了 `Map` 接口，它和 `HashMap` 很相似，但是 `Hashtable` 进行了同步处理，而 `HashMap` 没有。
-- `Collections` 类中提供的静态工厂方法创建的类（由 `Collections.synchronizedXxxx` 等方法）
+- `Collections` 类中提供的静态工厂方法创建的类（由 `Collections.synchronizedXXX` 等方法）
 
 ### 同步容器的问题
 
 同步容器的同步原理就是在方法上用 `synchronized` 修饰。 **`synchronized` 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块**。
 
-> 想详细了解 `synchronized` 用法和原理可以参考：[Java 并发核心机制之 synchronized](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md#%E4%BA%8Csynchronized)
+> 想详细了解 `synchronized` 用法和原理可以参考：[Java 并发核心机制 - synchronized](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md#%E4%BA%8Csynchronized)
 
 #### 性能问题
 
@@ -174,39 +174,111 @@ public class VectorDemo2 {
 
 但是在并发容器中不会出现这个问题。
 
-## 二、并发容器
+## 二、并发容器简介
 
-从前文可以知道，同步容器性能不高，也不能根本上保证线程安全，所以现代 Java 程序已经基本上将其弃用了。在并发场景下，取而代之的是并发容器。
+> 同步容器将所有对容器状态的访问都串行化，以保证线程安全性，这种策略会严重降低并发性。
+>
+> Java 1.5 后提供了多种并发容器，**使用并发容器来替代同步容器，可以极大地提高伸缩性并降低风险**。
 
-J.U.C 包中提供了几个非常有用的并发容器。
+J.U.C 包中提供了几个非常有用的并发容器作为线程安全的容器：
 
-- `CopyOnWriteArrayList` - 线程安全的 `ArrayList`。
-- `CopyOnWriteArraySet` - 线程安全的 Set，它内部包含了一个 `CopyOnWriteArrayList`，因此本质上是由 `CopyOnWriteArrayList` 实现的。
-- `ConcurrentSkipListSet` - 相当于线程安全的 `TreeSet`。它是有序的 Set。它由 `ConcurrentSkipListMap` 实现。
-- `ConcurrentHashMap` - 线程安全的 `HashMap`。采用分段锁实现高效并发。
-- `ConcurrentSkipListMap` - 线程安全的有序 Map。使用跳表实现高效并发。
-- `ConcurrentLinkedQueue` - 线程安全的无界队列。底层采用单链表。支持 FIFO。
-- `ConcurrentLinkedDeque` - 线程安全的无界双端队列。底层采用双向链表。支持 FIFO 和 FILO。
-- `ArrayBlockingQueue` - 数组实现的阻塞队列。
-- `LinkedBlockingQueue` - 链表实现的阻塞队列。
-- `LinkedBlockingDeque` - 双向链表实现的双端阻塞队列。
+| 并发容器                | 对应的普通容器 | 描述                                                         |
+| ----------------------- | -------------- | ------------------------------------------------------------ |
+| `ConcurrentHashMap`     | `HashMap`      | Java 1.8 之前采用分段锁机制细化锁粒度，降低阻塞，从而提高并发性；Java 1.8 之后基于 CAS 实现。 |
+| `ConcurrentSkipListMap` | `SortedMap`    | 基于跳表实现的                                               |
+| `CopyOnWriteArrayList`  | `ArrayList`    |                                                              |
+| `CopyOnWriteArraySet`   | `Set`          | 基于 `CopyOnWriteArrayList` 实现。                           |
+| `ConcurrentSkipListSet` | `SortedSet`    | 基于 `ConcurrentSkipListMap` 实现。                          |
+| `ConcurrentLinkedQueue` | `Queue`        | 线程安全的无界队列。底层采用单链表。支持 FIFO。              |
+| `ConcurrentLinkedDeque` | `Deque`        | 线程安全的无界双端队列。底层采用双向链表。支持 FIFO 和 FILO。 |
+| `ArrayBlockingQueue`    | `Queue`        | 数组实现的阻塞队列。                                         |
+| `LinkedBlockingQueue`   | `Queue`        | 链表实现的阻塞队列。                                         |
+| `LinkedBlockingDeque`   | `Deque`        | 双向链表实现的双端阻塞队列。                                 |
 
-### ConcurrentHashMap
+## ConcurrentHashMap
 
-#### 要点
+> `ConcurrentHashMap` 是线程安全的 `HashMap` ，用于替代 `Hashtable`。
 
-- 作用：ConcurrentHashMap 是线程安全的 HashMap。
-- 原理：JDK6 与 JDK7 中，ConcurrentHashMap 采用了分段锁机制。JDK8 中，摒弃了锁分段机制，改为利用 CAS 算法。
+### ConcurrentHashMap 的特性
 
-#### 源码
+`ConcurrentHashMap` 实现了 `ConcurrentMap` 接口，而 `ConcurrentMap` 接口扩展了 `Map` 接口。
 
-##### JDK7
+```java
+public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
+    implements ConcurrentMap<K,V>, Serializable {
+    // ...
+}
+```
 
-ConcurrentHashMap 类在 jdk1.7 中的设计，其基本结构如图所示：
+`ConcurrentHashMap` 的实现包含了 `HashMap` 所有的基本特性，如：数据结构、读写策略等。
 
-<p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/ConcurrentHashMap-jdk7.png">
-</p>
+`ConcurrentHashMap` 没有实现对 `Map` 加锁以提供独占访问。因此无法通过在客户端加锁的方式来创建新的原子操作。但是，一些常见的复合操作，如：“若没有则添加”、“若相等则移除”、“若相等则替换”，都已经实现为原子操作，并且是围绕 `ConcurrentMap` 的扩展接口而实现。
+
+```java
+public interface ConcurrentMap<K, V> extends Map<K, V> {
+ 
+    // 仅当 K 没有相应的映射值才插入
+    V putIfAbsent(K key, V value);
+ 
+    // 仅当 K 被映射到 V 时才移除
+    boolean remove(Object key, Object value);
+ 
+    // 仅当 K 被映射到 oldValue 时才替换为 newValue
+    boolean replace(K key, V oldValue, V newValue);
+ 
+    // 仅当 K 被映射到某个值时才替换为 newValue
+    V replace(K key, V value);
+}
+```
+
+不同于 `Hashtable`，`ConcurrentHashMap` 提供的迭代器不会抛出 `ConcurrentModificationException`，因此不需要在迭代过程中对容器加锁。
+
+> :bell: 注意：一些需要对整个 `Map` 进行计算的方法，如 `size` 和 `isEmpty` ，由于返回的结果在计算时可能已经过期，所以**并非实时的精确值**。这是一种策略上的权衡，在并发环境下，这类方法由于总在不断变化，所以获取其实时精确值的意义不大。`ConcurrentHashMap` 弱化这类方法，以换取更重要操作（如：`get`、`put`、`containesKey`、`remove` 等）的性能。
+
+### ConcurrentHashMap 的用法
+
+示例：不会出现 `ConcurrentModificationException`
+
+`ConcurrentHashMap` 的基本操作与 `HashMap` 的用法基本一样。不同于 `HashMap`、`Hashtable`，`ConcurrentHashMap` 提供的迭代器不会抛出 `ConcurrentModificationException`，因此不需要在迭代过程中对容器加锁。
+
+```java
+public class ConcurrentHashMapDemo {
+
+    public static void main(String[] args) throws InterruptedException {
+
+        // HashMap 在并发迭代访问时会抛出 ConcurrentModificationException 异常
+        // Map<Integer, Character> map = new HashMap<>();
+        Map<Integer, Character> map = new ConcurrentHashMap<>();
+
+        Thread wthread = new Thread(() -> {
+            System.out.println("写操作线程开始执行");
+            for (int i = 0; i < 26; i++) {
+                map.put(i, (char) ('a' + i));
+            }
+        });
+        Thread rthread = new Thread(() -> {
+            System.out.println("读操作线程开始执行");
+            for (Integer key : map.keySet()) {
+                System.out.println(key + " - " + map.get(key));
+            }
+        });
+        wthread.start();
+        rthread.start();
+        Thread.sleep(1000);
+    }
+}
+```
+
+### ConcurrentHashMap 的原理
+
+`ConcurrentHashMap` 在 Java 1.8 之前和 Java 1.8 之后的实现有很大差异：
+
+- Java 1.8 之前采用分段锁机制细化锁粒度，降低阻塞，从而提高并发性。
+- Java 1.8 之后基于 CAS 实现。
+
+#### Java 1.7 的实现
+
+##### 数据结构
 
 每一个 segment 都是一个 HashEntry<K,V>[] table， table 中的每一个元素本质上都是一个 HashEntry 的单向队列。比如 table[3]为首节点，table[3]->next 为节点 1，之后为节点 2，依次类推。
 
@@ -234,7 +306,7 @@ public class ConcurrentHashMap<K, V> extends AbstractMap<K, V>
 }
 ```
 
-##### JDK8
+#### Java 1.8 的实现
 
 - jdk8 中主要做了 2 方面的改进
 - 取消 segments 字段，直接采用 `transient volatile HashEntry<K,V>[] table` 保存数据，采用 table 数组元素作为锁，从而实现了对每一行数据进行加锁，进一步减少并发冲突的概率。
@@ -314,37 +386,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 }
 ```
 
-#### 示例
-
-```java
-public class ConcurrentHashMapDemo {
-
-    public static void main(String[] args) throws InterruptedException {
-
-        // HashMap 在并发迭代访问时会抛出 ConcurrentModificationException 异常
-        // Map<Integer, Character> map = new HashMap<>();
-        Map<Integer, Character> map = new ConcurrentHashMap<>();
-
-        Thread wthread = new Thread(() -> {
-            System.out.println("写操作线程开始执行");
-            for (int i = 0; i < 26; i++) {
-                map.put(i, (char) ('a' + i));
-            }
-        });
-        Thread rthread = new Thread(() -> {
-            System.out.println("读操作线程开始执行");
-            for (Integer key : map.keySet()) {
-                System.out.println(key + " - " + map.get(key));
-            }
-        });
-        wthread.start();
-        rthread.start();
-        Thread.sleep(1000);
-    }
-}
-```
-
-### CopyOnWriteArrayList
+## CopyOnWriteArrayList
 
 #### 要点
 
@@ -356,7 +398,7 @@ public class ConcurrentHashMapDemo {
   - 写时复制集合返回的迭代器不会抛出 ConcurrentModificationException，因为它们在数组的快照上工作，并且无论后续的修改（2,4）如何，都会像迭代器创建时那样完全返回元素。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/CopyOnWriteArrayList.png">
+  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/CopyOnWriteArrayList.png">
 </p>
 
 #### 源码
@@ -517,3 +559,4 @@ public class CopyOnWriteArrayListDemo {
 - https://www.cnblogs.com/leesf456/p/5547853.html
 - http://www.cnblogs.com/chengxiao/p/6881974.html
 - http://www.cnblogs.com/dolphin0520/p/3933404.html
+- [HashMap? ConcurrentHashMap? 相信看完这篇没人能难住你！](https://juejin.im/post/5b551e8df265da0f84562403)
