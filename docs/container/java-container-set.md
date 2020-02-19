@@ -2,21 +2,6 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
-<!-- TOC depthFrom:2 depthTo:2 -->
-
-- [Set 架构](#set-架构)
-- [Set 接口](#set-接口)
-- [SortedSet 接口](#sortedset-接口)
-- [NavigableSet 接口](#navigableset-接口)
-- [AbstractSet 抽象类](#abstractset-抽象类)
-- [HashSet 类](#hashset-类)
-- [TreeSet 类](#treeset-类)
-- [LinkedHashSet 类](#linkedhashset-类)
-- [EnumSet 类](#enumset-类)
-- [资料](#资料)
-
-<!-- /TOC -->
-
 ## Set 架构
 
 <div align="center">

@@ -1,27 +1,8 @@
-# JDK8 快速指南
+# JDK8 入门指南
 
 > JDK8 升级常见问题章节是我个人的经验整理。其他内容基本翻译自 [java8-tutorial](https://github.com/winterbe/java8-tutorial)
 >
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
-
-<!-- TOC depthFrom:2 depthTo:2 -->
-
-- [Default Methods for Interfaces(接口的默认方法)](#default-methods-for-interfaces接口的默认方法)
-- [Lambda expressions(Lambda 表达式)](#lambda-expressionslambda-表达式)
-- [Functional Interfaces(函数接口)](#functional-interfaces函数接口)
-- [Method and Constructor References(方法和构造器引用)](#method-and-constructor-references方法和构造器引用)
-- [Lambda Scopes(Lambda 作用域)](#lambda-scopeslambda-作用域)
-- [Built-in Functional Interfaces(内置函数接口)](#built-in-functional-interfaces内置函数接口)
-- [Optionals](#optionals)
-- [Streams](#streams)
-- [Parallel Streams](#parallel-streams)
-- [Maps](#maps)
-- [Date API](#date-api)
-- [Annotations](#annotations)
-- [JDK8 升级常见问题](#jdk8-升级常见问题)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
 
 ## Default Methods for Interfaces(接口的默认方法)
 
@@ -915,14 +896,14 @@ Error redis clients jedis HostAndPort cant resolve localhost address
 
 解决办法:
 
-1. 查看 Linux 系统的主机名
+（1）查看 Linux 系统的主机名
 
 ```
 # hostname
 template
 ```
 
-2. 查看/etc/hosts 文件中是否有 127.0.0.1 对应主机名，如果没有则添加
+（2）查看/etc/hosts 文件中是否有 127.0.0.1 对应主机名，如果没有则添加
 
 ### Resin 容器指定 JDK 1.8
 

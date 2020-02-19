@@ -204,15 +204,15 @@ jstat -gc 1262
 
 也可以设置间隔固定时间来打印：
 
-```bash
-$ jstat -gc 1262 2000 20
+```shell
+jstat -gc 1262 2000 20
 ```
 
 这个命令意思就是每隔 2000ms 输出 1262 的 gc 情况，一共输出 20 次
 
 Tomcat 设置示例：
 
-```bash
+```shell
 JAVA_OPTS="-server -Xms2000m -Xmx2000m -Xmn800m -XX:PermSize=64m -XX:MaxPermSize=256m -XX:SurvivorRatio=4
 -verbose:gc -Xloggc:$CATALINA_HOME/logs/gc.log
 -Djava.awt.headless=true
@@ -253,7 +253,9 @@ Full GC 回收日志:
 通过两张图非常明显看出 gc 日志构成：
 
 ![img](http://ityouknow.com/assets/images/2017/jvm/Young%20GC.png)
+
 ![img](http://ityouknow.com/assets/images/2017/jvm/Full%20GC.png)
+
 ### 如何分析 OutOfMemory(OOM)
 
 OutOfMemory ，即内存溢出，是一个常见的 JVM 问题。那么分析 OOM 的思路是什么呢？

@@ -4,23 +4,13 @@
 >
 > JDK 的 `java.util.concurrent` 包（即 J.U.C）中提供了几个非常有用的并发工具类。
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [一、CountDownLatch](#一countdownlatch)
-- [二、CyclicBarrier](#二cyclicbarrier)
-- [三、Semaphore](#三semaphore)
-- [四、总结](#四总结)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 一、CountDownLatch
 
 > 字面意思为 **递减计数锁**。用于控制一个或者多个线程等待多个线程。
 >
 > `CountDownLatch` 维护一个计数器 count，表示需要等待的事件数量。`countDown` 方法递减计数器，表示有一个事件已经发生。调用 `await` 方法的线程会一直阻塞直到计数器为零，或者等待中的线程中断，或者等待超时。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/CountDownLatch.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/CountDownLatch.png!zp)
 
 `CountDownLatch` 唯一的构造方法：
 
@@ -101,7 +91,7 @@ public class CountDownLatchDemo {
 
 `CyclicBarrier` 应用场景：`CyclicBarrier` 在并行迭代算法中非常有用。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/CyclicBarrier.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/CyclicBarrier.png!zp)
 
 `CyclicBarrier` 提供了 2 个构造方法
 
@@ -191,7 +181,7 @@ public class CyclicBarrierDemo {
 - `Semaphore` 可以用于实现资源池，如数据库连接池。
 - `Semaphore` 可以用于将任何一种容器变成有界阻塞容器。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/Semaphore.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/Semaphore.png!zp)
 
 `Semaphore` 提供了 2 个构造方法：
 

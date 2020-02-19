@@ -6,27 +6,6 @@
 >
 > JVM 中试图定义一种 JMM 来**屏蔽各种硬件和操作系统的内存访问差异，以实现让 Java 程序在各种平台下都能达到一致的内存访问效果**。
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [一、物理内存模型](#一物理内存模型)
-  - [硬件处理效率](#硬件处理效率)
-  - [缓存一致性](#缓存一致性)
-  - [代码乱序执行优化](#代码乱序执行优化)
-- [二、Java 内存模型](#二java-内存模型)
-  - [主内存和工作内存](#主内存和工作内存)
-  - [JMM 内存操作的问题](#jmm-内存操作的问题)
-  - [内存间交互操作](#内存间交互操作)
-- [三、Java 内存模型规则](#三java-内存模型规则)
-  - [内存交互操作的三大特性](#内存交互操作的三大特性)
-  - [先行发生原则](#先行发生原则)
-  - [内存屏障](#内存屏障)
-  - [volatile 变量的特殊规则](#volatile-变量的特殊规则)
-  - [long 和 double 变量的特殊规则](#long-和-double-变量的特殊规则)
-  - [final 型量的特殊规则](#final-型量的特殊规则)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 一、物理内存模型
 
 物理机遇到的并发问题与虚拟机中的情况有不少相似之处，物理机对并发的处理方案对于虚拟机的实现也有相当大的参考意义。
@@ -46,20 +25,20 @@
 
 为了解决缓存一致性问题，**需要各个处理器访问缓存时都遵循一些协议，在读写时要根据协议来进行操作**。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/cpu-memory-model.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/cpu-memory-model.png!zp)
 
 ### 代码乱序执行优化
 
 **除了高速缓存以外，为了使得处理器内部的运算单元尽量被充分利用**，处理器可能会对输入代码进行乱序执行（Out-Of-Order Execution）优化。处理器会在计算之后将乱序执行的结果重组，**保证该结果与顺序执行的结果是一致的**，但不保证程序中各个语句计算的先后顺序与输入代码中的顺序一致。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_1.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_1.png!zp)
 
 乱序执行技术是处理器为提高运算速度而做出违背代码原有顺序的优化。
 
 - **单核**环境下，处理器保证做出的优化不会导致执行结果远离预期目标，但在多核环境下却并非如此。
 - **多核**环境下， 如果存在一个核的计算任务依赖另一个核的计算任务的中间结果，而且对相关数据读写没做任何防护措施，那么其顺序性并不能靠代码的先后顺序来保证。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_2.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_2.png!zp)
 
 ## 二、Java 内存模型
 
@@ -75,11 +54,11 @@ JMM 规定了**所有的变量都存储在主内存（Main Memory）中**。
 
 每条线程还有自己的工作内存（Working Memory），**工作内存中保留了该线程使用到的变量的主内存的副本**。工作内存是 JMM 的一个抽象概念，并不真实存在，它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译器优化。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_3.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_3.png!zp)
 
 线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存中的变量。不同的线程间也无法直接访问对方工作内存中的变量，**线程间变量值的传递均需要通过主内存来完成**。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_4.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_4.png!zp)
 
 > 说明：
 >
@@ -121,7 +100,7 @@ JMM 还规定了上述 8 种基本操作，需要满足以下规则：
 - 如果一个变量事先没有被 lock 操作锁定，则不允许对它执行 unlock 操作，也不允许去 unlock 一个被其他线程锁定的变量。
 - 对一个变量执行 unlock 操作之前，必须先把此变量同步到主内存中（执行 store 和 write 操作）
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-operator.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-operator.png!zp)
 
 ## 三、Java 内存模型规则
 

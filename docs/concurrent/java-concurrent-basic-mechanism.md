@@ -4,29 +4,6 @@
 >
 > Java 对于并发的支持主要汇聚在 `java.util.concurrent`，即 J.U.C。而 J.U.C 的核心是 `AQS`。
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [一、J.U.C 简介](#一juc-简介)
-- [二、synchronized](#二synchronized)
-  - [synchronized 的用法](#synchronized-的用法)
-  - [synchronized 的原理](#synchronized-的原理)
-  - [synchronized 的优化](#synchronized-的优化)
-- [三、volatile](#三volatile)
-  - [volatile 的要点](#volatile-的要点)
-  - [volatile 的用法](#volatile-的用法)
-  - [volatile 的原理](#volatile-的原理)
-- [四、CAS](#四cas)
-  - [CAS 的要点](#cas-的要点)
-  - [CAS 的原理](#cas-的原理)
-  - [CAS 的应用](#cas-的应用)
-  - [CAS 的问题](#cas-的问题)
-- [五、ThreadLocal](#五threadlocal)
-  - [ThreadLocal 的用法](#threadlocal-的用法)
-  - [ThreadLocal 的原理](#threadlocal-的原理)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 一、J.U.C 简介
 
 Java 的 `java.util.concurrent` 包（简称 J.U.C）中提供了大量并发工具类，是 Java 并发能力的主要体现（注意，不是全部，有部分并发能力的支持在其他包中）。从功能上，大致可以分为：
@@ -40,7 +17,7 @@ Java 的 `java.util.concurrent` 包（简称 J.U.C）中提供了大量并发工
 
 我个人理解，Java 并发框架可以分为以下层次。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-concurrent-basic-mechanism.png)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-concurrent-basic-mechanism.png)
 
 由 Java 并发框架图不难看出，J.U.C 包中的工具类是基于 `synchronized`、`volatile`、`CAS`、`ThreadLocal` 这样的并发核心机制打造的。所以，要想深入理解 J.U.C 工具类的特性、为什么具有这样那样的特性，就必须先理解这些核心机制。
 

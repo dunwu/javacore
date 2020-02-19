@@ -4,44 +4,15 @@
 >
 > 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/reflect)」
 
-<!-- TOC depthFrom:2 depthTo:3 -->
+## 简介
 
-- [1. 简介](#1-简介)
-  - [1.1. 什么是反射](#11-什么是反射)
-  - [1.2. 反射的应用场景](#12-反射的应用场景)
-  - [1.3. 反射的缺点](#13-反射的缺点)
-- [2. 反射机制](#2-反射机制)
-  - [2.1. 类加载过程](#21-类加载过程)
-  - [2.2. Class 对象](#22-class-对象)
-- [3. 使用反射](#3-使用反射)
-  - [3.1. java.lang.reflect 包](#31-javalangreflect-包)
-  - [3.2. 获得 Class 对象](#32-获得-class-对象)
-  - [3.3. 判断是否为某个类的实例](#33-判断是否为某个类的实例)
-  - [3.4. 创建实例](#34-创建实例)
-  - [3.5. Field](#35-field)
-  - [3.6. Method](#36-method)
-  - [3.7. Constructor](#37-constructor)
-  - [3.8. Array](#38-array)
-- [4. 动态代理](#4-动态代理)
-  - [4.1. 静态代理](#41-静态代理)
-  - [4.2. 动态代理](#42-动态代理)
-  - [4.3. InvocationHandler 接口](#43-invocationhandler-接口)
-  - [4.4. Proxy 类](#44-proxy-类)
-  - [4.5. 动态代理实例](#45-动态代理实例)
-- [5. 小结](#5-小结)
-- [6. 参考资料](#6-参考资料)
-
-<!-- /TOC -->
-
-## 1. 简介
-
-### 1.1. 什么是反射
+### 什么是反射
 
 反射(Reflection)是 Java 程序开发语言的特征之一，它允许运行中的 Java 程序获取自身的信息，并且可以操作类或对象的内部属性。
 
 **通过反射机制，可以在运行时访问 Java 对象的属性，方法，构造方法等。**
 
-### 1.2. 反射的应用场景
+### 反射的应用场景
 
 反射的主要应用场景有：
 
@@ -50,15 +21,15 @@
 - **注解** - 注解本身仅仅是起到标记作用，它需要利用反射机制，根据注解标记去调用注解解释器，执行行为。如果没有反射机制，注解并不比注释更有用。
 - **可扩展性功能** - 应用程序可以通过使用完全限定名称创建可扩展性对象实例来使用外部的用户定义类。
 
-### 1.3. 反射的缺点
+### 反射的缺点
 
 - **性能开销** - 由于反射涉及动态解析的类型，因此无法执行某些 Java 虚拟机优化。因此，反射操作的性能要比非反射操作的性能要差，应该在性能敏感的应用程序中频繁调用的代码段中避免。
 - **破坏封装性** - 反射调用方法时可以忽略权限检查，因此可能会破坏封装性而导致安全问题。
 - **内部曝光** - 由于反射允许代码执行在非反射代码中非法的操作，例如访问私有字段和方法，所以反射的使用可能会导致意想不到的副作用，这可能会导致代码功能失常并可能破坏可移植性。反射代码打破了抽象，因此可能会随着平台的升级而改变行为。
 
-## 2. 反射机制
+## 反射机制
 
-### 2.1. 类加载过程
+### 类加载过程
 
 ![img](http://dunwu.test.upcdn.net/snap/1553611895164.png!zp)
 
@@ -68,7 +39,7 @@
 2. JVM 中的类加载器读取字节码文件，取出二进制数据，加载到内存中，解析.class 文件内的信息。类加载器会根据类的全限定名来获取此类的二进制字节流；然后，将字节流所代表的静态存储结构转化为方法区的运行时数据结构；接着，在内存中生成代表这个类的 `java.lang.Class` 对象。
 3. 加载结束后，JVM 开始进行连接阶段（包含验证、准备、初始化）。经过这一系列操作，类的变量会被初始化。
 
-### 2.2. Class 对象
+### Class 对象
 
 要想使用反射，首先需要获得待操作的类所对应的 Class 对象。**Java 中，无论生成某个类的多少个对象，这些对象都会对应于同一个 Class 对象。这个 Class 对象是由 JVM 生成的，通过它能够获悉整个类的结构**。所以，`java.lang.Class` 可以视为所有反射 API 的入口点。
 
@@ -86,9 +57,9 @@ User user = new User();
 2. JVM 会去本地磁盘查找 `User.class` 文件并加载 JVM 内存中。
 3. JVM 通过调用类加载器自动创建这个类对应的 `Class` 对象，并且存储在 JVM 的方法区。注意：**一个类有且只有一个 `Class` 对象**。
 
-## 3. 使用反射
+## 使用反射
 
-### 3.1. java.lang.reflect 包
+### java.lang.reflect 包
 
 Java 中的 `java.lang.reflect` 包提供了反射功能。`java.lang.reflect` 包中的类都没有 `public` 构造方法。
 
@@ -102,7 +73,7 @@ Java 中的 `java.lang.reflect` 包提供了反射功能。`java.lang.reflect` �
 - `Modifier` 类 - 提供了 static 方法和常量，对类和成员访问修饰符进行解码。
 - `Proxy` 类 - 提供动态地生成代理类和类实例的静态方法。
 
-### 3.2. 获得 Class 对象
+### 获得 Class 对象
 
 获得 Class 的三种方法：
 
@@ -196,7 +167,7 @@ public class ReflectClassDemo03 {
 //java.util.HashSet
 ```
 
-### 3.3. 判断是否为某个类的实例
+### 判断是否为某个类的实例
 
 判断是否为某个类的实例有两种方式：
 
@@ -222,7 +193,7 @@ public class InstanceofDemo {
 //ArrayList is List
 ```
 
-### 3.4. 创建实例
+### 创建实例
 
 通过反射来创建实例对象主要有两种方式：
 
@@ -254,7 +225,7 @@ public class NewInstanceDemo {
 //bbb
 ```
 
-### 3.5. Field
+### Field
 
 `Class` 对象提供以下方法获取对象的成员（`Field`）：
 
@@ -295,7 +266,7 @@ public class ReflectFieldDemo {
 //Type: class java.lang.Object
 ```
 
-### 3.6. Method
+### Method
 
 `Class` 对象提供以下方法获取对象的方法（`Method`）：
 
@@ -343,7 +314,7 @@ public class ReflectMethodDemo {
 }
 ```
 
-### 3.7. Constructor
+### Constructor
 
 `Class` 对象提供以下方法获取对象的构造方法（`Constructor`）：
 
@@ -381,7 +352,7 @@ public class ReflectMethodConstructorDemo {
 }
 ```
 
-### 3.8. Array
+### Array
 
 数组在 Java 里是比较特殊的一种类型，它可以赋值给一个对象引用。下面我们看一看利用反射创建数组的例子：
 
@@ -413,11 +384,11 @@ public static Object newInstance(Class<?> componentType, int length)
 }
 ```
 
-## 4. 动态代理
+## 动态代理
 
 动态代理是反射的一个非常重要的应用场景。动态代理常被用于一些 Java 框架中。例如 Spring 的 AOP ，Dubbo 的 SPI 接口，就是基于 Java 动态代理实现的。
 
-### 4.1. 静态代理
+### 静态代理
 
 > 静态代理其实就是指设计模式中的代理模式。
 >
@@ -464,7 +435,7 @@ class Proxy extends Subject {
 >
 > 静态代理模式固然在访问无法访问的资源，增强现有的接口业务功能方面有很大的优点，但是大量使用这种静态代理，会使我们系统内的类的规模增大，并且不易维护；并且由于 Proxy 和 RealSubject 的功能本质上是相同的，Proxy 只是起到了中介的作用，这种代理在系统中的存在，导致系统结构比较臃肿和松散。
 
-### 4.2. 动态代理
+### 动态代理
 
 为了解决静态代理的问题，就有了创建动态代理的想法：
 
@@ -489,7 +460,7 @@ Java 动态代理基于经典代理模式，引入了一个 InvocationHandler，
 
 在 Java 的动态代理机制中，有两个重要的类（接口），一个是 `InvocationHandler` 接口、另一个则是 `Proxy` 类，这一个类和一个接口是实现我们动态代理所必须用到的。
 
-### 4.3. InvocationHandler 接口
+### InvocationHandler 接口
 
 `InvocationHandler` 接口定义：
 
@@ -516,7 +487,7 @@ Object invoke(Object proxy, Method method, Object[] args) throws Throwable
 
 如果不是很明白，等下通过一个实例会对这几个参数进行更深的讲解。
 
-### 4.4. Proxy 类
+### Proxy 类
 
 `Proxy` 这个类的作用就是用来动态创建一个代理对象的类，它提供了许多的方法，但是我们用的最多的就是 `newProxyInstance` 这个方法：
 
@@ -532,7 +503,7 @@ public static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces,
 - **interfaces** - 一个 Interface 对象的数组，表示的是我将要给我需要代理的对象提供一组什么接口，如果我提供了一组接口给它，那么这个代理对象就宣称实现了该接口(多态)，这样我就能调用这组接口中的方法了
 - **h** - 一个 InvocationHandler 对象，表示的是当我这个动态代理对象在调用方法的时候，会关联到哪一个 InvocationHandler 对象上
 
-### 4.5. 动态代理实例
+### 动态代理实例
 
 上面的内容介绍完这两个接口(类)以后，我们来通过一个实例来看看我们的动态代理模式是什么样的：
 
@@ -673,13 +644,13 @@ public abstract java.lang.String io.github.dunwu.javacore.reflect.InvocationHand
 
 正好就是我们的 Subject 接口中的两个方法，这也就证明了当我通过代理对象来调用方法的时候，起实际就是委托由其关联到的 handler 对象的 invoke 方法中来调用，并不是自己来真实调用，而是通过代理的方式来调用的。
 
-## 5. 小结
+## 小结
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java反射.svg!zp)
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java代理.svg!zp)
 
-## 6. 参考资料
+## 参考资料
 
 - [Java编程思想](https://book.douban.com/subject/2130190/)
 - [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)

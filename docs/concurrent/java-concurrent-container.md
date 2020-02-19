@@ -2,18 +2,6 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [一、同步容器](#一同步容器)
-  - [同步容器简介](#同步容器简介)
-  - [同步容器的问题](#同步容器的问题)
-- [二、并发容器](#二并发容器)
-  - [ConcurrentHashMap](#concurrenthashmap)
-  - [CopyOnWriteArrayList](#copyonwritearraylist)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 一、同步容器
 
 ### 同步容器简介
@@ -182,18 +170,18 @@ public class VectorDemo2 {
 
 J.U.C 包中提供了几个非常有用的并发容器作为线程安全的容器：
 
-| 并发容器                | 对应的普通容器 | 描述                                                         |
-| ----------------------- | -------------- | ------------------------------------------------------------ |
+| 并发容器                | 对应的普通容器 | 描述                                                                                          |
+| ----------------------- | -------------- | --------------------------------------------------------------------------------------------- |
 | `ConcurrentHashMap`     | `HashMap`      | Java 1.8 之前采用分段锁机制细化锁粒度，降低阻塞，从而提高并发性；Java 1.8 之后基于 CAS 实现。 |
-| `ConcurrentSkipListMap` | `SortedMap`    | 基于跳表实现的                                               |
-| `CopyOnWriteArrayList`  | `ArrayList`    |                                                              |
-| `CopyOnWriteArraySet`   | `Set`          | 基于 `CopyOnWriteArrayList` 实现。                           |
-| `ConcurrentSkipListSet` | `SortedSet`    | 基于 `ConcurrentSkipListMap` 实现。                          |
-| `ConcurrentLinkedQueue` | `Queue`        | 线程安全的无界队列。底层采用单链表。支持 FIFO。              |
-| `ConcurrentLinkedDeque` | `Deque`        | 线程安全的无界双端队列。底层采用双向链表。支持 FIFO 和 FILO。 |
-| `ArrayBlockingQueue`    | `Queue`        | 数组实现的阻塞队列。                                         |
-| `LinkedBlockingQueue`   | `Queue`        | 链表实现的阻塞队列。                                         |
-| `LinkedBlockingDeque`   | `Deque`        | 双向链表实现的双端阻塞队列。                                 |
+| `ConcurrentSkipListMap` | `SortedMap`    | 基于跳表实现的                                                                                |
+| `CopyOnWriteArrayList`  | `ArrayList`    |                                                                                               |
+| `CopyOnWriteArraySet`   | `Set`          | 基于 `CopyOnWriteArrayList` 实现。                                                            |
+| `ConcurrentSkipListSet` | `SortedSet`    | 基于 `ConcurrentSkipListMap` 实现。                                                           |
+| `ConcurrentLinkedQueue` | `Queue`        | 线程安全的无界队列。底层采用单链表。支持 FIFO。                                               |
+| `ConcurrentLinkedDeque` | `Deque`        | 线程安全的无界双端队列。底层采用双向链表。支持 FIFO 和 FILO。                                 |
+| `ArrayBlockingQueue`    | `Queue`        | 数组实现的阻塞队列。                                                                          |
+| `LinkedBlockingQueue`   | `Queue`        | 链表实现的阻塞队列。                                                                          |
+| `LinkedBlockingDeque`   | `Deque`        | 双向链表实现的双端阻塞队列。                                                                  |
 
 ## ConcurrentHashMap
 
@@ -216,16 +204,16 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
 
 ```java
 public interface ConcurrentMap<K, V> extends Map<K, V> {
- 
+
     // 仅当 K 没有相应的映射值才插入
     V putIfAbsent(K key, V value);
- 
+
     // 仅当 K 被映射到 V 时才移除
     boolean remove(Object key, Object value);
- 
+
     // 仅当 K 被映射到 oldValue 时才替换为 newValue
     boolean replace(K key, V oldValue, V newValue);
- 
+
     // 仅当 K 被映射到某个值时才替换为 newValue
     V replace(K key, V value);
 }
@@ -388,7 +376,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 
 ## CopyOnWriteArrayList
 
-#### 要点
+### 要点
 
 - 作用：CopyOnWrite 字面意思为写入时复制。CopyOnWriteArrayList 是线程安全的 ArrayList。
 - 原理：
@@ -401,9 +389,9 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
   <img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/CopyOnWriteArrayList.png">
 </p>
 
-#### 源码
+### 源码
 
-##### 重要属性
+#### 重要属性
 
 - lock - 执行写时复制操作，需要使用可重入锁加锁
 - array - 对象数组，用于存放元素
@@ -416,7 +404,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
     private transient volatile Object[] array;
 ```
 
-##### 重要方法
+#### 重要方法
 
 - 添加操作
   - 添加的逻辑很简单，先将原容器 copy 一份，然后在新副本上执行写操作，之后再切换引用。当然此过程是要加锁的。
@@ -487,7 +475,7 @@ private E get(Object[] a, int index) {
 }
 ```
 
-#### 示例
+### 示例
 
 ```java
 public class CopyOnWriteArrayListDemo {

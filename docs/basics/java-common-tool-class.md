@@ -6,23 +6,6 @@
 >
 > 并发、IO、容器的工具类不会在本文提及，后面会有专题一一道来。
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [字符串](#字符串)
-  - [String](#string)
-  - [StringBuffer](#stringbuffer)
-  - [StringBuilder](#stringbuilder)
-- [日期时间](#日期时间)
-  - [Date](#date)
-  - [SimpleDateFormat](#simpledateformat)
-  - [Calendar](#calendar)
-- [数学](#数学)
-  - [Number](#number)
-  - [Math](#math)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 字符串
 
 ### String

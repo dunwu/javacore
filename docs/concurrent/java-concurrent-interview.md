@@ -2,59 +2,9 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
-<!-- TOC depthFrom:2 depthTo:3 -->
+## 并发简介
 
-- [1. 并发简介](#1-并发简介)
-    - [1.1. 什么是进程？什么是线程？进程和线程的区别？](#11-什么是进程什么是线程进程和线程的区别)
-    - [1.2. 并发（多线程）编程的好处是什么？](#12-并发多线程编程的好处是什么)
-    - [1.3. 并发一定比串行更快吗？](#13-并发一定比串行更快吗)
-    - [1.4. 如何让正在运行的线程暂停一段时间？](#14-如何让正在运行的线程暂停一段时间)
-    - [1.5. 什么是线程调度器(Thread Scheduler)和时间分片(Time Slicing)？](#15-什么是线程调度器thread-scheduler和时间分片time-slicing)
-    - [1.6. 在多线程中，什么是上下文切换(context-switching)？](#16-在多线程中什么是上下文切换context-switching)
-    - [1.7. 如何确保线程安全？](#17-如何确保线程安全)
-    - [1.8. 什么是死锁(Deadlock)？如何分析和避免死锁？](#18-什么是死锁deadlock如何分析和避免死锁)
-- [2. 线程基础](#2-线程基础)
-    - [2.1. Java 线程生命周期中有哪些状态？各状态之间如何切换？](#21-java-线程生命周期中有哪些状态各状态之间如何切换)
-    - [2.2. 创建线程有哪些方式？这些方法各自利弊是什么？](#22-创建线程有哪些方式这些方法各自利弊是什么)
-    - [2.3. 什么是 `Callable` 和 `Future`？什么是 `FutureTask`？](#23-什么是-callable-和-future什么是-futuretask)
-    - [2.4. `start()` 和 `run()` 有什么区别？可以直接调用 `Thread` 类的 `run()` 方法么？](#24-start-和-run-有什么区别可以直接调用-thread-类的-run-方法么)
-    - [2.5. `sleep()`、`yield()`、`join()` 方法有什么区别？为什么 `sleep()` 和 `yield()` 方法是静态（static）的？](#25-sleepyieldjoin-方法有什么区别为什么-sleep-和-yield-方法是静态static的)
-    - [2.6. Java 的线程优先级如何控制？高优先级的 Java 线程一定先执行吗？](#26-java-的线程优先级如何控制高优先级的-java-线程一定先执行吗)
-    - [2.7. 什么是守护线程？为什么要用守护线程？如何创建守护线程？](#27-什么是守护线程为什么要用守护线程如何创建守护线程)
-    - [2.8. 线程间是如何通信的？](#28-线程间是如何通信的)
-    - [2.9. 为什么线程通信的方法 `wait()`, `notify()` 和 `notifyAll()` 被定义在 Object 类里？](#29-为什么线程通信的方法-wait-notify-和-notifyall-被定义在-object-类里)
-    - [2.10. 为什么 `wait()`, `notify()` 和 `notifyAll()` 必须在同步方法或者同步块中被调用？](#210-为什么-wait-notify-和-notifyall-必须在同步方法或者同步块中被调用)
-- [3. 并发机制的底层实现](#3-并发机制的底层实现)
-    - [3.1. `volatile` 有什么作用？它的实现原理是什么？](#31-volatile-有什么作用它的实现原理是什么)
-    - [3.2. `synchronized` 有什么作用？它的实现原理是什么？同步方法和同步块，哪个更好？](#32-synchronized-有什么作用它的实现原理是什么同步方法和同步块哪个更好)
-    - [3.3. `volatile` 和 `synchronized` 的区别？](#33-volatile-和-synchronized-的区别)
-    - [3.4. `ThreadLocal` 有什么作用？`ThreadLocal` 的实现原理是什么？](#34-threadlocal-有什么作用threadlocal-的实现原理是什么)
-- [4. 内存模型](#4-内存模型)
-    - [4.1. 什么是 Java 内存模型](#41-什么是-java-内存模型)
-- [5. 同步容器和并发容器](#5-同步容器和并发容器)
-    - [5.1. 什么是同步容器？有哪些常见同步容器？它们是如何实现线程安全的？同步容器真的线程安全吗？](#51-什么是同步容器有哪些常见同步容器它们是如何实现线程安全的同步容器真的线程安全吗)
-    - [5.2. 什么是并发容器的实现？](#52-什么是并发容器的实现)
-- [6. 锁](#6-锁)
-    - [6.1. 如何避免死锁？](#61-如何避免死锁)
-    - [6.2. Lock 接口(Lock interface)是什么？对比同步它有什么优势？](#62-lock-接口lock-interface是什么对比同步它有什么优势)
-    - [6.3. 什么是阻塞队列？如何使用阻塞队列来实现生产者-消费者模型？](#63-什么是阻塞队列如何使用阻塞队列来实现生产者-消费者模型)
-- [7. 原子变量类](#7-原子变量类)
-    - [7.1. 什么是原子操作？有哪些原子类？原子类的实现原理是什么？](#71-什么是原子操作有哪些原子类原子类的实现原理是什么)
-- [8. 并发工具类](#8-并发工具类)
-    - [8.1. CyclicBarrier 和 CountDownLatch 有什么不同？](#81-cyclicbarrier-和-countdownlatch-有什么不同)
-- [9. 线程池](#9-线程池)
-    - [9.1. 什么是线程池？如何创建一个 Java 线程池？](#91-什么是线程池如何创建一个-java-线程池)
-    - [9.2. 什么是 Executors 框架？](#92-什么是-executors-框架)
-    - [9.3. Executors 类是什么？](#93-executors-类是什么)
-    - [9.4. ThreadPoolExecutor 有哪些参数，各自有什么用？](#94-threadpoolexecutor-有哪些参数各自有什么用)
-    - [9.5. 线程数多少才合理](#95-线程数多少才合理)
-- [10. 资料](#10-资料)
-
-<!-- /TOC -->
-
-## 1. 并发简介
-
-### 1.1. 什么是进程？什么是线程？进程和线程的区别？
+### 什么是进程？什么是线程？进程和线程的区别？
 
 - 什么是进程？
   - 简言之，进程可视为一个正在运行的程序。
@@ -66,13 +16,13 @@
   - 线程比进程划分更细，所以执行开销更小，并发性更高。
   - 进程是一个实体，拥有独立的资源；而同一个进程中的多个线程共享进程的资源。
 
-### 1.2. 并发（多线程）编程的好处是什么？
+### 并发（多线程）编程的好处是什么？
 
 - 更有效率的利用多处理器核心
 - 更快的响应时间
 - 更好的编程模型
 
-### 1.3. 并发一定比串行更快吗？
+### 并发一定比串行更快吗？
 
 答：否。
 
@@ -88,13 +38,13 @@
   - 线程数要合理
   - 协程：在单线程中实现多任务调度，并在单线程中维持多个任务的切换
 
-### 1.4. 如何让正在运行的线程暂停一段时间？
+### 如何让正在运行的线程暂停一段时间？
 
 我们可以使用 `Thread` 类的 Sleep() 方法让线程暂停一段时间。
 
 需要注意的是，这并不会让线程终止，一旦从休眠中唤醒线程，线程的状态将会被改变为 Runnable，并且根据线程调度，它将得到执行。
 
-### 1.5. 什么是线程调度器(Thread Scheduler)和时间分片(Time Slicing)？
+### 什么是线程调度器(Thread Scheduler)和时间分片(Time Slicing)？
 
 线程调度器是一个操作系统服务，它负责为 `Runnable` 状态的线程分配 CPU 时间。一旦我们创建一个线程并启动它，它的执行便依赖于线程调度器的实现。
 
@@ -102,18 +52,18 @@
 
 分配 CPU 时间可以基于线程优先级或者线程等待的时间。线程调度并不受到 Java 虚拟机控制，所以由应用程序来控制它是更好的选择（也就是说不要让你的程序依赖于线程的优先级）。
 
-### 1.6. 在多线程中，什么是上下文切换(context-switching)？
+### 在多线程中，什么是上下文切换(context-switching)？
 
 上下文切换是存储和恢复 CPU 状态的过程，它使得线程执行能够从中断点恢复执行。上下文切换是多任务操作系统和多线程环境的基本特征。
 
-### 1.7. 如何确保线程安全？
+### 如何确保线程安全？
 
 - 原子类(atomic concurrent classes)
 - 锁
 - `volatile` 关键字
 - 不变类和线程安全类
 
-### 1.8. 什么是死锁(Deadlock)？如何分析和避免死锁？
+### 什么是死锁(Deadlock)？如何分析和避免死锁？
 
 死锁是指两个以上的线程永远相互阻塞的情况，这种情况产生至少需要两个以上的线程和两个以上的资源。
 
@@ -121,11 +71,11 @@
 
 避免嵌套锁，只在需要的地方使用锁和避免无限期等待是避免死锁的通常办法。
 
-## 2. 线程基础
+## 线程基础
 
-### 2.1. Java 线程生命周期中有哪些状态？各状态之间如何切换？
+### Java 线程生命周期中有哪些状态？各状态之间如何切换？
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread_1.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread_1.png!zp)
 
 `java.lang.Thread.State` 中定义了 **6** 种不同的线程状态，在给定的一个时刻，线程只能处于其中的一个状态。
 
@@ -147,9 +97,9 @@
 - **终止(Terminated)** - 线程 `run()` 方法执行结束，或者因异常退出了 `run()` 方法，则该线程结束生命周期。死亡的线程不可再次复生。
 
 > 👉 参考阅读：[Java`Thread` Methods and `Thread` States](https://www.w3resource.com/java-tutorial/java-threadclass-methods-and-threadstates.php)
-> 👉 参考阅读：[Java线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
+> 👉 参考阅读：[Java 线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
 
-### 2.2. 创建线程有哪些方式？这些方法各自利弊是什么？
+### 创建线程有哪些方式？这些方法各自利弊是什么？
 
 创建线程主要有三种方式：
 
@@ -177,9 +127,9 @@
 - 实现 `Runnable` 接口优于继承 `Thread` 类，因为根据开放封闭原则——实现接口更便于扩展；
 - 实现 `Runnable` 接口的线程没有返回值；而使用 `Callable` / `Future` 方式可以让线程有返回值。
 
-> 👉 参考阅读：[Java创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
+> 👉 参考阅读：[Java 创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
 
-### 2.3. 什么是 `Callable` 和 `Future`？什么是 `FutureTask`？
+### 什么是 `Callable` 和 `Future`？什么是 `FutureTask`？
 
 **什么是 `Callable` 和 `Future`？**
 
@@ -191,9 +141,9 @@ Java 5 在 concurrency 包中引入了 `Callable` 接口，它和 `Runnable` 接
 
 `FutureTask` 是 `Future` 的一个基础实现，我们可以将它同 `Executors` 使用处理异步任务。通常我们不需要使用 `FutureTask` 类，单当我们打算重写 `Future` 接口的一些方法并保持原来基础的实现是，它就变得非常有用。我们可以仅仅继承于它并重写我们需要的方法。阅读 Java `FutureTask` 例子，学习如何使用它。
 
-> 👉 参考阅读：[Java并发编程：Callable、Future 和 FutureTask](http://www.cnblogs.com/dolphin0520/p/3949310.html)
+> 👉 参考阅读：[Java 并发编程：Callable、Future 和 FutureTask](http://www.cnblogs.com/dolphin0520/p/3949310.html)
 
-### 2.4. `start()` 和 `run()` 有什么区别？可以直接调用 `Thread` 类的 `run()` 方法么？
+### `start()` 和 `run()` 有什么区别？可以直接调用 `Thread` 类的 `run()` 方法么？
 
 - `run()` 方法是线程的执行体。
 - `start()` 方法负责启动线程，然后 JVM 会让这个线程去执行 `run()` 方法。
@@ -203,7 +153,7 @@ Java 5 在 concurrency 包中引入了 `Callable` 接口，它和 `Runnable` 接
 - 可以。但是如果直接调用 `Thread` 的 `run()` 方法，它的行为就会和普通的方法一样。
 - 为了在新的线程中执行我们的代码，必须使用 `start()` 方法。
 
-### 2.5. `sleep()`、`yield()`、`join()` 方法有什么区别？为什么 `sleep()` 和 `yield()` 方法是静态（static）的？
+### `sleep()`、`yield()`、`join()` 方法有什么区别？为什么 `sleep()` 和 `yield()` 方法是静态（static）的？
 
 **`yield()`**
 
@@ -224,10 +174,10 @@ Java 5 在 concurrency 包中引入了 `Callable` 接口，它和 `Runnable` 接
 
 - `Thread` 类的 `sleep()` 和 `yield()` 方法将处理 **Running** 状态的线程。所以在其他处于非 **Running** 状态的线程上执行这两个方法是没有意义的。这就是为什么这些方法是静态的。它们可以在当前正在执行的线程中工作，并避免程序员错误的认为可以在其他非运行线程调用这些方法。
 
-> 👉 参考阅读：[Java线程中 yield 与 join 方法的区别](http://www.importnew.com/14958.html)
+> 👉 参考阅读：[Java 线程中 yield 与 join 方法的区别](http://www.importnew.com/14958.html)
 > 👉 参考阅读：[sleep()，wait()，yield()和 join()方法的区别](https://blog.csdn.net/xiangwanpeng/article/details/54972952)
 
-### 2.6. Java 的线程优先级如何控制？高优先级的 Java 线程一定先执行吗？
+### Java 的线程优先级如何控制？高优先级的 Java 线程一定先执行吗？
 
 **Java 中的线程优先级如何控制**
 
@@ -239,7 +189,7 @@ Java 5 在 concurrency 包中引入了 `Callable` 接口，它和 `Runnable` 接
 - 原因：这是因为 **Java 线程优先级依赖于操作系统的支持**，然而，不同的操作系统支持的线程优先级并不相同，不能很好的和 Java 中线程优先级一一对应。
 - 结论：Java 线程优先级控制并不可靠。
 
-### 2.7. 什么是守护线程？为什么要用守护线程？如何创建守护线程？
+### 什么是守护线程？为什么要用守护线程？如何创建守护线程？
 
 **什么是守护线程**
 
@@ -258,27 +208,27 @@ Java 5 在 concurrency 包中引入了 `Callable` 接口，它和 `Runnable` 接
   - 一个守护线程创建的子线程依然是守护线程。
   - 不要认为所有的应用都可以分配给守护线程来进行服务，比如读写操作或者计算逻辑。
 
-> 👉 参考阅读：[Java中守护线程的总结](https://blog.csdn.net/shimiso/article/details/8964414)
+> 👉 参考阅读：[Java 中守护线程的总结](https://blog.csdn.net/shimiso/article/details/8964414)
 
-### 2.8. 线程间是如何通信的？
+### 线程间是如何通信的？
 
 当线程间是可以共享资源时，线程间通信是协调它们的重要的手段。`Object` 类中 `wait()`, `notify()` 和 `notifyAll()` 方法可以用于线程间通信关于资源的锁的状态。
 
-> 👉 参考阅读：[Java并发编程：线程间协作的两种方式：wait、notify、notifyAll 和 Condition](http://www.cnblogs.com/dolphin0520/p/3920385.html)
+> 👉 参考阅读：[Java 并发编程：线程间协作的两种方式：wait、notify、notifyAll 和 Condition](http://www.cnblogs.com/dolphin0520/p/3920385.html)
 
-### 2.9. 为什么线程通信的方法 `wait()`, `notify()` 和 `notifyAll()` 被定义在 Object 类里？
+### 为什么线程通信的方法 `wait()`, `notify()` 和 `notifyAll()` 被定义在 Object 类里？
 
 Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并且 `wait()`、`notify()` 等方法用于等待对象的锁或者通知其他线程对象的监视器可用。在 Java 的线程中并没有可供任何对象使用的锁和同步器。这就是为什么这些方法是 Object 类的一部分，这样 Java 的每一个类都有用于线程间通信的基本方法
 
-### 2.10. 为什么 `wait()`, `notify()` 和 `notifyAll()` 必须在同步方法或者同步块中被调用？
+### 为什么 `wait()`, `notify()` 和 `notifyAll()` 必须在同步方法或者同步块中被调用？
 
 当一个线程需要调用对象的 `wait()` 方法的时候，这个线程必须拥有该对象的锁，接着它就会释放这个对象锁并进入等待状态直到其他线程调用这个对象上的 `notify()` 方法。同样的，当一个线程需要调用对象的 `notify()` 方法时，它会释放这个对象的锁，以便其他在等待的线程就可以得到这个对象锁。
 
 由于所有的这些方法都需要线程持有对象的锁，这样就只能通过同步来实现，所以他们只能在同步方法或者同步块中被调用。
 
-## 3. 并发机制的底层实现
+## 并发机制的底层实现
 
-### 3.1. `volatile` 有什么作用？它的实现原理是什么？
+### `volatile` 有什么作用？它的实现原理是什么？
 
 作用：
 
@@ -293,9 +243,9 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
   - 它会强制将对缓存的修改操作立即写入主存；
   - 如果是写操作，它会导致其他 CPU 中对应的缓存行无效。
 
-> 👉 参考阅读：[Java并发编程：`volatile` 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
+> 👉 参考阅读：[Java 并发编程：`volatile` 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
 
-### 3.2. `synchronized` 有什么作用？它的实现原理是什么？同步方法和同步块，哪个更好？
+### `synchronized` 有什么作用？它的实现原理是什么？同步方法和同步块，哪个更好？
 
 作用：
 
@@ -318,9 +268,9 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
 - 同步块是更好的选择。
 - 因为它不会锁住整个对象（当然你也可以让它锁住整个对象）。同步方法会锁住整个对象，哪怕这个类中有多个不相关联的同步块，这通常会导致他们停止执行并需要等待获得这个对象上的锁。
 
-> 👉 参考阅读：[Java并发编程：synchronized](http://www.cnblogs.com/dolphin0520/p/3923737.html)
+> 👉 参考阅读：[Java 并发编程：synchronized](http://www.cnblogs.com/dolphin0520/p/3923737.html)
 
-### 3.3. `volatile` 和 `synchronized` 的区别？
+### `volatile` 和 `synchronized` 的区别？
 
 - `volatile` 本质是在告诉 jvm 当前变量在寄存器（工作内存）中的值是不确定的，需要从主存中读取； `synchronized` 则是锁定当前变量，只有当前线程可以访问该变量，其他线程被阻塞住。
 - `volatile` 仅能使用在变量级别；synchronized 则可以使用在变量、方法、和类级别的。
@@ -334,11 +284,11 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
 
 ### CAS 的三大问题？
 
-1. ABA问题：因为CAS需要在操作值的时候检查下值有没有发生变化，如果没有发生变化则更新，但是如果一个值原来是A，变成了B，又变成了A，那么使用CAS进行检查时会发现它的值没有发生变化，但是实际上却变化了。ABA问题的解决思路就是使用版本号。在变量前面追加上版本号，每次变量更新的时候把版本号加一，那么A－B－A 就会变成1A-2B－3A。
-2. 循环时间长开销大。自旋CAS如果长时间不成功，会给CPU带来非常大的执行开销。如果JVM能支持处理器提供的pause指令那么效率会有一定的提升，pause指令有两个作用，第一它可以延迟流水线执行指令（de-pipeline）,使CPU不会消耗过多的执行资源，延迟的时间取决于具体实现的版本，在一些处理器上延迟时间是零。第二它可以避免在退出循环的时候因内存顺序冲突（memory order violation）而引起CPU流水线被清空（CPU pipeline flush），从而提高CPU的执行效率。
-3. 只能保证一个共享变量的原子操作。当对一个共享变量执行操作时，我们可以使用循环CAS的方式来保证原子操作，但是对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁，或者有一个取巧的办法，就是把多个共享变量合并成一个共享变量来操作。比如有两个共享变量i＝2,j=a，合并一下ij=2a，然后用CAS来操作ij。从Java1.5开始JDK提供了AtomicReference类来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行CAS操作。
+1. ABA 问题：因为 CAS 需要在操作值的时候检查下值有没有发生变化，如果没有发生变化则更新，但是如果一个值原来是 A，变成了 B，又变成了 A，那么使用 CAS 进行检查时会发现它的值没有发生变化，但是实际上却变化了。ABA 问题的解决思路就是使用版本号。在变量前面追加上版本号，每次变量更新的时候把版本号加一，那么 A－B－A 就会变成 1A-2B－3A。
+2. 循环时间长开销大。自旋 CAS 如果长时间不成功，会给 CPU 带来非常大的执行开销。如果 JVM 能支持处理器提供的 pause 指令那么效率会有一定的提升，pause 指令有两个作用，第一它可以延迟流水线执行指令（de-pipeline）,使 CPU 不会消耗过多的执行资源，延迟的时间取决于具体实现的版本，在一些处理器上延迟时间是零。第二它可以避免在退出循环的时候因内存顺序冲突（memory order violation）而引起 CPU 流水线被清空（CPU pipeline flush），从而提高 CPU 的执行效率。
+3. 只能保证一个共享变量的原子操作。当对一个共享变量执行操作时，我们可以使用循环 CAS 的方式来保证原子操作，但是对多个共享变量操作时，循环 CAS 就无法保证操作的原子性，这个时候就可以用锁，或者有一个取巧的办法，就是把多个共享变量合并成一个共享变量来操作。比如有两个共享变量 i ＝ 2,j=a，合并一下 ij=2a，然后用 CAS 来操作 ij。从 Java1.5 开始 JDK 提供了 AtomicReference 类来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行 CAS 操作。
 
-### 3.4. `ThreadLocal` 有什么作用？`ThreadLocal` 的实现原理是什么？
+### `ThreadLocal` 有什么作用？`ThreadLocal` 的实现原理是什么？
 
 **ThreadLocal 有什么作用？**
 
@@ -354,11 +304,11 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
 
 需要注意的是：`ThreadLocalMap.Entry` 继承了 `WeakReference`。ThreadLocalMap 使用它的目的是：当 threadLocal 实例可以被 GC 回收时，系统可以检测到该 threadLocal 对应的 Entry 是否已经过期（根据 `reference.get() == null` 来判断，如果为 true 则表示过期，程序内部称为 stale slots）来自动做一些清除工作，否则如果不清除的话容易产生内存无法释放的问题：value 对应的对象即使不再使用，但由于被 threadLocalMap 所引用导致无法被 GC 回收。实际代码中，ThreadLocalMap 会在 set，get 以及 resize 等方法中对 stale slots 做自动删除（set 以及 get 不保证所有过期 slots 会在操作中会被删除，而 resize 则会删除 threadLocalMap 中所有的过期 slots）。当然将 threadLocal 对象设置为 null 并不能完全避免内存泄露对象，最安全的办法仍然是调用 ThreadLocal 的 remove 方法，来彻底避免可能的内存泄露。
 
-> 👉 参考阅读：[Java并发编程：深入剖析 ThreadLocal](https://www.cnblogs.com/dolphin0520/p/3920407.html)
+> 👉 参考阅读：[Java 并发编程：深入剖析 ThreadLocal](https://www.cnblogs.com/dolphin0520/p/3920407.html)
 
-## 4. 内存模型
+## 内存模型
 
-### 4.1. 什么是 Java 内存模型
+### 什么是 Java 内存模型
 
 - Java 内存模型即 Java Memory Model，简称 JMM。JMM 定义了 JVM 在计算机内存(RAM)中的工作方式。JMM 是隶属于 JVM 的。
 - 并发编程领域两个关键问题：线程间通信和线程间同步
@@ -382,13 +332,13 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
   - 对于一个对象的成员方法，这些方法中包含本地变量，仍需要存储在栈区，即使它们所属的对象在堆区。
   - 对于一个对象的成员变量，不管它是原始类型还是包装类型，都会被存储到堆区。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_3.png)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-memory-model_3.png)
 
 > 👉 参考阅读：[全面理解 Java 内存模型](https://blog.csdn.net/suifeng3051/article/details/52611310)
 
-## 5. 同步容器和并发容器
+## 同步容器和并发容器
 
-### 5.1. 什么是同步容器？有哪些常见同步容器？它们是如何实现线程安全的？同步容器真的线程安全吗？
+### 什么是同步容器？有哪些常见同步容器？它们是如何实现线程安全的？同步容器真的线程安全吗？
 
 - 同步容器是指 Java 中使用 `synchronized` 关键字修饰方法以保证方法线程安全的容器。
 - 常见的同步容器有 Vector、HashTable、Stack，与之相对应的 ArrayList、HashMap、LinkedList 则是非线程安全的。
@@ -402,9 +352,9 @@ for(int i=0;i<vector.size();i++)
     vector.remove(i);
 ```
 
-> 👉 参考阅读：[Java并发编程：同步容器](https://www.cnblogs.com/dolphin0520/p/3933404.html)
+> 👉 参考阅读：[Java 并发编程：同步容器](https://www.cnblogs.com/dolphin0520/p/3933404.html)
 
-### 5.2. 什么是并发容器的实现？
+### 什么是并发容器的实现？
 
 Java 集合类都是快速失败的，这就意味着当集合被改变且一个线程在使用迭代器遍历集合的时候，迭代器的 next()方法将抛出 ConcurrentModificationException 异常。
 
@@ -412,9 +362,9 @@ Java 集合类都是快速失败的，这就意味着当集合被改变且一个
 
 主要的类有 ConcurrentHashMap, CopyOnWriteArrayList 和 CopyOnWriteArraySet，阅读这篇文章了解如何避免 ConcurrentModificationException。
 
-## 6. 并发锁
+## 并发锁
 
-### 6.1. 如何避免死锁？
+### 如何避免死锁？
 
 - 避免一个线程同时获取多个锁
 - 避免一个线程在锁内同时占用多个资源，尽量保证每个锁只占用一个资源
@@ -423,7 +373,7 @@ Java 集合类都是快速失败的，这就意味着当集合被改变且一个
 
 ### Java 中有哪些锁？
 
-### 6.2. Lock 接口(Lock interface)是什么？对比同步它有什么优势？
+### Lock 接口(Lock interface)是什么？对比同步它有什么优势？
 
 Lock 接口比同步方法和同步块提供了更具扩展性的锁操作。他们允许更灵活的结构，可以具有完全不同的性质，并且可以支持多个相关类的条件对象。
 
@@ -431,7 +381,7 @@ Lock 接口比同步方法和同步块提供了更具扩展性的锁操作。他
 
 可以使锁更公平可以使线程在等待锁的时候响应中断可以让线程尝试获取锁，并在无法获取锁的时候立即返回或者等待一段时间可以在不同的范围，以不同的顺序获取和释放锁阅读更多关于锁的例子
 
-### 6.3. 什么是阻塞队列？如何使用阻塞队列来实现生产者-消费者模型？
+### 什么是阻塞队列？如何使用阻塞队列来实现生产者-消费者模型？
 
 java.util.concurrent.BlockingQueue 的特性是：当队列是空的时，从队列中获取或删除元素的操作将会被阻塞，或者当队列是满时，往队列里添加元素的操作会被阻塞。
 
@@ -443,9 +393,9 @@ BlockingQueue 接口是 java collections 框架的一部分，它主要用于实
 
 阅读这篇文章了解如何使用阻塞队列实现生产者-消费者问题。
 
-## 7. 原子变量类
+## 原子变量类
 
-### 7.1. 什么是原子操作？有哪些原子类？
+### 什么是原子操作？有哪些原子类？
 
 原子操作是指一个不受其他操作影响的操作任务单元。原子操作是在多线程环境下避免数据不一致必须的手段。
 
@@ -455,40 +405,40 @@ int++并不是一个原子操作，所以当一个线程读取它的值并加 1 
 
 ### 原子类的实现原理是什么？
 
-1. 处理器实现原子操作：使用总线锁保证原子性，使用缓存锁保证原子性（修改内存地址，缓存一致性机制：阻止同时修改由2个以上的处理器缓存的内存区域数据）
-2. JAVA实现原子操作：循环使用CAS实现原子操作
+1. 处理器实现原子操作：使用总线锁保证原子性，使用缓存锁保证原子性（修改内存地址，缓存一致性机制：阻止同时修改由 2 个以上的处理器缓存的内存区域数据）
+2. JAVA 实现原子操作：循环使用 CAS 实现原子操作
 
-## 8. 并发工具类
+## 并发工具类
 
-### 8.1. CyclicBarrier 和 CountDownLatch 有什么不同？
+### CyclicBarrier 和 CountDownLatch 有什么不同？
 
 CyclicBarrier 和 CountDownLatch 都可以用来让一组线程等待其它线程。与 CyclicBarrier 不同的是，CountdownLatch 不能重用。
 
-> 👉 参考阅读：[Java并发编程：CountDownLatch、CyclicBarrier 和 Semaphore](http://www.cnblogs.com/dolphin0520/p/3920397.html)
+> 👉 参考阅读：[Java 并发编程：CountDownLatch、CyclicBarrier 和 Semaphore](http://www.cnblogs.com/dolphin0520/p/3920397.html)
 
-## 9. 线程池
+## 线程池
 
-### 9.1. 什么是线程池？如何创建一个 Java 线程池？
+### 什么是线程池？如何创建一个 Java 线程池？
 
 一个线程池管理了一组工作线程，同时它还包括了一个用于放置等待执行的任务的队列。
 
 java.util.concurrent.Executors 提供了一个 java.util.concurrent.Executor 接口的实现用于创建线程池。线程池例子展现了如何创建和使用线程池，或者阅读 ScheduledThreadPoolExecutor 例子，了解如何创建一个周期任务。
 
-> 👉 参考阅读：[Java并发编程：线程池的使用](http://www.cnblogs.com/dolphin0520/p/3932921.html)
+> 👉 参考阅读：[Java 并发编程：线程池的使用](http://www.cnblogs.com/dolphin0520/p/3932921.html)
 
-### 9.2. 什么是 Executors 框架？
+### 什么是 Executors 框架？
 
 Executor 框架同 java.util.concurrent.Executor 接口在 Java 5 中被引入。Executor 框架是一个根据一组执行策略调用，调度，执行和控制的异步任务的框架。
 
 无限制的创建线程会引起应用程序内存溢出。所以创建一个线程池是个更好的的解决方案，因为可以限制线程的数量并且可以回收再利用这些线程。利用 Executors 框架可以非常方便的创建一个线程池，阅读这篇文章可以了解如何使用 Executor 框架创建一个线程池。
 
-### 9.3. Executors 类是什么？
+### Executors 类是什么？
 
 Executors 为 Executor，ExecutorService，ScheduledExecutorService，ThreadFactory 和 `Callable` 类提供了一些工具方法。
 
 Executors 可以用于方便的创建线程池。
 
-### 9.4. ThreadPoolExecutor 有哪些参数，各自有什么用？
+### ThreadPoolExecutor 有哪些参数，各自有什么用？
 
 `java.uitl.concurrent.ThreadPoolExecutor` 类是 Executor 框架中最核心的一个类。
 
@@ -523,7 +473,7 @@ ThreadPoolExecutor 有四个构造方法，前三个都是基于第四个实现�
   - DiscardPolicy：不处理，丢弃掉。
   - 当然也可以根据应用场景需要来实现 RejectedExecutionHandler 接口自定义策略。如记录日志或持久化不能处理的任务。
 
-### 9.5. 线程数多少才合理
+### 线程数多少才合理
 
 #### 资源限制
 
@@ -533,24 +483,24 @@ ThreadPoolExecutor 有四个构造方法，前三个都是基于第四个实现�
 
 如何解决资源限制问题：可以使用集群并行执行程序，既然单机的资源有限，那么可以让程序在多机上运行，比如使用 ODPS、Hadoop 或者自己搭个服务器集群，不同的机器处理不同的数据，可以通过“数据 ID%机器数”，计算得到一个机器编号，然后由对应编号的机器处理这个数据，对于软件资源受限，可以使用资源池来复用如使用连接池将数据库和 Socket 连接复用，或者在调用对方 webservice 接口获取数据只建立一个连接。
 
-## 10. 参考资料
+## 参考资料
 
 - **书**
   - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
   - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
   - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - **文章**
-  - [Java线程面试题 Top 50](http://www.importnew.com/12773.html)
-  - [Java多线程和并发基础面试问答](http://ifeve.com/java-multi-threading-concurrency-interview-questions-with-answers/)
+  - [Java 线程面试题 Top 50](http://www.importnew.com/12773.html)
+  - [Java 多线程和并发基础面试问答](http://ifeve.com/java-multi-threading-concurrency-interview-questions-with-answers/)
   - [进程和线程关系及区别](https://blog.csdn.net/yaosiming2011/article/details/44280797)
   - [JavaThread Methods and Thread States](https://www.w3resource.com/java-tutorial/java-threadclass-methods-and-threadstates.php)
-  - [Java线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
-  - [Java中守护线程的总结](https://blog.csdn.net/shimiso/article/details/8964414)
-  - [Java创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
-  - [Java线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
-  - [Java线程方法 join 的简单总结](https://www.cnblogs.com/lcplcpjava/p/6896904.html)
-  - [Java并发编程：线程间协作的两种方式：wait、notify、notifyAll 和 Condition](http://www.cnblogs.com/dolphin0520/p/3920385.html)
-  - [Java并发编程：volatile 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
-  - [Java并发编程：Callable、Future 和 FutureTask](http://www.cnblogs.com/dolphin0520/p/3949310.html)
-  - [Java并发编程：线程池的使用](http://www.cnblogs.com/dolphin0520/p/3932921.html)
-  - [Java并发编程](https://www.jianshu.com/p/0256c2995cec)
+  - [Java 线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
+  - [Java 中守护线程的总结](https://blog.csdn.net/shimiso/article/details/8964414)
+  - [Java 创建线程的三种方式及其对比](https://blog.csdn.net/longshengguoji/article/details/41126119)
+  - [Java 线程的 5 种状态及切换(透彻讲解)](https://blog.csdn.net/pange1991/article/details/53860651)
+  - [Java 线程方法 join 的简单总结](https://www.cnblogs.com/lcplcpjava/p/6896904.html)
+  - [Java 并发编程：线程间协作的两种方式：wait、notify、notifyAll 和 Condition](http://www.cnblogs.com/dolphin0520/p/3920385.html)
+  - [Java 并发编程：volatile 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
+  - [Java 并发编程：Callable、Future 和 FutureTask](http://www.cnblogs.com/dolphin0520/p/3949310.html)
+  - [Java 并发编程：线程池的使用](http://www.cnblogs.com/dolphin0520/p/3932921.html)
+  - [Java 并发编程](https://www.jianshu.com/p/0256c2995cec)

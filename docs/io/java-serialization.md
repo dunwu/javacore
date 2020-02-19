@@ -4,24 +4,6 @@
 >
 > 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/serialize)」
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [简介](#简介)
-- [序列化和反序列化](#序列化和反序列化)
-- [Serializable 接口](#serializable-接口)
-  - [serialVersionUID](#serialversionuid)
-- [默认序列化机制](#默认序列化机制)
-- [非默认序列化机制](#非默认序列化机制)
-  - [transient 关键字](#transient-关键字)
-  - [Externalizable 接口](#externalizable-接口)
-  - [Externalizable 接口的替代方法](#externalizable-接口的替代方法)
-  - [readResolve() 方法](#readresolve-方法)
-- [序列化工具](#序列化工具)
-- [小结](#小结)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 简介
 
 ![img](http://dunwu.test.upcdn.net/snap/1553224129484.png)

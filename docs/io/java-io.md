@@ -4,15 +4,6 @@
 >
 > 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
 
-<!-- TOC depthFrom:2 depthTo:2 -->
-
-- [File](#file)
-- [RandomAccessFile](#randomaccessfile)
-- [System](#system)
-- [Scanner](#scanner)
-
-<!-- /TOC -->
-
 ## File
 
 `File` 类是 `java.io` 包中唯一对文件本身进行操作的类。它可以对文件、目录进行增删查操作。

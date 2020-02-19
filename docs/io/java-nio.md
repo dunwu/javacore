@@ -2,26 +2,6 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [流与块](#流与块)
-- [通道与缓冲区](#通道与缓冲区)
-    - [通道](#通道)
-    - [缓冲区](#缓冲区)
-- [缓冲区状态变量](#缓冲区状态变量)
-- [文件 NIO 实例](#文件-nio-实例)
-- [选择器](#选择器)
-    - [创建选择器](#创建选择器)
-    - [将通道注册到选择器上](#将通道注册到选择器上)
-    - [监听事件](#监听事件)
-    - [获取到达的事件](#获取到达的事件)
-    - [事件循环](#事件循环)
-- [套接字 NIO 实例](#套接字-nio-实例)
-- [内存映射文件](#内存映射文件)
-- [对比](#对比)
-
-<!-- /TOC -->
-
 - [JavaNIO Tutorial](http://tutorials.jenkov.com/java-nio/index.html)
 - [JavaNIO 浅析](https://tech.meituan.com/nio.html)
 - [IBM: NIO 入门](https://www.ibm.com/developerworks/cn/education/java/j-nio/j-nio.html)
@@ -139,7 +119,6 @@ NIO 实现了 IO 多路复用中的 Reactor 模型，一个线程 Thread 使用�
 
 应该注意的是，只有套接字 Channel 才能配置为非阻塞，而 FileChannel 不能，为 FileChannel 配置非阻塞也没有意义。
 
-<div align="center"> <img src="../pics//4d930e22-f493-49ae-8dff-ea21cd6895dc.png"/> </div>
 ### 创建选择器
 
 ```java

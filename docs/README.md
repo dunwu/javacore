@@ -1,16 +1,15 @@
-<p align="center">
-    <a href="https://dunwu.github.io/javacore/#/" target="_blank" rel="noopener noreferrer">
-        <img src="http://dunwu.test.upcdn.net/common/logo/java-logo.png" alt="logo" width="100px">
-    </a>
-</p>
+---
+home: true
+heroImage: /images/dunwu-logo-200.png
+heroText: JAVACORE
+tagline: ☕ JavaCore 是一个 Java 核心技术教程。
+actionLink: /
+footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
+---
 
-<p align="center">
-    <img src="https://badgen.net/github/license/dunwu/javacore" alt="license">
-</p>
+# JAVACORE
 
-<h1 align="center">JavaCore</h1>
-
-> ☕ **JavaCore** 是一个 Java 核心技术教程。
+> ☕ JavaCore 是一个 Java 核心技术教程。
 >
 > - 🔁 项目同步维护：[Github](https://github.com/dunwu/javacore/) | [Gitee](https://gitee.com/turnon/javacore/)
 > - 📖 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore/)

@@ -2,30 +2,11 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [1. 简介](#1-简介)
-- [2. 招式篇](#2-招式篇)
-  - [2.1. Pattern 类](#21-pattern-类)
-  - [2.2. Matcher 类](#22-matcher-类)
-- [3. 心法篇](#3-心法篇)
-  - [3.1. 元字符](#31-元字符)
-  - [3.2. 分组构造](#32-分组构造)
-  - [3.3. 贪婪与懒惰](#33-贪婪与懒惰)
-  - [3.4. 附录](#34-附录)
-- [4. 正则应用](#4-正则应用)
-  - [4.1. 最实用的正则](#41-最实用的正则)
-  - [4.2. 特定字符](#42-特定字符)
-  - [4.3. 特定数字](#43-特定数字)
-- [5. 参考资料](#5-参考资料)
-
-<!-- /TOC -->
-
-## 1. 简介
+## 简介
 
 **正则表达式是什么？有什么用？**
 
-**_正则表达式(Regular Expression)_**是一种文本规则，可以用来**校验**、**查找**、**替换**与规则匹配的文本。
+***正则表达式(Regular Expression)***是一种文本规则，可以用来**校验**、**查找**、**替换**与规则匹配的文本。
 
 **又爱又恨的正则**
 
@@ -37,7 +18,7 @@
 
 **以上闲话可归纳为一句：学习正则应该从实例去理解规则。**
 
-## 2. 招式篇
+## 招式篇
 
 JDK 中的`java.util.regex`包提供了对正则表达式的支持。
 
@@ -47,22 +28,22 @@ JDK 中的`java.util.regex`包提供了对正则表达式的支持。
 - **Matcher 类：**`Matcher`是对输入字符串进行解释和匹配操作的引擎。
 - **PatternSyntaxException：**`PatternSyntaxException`是一个非强制异常类，它表示一个正则表达式模式中的语法错误。
 
-**_注：_**需要格外注意一点，在 Java 中使用反斜杠"\\"时必须写成 `"\\"`。所以本文的代码出现形如`String regex = "\\$\\{.*?\\}"` 其实就是"\\\$\\{.\*?\\}"，不要以为是画风不对哦。
+***注：***需要格外注意一点，在 Java 中使用反斜杠"\\"时必须写成 `"\\"`。所以本文的代码出现形如`String regex = "\\$\\{.*?\\}"` 其实就是"\\\$\\{.\*?\\}"，不要以为是画风不对哦。
 
-### 2.1. Pattern 类
+### Pattern 类
 
 `Pattern`类没有公共构造方法。要创建一个`Pattern`对象，你必须首先调用其**静态方法**`compile`，加载正则规则字符串，然后返回一个 Pattern 对象。
 
 与`Pattern`类一样，`Matcher`类也没有公共构造方法。你需要调用`Pattern`对象的`matcher`方法来获得一个`Matcher`对象。
 
-**_案例：Pattern 和 Matcher 的初始化_**
+***案例：Pattern 和 Matcher 的初始化***
 
 ```java
 Pattern p = Pattern.compile(regex);
 Matcher m = p.matcher(content);
 ```
 
-### 2.2. Matcher 类
+### Matcher 类
 
 `Matcher`类可以说是`java.util.regex`核心类中的必杀技！
 
@@ -352,7 +333,7 @@ replaceAll: product is ${product}.
 
 字符串中如果有`\`或`$`，不能被正常解析的问题解决。
 
-## 3. 心法篇
+## 心法篇
 
 为了理解下面章节的内容，你需要先了解一些基本概念。
 
@@ -368,7 +349,7 @@ replaceAll: product is ${product}.
 
 普通字符包括没有显式指定为元字符的所有可打印和不可打印字符。这包括所有大写和小写字母、所有数字、所有标点符号和一些其他符号。
 
-### 3.1. 元字符
+### 元字符
 
 #### 基本元字符
 
@@ -718,7 +699,7 @@ apppppppppp	not matches： ap?
 
 字符具有高于替换运算符的优先级，使得“m|food”匹配“m”或“food”。若要匹配“mood”或“food”，请使用括号创建子表达式，从而产生“(m|f)ood”。
 
-### 3.2. 分组构造
+### 分组构造
 
 在基本元字符章节，提到了 `()` 字符可以用来对表达式分组。实际上分组还有更多复杂的用法。
 
@@ -947,7 +928,7 @@ regex = (?<!(Saturday|Sunday) )\b\w+ \d{1,2}, \d{4}\b, content: Monday, February
 [1th] start: 8, end: 24, group: February 8, 2010
 ```
 
-### 3.3. 贪婪与懒惰
+### 贪婪与懒惰
 
 当正则表达式中包含能接受重复的限定符时，通常的行为是（在使整个表达式能得到匹配的前提下）匹配**尽可能多**的字符。以这个表达式为例：a.\*b，它将会匹配最长的以 a 开始，以 b 结束的字符串。如果用它来搜索 aabab 的话，它会匹配整个字符串 aabab。这被称为贪婪匹配。
 
@@ -1010,7 +991,7 @@ regex = a\w{3,}?b, content: abaabaaabaaaab
 
 请从输出结果中，细细体味使用不同的贪婪或懒惰策略，对于匹配子字符串有什么影响。
 
-### 3.4. 附录
+### 附录
 
 #### 匹配正则字符串的方法
 
@@ -1118,19 +1099,19 @@ public int findAll(String regex, String content) {
 | `\|`                                                                                                                                                           | 指明两项之间的一个选择。                                                      |
 | `[]`                                                                                                                                                           | 匹配方括号范围内的任意一个字符。形式如：[xyz]、[^xyz]、[a-z]、[^a-z]、[x,y,z] |
 
-## 4. 正则应用
+## 正则应用
 
 虽然本系列洋洋洒洒的大谈特谈正则表达式。但是我还是要在这里建议，如果一个正则表达式没有经过充分测试，还是要谨慎使用。
 
 正则是把双刃剑，它可以为你节省大量的代码行。但是由于它不易阅读，维护起来可是头疼的哦（你需要一个字符一个字符的去理解）。
 
-### 4.1. 最实用的正则
+### 最实用的正则
 
 #### 校验中文
 
 **描述：**校验字符串中只能有中文字符（不包括中文标点符号）。中文字符的 Unicode 编码范围是\u4e00 到 \u9fa5。
 
-如有兴趣，可以参考[**_百度百科-Unicode_**](http://baike.baidu.com/link?url=3xi0vmvCIGKQLJZdn_BYhQ1IDFsoSJMrya6_eOjCBb7A6cRIW-zhZFLC9Yh8wjxU6A_HCfNuP8FBBXU9CN3Wcq) 。
+如有兴趣，可以参考[***百度百科-Unicode***](http://baike.baidu.com/link?url=3xi0vmvCIGKQLJZdn_BYhQ1IDFsoSJMrya6_eOjCBb7A6cRIW-zhZFLC9Yh8wjxU6A_HCfNuP8FBBXU9CN3Wcq) 。
 
 ```
 ^[\u4e00-\u9fa5]+$
@@ -1152,7 +1133,7 @@ public int findAll(String regex, String content) {
 
 **描述：**由十七位数字本体码和一位数字校验码组成。排列顺序从左至右依次为：六位数字地区码；八位数字出生日期；三位数字顺序码和一位数字校验码（也可能是 X）。
 
-身份证号含义详情请见：[**_百度百科-居民身份证号码_**](http://baike.baidu.com/link?url=5mYlYNE0RsSe2D4tydajtiaR8hAm4pPZ0FHSPuQ05N4f6H-i7qPuw7sY5KfNuiOVJWVWZvU4gf3IY-vIcKdP1CU4Fv-9pKmFQB50qGv_hZT2dkGbkd9--8_saY7omV80vEw9ixVeEwda37fHswfmtyU4QSiBG5s3K5K-JnYr1dqNlPu0f3t008UcLh5-wyID)
+身份证号含义详情请见：[***百度百科-居民身份证号码***](http://baike.baidu.com/link?url=5mYlYNE0RsSe2D4tydajtiaR8hAm4pPZ0FHSPuQ05N4f6H-i7qPuw7sY5KfNuiOVJWVWZvU4gf3IY-vIcKdP1CU4Fv-9pKmFQB50qGv_hZT2dkGbkd9--8_saY7omV80vEw9ixVeEwda37fHswfmtyU4QSiBG5s3K5K-JnYr1dqNlPu0f3t008UcLh5-wyID)
 
 **地区码（6 位）**
 
@@ -1269,7 +1250,7 @@ public int findAll(String regex, String content) {
 
 此外，中国在国际上的区号为 86，所以手机号开头有+86、86 也是合法的。
 
-以上信息来源于 [**_百度百科-手机号_**](http://baike.baidu.com/link?url=Bia2K_f8rGcakOlP4d9m_-DNSgXU5-0NDP0pPavS0ZbhRHQcUFUTbMERjdO4u7cvkpTJaIDeUXq_EXWnMqXMdSuMQDX3NAbZXAlZYl_V18KATWF7y1EFzUyJ62rf3bAN)
+以上信息来源于 [***百度百科-手机号***](http://baike.baidu.com/link?url=Bia2K_f8rGcakOlP4d9m_-DNSgXU5-0NDP0pPavS0ZbhRHQcUFUTbMERjdO4u7cvkpTJaIDeUXq_EXWnMqXMdSuMQDX3NAbZXAlZYl_V18KATWF7y1EFzUyJ62rf3bAN)
 
 ```
 ^((\+)?86\s*)?((13[0-9])|(15([0-3]|[5-9]))|(18[0,2,5-9]))\d{8}$
@@ -1285,7 +1266,7 @@ public int findAll(String regex, String content) {
 3 位有效区号：010、020\~029，固话位数为 8 位。
 4 位有效区号：03xx 开头到 09xx，固话位数为 7。
 
-如果想了解更详细的信息，请参考 [**_百度百科-电话区号_**](http://baike.baidu.com/link?url=sX8JoxK1ja5uM5pDYvQe27_QsyqAZ_78DLSeEvwjqtG_uXqU6p5Oh7CPbImNbnwu1ClOmD8udgDIswZfYzQIw0z3BYZO3eTplvVDzieuowTYqt7yHGDAqyT7o4vvGhg4) 。
+如果想了解更详细的信息，请参考 [***百度百科-电话区号***](http://baike.baidu.com/link?url=sX8JoxK1ja5uM5pDYvQe27_QsyqAZ_78DLSeEvwjqtG_uXqU6p5Oh7CPbImNbnwu1ClOmD8udgDIswZfYzQIw0z3BYZO3eTplvVDzieuowTYqt7yHGDAqyT7o4vvGhg4) 。
 
 ```
 ^(010|02[0-9])(\s|-)\d{8}|(0[3-9]\d{2})(\s|-)\d{7}$
@@ -1322,9 +1303,9 @@ IPv6 地址可以表示为以下形式：
 
 显然，IPv6 地址的表示方式很复杂。你也可以参考
 
-[**_百度百科-IPv6_**](http://baike.baidu.com/link?url=D3nmh0q_G_ZVmxXFG79mjjNfT4hs9fwjqUgygh-tvhq43KYqx88HV27WEXmoT4nA4iGzXwXMm5L-j50C2gSL5q)
+[***百度百科-IPv6***](http://baike.baidu.com/link?url=D3nmh0q_G_ZVmxXFG79mjjNfT4hs9fwjqUgygh-tvhq43KYqx88HV27WEXmoT4nA4iGzXwXMm5L-j50C2gSL5q)
 
-[**_Stack overflow 上的 IPv6 正则表达高票答案_**](http://stackoverflow.com/questions/53497/regular-expression-that-matches-valid-ipv6-addresses)
+[***Stack overflow 上的 IPv6 正则表达高票答案***](http://stackoverflow.com/questions/53497/regular-expression-that-matches-valid-ipv6-addresses)
 
 ```
 (([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))
@@ -1334,7 +1315,7 @@ IPv6 地址可以表示为以下形式：
 
 **不匹配：**1.2.3.4.5.6.7.8 | 1::2::3
 
-### 4.2. 特定字符
+### 特定字符
 
 - 匹配长度为 3 的字符串：`^.{3}$`。
 - 匹配由 26 个英文字母组成的字符串：`^[A-Za-z]+$`。
@@ -1343,7 +1324,7 @@ IPv6 地址可以表示为以下形式：
 - 匹配由数字和 26 个英文字母组成的字符串：`^[A-Za-z0-9]+$`。
 - 匹配由数字、26 个英文字母或者下划线组成的字符串：`^\w+$`。
 
-### 4.3. 特定数字
+### 特定数字
 
 - 匹配正整数：`^[1-9]\d*$`
 - 匹配负整数：`^-[1-9]\d*$`
@@ -1352,7 +1333,7 @@ IPv6 地址可以表示为以下形式：
 - 匹配负浮点数：`^-([1-9]\d*\.\d*|0\.\d*[1-9]\d*)$`
 - 匹配浮点数：`^-?([1-9]\d*\.\d*|0\.\d*[1-9]\d*|0?\.0+|0)$`
 
-## 5. 参考资料
+## 参考资料
 
 - [正则表达式 30 分钟入门教程](http://deerchao.net/tutorials/regex/regex.htm)
 - [msdn 正则表达式教程](<https://msdn.microsoft.com/zh-cn/library/d9eze55x(v=vs.80).aspx>)

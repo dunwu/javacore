@@ -2,21 +2,6 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
-<!-- TOC depthFrom:2 depthTo:2 -->
-
-- [Queue 架构](#queue-架构)
-- [Queue 接口](#queue-接口)
-- [BlockingQueue 接口](#blockingqueue-接口)
-- [AbstractQueue 抽象类](#abstractqueue-抽象类)
-- [PriorityQueue 类](#priorityqueue-类)
-- [PriorityBlockingQueue 类](#priorityblockingqueue-类)
-- [LinkedBlockingQueue 类](#linkedblockingqueue-类)
-- [ArrayBlockingQueue 类](#arrayblockingqueue-类)
-- [SynchronousQueue](#synchronousqueue)
-- [资料](#资料)
-
-<!-- /TOC -->
-
 ## Queue 架构
 
 <div align="center">
@@ -52,11 +37,11 @@ BlockingQueue 对插入操作、移除操作、获取元素操作提供了四种
 
 总结如下：
 
-|         | _Throws exception_ | _Special value_ | _Blocks_         | _Times out_          |
+|         | *Throws exception* | *Special value* | *Blocks*         | *Times out*          |
 | ------- | ------------------ | --------------- | ---------------- | -------------------- |
 | Insert  | add(e)             | offer(e)        | put(e)           | offer(e, time, unit) |
 | Remove  | remove()           | poll()          | take()           | poll(time, unit)     |
-| Examine | element()          | peek()          | _not applicable_ | _not applicable_     |
+| Examine | element()          | peek()          | *not applicable* | *not applicable*     |
 
 BlockingQueue 的各个实现类都遵循了这些规则。
 

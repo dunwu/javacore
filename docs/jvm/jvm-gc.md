@@ -4,16 +4,6 @@
 
 > 程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后也会消失，因此不需要对这三个区域进行垃圾回收。**垃圾回收主要是针对 Java 堆和方法区进行**。
 
-<!-- TOC depthFrom:2 depthTo:2 -->
-
-- [对象死了吗](#对象死了吗)
-- [垃圾收集算法](#垃圾收集算法)
-- [垃圾收集器](#垃圾收集器)
-- [内存分配与回收策略](#内存分配与回收策略)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 对象死了吗
 
 ### 引用计数算法
@@ -371,6 +361,7 @@ CMS 收集器运行步骤如下：
 发生两次 stop the world 事件：初始标记和重新标记。当年老代达到特定的占用比例时，CMS 开始执行。
 
 ![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide5.png)
+
 - 初始标记是一个短暂暂停的、可达对象被标记的阶段。
 - 并发标记寻找活跃对象在应用连续执行时。
 - 最后，在重新标记阶段，寻找在之前并发标记阶段中丢失的对象。
@@ -476,7 +467,7 @@ G1 把年轻代和老年代划分成多个大小相等的独立区域（Region�
 堆空间是一个被分成许多固定大小区域的内存块。
 
 ![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide8.png)
-Java虚拟机启动时选定区域大小。Java虚拟机通常会指定2000个左右的大小相等、每个大小范围在1到32M的区域。
+Java 虚拟机启动时选定区域大小。Java 虚拟机通常会指定 2000 个左右的大小相等、每个大小范围在 1 到 32M 的区域。
 
 **（2）G1 堆空间分配**
 
@@ -501,7 +492,7 @@ Java虚拟机启动时选定区域大小。Java虚拟机通常会指定2000个�
 活跃对象会被疏散（复制、移动）到一个或多个 survivor 区域。如果达到晋升总阈值，对象会晋升到年老代区域。
 
 ![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide11.png)
-这是一个stop the world暂停。为下一次年轻代垃圾回收计算Eden和Survivor的大小。保留审计信息有助于计算大小。类似目标暂停时间的事情会被考虑在内。
+这是一个 stop the world 暂停。为下一次年轻代垃圾回收计算 Eden 和 Survivor 的大小。保留审计信息有助于计算大小。类似目标暂停时间的事情会被考虑在内。
 
 这个方法使重调区域大小变得很容易，按需把它们调大或调小。
 
@@ -510,7 +501,7 @@ Java虚拟机启动时选定区域大小。Java虚拟机通常会指定2000个�
 活跃对象被疏散到 Survivor 或者年老代区域。
 
 ![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide12.png)
-最近晋升的对象显示为深蓝色。Survivor区域显示为绿色。
+最近晋升的对象显示为深蓝色。Survivor 区域显示为绿色。
 
 关于 G1 的年轻代回收做以下总结：
 
@@ -547,6 +538,7 @@ G1 选择活性最低的区域，这些区域能够以最快的速度回收。�
 被选择的区域已经被回收和压缩到图中显示的深蓝色区和深绿色区中。
 
 ![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide17.png)
+
 ### 总结
 
 |        收集器         | 串行/并行/并发 |  年轻代/老年代  |       收集算法       |     目标     |                   适用场景                    |

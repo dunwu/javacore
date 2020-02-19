@@ -1,5 +1,9 @@
 # Java 并发教程
 
+> Java 并发总结、整理 Java 并发编程相关知识点。
+
+## 内容
+
 - [Java 并发面试题集 💯](java-concurrent-interview.md)
 - [Java 并发简介](java-concurrent-introduction.md) - 关键词：`进程`、`线程`
 - [Java 线程基础](java-thread.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`

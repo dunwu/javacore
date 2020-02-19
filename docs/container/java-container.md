@@ -2,22 +2,6 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [一、容器简介](#一容器简介)
-  - [数组与容器](#数组与容器)
-  - [容器框架](#容器框架)
-- [二、容器的基本机制](#二容器的基本机制)
-  - [泛型](#泛型)
-  - [Iterable 和 Iterator](#iterable-和-iterator)
-  - [Comparable 和 Comparator](#comparable-和-comparator)
-  - [Cloneable](#cloneable)
-  - [fail-fast](#fail-fast)
-- [三、容器和线程安全](#三容器和线程安全)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 一、容器简介
 
 ### 数组与容器
@@ -29,7 +13,7 @@ Java 中常用的存储容器就是数组和容器，二者有以下区别：
 
 ### 容器框架
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/container/java-container-structure.png)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/container/java-container-structure.png)
 
 Java 容器框架主要分为 `Collection` 和 `Map` 两种。其中，`Collection` 又分为 `List`、`Set` 以及 `Queue`。
 

@@ -4,21 +4,12 @@
 >
 > 关键词：URL、InetAddress
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [InetAddress](#inetaddress)
-- [URL](#url)
-- [Sockets](#sockets)
-- [Datagram](#datagram)
-
-<!-- /TOC -->
-
 Java 中的网络支持：
 
-- InetAddress：用于表示网络上的硬件资源，即 IP 地址；
-- URL：统一资源定位符；
-- Sockets：使用 TCP 协议实现网络通信；
-- Datagram：使用 UDP 协议实现网络通信。
+- InetAddress
+- URL
+- Sockets
+- Datagram
 
 ## InetAddress
 
@@ -61,8 +52,6 @@ public static void main(String[] args) throws IOException {
 - ServerSocket：服务器端类
 - Socket：客户端类
 - 服务器和客户端通过 InputStream 和 OutputStream 进行输入输出。
-
-<div align="center"> <img src="../pics//ClienteServidorSockets1521731145260.jpg"/> </div>
 
 ## Datagram
 

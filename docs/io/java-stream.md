@@ -4,22 +4,6 @@
 >
 > 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 
-<!-- TOC depthFrom:2 depthTo:2 -->
-
-- [字符流和字节流](#字符流和字节流)
-- [FileReader 和 FileWriter](#filereader-和-filewriter)
-- [InputStreamReader 和 OutputStreamWriter](#inputstreamreader-和-outputstreamwriter)
-- [BufferedReader](#bufferedreader)
-- [PrintStream](#printstream)
-- [FileInputStream 和 FileOutputStream](#fileinputstream-和-fileoutputstream)
-- [ByteArrayInputStream 和 ByteArrayOutputStream](#bytearrayinputstream-和-bytearrayoutputstream)
-- [PipedInputStream 和 PipedOutputStream](#pipedinputstream-和-pipedoutputstream)
-- [DataInputStream 和 DataOutputStream](#datainputstream-和-dataoutputstream)
-- [ZipInputStream 和 ZipOutputStream](#zipinputstream-和-zipoutputstream)
-- [ObjectInputStream 和 ObjectOutputStream](#objectinputstream-和-objectoutputstream)
-
-<!-- /TOC -->
-
 ## 字符流和字节流
 
 JAVA IO 中的流操作分为两类：

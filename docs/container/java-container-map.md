@@ -2,17 +2,6 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
-<!-- TOC depthFrom:2 depthTo:2 -->
-
-- [Map 家族简介](#map-家族简介)
-- [HashMap 类](#hashmap-类)
-- [LinkedHashMap 类](#linkedhashmap-类)
-- [TreeMap 类](#treemap-类)
-- [WeakHashMap](#weakhashmap)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## Map 家族简介
 
 ### Map 架构

@@ -2,31 +2,6 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
 
-<!-- TOC depthFrom:2 depthTo:3 -->
-
-- [一、简介](#一简介)
-  - [什么是线程池](#什么是线程池)
-  - [为什么要用线程池](#为什么要用线程池)
-- [二、Executor 框架](#二executor-框架)
-  - [核心 API 概述](#核心-api-概述)
-  - [Executor](#executor)
-  - [ExecutorService](#executorservice)
-  - [ScheduledExecutorService](#scheduledexecutorservice)
-- [三、ThreadPoolExecutor](#三threadpoolexecutor)
-  - [重要字段](#重要字段)
-  - [构造方法](#构造方法)
-  - [execute 方法](#execute-方法)
-  - [其他重要方法](#其他重要方法)
-  - [使用示例](#使用示例)
-- [四、Executors](#四executors)
-  - [newSingleThreadExecutor](#newsinglethreadexecutor)
-  - [newFixedThreadPool](#newfixedthreadpool)
-  - [newCachedThreadPool](#newcachedthreadpool)
-  - [newScheduleThreadPool](#newschedulethreadpool)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 一、简介
 
 ### 什么是线程池
@@ -61,7 +36,7 @@ Executor 框架核心 API 如下：
 - `ScheduledThreadPoolExecutor` - `ScheduledExecutorService` 接口的实现，一个可定时调度任务的线程池。
 - `Executors` - 可以通过调用 `Executors` 的静态工厂方法来创建线程池并返回一个 `ExecutorService` 对象。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/exexctor-uml.png)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/exexctor-uml.png)
 
 ### Executor
 
@@ -191,7 +166,7 @@ private static final int TERMINATED =  3 << COUNT_BITS;
     - `workerCount` 为 0；
     - 设置 `TIDYING` 状态成功。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread-pool_2.png)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread-pool_2.png)
 
 ### 构造方法
 
@@ -258,7 +233,7 @@ public ThreadPoolExecutor(int corePoolSize,
 3. 如果 `workerCount >= corePoolSize && workerCount < maximumPoolSize`，且线程池内的阻塞队列已满，则创建并启动一个线程来执行新提交的任务；
 4. 如果`workerCount >= maximumPoolSize`，并且线程池内的阻塞队列已满，则根据拒绝策略来处理该任务, 默认的处理方式是直接抛异常。
 
-![](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread-pool_1.png)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread-pool_1.png)
 
 ### 其他重要方法
 

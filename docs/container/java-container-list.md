@@ -4,15 +4,6 @@
 >
 > `List` 是 `Collection` 的子接口，其中可以保存各个重复的内容。
 
-<!-- TOC depthFrom:2 depthTo:2 -->
-
-- [一、List 简介](#一list-简介)
-- [二、ArrayList](#二arraylist)
-- [三、LinkedList](#三linkedlist)
-- [参考资料](#参考资料)
-
-<!-- /TOC -->
-
 ## 一、List 简介
 
 `List` 是一个接口，它继承于 `Collection` 的接口。它代表着有序的队列。

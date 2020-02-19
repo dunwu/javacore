@@ -19,7 +19,7 @@ JDK 自带了一些实用的命令行工具来监控 JVM。
 
 命令格式：
 
-```bash
+```shell
 jps [option] [hostid]
 ```
 
@@ -38,7 +38,7 @@ jps [option] [hostid]
 
 示例：
 
-```bash
+```shell
 $ jps -l -m
 28920 org.apache.catalina.startup.Bootstrap start
 11589 org.apache.catalina.startup.Bootstrap start
@@ -51,7 +51,7 @@ $ jps -l -m
 
 命令格式：
 
-```bash
+```shell
 jstat [option] VMID [interval] [count]
 ```
 
@@ -66,7 +66,7 @@ jstat [option] VMID [interval] [count]
 
 示例：
 
-```bash
+```shell
 $ jstat -gc 29527 200 5
  S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT
 22528.0 22016.0  0.0   21388.2 4106752.0 921244.7 5592576.0  2086826.5  110716.0 103441.1 12416.0 11167.7   3189   90.057  10      2.140   92.197
@@ -104,7 +104,7 @@ jmap [option] VMID
 
 dump 堆到文件，format 指定输出格式，live 指明是活着的对象，file 指定文件名
 
-```bash
+```shell
 $ jmap -dump:live,format=b,file=dump.hprof 28920
 Dumping heap to /home/xxx/dump.hprof ...
 Heap dump file created
@@ -114,7 +114,7 @@ dump.hprof 这个后缀是为了后续可以直接用 MAT(Memory Anlysis Tool)�
 
 **（2）查看实例数最多的类**
 
-```bash
+```shell
 $ jmap -histo 29527 | head -n 6
 
  num     #instances         #bytes  class name
@@ -128,7 +128,7 @@ $ jmap -histo 29527 | head -n 6
 
 注意：使用 CMS GC 情况下，`jmap -heap PID` 的执行有可能会导致 java 进程挂起。
 
-```bash
+```shell
 $ ./jmap -heap 12379
 Attaching to process ID 12379, please wait...
 Debugger attached successfully.
@@ -189,7 +189,7 @@ PS Perm Generation
 
 命令格式：
 
-```bash
+```shell
 jstack [option] vmid
 ```
 
@@ -208,7 +208,7 @@ a) 找出 Java 进程
 
 假设应用名称为 myapp：
 
-```bash
+```shell
 $ jps | grep myapp
 29527 myapp.jar
 ```
@@ -220,7 +220,7 @@ b) 找出该进程内最耗费 CPU 的线程，可以使用 `ps -Lfp pid` 或者
 ![img](http://static.oschina.net/uploads/space/2014/0128/170402_A57i_111708.png)
 TIME 列就是各个 Java 线程耗费的 CPU 时间，CPU 时间最长的是线程 ID 为 21742 的线程，用
 
-```bash
+```shell
 printf "%x\n" 21742
 ```
 
@@ -230,7 +230,7 @@ c) 使用 jstack 打印线程堆栈信息
 
 下一步终于轮到 jstack 上场了，它用来输出进程 21711 的堆栈信息，然后根据线程 ID 的十六进制值 grep，如下：
 
-```bash
+```shell
 $ jstack 21711 | grep 54ee
 "PollIntervalRetrySchedulerThread" prio=10 tid=0x00007f950043e000 nid=0x54ee in Object.wait() [0x00007f94c6eda000]
 ```
@@ -265,7 +265,7 @@ synchronized(sigLock) {
 
 命令格式：
 
-```bash
+```shell
 jhat [dumpfile]
 ```
 
@@ -277,7 +277,7 @@ jhat [dumpfile]
 
 命令格式：
 
-```bash
+```shell
 jinfo [option] pid
 ```
 
@@ -289,7 +289,7 @@ jinfo [option] pid
 
 示例：
 
-```bash
+```shell
 $ jinfo -sysprops 29527
 Attaching to process ID 29527, please wait...
 Debugger attached successfully.
