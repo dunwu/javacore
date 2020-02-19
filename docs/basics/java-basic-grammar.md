@@ -1,6 +1,6 @@
 # Java 基础语法特性
 
-> **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
 ## 注释
 

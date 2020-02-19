@@ -1,6 +1,6 @@
 # 深入理解 Java 基本数据类型
 
-> **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
 ## 数据类型分类
 

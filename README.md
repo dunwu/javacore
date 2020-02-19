@@ -6,6 +6,7 @@
 
 <p align="center">
     <img src="https://badgen.net/github/license/dunwu/javacore" alt="license">
+    <img src="https://travis-ci.com/dunwu/javacore.svg?branch=master" alt="build">
 </p>
 
 <h1 align="center">JavaCore</h1>
@@ -74,10 +75,11 @@
 
 > Java IO 知识点
 
-- [Java 常用 IO 类](docs/io/java-io.md) - 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
-- [Java 流操作](docs/io/java-stream.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
-- [Java 序列化](docs/io/java-serialization.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`
-- [Java 网络编程](docs/io/java-socket.md)
+- [Java 基础 IO 类](docs/io/java-io-base.md) - 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
+- [Java BIO](docs/io/java-bio.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
+- [Java NIO](docs/io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`
+- [Java 序列化](docs/io/java-serialization.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`、`transient`
+- [Java 网络编程](docs/io/java-net.md) - 关键词：`Socket`、`ServerSocket`、`DatagramPacket`、`DatagramSocket`
 
 ## Java 虚拟机
 
@@ -89,3 +91,31 @@
 - [JVM 类加载](docs/jvm/jvm-class-loader.md)
 - [JVM 工具](docs/jvm/jvm-tools.md)
 - [JVM 实战](docs/jvm/jvm-action.md)
+
+## 资源
+
+- **书籍**
+  - Java 四大名著
+    - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
+    - [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
+    - [《Java 核心技术 卷 II 高级特性》](https://item.jd.com/12791368.html)
+    - [《Effective Java》](https://item.jd.com/12507084.html)
+  - Java 并发
+    - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
+    - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
+  - Java 虚拟机
+    - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+  - Java 入门
+    - [《O'Reilly：Head First Java》](https://item.jd.com/10100190.html)
+    - [《Java 从入门到精通》](https://item.jd.com/12555860.html)
+    - [《疯狂 Java 讲义》](https://item.jd.com/12518025.html)
+  - 其他
+    - [《 Java 网络编程》](https://item.jd.com/11544991.html)
+    - [《Java 加密与解密的艺术》](https://item.jd.com/26122568270.html)
+    - [《Java 程序员面试宝典》](https://item.jd.com/11772823.html)
+- **学习资源**
+  - [Runoob Java 教程](https://www.runoob.com/java/java-tutorial.html)
+  - [JavaGuide](https://github.com/Snailclimb/JavaGuide)
+  - [Java](https://github.com/TheAlgorithms/Java)
+  - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)
+  - [advanced-java](https://github.com/doocs/advanced-java)

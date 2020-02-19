@@ -1,6 +1,6 @@
 # Java 并发核心机制
 
-> **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 >
 > Java 对于并发的支持主要汇聚在 `java.util.concurrent`，即 J.U.C。而 J.U.C 的核心是 `AQS`。
 

@@ -1,6 +1,6 @@
 # 深入理解 Java 并发锁
 
-> **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
 ## 一、并发锁简介
 

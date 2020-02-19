@@ -54,7 +54,7 @@ module.exports = {
             link: "/jvm/",
           },
           {
-            text: "Java系列",
+            text: "✨ Java系列",
             ariaLabel: "Java",
             items: [
               {
@@ -90,7 +90,7 @@ module.exports = {
             ]
           },
           {
-            text: "博客",
+            text: "🎯 博客",
             link: "https://github.com/dunwu/blog",
             target: "_blank",
             rel: ""

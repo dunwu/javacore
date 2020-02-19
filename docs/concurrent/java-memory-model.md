@@ -1,6 +1,6 @@
 # Java 内存模型
 
-> **📦 本文以及示例源码已归档在 [javacore](https://dunwu.github.io/javacore/#/)**
+> **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 >
 > Java 内存模型（Java Memory Model），简称 **JMM**。
 >
