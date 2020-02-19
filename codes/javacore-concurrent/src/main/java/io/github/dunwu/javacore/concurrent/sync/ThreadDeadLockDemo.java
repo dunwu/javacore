@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.concurrent.sync;
 /**
  * 死锁示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/8/1
  */
 public class ThreadDeadLockDemo implements Runnable {

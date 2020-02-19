@@ -15,22 +15,22 @@ import java.io.IOException;
  */
 public class JavassistDemo2 {
 
-	public static void main(String[] args)
-		throws CannotCompileException, IOException, NotFoundException, IllegalAccessException, InstantiationException {
-		Base oldBase = new Base();
-		System.out.println("call io.github.dunwu.javacore.jvm.bytecode.Base.process");
-		oldBase.process();
+    public static void main(String[] args)
+        throws CannotCompileException, IOException, NotFoundException, IllegalAccessException, InstantiationException {
+        Base oldBase = new Base();
+        System.out.println("call io.github.dunwu.javacore.jvm.bytecode.Base.process");
+        oldBase.process();
 
-		ClassPool cp = ClassPool.getDefault();
-		CtClass cc = cp.get("io.github.dunwu.javacore.jvm.bytecode.Base");
-		CtMethod m = cc.getDeclaredMethod("process");
-		m.insertBefore("{ System.out.println(\"start\"); }");
-		m.insertAfter("{ System.out.println(\"end\"); }");
-		Class c = cc.toClass();
-		String classPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		cc.writeFile(classPath + "io/github/dunwu/javacore/jvm/bytecode/");
-		Base newBase = (Base) c.newInstance();
-		newBase.process();
-	}
+        ClassPool cp = ClassPool.getDefault();
+        CtClass cc = cp.get("io.github.dunwu.javacore.jvm.bytecode.Base");
+        CtMethod m = cc.getDeclaredMethod("process");
+        m.insertBefore("{ System.out.println(\"start\"); }");
+        m.insertAfter("{ System.out.println(\"end\"); }");
+        Class c = cc.toClass();
+        String classPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        cc.writeFile(classPath + "io/github/dunwu/javacore/jvm/bytecode/");
+        Base newBase = (Base) c.newInstance();
+        newBase.process();
+    }
 
 }

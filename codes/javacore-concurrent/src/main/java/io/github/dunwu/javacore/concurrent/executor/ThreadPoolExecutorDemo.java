@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 使用 ThreadPoolExecutor 创建线程池示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class ThreadPoolExecutorDemo {
 

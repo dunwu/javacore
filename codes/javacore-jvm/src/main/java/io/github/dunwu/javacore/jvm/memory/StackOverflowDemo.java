@@ -23,11 +23,6 @@ public class StackOverflowDemo {
 
     private int stackLength = 1;
 
-    public void recursion() {
-        stackLength++;
-        recursion();
-    }
-
     public static void main(String[] args) {
         StackOverflowDemo obj = new StackOverflowDemo();
         try {
@@ -36,6 +31,11 @@ public class StackOverflowDemo {
             System.out.println("栈深度：" + obj.stackLength);
             e.printStackTrace();
         }
+    }
+
+    public void recursion() {
+        stackLength++;
+        recursion();
     }
 
 }

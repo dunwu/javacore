@@ -80,7 +80,9 @@ public class ReentrantReadWriteLockDemo {
 
     }
 
-    /** 线程任务每次向缓存中写入 3 个随机值，key 固定 */
+    /**
+     * 线程任务每次向缓存中写入 3 个随机值，key 固定
+     */
     static class MyThread implements Runnable {
 
         @Override

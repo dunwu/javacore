@@ -9,7 +9,7 @@ import io.github.dunwu.javacore.concurrent.annotation.Error;
  * <p>
  * 注意：本示例中 MyThread 的两个实例是串行执行的
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 @Error
 public class ThreadErrorDemo01 {

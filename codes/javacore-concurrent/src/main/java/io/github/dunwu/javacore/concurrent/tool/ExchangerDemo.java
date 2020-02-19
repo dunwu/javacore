@@ -8,7 +8,7 @@ import java.util.concurrent.Exchanger;
  * Exchanger 示例 Exchanger，它允许在并发任务之间交换数据。具体来说，Exchanger类允许在两个线程之间定义同步点。 当两个线程都到达同步点时，他们交换数据结构，因此第一个线程的数据结构进入到第二个线程中，
  * 第二个线程的数据结构进入到第一个线程中。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see java.util.concurrent.Exchanger
  * @since 2018/5/10
  */

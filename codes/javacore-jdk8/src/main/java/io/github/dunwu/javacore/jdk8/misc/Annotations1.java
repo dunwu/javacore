@@ -7,41 +7,41 @@ import java.lang.annotation.*;
  */
 public class Annotations1 {
 
-	public static void main(String[] args) {
-		Hint hint = Person.class.getAnnotation(Hint.class);
-		System.out.println(hint); // null
+    public static void main(String[] args) {
+        Hint hint = Person.class.getAnnotation(Hint.class);
+        System.out.println(hint); // null
 
-		Hints hints1 = Person.class.getAnnotation(Hints.class);
-		System.out.println(hints1.value().length); // 2
+        Hints hints1 = Person.class.getAnnotation(Hints.class);
+        System.out.println(hints1.value().length); // 2
 
-		Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);
-		System.out.println(hints2.length); // 2
-	}
+        Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);
+        System.out.println(hints2.length); // 2
+    }
 
-	@Target({ElementType.TYPE_PARAMETER, ElementType.TYPE_USE})
-	@interface MyAnnotation {
+    @Target({ ElementType.TYPE_PARAMETER, ElementType.TYPE_USE })
+    @interface MyAnnotation {
 
-	}
+    }
 
-	@Retention(RetentionPolicy.RUNTIME)
-	@interface Hints {
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface Hints {
 
-		Hint[] value();
+        Hint[] value();
 
-	}
+    }
 
-	@Repeatable(Hints.class)
-	@Retention(RetentionPolicy.RUNTIME)
-	@interface Hint {
+    @Repeatable(Hints.class)
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface Hint {
 
-		String value();
+        String value();
 
-	}
+    }
 
-	@Hint("hint1")
-	@Hint("hint2")
-	class Person {
+    @Hint("hint1")
+    @Hint("hint2")
+    class Person {
 
-	}
+    }
 
 }

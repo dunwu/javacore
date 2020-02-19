@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 
 /**
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class FutureTaskDemo {
 

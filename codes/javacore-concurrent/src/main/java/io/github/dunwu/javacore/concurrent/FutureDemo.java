@@ -8,7 +8,7 @@ import java.util.concurrent.Future;
 /**
  * Callable 示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class FutureDemo {
 

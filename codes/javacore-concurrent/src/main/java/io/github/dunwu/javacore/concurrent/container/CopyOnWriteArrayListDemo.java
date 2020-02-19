@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 /**
  * CopyOnWriteArrayList 示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/5/16
  */
 public class CopyOnWriteArrayListDemo {

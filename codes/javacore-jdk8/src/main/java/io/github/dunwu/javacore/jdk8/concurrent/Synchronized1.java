@@ -9,45 +9,45 @@ import java.util.stream.IntStream;
  */
 public class Synchronized1 {
 
-	private static final int NUM_INCREMENTS = 10000;
+    private static final int NUM_INCREMENTS = 10000;
 
-	private static int count = 0;
+    private static int count = 0;
 
-	public static void main(String[] args) {
-		testSyncIncrement();
-		testNonSyncIncrement();
-	}
+    public static void main(String[] args) {
+        testSyncIncrement();
+        testNonSyncIncrement();
+    }
 
-	private static void testSyncIncrement() {
-		count = 0;
+    private static void testSyncIncrement() {
+        count = 0;
 
-		ExecutorService executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-		IntStream.range(0, NUM_INCREMENTS).forEach(i -> executor.submit(Synchronized1::incrementSync));
+        IntStream.range(0, NUM_INCREMENTS).forEach(i -> executor.submit(Synchronized1::incrementSync));
 
-		ConcurrentUtils.stop(executor);
+        ConcurrentUtils.stop(executor);
 
-		System.out.println("   Sync: " + count);
-	}
+        System.out.println("   Sync: " + count);
+    }
 
-	private static void testNonSyncIncrement() {
-		count = 0;
+    private static synchronized void incrementSync() {
+        count = count + 1;
+    }
 
-		ExecutorService executor = Executors.newFixedThreadPool(2);
+    private static void testNonSyncIncrement() {
+        count = 0;
 
-		IntStream.range(0, NUM_INCREMENTS).forEach(i -> executor.submit(Synchronized1::increment));
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-		ConcurrentUtils.stop(executor);
+        IntStream.range(0, NUM_INCREMENTS).forEach(i -> executor.submit(Synchronized1::increment));
 
-		System.out.println("NonSync: " + count);
-	}
+        ConcurrentUtils.stop(executor);
 
-	private static synchronized void incrementSync() {
-		count = count + 1;
-	}
+        System.out.println("NonSync: " + count);
+    }
 
-	private static void increment() {
-		count = count + 1;
-	}
+    private static void increment() {
+        count = count + 1;
+    }
 
 }

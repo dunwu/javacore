@@ -1,30 +1,30 @@
 package io.github.dunwu.javacore.method;
 
 /**
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-03-16
  */
 public class DefaultMethodDemo {
 
-	public static void main(String[] args) {
-		MyInterface obj = new MyClass();
-		obj.print();
-	}
+    public static void main(String[] args) {
+        MyInterface obj = new MyClass();
+        obj.print();
+    }
 
-	interface MyInterface {
+    interface MyInterface {
 
-		void print();
+        void print();
 
-	}
+    }
 
-	static class MyClass implements MyInterface {
+    static class MyClass implements MyInterface {
 
-		@Override
-		public void print() {
-			System.out.println("Hello World");
-		}
+        @Override
+        public void print() {
+            System.out.println("Hello World");
+        }
 
-	}
+    }
 
 }
 // Output:

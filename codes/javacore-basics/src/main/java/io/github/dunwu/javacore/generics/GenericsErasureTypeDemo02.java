@@ -8,10 +8,10 @@ import java.util.List;
  */
 public class GenericsErasureTypeDemo02 {
 
-	public static void main(String[] args) {
-		List<Integer> list = new ArrayList<>();
-		// List<Object> list2 = list; // Erorr
-	}
+    public static void main(String[] args) {
+        List<Integer> list = new ArrayList<>();
+        // List<Object> list2 = list; // Erorr
+    }
 
 }
 // Output:

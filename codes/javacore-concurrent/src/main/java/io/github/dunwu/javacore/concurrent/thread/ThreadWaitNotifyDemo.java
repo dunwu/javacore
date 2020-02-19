@@ -1,7 +1,7 @@
 package io.github.dunwu.javacore.concurrent.thread;
 
 /**
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/5/11
  */
 public class ThreadWaitNotifyDemo {

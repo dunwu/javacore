@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.concurrent;
 /**
  * {@link ThreadLocal} 示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class ThreadLocalDemo02 {
 

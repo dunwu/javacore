@@ -8,28 +8,28 @@ import java.io.Serializable;
 
 public class Foo extends AbstractFoo implements Serializable {
 
-	private static final long serialVersionUID = 1856835860954L;
+    private static final long serialVersionUID = 1856835860954L;
 
-	// Constructor does not use the fancy mechanism
-	public Foo(int x, int y) {
-		super(x, y);
-	}
+    // Constructor does not use the fancy mechanism
+    public Foo(int x, int y) {
+        super(x, y);
+    }
 
-	private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
-		s.defaultReadObject();
+    private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        s.defaultReadObject();
 
-		// Manually deserialize and initialize superclass state
-		int x = s.readInt();
-		int y = s.readInt();
-		initialize(x, y);
-	}
+        // Manually deserialize and initialize superclass state
+        int x = s.readInt();
+        int y = s.readInt();
+        initialize(x, y);
+    }
 
-	private void writeObject(ObjectOutputStream s) throws IOException {
-		s.defaultWriteObject();
+    private void writeObject(ObjectOutputStream s) throws IOException {
+        s.defaultWriteObject();
 
-		// Manually serialize superclass state
-		s.writeInt(getX());
-		s.writeInt(getY());
-	}
+        // Manually serialize superclass state
+        s.writeInt(getX());
+        s.writeInt(getY());
+    }
 
 }

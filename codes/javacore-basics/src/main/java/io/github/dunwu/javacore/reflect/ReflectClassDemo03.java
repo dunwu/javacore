@@ -4,31 +4,32 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-03-26
  */
 public class ReflectClassDemo03 {
 
-	public static void main(String[] args) {
-		Class c = "foo".getClass();
-		System.out.println(c.getCanonicalName());
+    public static void main(String[] args) {
+        Class c = "foo".getClass();
+        System.out.println(c.getCanonicalName());
 
-		Class c2 = ReflectClassDemo03.E.A.getClass();
-		System.out.println(c2.getCanonicalName());
+        Class c2 = ReflectClassDemo03.E.A.getClass();
+        System.out.println(c2.getCanonicalName());
 
-		byte[] bytes = new byte[1024];
-		Class c3 = bytes.getClass();
-		System.out.println(c3.getCanonicalName());
+        byte[] bytes = new byte[1024];
+        Class c3 = bytes.getClass();
+        System.out.println(c3.getCanonicalName());
 
-		Set<String> set = new HashSet<>();
-		Class c4 = set.getClass();
-		System.out.println(c4.getCanonicalName());
-	}
+        Set<String> set = new HashSet<>();
+        Class c4 = set.getClass();
+        System.out.println(c4.getCanonicalName());
+    }
 
-	enum E {
+    enum E {
 
-		A, B
-	}
+        A,
+        B
+    }
 
 }
 // Output:

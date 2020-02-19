@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.concurrent.tool;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/5/15
  */
 public class CountDownLatchDemo02 {

@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.concurrent.thread;
 /**
  * 实现 {@link Runnable} 接口方式创建线程。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class RunnableDemo {
 

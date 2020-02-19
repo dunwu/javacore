@@ -1,54 +1,56 @@
 package io.github.dunwu.javacore.enumeration;
 
 /**
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-03-19
  */
 public class ErrorCodeEnumDemo {
 
-	public static void main(String[] args) {
-		System.out.println(ErrorCodeEn.toStringAll());
-		for (ErrorCodeEn s : ErrorCodeEn.values()) {
-			System.out.println(s);
-		}
-	}
+    public static void main(String[] args) {
+        System.out.println(ErrorCodeEn.toStringAll());
+        for (ErrorCodeEn s : ErrorCodeEn.values()) {
+            System.out.println(s);
+        }
+    }
 
-	enum ErrorCodeEn {
+    enum ErrorCodeEn {
 
-		OK(0, "成功"), ERROR_A(100, "错误A"), ERROR_B(200, "错误B");
+        OK(0, "成功"),
+        ERROR_A(100, "错误A"),
+        ERROR_B(200, "错误B");
 
-		private int code;
+        private int code;
 
-		private String msg;
+        private String msg;
 
-		ErrorCodeEn(int number, String msg) {
-			this.code = number;
-			this.msg = msg;
-		}
+        ErrorCodeEn(int number, String msg) {
+            this.code = number;
+            this.msg = msg;
+        }
 
-		public static String toStringAll() {
-			StringBuilder sb = new StringBuilder();
-			sb.append("ErrorCodeEn All Elements: [");
-			for (ErrorCodeEn code : ErrorCodeEn.values()) {
-				sb.append(code.getCode()).append(", ");
-			}
-			sb.append("]");
-			return sb.toString();
-		}
+        public static String toStringAll() {
+            StringBuilder sb = new StringBuilder();
+            sb.append("ErrorCodeEn All Elements: [");
+            for (ErrorCodeEn code : ErrorCodeEn.values()) {
+                sb.append(code.getCode()).append(", ");
+            }
+            sb.append("]");
+            return sb.toString();
+        }
 
-		public int getCode() {
-			return code;
-		}
+        public int getCode() {
+            return code;
+        }
 
-		public String getMsg() {
-			return msg;
-		}
+        @Override
+        public String toString() {
+            return "ErrorCodeEn{" + "code=" + code + ", msg='" + msg + '\'' + '}';
+        }
 
-		@Override
-		public String toString() {
-			return "ErrorCodeEn{" + "code=" + code + ", msg='" + msg + '\'' + '}';
-		}
-	}
+        public String getMsg() {
+            return msg;
+        }
+    }
 
 }
 // Output:

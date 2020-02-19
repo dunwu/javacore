@@ -7,7 +7,7 @@ import io.github.dunwu.javacore.concurrent.annotation.Error;
  * <p>
  * 重复调用 {@link Thread#start()} 会抛出 {@link java.lang.IllegalThreadStateException} 异常。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 @Error
 public class ThreadErrorDemo02 {

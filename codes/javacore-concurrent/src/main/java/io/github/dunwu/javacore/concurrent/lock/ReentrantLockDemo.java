@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * ReentrantLock 的基本操作：{@link java.util.concurrent.locks.ReentrantLock#lock()} 和 {@link
  * java.util.concurrent.locks.ReentrantLock#unlock()} 方法
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/5/11
  */
 @SuppressWarnings("all")

@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.concurrent.thread;
 /**
  * get/set 线程名称示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class ThreadNameDemo {
 

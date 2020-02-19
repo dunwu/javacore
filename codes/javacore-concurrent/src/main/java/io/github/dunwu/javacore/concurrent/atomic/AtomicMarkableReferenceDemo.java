@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
 /**
  * {@link AtomicMarkableReference} 示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/5/24
  */
 public class AtomicMarkableReferenceDemo {

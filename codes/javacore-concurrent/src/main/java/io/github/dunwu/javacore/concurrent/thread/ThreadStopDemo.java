@@ -7,7 +7,7 @@ package io.github.dunwu.javacore.concurrent.thread;
  * 如果先前由这些监视器保护的任何对象处于不一致状态，则损坏的对象将对其他线程可见，从而可能导致任意行为。 stop的许多用法应由仅修改某些变量以指示目标线程应停止运行的代码代替。
  * 目标线程应定期检查此变量，如果该变量指示要停止运行，则应按有序方式从其运行方法返回。如果目标线程等待很长时间（例如，在条件变量上），则应使用中断方法来中断等待。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 @Deprecated
 @SuppressWarnings("all")

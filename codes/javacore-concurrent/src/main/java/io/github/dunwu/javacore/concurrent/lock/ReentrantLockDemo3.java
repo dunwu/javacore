@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * ReentrantLock 可定时获取锁 {@link java.util.concurrent.locks.ReentrantLock#tryLock(long, java.util.concurrent.TimeUnit)}
  * 示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/5/11
  */
 @SuppressWarnings("all")

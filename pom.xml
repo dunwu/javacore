@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>io.github.dunwu.javacore</groupId>
+	<artifactId>javacore</artifactId>
+	<version>1.0.1</version>
+	<name>JAVACORE</name>
+	<packaging>pom</packaging>
+	<description>JavaCore 经验总结</description>
+  <url>https://github.com/dunwu/javacore</url>
+
+	<modules>
+		<module>codes/javacore-basics</module>
+		<module>codes/javacore-advanced</module>
+    <module>codes/javacore-container</module>
+    <module>codes/javacore-io</module>
+    <module>codes/javacore-effective</module>
+    <module>codes/javacore-jdk8</module>
+    <module>codes/javacore-jvm</module>
+		<module>codes/javacore-concurrent</module>
+		<module>codes/javacore-utils</module>
+		<module>codes/javacore-oop</module>
+	</modules>
+</project>

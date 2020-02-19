@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * @since 2019-12-23
  */
 @Documented
-@Target(ElementType.TYPE)
+@Target({ ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Error {
 

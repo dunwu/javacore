@@ -9,7 +9,7 @@ package io.github.dunwu.javacore.concurrent.thread;
  * <p>
  * 但是，{@link Thread#sleep} 方法不会释放“锁标志”，也就是说如果有 synchronized 同步块，其他线程仍然不能访问共享数据。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see ThreadJoinDemo
  * @see ThreadYieldDemo
  * @since 2018/1/18
@@ -24,10 +24,14 @@ public class ThreadSleepDemo {
 
     static class MyThread implements Runnable {
 
-        /** 线程名称 */
+        /**
+         * 线程名称
+         */
         private String name;
 
-        /** 休眠时间 */
+        /**
+         * 休眠时间
+         */
         private int time;
 
         private MyThread(String name, int time) {

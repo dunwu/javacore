@@ -12,36 +12,36 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class Lock3 {
 
-	public static void main(String[] args) {
-		ExecutorService executor = Executors.newFixedThreadPool(2);
+    public static void main(String[] args) {
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-		Map<String, String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
 
-		ReadWriteLock lock = new ReentrantReadWriteLock();
+        ReadWriteLock lock = new ReentrantReadWriteLock();
 
-		executor.submit(() -> {
-			lock.writeLock().lock();
-			try {
-				ConcurrentUtils.sleep(1);
-				map.put("foo", "bar");
-			} finally {
-				lock.writeLock().unlock();
-			}
-		});
+        executor.submit(() -> {
+            lock.writeLock().lock();
+            try {
+                ConcurrentUtils.sleep(1);
+                map.put("foo", "bar");
+            } finally {
+                lock.writeLock().unlock();
+            }
+        });
 
-		Runnable readTask = () -> {
-			lock.readLock().lock();
-			try {
-				System.out.println(map.get("foo"));
-				ConcurrentUtils.sleep(1);
-			} finally {
-				lock.readLock().unlock();
-			}
-		};
-		executor.submit(readTask);
-		executor.submit(readTask);
+        Runnable readTask = () -> {
+            lock.readLock().lock();
+            try {
+                System.out.println(map.get("foo"));
+                ConcurrentUtils.sleep(1);
+            } finally {
+                lock.readLock().unlock();
+            }
+        };
+        executor.submit(readTask);
+        executor.submit(readTask);
 
-		ConcurrentUtils.stop(executor);
-	}
+        ConcurrentUtils.stop(executor);
+    }
 
 }

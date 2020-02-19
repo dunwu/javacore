@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * 利用 {@link AtomicReference} 实现自旋锁
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class AtomicReferenceDemo2 {
 

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * 创建一个线程池，可以安排命令在给定延迟后运行，或定期执行。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class ScheduledThreadPoolDemo {
 

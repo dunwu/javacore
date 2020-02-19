@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.concurrent;
 import java.util.concurrent.Callable;
 
 /**
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 class CallableDemo implements Callable<Integer> {
 

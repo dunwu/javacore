@@ -5,9 +5,9 @@ package io.github.dunwu.javacore.jvm.classloader;
  */
 public class ConstClass {
 
-	public static final String value = "hello world";
+    public static final String value = "hello world";
 
-	static {
-		System.out.println("ConstClass init!");
-	}
+    static {
+        System.out.println("ConstClass init!");
+    }
 }

@@ -9,30 +9,30 @@ import java.util.stream.IntStream;
  */
 public class Synchronized2 {
 
-	private static final int NUM_INCREMENTS = 10000;
+    private static final int NUM_INCREMENTS = 10000;
 
-	private static int count = 0;
+    private static int count = 0;
 
-	public static void main(String[] args) {
-		testSyncIncrement();
-	}
+    public static void main(String[] args) {
+        testSyncIncrement();
+    }
 
-	private static void testSyncIncrement() {
-		count = 0;
+    private static void testSyncIncrement() {
+        count = 0;
 
-		ExecutorService executor = Executors.newFixedThreadPool(2);
+        ExecutorService executor = Executors.newFixedThreadPool(2);
 
-		IntStream.range(0, NUM_INCREMENTS).forEach(i -> executor.submit(Synchronized2::incrementSync));
+        IntStream.range(0, NUM_INCREMENTS).forEach(i -> executor.submit(Synchronized2::incrementSync));
 
-		ConcurrentUtils.stop(executor);
+        ConcurrentUtils.stop(executor);
 
-		System.out.println(count);
-	}
+        System.out.println(count);
+    }
 
-	private static void incrementSync() {
-		synchronized (Synchronized2.class) {
-			count = count + 1;
-		}
-	}
+    private static void incrementSync() {
+        synchronized (Synchronized2.class) {
+            count = count + 1;
+        }
+    }
 
 }

@@ -5,8 +5,8 @@ package io.github.dunwu.javacore.jvm.classloader;
  **/
 public class PassiveRefDemo02 {
 
-	public static void main(String[] args) {
-		SuperClass[] sca = new SuperClass[10];
-	}
+    public static void main(String[] args) {
+        SuperClass[] sca = new SuperClass[10];
+    }
 
 }

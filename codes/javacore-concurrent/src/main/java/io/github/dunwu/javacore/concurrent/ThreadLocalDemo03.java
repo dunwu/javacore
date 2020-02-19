@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 /**
  * 在main线程中，没有先set，直接get的话，运行时会报空指针异常。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see ThreadLocalDemo02
  */
 public class ThreadLocalDemo03 {

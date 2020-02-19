@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 /**
  * 利用 wait() 、notify() 实现生产者-消费者模型
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see ConditionDemo
  * @since 2018/5/11
  */

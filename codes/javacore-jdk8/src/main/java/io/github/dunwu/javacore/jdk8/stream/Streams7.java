@@ -9,47 +9,47 @@ import java.util.stream.IntStream;
  */
 public class Streams7 {
 
-	public static void main(String[] args) {
-		// test1();
-		test2();
-	}
+    public static void main(String[] args) {
+        // test1();
+        test2();
+    }
 
-	static void test2() {
-		IntStream.range(1, 4).mapToObj(num -> new Foo("Foo" + num)).peek(
-			f -> IntStream.range(1, 4).mapToObj(num -> new Bar("Bar" + num + " <- " + f.name)).forEach(f.bars::add))
-			.flatMap(f -> f.bars.stream()).forEach(b -> System.out.println(b.name));
-	}
+    static void test2() {
+        IntStream.range(1, 4).mapToObj(num -> new Foo("Foo" + num)).peek(
+            f -> IntStream.range(1, 4).mapToObj(num -> new Bar("Bar" + num + " <- " + f.name)).forEach(f.bars::add))
+            .flatMap(f -> f.bars.stream()).forEach(b -> System.out.println(b.name));
+    }
 
-	static void test1() {
-		List<Foo> foos = new ArrayList<>();
+    static void test1() {
+        List<Foo> foos = new ArrayList<>();
 
-		IntStream.range(1, 4).forEach(num -> foos.add(new Foo("Foo" + num)));
+        IntStream.range(1, 4).forEach(num -> foos.add(new Foo("Foo" + num)));
 
-		foos.forEach(f -> IntStream.range(1, 4).forEach(num -> f.bars.add(new Bar("Bar" + num + " <- " + f.name))));
+        foos.forEach(f -> IntStream.range(1, 4).forEach(num -> f.bars.add(new Bar("Bar" + num + " <- " + f.name))));
 
-		foos.stream().flatMap(f -> f.bars.stream()).forEach(b -> System.out.println(b.name));
-	}
+        foos.stream().flatMap(f -> f.bars.stream()).forEach(b -> System.out.println(b.name));
+    }
 
-	static class Foo {
+    static class Foo {
 
-		String name;
+        String name;
 
-		List<Bar> bars = new ArrayList<>();
+        List<Bar> bars = new ArrayList<>();
 
-		Foo(String name) {
-			this.name = name;
-		}
+        Foo(String name) {
+            this.name = name;
+        }
 
-	}
+    }
 
-	static class Bar {
+    static class Bar {
 
-		String name;
+        String name;
 
-		Bar(String name) {
-			this.name = name;
-		}
+        Bar(String name) {
+            this.name = name;
+        }
 
-	}
+    }
 
 }

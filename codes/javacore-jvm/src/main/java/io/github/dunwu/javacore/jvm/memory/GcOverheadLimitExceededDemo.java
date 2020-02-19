@@ -19,12 +19,12 @@ import java.util.List;
  */
 public class GcOverheadLimitExceededDemo {
 
-	public static void main(String[] args) {
-		List<Double> list = new ArrayList<>();
-		double d = 0.0;
-		while (true) {
-			list.add(d++);
-		}
-	}
+    public static void main(String[] args) {
+        List<Double> list = new ArrayList<>();
+        double d = 0.0;
+        while (true) {
+            list.add(d++);
+        }
+    }
 
 }

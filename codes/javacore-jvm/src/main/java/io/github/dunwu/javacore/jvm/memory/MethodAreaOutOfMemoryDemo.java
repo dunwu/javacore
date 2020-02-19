@@ -1,9 +1,10 @@
 package io.github.dunwu.javacore.jvm.memory;
 
-import java.lang.reflect.Method;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+
+import java.lang.reflect.Method;
 
 /**
  * 方法区出现 OutOfMemoryError

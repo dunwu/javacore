@@ -12,7 +12,7 @@ package io.github.dunwu.javacore.concurrent.thread;
  * 注意点： 正在运行的用户线程无法设置为守护线程，所以 thread.setDaemon(true)必须在 thread.start()之前设置，否则会抛出 llegalThreadStateException 异常；
  * 一个守护线程创建的子线程依然是守护线程。 不要认为所有的应用都可以分配给 Daemon 来进行服务，比如读写操作或者计算逻辑。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/1/18
  */
 public class ThreadDaemonDemo {

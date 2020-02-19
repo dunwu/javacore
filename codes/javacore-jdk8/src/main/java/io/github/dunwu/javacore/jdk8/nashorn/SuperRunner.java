@@ -5,9 +5,9 @@ package io.github.dunwu.javacore.jdk8.nashorn;
  */
 public class SuperRunner implements Runnable {
 
-	@Override
-	public void run() {
-		System.out.println("super run");
-	}
+    @Override
+    public void run() {
+        System.out.println("super run");
+    }
 
 }

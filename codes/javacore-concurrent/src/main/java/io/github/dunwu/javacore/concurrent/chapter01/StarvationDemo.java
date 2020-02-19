@@ -1,10 +1,7 @@
 package io.github.dunwu.javacore.concurrent.chapter01;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JProgressBar;
+import java.awt.*;
+import javax.swing.*;
 
 /**
  * 饥饿问题示例
@@ -45,10 +42,6 @@ public class StarvationDemo {
             progressBar.setStringPainted(true);
         }
 
-        JComponent getProgressComponent() {
-            return progressBar;
-        }
-
         @Override
         public void run() {
 
@@ -67,6 +60,10 @@ public class StarvationDemo {
                     }
                 }
             }
+        }
+
+        JComponent getProgressComponent() {
+            return progressBar;
         }
 
     }

@@ -3,6 +3,6 @@ package io.github.dunwu.javacore.effective.chapter02.item01;
 
 public interface Provider {
 
-	Service newService();
+    Service newService();
 
 }

@@ -5,8 +5,8 @@ package io.github.dunwu.javacore.jvm.classloader;
  **/
 public class PassiveRefDemo03 {
 
-	public static void main(String[] args) {
-		System.out.println(ConstClass.value);
-	}
+    public static void main(String[] args) {
+        System.out.println(ConstClass.value);
+    }
 
 }

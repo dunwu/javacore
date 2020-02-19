@@ -13,45 +13,45 @@ package io.github.dunwu.javacore.jvm.memory;
  */
 public class StackOverflowDemo2 {
 
-	public static void main(String[] args) {
-		A obj = new A();
-		System.out.println(obj.toString());
-	}
+    public static void main(String[] args) {
+        A obj = new A();
+        System.out.println(obj.toString());
+    }
 
-	static class A {
+    static class A {
 
-		private int value;
+        private int value;
 
-		private B instance;
+        private B instance;
 
-		public A() {
-			value = 0;
-			instance = new B();
-		}
+        public A() {
+            value = 0;
+            instance = new B();
+        }
 
-		@Override
-		public String toString() {
-			return "<" + value + ", " + instance + ">";
-		}
+        @Override
+        public String toString() {
+            return "<" + value + ", " + instance + ">";
+        }
 
-	}
+    }
 
-	static class B {
+    static class B {
 
-		private int value;
+        private int value;
 
-		private A instance;
+        private A instance;
 
-		public B() {
-			value = 10;
-			instance = new A();
-		}
+        public B() {
+            value = 10;
+            instance = new A();
+        }
 
-		@Override
-		public String toString() {
-			return "<" + value + ", " + instance + ">";
-		}
+        @Override
+        public String toString() {
+            return "<" + value + ", " + instance + ">";
+        }
 
-	}
+    }
 
 }

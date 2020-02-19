@@ -1,7 +1,8 @@
 package io.github.dunwu.javacore.jvm.memory;
 
-import java.lang.reflect.Field;
 import sun.misc.Unsafe;
+
+import java.lang.reflect.Field;
 
 /**
  * 本机直接内存溢出示例

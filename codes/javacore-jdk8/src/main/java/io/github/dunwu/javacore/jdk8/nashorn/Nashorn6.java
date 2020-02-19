@@ -1,9 +1,10 @@
 package io.github.dunwu.javacore.jdk8.nashorn;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 /**
  * Using Backbone Models from Nashorn.
@@ -12,23 +13,23 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
  */
 public class Nashorn6 {
 
-	public static void main(String[] args) throws Exception {
-		ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-		engine.eval("load('res/nashorn6.js')");
+    public static void getProduct(ScriptObjectMirror result) {
+        System.out.println(result.get("name") + ": " + result.get("valueOfGoods"));
+    }
 
-		Invocable invocable = (Invocable) engine;
+    public static void main(String[] args) throws Exception {
+        ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
+        engine.eval("load('res/nashorn6.js')");
 
-		Product product = new Product();
-		product.setName("Rubber");
-		product.setPrice(1.99);
-		product.setStock(1337);
+        Invocable invocable = (Invocable) engine;
 
-		ScriptObjectMirror result = (ScriptObjectMirror) invocable.invokeFunction("calculate", product);
-		System.out.println(result.get("name") + ": " + result.get("valueOfGoods"));
-	}
+        Product product = new Product();
+        product.setName("Rubber");
+        product.setPrice(1.99);
+        product.setStock(1337);
 
-	public static void getProduct(ScriptObjectMirror result) {
-		System.out.println(result.get("name") + ": " + result.get("valueOfGoods"));
-	}
+        ScriptObjectMirror result = (ScriptObjectMirror) invocable.invokeFunction("calculate", product);
+        System.out.println(result.get("name") + ": " + result.get("valueOfGoods"));
+    }
 
 }

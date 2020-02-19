@@ -1,13 +1,14 @@
 package io.github.dunwu.javacore.concurrent.atomic;
 
 import io.github.dunwu.javacore.concurrent.annotation.Error;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
  * 非线程安全的示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 @Error
 public class AtomicReferenceDemo {

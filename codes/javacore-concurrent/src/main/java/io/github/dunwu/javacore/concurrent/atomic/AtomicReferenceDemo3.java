@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.concurrent.atomic;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/5/24
  */
 public class AtomicReferenceDemo3 {
@@ -83,6 +83,11 @@ public class AtomicReferenceDemo3 {
             this.age = age;
         }
 
+        @Override
+        public String toString() {
+            return "[name " + this.name + ", age " + this.age + "]";
+        }
+
         public String getName() {
             return name;
         }
@@ -97,11 +102,6 @@ public class AtomicReferenceDemo3 {
 
         void setAge(int age) {
             this.age = age;
-        }
-
-        @Override
-        public String toString() {
-            return "[name " + this.name + ", age " + this.age + "]";
         }
 
     }

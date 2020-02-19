@@ -5,7 +5,7 @@ package io.github.dunwu.javacore.concurrent.thread;
  * <p>
  * {@link Thread#join} 方法会使当前线程等待调用 {@link Thread#join} 方法的线程结束后才能继续执行。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see ThreadSleepDemo
  * @see ThreadYieldDemo
  * @since 2018/1/18

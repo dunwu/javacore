@@ -5,48 +5,48 @@ import java.util.Arrays;
 
 public class Stack<E> {
 
-	private static final int DEFAULT_INITIAL_CAPACITY = 16;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
 
-	private Object[] elements;
+    private Object[] elements;
 
-	private int size = 0;
+    private int size = 0;
 
-	public Stack() {
-		elements = new Object[DEFAULT_INITIAL_CAPACITY];
-	}
+    public Stack() {
+        elements = new Object[DEFAULT_INITIAL_CAPACITY];
+    }
 
-	// Little program to exercise our generic Stack
-	public static void main(String[] args) {
-		Stack<String> stack = new Stack<String>();
-		for (String arg : args) {
-			stack.push(arg);
-		}
-		while (!stack.isEmpty()) { System.out.println(stack.pop().toUpperCase()); }
-	}
+    // Little program to exercise our generic Stack
+    public static void main(String[] args) {
+        Stack<String> stack = new Stack<String>();
+        for (String arg : args) {
+            stack.push(arg);
+        }
+        while (!stack.isEmpty()) { System.out.println(stack.pop().toUpperCase()); }
+    }
 
-	public void push(E e) {
-		ensureCapacity();
-		elements[size++] = e;
-	}
+    public void push(E e) {
+        ensureCapacity();
+        elements[size++] = e;
+    }
 
-	public boolean isEmpty() {
-		return size == 0;
-	}
+    private void ensureCapacity() {
+        if (elements.length == size) { elements = Arrays.copyOf(elements, 2 * size + 1); }
+    }
 
-	// Appropriate suppression of unchecked warning
-	public E pop() {
-		if (size == 0) { throw new EmptyStackException(); }
+    public boolean isEmpty() {
+        return size == 0;
+    }
 
-		// push requires elements to be of type E, so cast is correct
-		@SuppressWarnings("unchecked")
-		E result = (E) elements[--size];
+    // Appropriate suppression of unchecked warning
+    public E pop() {
+        if (size == 0) { throw new EmptyStackException(); }
 
-		elements[size] = null; // Eliminate obsolete reference
-		return result;
-	}
+        // push requires elements to be of type E, so cast is correct
+        @SuppressWarnings("unchecked")
+        E result = (E) elements[--size];
 
-	private void ensureCapacity() {
-		if (elements.length == size) { elements = Arrays.copyOf(elements, 2 * size + 1); }
-	}
+        elements[size] = null; // Eliminate obsolete reference
+        return result;
+    }
 
 }

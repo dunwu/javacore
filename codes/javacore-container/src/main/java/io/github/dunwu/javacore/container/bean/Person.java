@@ -14,11 +14,6 @@ public class Person implements Comparable<Person> {
     }
 
     @Override
-    public String toString() {
-        return "姓名：" + this.name + "；年龄：" + this.age;
-    }
-
-    @Override
     public int compareTo(Person per) {
         if (this.age > per.age) {
             return 1;
@@ -27,6 +22,11 @@ public class Person implements Comparable<Person> {
         } else {
             return this.name.compareTo(per.name);    // 调用String中的compareTo()方法
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class Person implements Comparable<Person> {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(name, age);
+    public String toString() {
+        return "姓名：" + this.name + "；年龄：" + this.age;
     }
 
 }

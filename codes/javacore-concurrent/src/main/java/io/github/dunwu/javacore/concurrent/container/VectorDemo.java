@@ -1,7 +1,7 @@
 package io.github.dunwu.javacore.concurrent.container;
 
 import io.github.dunwu.javacore.concurrent.annotation.Error;
-import java.util.Collections;
+
 import java.util.Vector;
 
 /**

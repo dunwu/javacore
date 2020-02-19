@@ -9,7 +9,7 @@ import java.util.concurrent.CountDownLatch;
  * <p>
  * 原理：CountDownLatch 维护一个计数器 count。每次调用 countDown 方法会让 count 的值减 1，减到 0 的时候，那些因为调用 await 方法而在等待的线程就会被唤醒。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see java.util.concurrent.CountDownLatch
  * @since 2018/5/10
  */

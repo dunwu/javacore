@@ -12,7 +12,7 @@ package io.github.dunwu.javacore.concurrent.thread;
  * 即使设置了线程的优先级，也无法保证高优先级的线程一定先执行。 原因：这是因为线程优先级依赖于操作系统的支持，然而，不同的操作系统支持的线程优先级并不相同，不能很好的和Java中线程优先级一一对应。 结论：Java
  * 线程优先级控制并不可靠。
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/5/10
  */
 public class ThreadPriorityDemo {

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Java 容器 fail-fast 机制示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/6/29
  */
 public class FailFastDemo {
@@ -25,7 +25,9 @@ public class FailFastDemo {
         new Thread(new MyThreadB()).start();
     }
 
-    /** 迭代遍历容器所有元素 */
+    /**
+     * 迭代遍历容器所有元素
+     */
     static class MyThreadA implements Runnable {
 
         @Override
@@ -44,7 +46,9 @@ public class FailFastDemo {
 
     }
 
-    /** 遍历删除指定范围内的所有偶数 */
+    /**
+     * 遍历删除指定范围内的所有偶数
+     */
     static class MyThreadB implements Runnable {
 
         @Override

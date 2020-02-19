@@ -18,22 +18,22 @@ import java.io.FileOutputStream;
  */
 public class AsmDemo {
 
-	public static void main(String[] args) throws Exception {
-		//读取
-		ClassReader classReader = new ClassReader("io/github/dunwu/javacore/jvm/bytecode/Base");
-		ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-		//处理
-		ClassVisitor classVisitor = new MyClassVisitor(classWriter);
-		classReader.accept(classVisitor, ClassReader.SKIP_DEBUG);
-		byte[] data = classWriter.toByteArray();
-		//输出
-		String classPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		File f = new File(classPath + "io/github/dunwu/javacore/jvm/bytecode/Base.class");
-		FileOutputStream fout = new FileOutputStream(f);
-		fout.write(data);
-		fout.close();
-		Base base = new Base();
-		base.process();
-	}
+    public static void main(String[] args) throws Exception {
+        //读取
+        ClassReader classReader = new ClassReader("io/github/dunwu/javacore/jvm/bytecode/Base");
+        ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+        //处理
+        ClassVisitor classVisitor = new MyClassVisitor(classWriter);
+        classReader.accept(classVisitor, ClassReader.SKIP_DEBUG);
+        byte[] data = classWriter.toByteArray();
+        //输出
+        String classPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        File f = new File(classPath + "io/github/dunwu/javacore/jvm/bytecode/Base.class");
+        FileOutputStream fout = new FileOutputStream(f);
+        fout.write(data);
+        fout.close();
+        Base base = new Base();
+        base.process();
+    }
 
 }

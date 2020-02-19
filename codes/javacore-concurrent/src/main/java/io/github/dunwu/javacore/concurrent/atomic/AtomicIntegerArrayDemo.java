@@ -5,7 +5,7 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
 /**
  * {@link java.util.concurrent.atomic.AtomicIntegerArray} 示例
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/5/24
  */
 public class AtomicIntegerArrayDemo {

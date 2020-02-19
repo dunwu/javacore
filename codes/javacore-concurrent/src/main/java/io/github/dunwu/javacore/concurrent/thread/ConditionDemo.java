@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * 利用 Condition 实现生产者-消费者模型
  *
- * @author Zhang Peng
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see ThreadWaitNotifyDemo02
  * @since 2018/5/11
  */
