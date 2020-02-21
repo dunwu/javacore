@@ -49,10 +49,10 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 > [Java 容器](container) 涉及许多数据结构知识点，所以设立专题进行总结。
 
 - [Java 容器概述](container/java-container.md)
-- [Java 容器之 List](container/java-container-list.md)
+- [Java 容器之 List](container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
+- [Java 容器之 Map](container/java-container-map.md) - 关键词：`Map`、`HashMap`、`LinkedHashMap`、`TreeMap`、`WeakHashMap`
 - [Java 容器之 Set](container/java-container-set.md)
 - [Java 容器之 Queue](container/java-container-queue.md)
-- [Java 容器之 Map](container/java-container-map.md)
 
 ## Java 并发
 

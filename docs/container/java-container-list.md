@@ -14,11 +14,11 @@
 
 ### ArrayList 和 LinkedList
 
-ArrayList、LinkedList 是 List 最常用的实现。
+`ArrayList`、`LinkedList` 是 `List` 最常用的实现。
 
-- ArrayList 基于动态数组实现，存在容量限制，当元素数超过最大容量时，会自动扩容；LinkedList 基于双向链表实现，不存在容量限制。
-- ArrayList 随机访问速度较快，随机插入、删除速度较慢；LinkedList 随机插入、删除速度较快，随机访问速度较慢。
-- ArrayList 和 LinkedList 都不是线程安全的。
+- `ArrayList` 基于动态数组实现，存在容量限制，当元素数超过最大容量时，会自动扩容；`LinkedList` 基于双向链表实现，不存在容量限制。
+- `ArrayList` 随机访问速度较快，随机插入、删除速度较慢；`LinkedList` 随机插入、删除速度较快，随机访问速度较慢。
+- `ArrayList` 和 `LinkedList` 都不是线程安全的。
 
 ### Vector 和 Stack
 
@@ -28,6 +28,8 @@ ArrayList、LinkedList 是 List 最常用的实现。
 - `Stack` - `Stack` 也是一个同步容器，它的方法也用 `synchronized` 进行了同步，它实际上是继承于 `Vector` 类。
 
 ## 二、ArrayList
+
+> ArrayList 从数据结构角度来看，可以视为支持动态扩容的线性表。
 
 ### ArrayList 要点
 
@@ -44,9 +46,9 @@ public class ArrayList<E> extends AbstractList<E>
 
 - `ArrayList` 实现了 `List` 接口，并继承了 `AbstractList`，它支持所有 `List` 的操作。
 - `ArrayList` 实现了 `RandomAccess` 接口，**支持随机访问**。`RandomAccess` 是 Java 中用来被 List 实现，为 List 提供快速访问功能的。在 `ArrayList` 中，我们即可以**通过元素的序号快速获取元素对象**；这就是快速随机访问。
-- ArrayList 实现了 `Cloneable` 接口，**支持深拷贝**。
-- ArrayList 实现了 `Serializable` 接口，**支持序列化**，能通过序列化方式传输。
-- ArrayList 是**非线程安全**的。
+- `ArrayList` 实现了 `Cloneable` 接口，**支持深拷贝**。
+- `ArrayList` 实现了 `Serializable` 接口，**支持序列化**，能通过序列化方式传输。
+- `ArrayList` 是**非线程安全**的。
 
 ### ArrayList 原理
 
@@ -59,17 +61,17 @@ transient Object[] elementData;
 private int size;
 ```
 
-- `size` - 是动态数组的实际大小。
+- `size` - 是动态数组的实际大小。默认初始容量大小为 `10` （可以在构造方法中指定初始大小），添加元素时如果发现容量已满，会自动扩容一倍。
 - `elementData` - 是一个 `Object` 数组，用于保存添加到 `ArrayList` 中的元素。
-  - 这个数组的默认初始容量大小为 `10` （可以在构造方法中指定初始大小），添加元素时如果发现容量已满，会自动扩容一倍。
-  - 这个字段使用 `transient` 修饰，是为了使得它可以被 Java 默认序列化方式所忽略。
 
 #### ArrayList 的序列化
 
-`ArrayList` 具有动态`ArrayList` 容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。为此，`ArrayList` 定制了其序列化方式。具体做法是：
+`ArrayList` 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。为此，`ArrayList` 定制了其序列化方式。具体做法是：
 
-- 存储元素的 `Object` 数组使用 `transient` 修饰，使得它可以被 Java 默认序列化方式所忽略。
+- 存储元素的 `Object` 数组（即 `elementData`）使用 `transient` 修饰，使得它可以被 Java 默认序列化方式所忽略。
 - `ArrayList` 重写了 `writeObject()` 和 `readObject()` 来控制序列化数组中有元素填充那部分内容。
+
+> :bulb: 不了解 Java 序列化方式，可以参考：[Java 序列化](https://github.com/dunwu/javacore/blob/master/docs/io/java-serialization.md)
 
 #### ArrayList 的访问元素
 
@@ -87,11 +89,11 @@ E elementData(int index) {
 }
 ```
 
-实现非常简单，其实就是通过数组下标访问数组元素，其时间复杂度为 O(1)，所以很快。
+实现非常简单，其实就是**通过数组下标访问数组元素，其时间复杂度为 O(1)**，所以很快。
 
 #### ArrayList 的添加元素
 
-`ArrayList` 添加元素时，如果发现容量已满，会自动扩容为原始大小的 1.5 倍。
+`ArrayList` 添加元素时，**如果发现容量已满，会自动扩容为原始大小的 1.5 倍**。
 
 `ArrayList` 添加元素的实现主要基于以下关键性源码：
 
@@ -134,7 +136,7 @@ private void grow(int minCapacity) {
 `ArrayList` 执行添加元素动作（`add` 方法）时，调用 `ensureCapacityInternal()` 方法来保证容量足够。
 
 - 如果容量足够时，将数据作为数组中 `size+1` 位置上的元素写入，并将 `size` 自增 1。
-- 如果容量不够时，需要使用 `grow()` 方法进行扩容数组，新容量的大小为 `oldCapacity + (oldCapacity >> 1)`，也就是旧容量的 1.5 倍。扩容操作需要调用 `Arrays.copyOf()` 把原数组整个复制到新数组中，因此最好在创建 `ArrayList` 对象时就指定大概的容量大小，减少扩容操作的次数。
+- 如果容量不够时，需要使用 `grow()` 方法进行扩容数组，新容量的大小为 `oldCapacity + (oldCapacity >> 1)`，也就是旧容量的 1.5 倍。扩容操作实际上是**调用 `Arrays.copyOf()` 把原数组拷贝为一个新数组**，因此最好在创建 `ArrayList` 对象时就指定大概的容量大小，减少扩容操作的次数。
 
 #### ArrayList 的删除元素
 
@@ -156,11 +158,11 @@ public E remove(int index) {
 }
 ```
 
-`ArrayList` 执行删除元素（`remove` 方法）作时，需要调用 `System.arraycopy()` 将 `index+1` 后面的元素都复制到 `index` 位置上，复制的代价很高。
+`ArrayList` 执行删除元素（`remove` 方法）作时，实际上是**调用 `System.arraycopy()` 将 `index+1` 后面的元素都复制到 `index` 位置上**，复制的代价很高。
 
 #### ArrayList 的 Fail-Fast
 
-modCount 用来记录 `ArrayList` 结构发生变化的次数。结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
+`modCount` 用来记录 `ArrayList` 结构发生变化的次数。结构发生变化是指添加或者删除至少一个元素的所有操作，或者是调整内部数组的大小，仅仅只是设置元素的值不算结构发生变化。
 
 在进行序列化或者迭代等操作时，需要比较操作前后 modCount 是否改变，如果改变了需要抛出 `ConcurrentModificationException`。
 
@@ -187,6 +189,8 @@ private void writeObject(java.io.ObjectOutputStream s)
 
 ## 三、LinkedList
 
+> LinkedList 从数据结构角度来看，可以视为双链表。
+
 ### LinkedList 要点
 
 `LinkedList` 基于双链表实现。由于是双链表，所以**顺序访问会非常高效，而随机访问效率比较低。**
@@ -201,19 +205,19 @@ public class LinkedList<E>
 
 从 `LinkedList` 的定义，可以得出 `LinkedList` 的一些基本特性：
 
-- `LinkedList` 实现了 `List` 接口，并继承了 `AbstractSequentialList` ，它支持所有 List 的操作。它也可以被当作堆栈、队列或双端队列进行操作。
-- `LinkedList` 实现了 `Deque` 接口，可以将 `LinkedList` 当作双端队列使用。
-- LinkedList 实现了 `Cloneable` 接口，**支持深拷贝**。
-- LinkedList 实现了 `Serializable` 接口，**支持序列化**，能通过序列化方式传输。
-- LinkedList 是**非线程安全**的。
+- `LinkedList` 实现了 `List` 接口，并继承了 `AbstractSequentialList` ，它支持所有 `List` 的操作。
+- `LinkedList` 实现了 `Deque` 接口，也可以被当作队列（`Queue`）或双端队列（`Deque`）进行操作，此外，也可以用来实现栈。
+- `LinkedList` 实现了 `Cloneable` 接口，**支持深拷贝**。
+- `LinkedList` 实现了 `Serializable` 接口，**支持序列化**。
+- `LinkedList` 是**非线程安全**的。
 
 ### LinkedList 原理
 
 #### LinkedList 的数据结构
 
-`LinkedList` 内部维护了一个双链表。
+**`LinkedList` 内部维护了一个双链表**。
 
-`LinkedList` 包含两个重要的成员：`first` 和 `last`。
+`LinkedList` 通过 `Node` 类型的头尾指针（`first` 和 `last`）来访问数据。
 
 ```java
 // 链表长度
@@ -224,10 +228,10 @@ transient Node<E> first;
 transient Node<E> last;
 ```
 
-- `size` - 表示双链表中节点的个数，初始为 0。
-- `first` 和 `last` - 分别是双链表的头节点和尾节点。
+- `size` - **表示双链表中节点的个数，初始为 0**。
+- `first` 和 `last` - **分别是双链表的头节点和尾节点**。
 
-`Node` 是 `LinkedList` 的内部类，它表示链表中的实例。Node 中包含三个元素：
+`Node` 是 `LinkedList` 的内部类，它表示链表中的元素实例。Node 中包含三个元素：
 
 - `prev` 是该节点的上一个节点；
 - `next` 是该节点的下一个节点；
@@ -268,16 +272,15 @@ Node<E> node(int index) {
             x = x.prev;
         return x;
     }
-}****
+}
 ```
 
 获取 `LinkedList` 第 index 个元素的算法是：
 
-- 先判断 index 是否小于 size 的一半大小。
-- 如果小于 size 的一半大小，就从双链表的头节点开始遍历，找到 index 元素返回。
-- 如果大于 size 的一半大小，就从双链表的尾结点开始遍历，找到 index 元素返回。
+- 判断 index 在链表前半部分，还是后半部分。
+- 如果是前半部分，从头节点开始查找；如果是后半部分，从尾结点开始查找。
 
-显然，`LinkedList` 访问元素的速度要比 `ArrayList` 慢很多。
+显然，`LinkedList` 这种顺序访问元素的方式比 `ArrayList` 随机访问元素要慢。
 
 #### LinkedList 的添加元素
 
@@ -363,6 +366,16 @@ E unlink(Node<E> x) {
 - unlink 删除节点的方法：
   - 如果当前节点有前驱节点，则让前驱节点指向当前节点的下一个节点；否则，让双链表头指针指向下一个节点。
   - 如果当前节点有后继节点，则让后继节点指向当前节点的前一个节点；否则，让双链表尾指针指向上一个节点。
+
+## 四、总结
+
+### ArrayList 总结
+
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221142803.png)
+
+### LinkedList 总结
+
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221142535.png)
 
 ## 参考资料
 
