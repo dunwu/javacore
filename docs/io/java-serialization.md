@@ -2,7 +2,7 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-## 简介
+## 一、序列化简介
 
 ![img](http://dunwu.test.upcdn.net/snap/1553224129484.png)
 
@@ -15,7 +15,7 @@
 
 > 🔔 注意：使用 Java 对象序列化，在保存对象时，会把其状态保存为一组字节，在未来，再将这些字节组装成对象。必须注意地是，对象序列化保存的是对象的”状态”，即它的成员变量。由此可知，**对象序列化不会关注类中的静态变量**。
 
-## 序列化和反序列化
+## 二、序列化和反序列化
 
 Java 通过对象输入输出流来实现序列化和反序列化：
 
@@ -87,7 +87,7 @@ public class SerializeDemo01 {
 // Person{name='Jack', age=30, sex=MALE}
 ```
 
-## Serializable 接口
+## 三、Serializable 接口
 
 **被序列化的类必须属于 Enum、Array 和 Serializable 类型其中的任何一种**。
 
@@ -158,7 +158,7 @@ private static final long serialVersionUID = 2L;
 
 综上所述，我们大概可以清楚：**`serialVersionUID` 用于控制序列化版本是否兼容**。若我们认为修改的可序列化类是向后兼容的，则不修改 `serialVersionUID`。
 
-## 默认序列化机制
+### 默认序列化机制
 
 如果仅仅只是让某个类实现 `Serializable` 接口，而没有其它任何处理的话，那么就会使用默认序列化机制。
 
@@ -166,13 +166,11 @@ private static final long serialVersionUID = 2L;
 
 > 🔔 注意：这里的父类和引用对象既然要进行序列化，那么它们当然也要满足序列化要求：**被序列化的类必须属于 Enum、Array 和 Serializable 类型其中的任何一种**。
 
-## 非默认序列化机制
+### transient
 
 在现实应用中，有些时候不能使用默认序列化机制。比如，希望在序列化过程中忽略掉敏感数据，或者简化序列化过程。下面将介绍若干影响序列化的方法。
 
-### transient 关键字
-
-**当某个字段被声明为 transient 后，默认序列化机制就会忽略该字段**。
+**当某个字段被声明为 `transient` 后，默认序列化机制就会忽略该字段**。
 
 我们将 SerializeDemo01 示例中的内部类 Person 的 age 字段声明为 `transient`，如下所示：
 
@@ -190,7 +188,7 @@ public class SerializeDemo02 {
 
 从输出结果可以看出，age 字段没有被序列化。
 
-### Externalizable 接口
+## 四、Externalizable 接口
 
 无论是使用 `transient` 关键字，还是使用 `writeObject()` 和 `readObject()` 方法，其实都是基于 `Serializable` 接口的序列化。
 
@@ -232,7 +230,7 @@ public class ExternalizeDemo01 {
 从该结果，一方面可以看出 Person 对象中任何一个字段都没有被序列化。另一方面，如果细心的话，还可以发现这此次序列化过程调用了 Person 类的无参构造方法。
 
 - **`Externalizable` 继承于 `Serializable`，它增添了两个方法：`writeExternal()` 与 `readExternal()`。这两个方法在序列化和反序列化过程中会被自动调用，以便执行一些特殊操作**。当使用该接口时，序列化的细节需要由程序员去完成。如上所示的代码，由于 `writeExternal()` 与 `readExternal()` 方法未作任何处理，那么该序列化行为将不会保存/读取任何一个字段。这也就是为什么输出结果中所有字段的值均为空。
-- 另外，**若使用 Externalizable 进行序列化，当读取对象时，会调用被序列化类的无参构造方法去创建一个新的对象；然后再将被保存对象的字段的值分别填充到新对象中**。这就是为什么在此次序列化过程中 Person 类的无参构造方法会被调用。由于这个原因，实现 `Externalizable` 接口的类必须要提供一个无参的构造方法，且它的访问权限为 `public`。
+- 另外，**若使用 `Externalizable` 进行序列化，当读取对象时，会调用被序列化类的无参构造方法去创建一个新的对象；然后再将被保存对象的字段的值分别填充到新对象中**。这就是为什么在此次序列化过程中 Person 类的无参构造方法会被调用。由于这个原因，实现 `Externalizable` 接口的类必须要提供一个无参的构造方法，且它的访问权限为 `public`。
 
 对上述 Person 类作进一步的修改，使其能够对 name 与 age 字段进行序列化，但要忽略掉 gender 字段，如下代码所示：
 
@@ -411,16 +409,26 @@ public class SerializeDemo05 {
 // true
 ```
 
-## 序列化工具
+## 五、序列化问题
+
+Java 的序列化能保证对象状态的持久保存，但是遇到一些对象结构复杂的情况还是难以处理，这里归纳一下：
+
+- 当父类继承 `Serializable` 接口时，所有子类都可以被序列化。
+- 子类实现了 `Serializable` 接口，父类没有，则父类的属性不会被序列化（不报错，数据丢失），子类的属性仍可以正确序列化。
+- 如果序列化的属性是对象，则这个对象也必须实现 `Serializable` 接口，否则会报错。
+- 在反序列化时，如果对象的属性有修改或删减，则修改的部分属性会丢失，但不会报错。
+- 在反序列化时，如果 `serialVersionUID` 被修改，则反序列化时会失败。
+
+## 六、序列化工具
 
 Java 官方的序列化存在许多问题，因此，很多人更愿意使用优秀的第三方序列化工具来替代 Java 自身的序列化机制。
 
 Java 官方的序列化主要体现在以下方面：
 
-- Java 官方的序列化性能不高，序列化后的数据相对于一些优秀的序列化的工具，还是要大不少，这大大影响存储和传输的效率。
-- Java 官方的序列化一定需要实现 Serializable 接口。
-- Java 官方的序列化需要关注 serialVersionUID。
-- Java 官方的序列无法跨语言使用。
+- Java 官方的序列化**性能不高**，序列化后的数据相对于一些优秀的序列化的工具，还是要大不少，这大大影响存储和传输的效率。
+- Java 官方的序列化一定**需要实现 `Serializable` 接口**。
+- Java 官方的序列化**需要关注 `serialVersionUID`**。
+- Java 官方的序列**无法跨语言**使用。
 
 当然我们还有更加优秀的一些序列化和反序列化的工具，根据不同的使用场景可以自行选择！
 
@@ -428,7 +436,7 @@ Java 官方的序列化主要体现在以下方面：
 - [hessian](http://hessian.caucho.com/doc/hessian-overview.xtp) - 适用于对开发体验敏感，性能有要求的内外部系统。
 - [jackson](https://github.com/FasterXML/jackson)、[gson](https://github.com/google/gson)、[fastjson](https://github.com/alibaba/fastjson) - 适用于对序列化后的数据要求有良好的可读性（转为 json 、xml 形式）。
 
-## 小结
+## 要点总结
 
 ![img](http://dunwu.test.upcdn.net/snap/1553227663192.png!zp)
 
