@@ -10,8 +10,7 @@ public class School {
     private List<Student> allStudents;
 
     public School(String name) {
-        this();
-        this.setName(name);
+        this.name = name;
     }
 
     public School() {
