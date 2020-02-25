@@ -7,7 +7,7 @@ actionLink: /
 footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 ---
 
-# JAVACORE
+# JavaCore
 
 > ☕ JavaCore 是一个 Java 核心技术教程。
 >
@@ -18,7 +18,9 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 | :---------------------: | :---------------------: | :---------------------: | :---------------------: | :----------------: | :-------------------------: |
 | [Java 基础](#java-基础) | [Java 高级](#java-高级) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [JavaIO](#java-io) | [Java 虚拟机](#java-虚拟机) |
 
-## Java 基础
+## 教程内容 📖
+
+### Java 基础
 
 > [Java 基础](basics) 总结 Java 的一些基础特性。
 
@@ -35,7 +37,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 - [Java 反射](basics/java-reflection.md)
 - [Java 注解](basics/java-annotation.md)
 
-## Java 高级
+### Java 高级
 
 > [Java 高级](advanced) 总结 Java 的一些高级特性。
 
@@ -44,17 +46,17 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 - [Java 本地化](advanced/java-locale.md)
 - [JavaJDK8](advanced/jdk8.md)
 
-## Java 容器
+### Java 容器
 
 > [Java 容器](container) 涉及许多数据结构知识点，所以设立专题进行总结。
 
-- [Java 容器概述](container/java-container.md)
+- [Java 容器简介](container/java-container.md)
 - [Java 容器之 List](container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
 - [Java 容器之 Map](container/java-container-map.md) - 关键词：`Map`、`HashMap`、`LinkedHashMap`、`TreeMap`、`WeakHashMap`
 - [Java 容器之 Set](container/java-container-set.md)
 - [Java 容器之 Queue](container/java-container-queue.md)
 
-## Java 并发
+### Java 并发
 
 > [Java 并发](concurrent) 知识点庞杂且难懂，特设专题进行总结。
 
@@ -69,7 +71,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 - [Java 线程池](concurrent/java-thread-pool.md) - 关键词：`Executor`、`ExecutorService`、`ThreadPoolExecutor`、`Executors`
 - [Java 并发工具类](concurrent/java-concurrent-tools.md) - 关键词：`CountDownLatch`、`CyclicBarrier`、`Semaphore`
 
-## Java IO
+### Java IO
 
 > Java IO 知识点
 
@@ -79,7 +81,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 - [Java 序列化](io/java-serialization.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`、`transient`
 - [Java 网络编程](io/java-net.md) - 关键词：`Socket`、`ServerSocket`、`DatagramPacket`、`DatagramSocket`
 
-## Java 虚拟机
+### Java 虚拟机
 
 > [Java 虚拟机](jvm) 记录了 JVM 的基本机制。
 
@@ -90,7 +92,22 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 - [JVM 工具](jvm/jvm-tools.md)
 - [JVM 实战](jvm/jvm-action.md)
 
-## 资源
+## 其他教程 📚
+
+> 你可能会感兴趣：
+
+- [我的博客](https://github.com/dunwu/blog) 🎯
+- [Java 教程](https://github.com/dunwu/java-tutorial) 📚
+- [JavaCore 教程](https://dunwu.github.io/javacore/) 📚
+- [JavaTech 教程](https://dunwu.github.io/javatech/) 📚
+- [Spring 教程](https://dunwu.github.io/spring-tutorial/) 📚
+- [Spring Boot 教程](https://dunwu.github.io/spring-boot-tutorial/) 📚
+- [数据库教程](https://dunwu.github.io/db-tutorial/) 📚
+- [数据结构和算法教程](https://dunwu.github.io/algorithm-tutorial/) 📚
+- [Linux 教程](https://dunwu.github.io/linux-tutorial/) 📚
+- [Nginx 教程](https://github.com/dunwu/nginx-tutorial/) 📚
+
+## 学习资源 💎
 
 - **书籍**
   - Java 四大名著
@@ -111,7 +128,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
     - [《 Java 网络编程》](https://item.jd.com/11544991.html)
     - [《Java 加密与解密的艺术》](https://item.jd.com/26122568270.html)
     - [《Java 程序员面试宝典》](https://item.jd.com/11772823.html)
-- **学习资源**
+- **教程、社区**
   - [Runoob Java 教程](https://www.runoob.com/java/java-tutorial.html)
   - [JavaGuide](https://github.com/Snailclimb/JavaGuide)
   - [Java](https://github.com/TheAlgorithms/Java)

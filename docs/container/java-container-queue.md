@@ -2,13 +2,13 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-## 一、Queue 架构
+## 一、Queue 简介
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/Queue-diagrams.png" />
 </div>
 
-## Queue 接口
+### Queue 接口
 
 `Queue` 接口定义如下：
 
@@ -18,6 +18,8 @@ public interface Queue<E> extends Collection<E> {}
 
 ### AbstractQueue 抽象类
 
+**`AbstractQueue` 类提供 `Queue` 接口的核心实现**，以最大限度地减少实现 `Queue` 接口所需的工作。
+
 `AbstractQueue` 抽象类定义如下：
 
 ```java
@@ -26,9 +28,56 @@ public abstract class AbstractQueue<E>
     implements Queue<E> {}
 ```
 
-`AbstractQueue` 类提供 `Queue` 接口的核心实现，以最大限度地减少实现 `Queue` 接口所需的工作。
+### Deque 接口
 
-### PriorityQueue 类
+Deque 接口是 double ended queue的缩写，即双端队列，支持在线性表的两端插入和删除元素，继承 Queue 接口。大多数的实现对元素的数量没有限制，但这个接口既支持有容量限制的 deque，也支持没有固定大小限制的。
+
+## ArrayDeque
+
+`ArrayDeque` 是 `Deque` 的顺序表实现。
+
+ `ArrayDeque` 用一个动态数组实现了栈和队列所需的所有操作。 
+
+## LinkedList
+
+`LinkedList` 是 `Deque` 的链表实现。
+
+示例：
+
+```java
+public class LinkedListQueueDemo {
+
+    public static void main(String[] args) {
+        //add()和remove()方法在失败的时候会抛出异常(不推荐)
+        Queue<String> queue = new LinkedList<>();
+
+        queue.offer("a"); // 入队
+        queue.offer("b"); // 入队
+        queue.offer("c"); // 入队
+        for (String q : queue) {
+            System.out.println(q);
+        }
+        System.out.println("===");
+        System.out.println("poll=" + queue.poll()); // 出队
+        for (String q : queue) {
+            System.out.println(q);
+        }
+        System.out.println("===");
+        System.out.println("element=" + queue.element()); //返回第一个元素
+        for (String q : queue) {
+            System.out.println(q);
+        }
+        System.out.println("===");
+        System.out.println("peek=" + queue.peek()); //返回第一个元素
+        for (String q : queue) {
+            System.out.println(q);
+        }
+    }
+
+}
+```
+
+## PriorityQueue
 
 `PriorityQueue` 类定义如下：
 
@@ -40,12 +89,12 @@ public class PriorityQueue<E> extends AbstractQueue<E>
 `PriorityQueue` 要点：
 
 - `PriorityQueue` 实现了 `Serializable`，支持序列化。
-- `PriorityQueue` 类是基于优先级堆实现的无界优先级队列。
+- `PriorityQueue` 类是无界优先级队列。
 - `PriorityQueue` 中的元素根据自然顺序或 `Comparator` 提供的顺序排序。
 - `PriorityQueue` 不接受 null 值元素。
 - `PriorityQueue` 不是线程安全的。
 
-## BlockingQueue 接口
+## 二、BlockingQueue 接口
 
 `BlockingQueue` 接口定义如下：
 

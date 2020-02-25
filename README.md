@@ -20,7 +20,9 @@
 | :---------------------: | :---------------------: | :---------------------: | :---------------------: | :----------------: | :-------------------------: |
 | [Java 基础](#java-基础) | [Java 高级](#java-高级) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [JavaIO](#java-io) | [Java 虚拟机](#java-虚拟机) |
 
-## Java 基础
+## 教程内容 📖
+
+### Java 基础
 
 > [Java 基础](docs/basics) 总结 Java 的一些基础特性。
 
@@ -37,7 +39,7 @@
 - [Java 反射](docs/basics/java-reflection.md)
 - [Java 注解](docs/basics/java-annotation.md)
 
-## Java 高级
+### Java 高级
 
 > [Java 高级](docs/advanced) 总结 Java 的一些高级特性。
 
@@ -46,19 +48,23 @@
 - [Java 本地化](docs/advanced/java-locale.md)
 - [Java JDK8](docs/advanced/jdk8.md)
 
-## Java 容器
+### Java 容器
 
 > [Java 容器](docs/container) 涉及许多数据结构知识点，所以设立专题进行总结。
 
-- [Java 容器概述](docs/container/java-container.md)
-- [Java 容器之 List](docs/container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
-- [Java 容器之 Map](docs/container/java-container-map.md) - 关键词：`Map`、`HashMap`、`LinkedHashMap`、`TreeMap`、`WeakHashMap`
-- [Java 容器之 Set](docs/container/java-container-set.md)
-- [Java 容器之 Queue](docs/container/java-container-queue.md)
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175550.png)
 
-## Java 并发
+- [Java 容器简介](docs/container/java-container.md) - 关键词：`Collection`、`泛型`、`Iterable`、`Iterator`、`Comparable`、`Comparator`、`Cloneable`、`fail-fast`
+- [Java 容器之 List](docs/container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
+- [Java 容器之 Map](docs/container/java-container-map.md) - 关键词：`Map`、`HashMap`、`TreeMap`、`LinkedHashMap`、`WeakHashMap`
+- [Java 容器之 Set](docs/container/java-container-set.md) - 关键词：`Set`、`HashSet`、`TreeSet`、`LinkedHashSet`、`EmumSet`
+- [Java 容器之 Queue](docs/container/java-container-queue.md) - 关键词：
+
+### Java 并发
 
 > [Java 并发](docs/concurrent) 总结、整理 Java 并发编程相关知识点。
+
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175827.png)
 
 - [Java 并发面试题集 💯](docs/concurrent/java-concurrent-interview.md)
 - [Java 并发简介](docs/concurrent/java-concurrent-introduction.md) - 关键词：`进程`、`线程`
@@ -71,7 +77,7 @@
 - [Java 并发工具类](docs/concurrent/java-concurrent-tools.md) - 关键词：`CountDownLatch`、`CyclicBarrier`、`Semaphore`
 - [Java 内存模型](docs/concurrent/java-memory-model.md) - 关键词：`JMM`、`原子性`、`可见性`、`有序性`、`Happens-Before`
 
-## Java IO
+### Java IO
 
 > Java IO 知识点
 
@@ -81,9 +87,11 @@
 - [Java 序列化](docs/io/java-serialization.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`、`transient`
 - [Java 网络编程](docs/io/java-net.md) - 关键词：`Socket`、`ServerSocket`、`DatagramPacket`、`DatagramSocket`
 
-## Java 虚拟机
+### Java 虚拟机
 
 > [Java 虚拟机](docs/jvm) 记录了 JVM 的基本机制。
+
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221180028.png)
 
 - [JVM 内存区域](docs/jvm/jvm-memory.md)
 - [JVM 垃圾收集](docs/jvm/jvm-gc.md)
@@ -92,7 +100,22 @@
 - [JVM 工具](docs/jvm/jvm-tools.md)
 - [JVM 实战](docs/jvm/jvm-action.md)
 
-## 资源
+## 其他教程 📚
+
+> 你可能会感兴趣：
+
+- [我的 Github 博客](https://github.com/dunwu/blog) 🎯
+- [Java 教程](https://github.com/dunwu/java-tutorial) 📚
+- [JavaCore 教程](https://dunwu.github.io/javacore/) 📚
+- [JavaTech 教程](https://dunwu.github.io/javatech/) 📚
+- [Spring 教程](https://dunwu.github.io/spring-tutorial/) 📚
+- [Spring Boot 教程](https://dunwu.github.io/spring-boot-tutorial/) 📚
+- [数据库教程](https://dunwu.github.io/db-tutorial/) 📚
+- [数据结构和算法教程](https://dunwu.github.io/algorithm-tutorial/) 📚
+- [Linux 教程](https://dunwu.github.io/linux-tutorial/) 📚
+- [Nginx 教程](https://github.com/dunwu/nginx-tutorial/) 📚
+
+## 学习资源 💎
 
 - **书籍**
   - Java 四大名著
@@ -113,7 +136,7 @@
     - [《 Java 网络编程》](https://item.jd.com/11544991.html)
     - [《Java 加密与解密的艺术》](https://item.jd.com/26122568270.html)
     - [《Java 程序员面试宝典》](https://item.jd.com/11772823.html)
-- **学习资源**
+- **教程、社区**
   - [Runoob Java 教程](https://www.runoob.com/java/java-tutorial.html)
   - [JavaGuide](https://github.com/Snailclimb/JavaGuide)
   - [Java](https://github.com/TheAlgorithms/Java)
