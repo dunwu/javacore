@@ -340,6 +340,7 @@ CMS 收集器运行步骤如下：
 年轻代被标为浅绿色，年老代被标记为蓝色。如果你的应用已经运行了一段时间，CMS 的堆看起来应该是这个样子。对象分散在年老代区域里。
 
 ![img](http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/images/slide2.png)
+
 使用 CMS，年老代对象就地释放。它们不会被来回移动。这个空间不会被压缩除非发生 FullGC。
 
 **（3）年轻代收集**

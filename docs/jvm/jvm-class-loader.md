@@ -2,11 +2,11 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-## 类加载机制
+## 一、类加载机制
 
 > 类是在运行期间动态加载的。
 
-### 类生命周期
+### 类加载过程
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jmm-类加载-生命周期.jpg" />
@@ -25,8 +25,6 @@ Java 类的完整生命周期包括以下几个阶段：
 
 加载、验证、准备、初始化和卸载这 5 个阶段的顺序是确定的，类的加载过程必须按照这种顺序按部就班地开始。而解析过程在某些情况下可以在初始化阶段之后再开始，这是为了支持 Java 的动态绑定。
 
-### 类加载过程
-
 类加载过程是指加载、验证、准备、解析和初始化这 5 个阶段。
 
 #### （一）加载
@@ -35,9 +33,9 @@ Java 类的完整生命周期包括以下几个阶段：
 
 加载过程完成以下三件事：
 
-1. 通过一个类的全限定名来获取定义此类的二进制字节流。
-2. 将这个字节流所代表的静态存储结构转化为方法区的运行时存储结构。
-3. 在内存中生成一个代表这个类的 Class 对象，作为方法区这个类的各种数据的访问入口。
+- 通过一个类的全限定名来获取定义此类的二进制字节流。
+- 将这个字节流所代表的静态存储结构转化为方法区的运行时存储结构。
+- 在内存中生成一个代表这个类的 Class 对象，作为方法区这个类的各种数据的访问入口。
 
 其中二进制字节流可以从以下方式中获取：
 
@@ -50,7 +48,7 @@ Java 类的完整生命周期包括以下几个阶段：
 
 #### （二）验证
 
-验证是链接阶段的第一步，它的目标是**确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全**。
+验证是链接阶段的第一步，它的目标是**确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求**，并且不会危害虚拟机自身的安全。
 
 - **文件格式验证** - 验证字节流是否符合 Class 文件格式的规范，并且能被当前版本的虚拟机处理。
 - **元数据验证** - 对字节码描述的信息进行语义分析，以保证其描述的信息符合 Java 语言规范的要求。
@@ -102,8 +100,8 @@ public class Test {
 }
 ```
 
-- 与类的构造函数（或者说实例构造器 &lt;init>()）不同，不需要显式的调用父类的构造器。虚拟机会自动保证在子类的 &lt;clinit>() 方法运行之前，父类的 &lt;clinit>() 方法已经执行结束。因此虚拟机中第一个执行 &lt;clinit>() 方法的类肯定为 java.lang.Object。
-- 由于父类的 &lt;clinit>() 方法先执行，也就意味着父类中定义的静态语句块要优于子类的变量赋值操作。例如以下代码：
+- 与类的构造函数（或者说实例构造器 `<init>()`）不同，不需要显式的调用父类的构造器。虚拟机会自动保证在子类的 `<clinit>()` 方法运行之前，父类的 `<clinit>()` 方法已经执行结束。因此虚拟机中第一个执行 `<clinit>()` 方法的类肯定为 `java.lang.Object`。
+- 由于父类的 `<clinit>()` 方法先执行，也就意味着父类中定义的静态语句块要优于子类的变量赋值操作。例如以下代码：
 
 ```java
 static class Parent {
@@ -122,67 +120,82 @@ public static void main(String[] args) {
 }
 ```
 
-- &lt;clinit>() 方法对于类或接口不是必须的，如果一个类中不包含静态语句块，也没有对类变量的赋值操作，编译器可以不为该类生成 &lt;clinit>() 方法。
-- 接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样都会生成 &lt;clinit>() 方法。但接口与类不同的是，执行接口的 &lt;clinit>() 方法不需要先执行父接口的 &lt;clinit>() 方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时也一样不会执行接口的 &lt;clinit>() 方法。
-- 虚拟机会保证一个类的 &lt;clinit>() 方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 &lt;clinit>() 方法，其它线程都会阻塞等待，直到活动线程执行 &lt;clinit>() 方法完毕。如果在一个类的 &lt;clinit>() 方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。
+- `<clinit>()` 方法对于类或接口不是必须的，如果一个类中不包含静态语句块，也没有对类变量的赋值操作，编译器可以不为该类生成 `<clinit>()` 方法。
+- 接口中不可以使用静态语句块，但仍然有类变量初始化的赋值操作，因此接口与类一样都会生成 `<clinit>()` 方法。但接口与类不同的是，执行接口的 `<clinit>()` 方法不需要先执行父接口的 `<clinit>()` 方法。只有当父接口中定义的变量使用时，父接口才会初始化。另外，接口的实现类在初始化时也一样不会执行接口的 `<clinit>()` 方法。
+- 虚拟机会保证一个类的 `<clinit>()` 方法在多线程环境下被正确的加锁和同步，如果多个线程同时初始化一个类，只会有一个线程执行这个类的 `<clinit>()` 方法，其它线程都会阻塞等待，直到活动线程执行 `<clinit>()` 方法完毕。如果在一个类的 `<clinit>()` 方法中有耗时的操作，就可能造成多个线程阻塞，在实际过程中此种阻塞很隐蔽。
 
-##### 类初始化时机
+### 类初始化时机
 
-**主动引用**
+#### 主动引用
 
 虚拟机规范中并没有强制约束何时进行加载，但是规范严格规定了有且只有下列五种情况必须对类进行初始化（加载、验证、准备都会随着发生）：
 
-1. 遇到 new、getstatic、putstatic、invokestatic 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候。
-2. 使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行初始化，则需要先触发其初始化。
-3. 当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化。
-4. 当虚拟机启动时，用户需要指定一个要执行的主类（包含 main() 方法的那个类），虚拟机会先初始化这个主类；
-5. 当使用 JDK 1.7 的动态语言支持时，如果一个 java.lang.invoke.MethodHandle 实例最后的解析结果为 REF_getStatic, REF_putStatic, REF_invokeStatic 的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化；
+- 遇到 `new`、`getstatic`、`putstatic`、`invokestatic` 这四条字节码指令时，如果类没有进行过初始化，则必须先触发其初始化。最常见的生成这 4 条指令的场景是：使用 new 关键字实例化对象的时候；读取或设置一个类的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候；以及调用一个类的静态方法的时候。
+- 使用 `java.lang.reflect` 包的方法对类进行反射调用的时候，如果类没有进行初始化，则需要先触发其初始化。
+- 当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化。
+- 当虚拟机启动时，用户需要指定一个要执行的主类（包含 `main()` 方法的类），虚拟机会先初始化这个主类。
+- 当使用 JDK 1.7 的动态语言支持时，如果一个 `java.lang.invoke.MethodHandle` 实例最后的解析结果为 `REF_getStatic`, `REF_putStatic`, `REF_invokeStatic` 的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化。
 
-**被动引用**
+#### 被动引用
 
 以上 5 种场景中的行为称为对一个类进行主动引用。除此之外，所有引用类的方式都不会触发初始化，称为被动引用。被动引用的常见例子包括：
 
-- 通过子类引用父类的静态字段，不会导致子类初始化。
+- **通过子类引用父类的静态字段，不会导致子类初始化**。
 
 ```java
 System.out.println(SubClass.value); // value 字段在 SuperClass 中定义
 ```
 
-- 通过数组定义来引用类，不会触发此类的初始化。该过程会对数组类进行初始化，数组类是一个由虚拟机自动生成的、直接继承自 Object 的子类，其中包含了数组的属性和方法。
+- **通过数组定义来引用类，不会触发此类的初始化**。该过程会对数组类进行初始化，数组类是一个由虚拟机自动生成的、直接继承自 `Object` 的子类，其中包含了数组的属性和方法。
 
 ```java
 SuperClass[] sca = new SuperClass[10];
 ```
 
-- 常量在编译阶段会存入调用类的常量池中，本质上并没有直接引用到定义常量的类，因此不会触发定义常量的类的初始化。
+- 常量在编译阶段会存入调用类的常量池中，本质上并没有直接引用到定义常量的类，因此不会触发**定义常量的类的初始化**。
 
 ```java
 System.out.println(ConstClass.HELLOWORLD);
 ```
 
-## 类加载器
+## 二、ClassLoader
 
-实现类的加载动作。在 Java 虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类。
+`ClassLoader` 即类加载器，负责将类加载到 JVM。在 Java 虚拟机外部实现，以便让应用程序自己决定如何去获取所需要的类。
+
+JVM 加载 `class` 文件到内存有两种方式：
+
+- 隐式加载 - JVM 自动加载需要的类到内存中。
+- 显示加载 - 通过使用 `ClassLoader` 来加载一个类到内存中。
 
 ### 类与类加载器
 
-两个类相等：类本身相等，并且使用同一个类加载器进行加载。这是因为每一个类加载器都拥有一个独立的类名称空间。
+如何判断两个类是否相等：类本身相等，并且使用同一个类加载器进行加载。这是因为***每一个 `ClassLoader` 都拥有一个独立的类名称空间***。
 
-这里的相等，包括类的 Class 对象的 equals() 方法、isAssignableFrom() 方法、isInstance() 方法的返回结果为 true，也包括使用 instanceof 关键字做对象所属关系判定结果为 true。
+这里的相等，包括类的 `Class` 对象的 `equals()` 方法、`isAssignableFrom()` 方法、`isInstance()` 方法的返回结果为 true，也包括使用 `instanceof` 关键字做对象所属关系判定结果为 true。
 
 ### 类加载器分类
 
-- **启动类加载器（Bootstrap ClassLoader）** - 此类加载器负责将存放在 `<JAVA_HOME>\lib` 目录中的，或者被 `-Xbootclasspath` 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 null 代替即可。
+#### Bootstrap ClassLoader
 
-- **扩展类加载器（Extension ClassLoader）** - 这个类加载器是由 `ExtClassLoader(sun.misc.Launcher\$ExtClassLoader)`实现的。它负责将 `<JAVA_HOME>\lib\ext` 或者被 java.ext.dir 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
+`Bootstrap ClassLoader` ，即启动类加载器 ，**负责加载 JVM 自身工作所需要的类**。
 
-- **应用程序类加载器（Application ClassLoader）** - 这个类加载器是由 `AppClassLoader（sun.misc.Launcher\$AppClassLoader）`实现的。由于这个类加载器是 `ClassLoader` 中的 `getSystemClassLoader()` 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（ClassPath）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
+`Bootstrap ClassLoader` 会将存放在 `<JAVA_HOME>\lib` 目录中的，或者被 `-Xbootclasspath` 参数所指定的路径中的，并且是虚拟机识别的（仅按照文件名识别，如 rt.jar，名字不符合的类库即使放在 lib 目录中也不会被加载）类库加载到虚拟机内存中。
 
-### 双亲委派模型
+`Bootstrap ClassLoader` 完全是由 JVM 自己控制的，启动类加载器无法被 Java 程序直接引用，用户在编写自定义类加载器时，如果需要把加载请求委派给启动类加载器，直接使用 `null` 代替即可。
 
-应用程序都是由以上三种类加载器相互配合进行加载的，如果有必要，还可以加入自己定义的类加载器。
+#### ExtClassLoader
 
-下图展示的类加载器之间的层次关系，称为类加载器的**双亲委派模型（Parents Delegation Model）**。**该模型要求除了顶层的启动类加载器外，其余的类加载器都应有自己的父类加载器**。**这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现**。
+`ExtClassLoader`，即扩展类加载器，这个类加载器是由 `ExtClassLoader(sun.misc.Launcher\$ExtClassLoader)`实现的。它负责将 `<JAVA_HOME>\lib\ext` 或者被 `java.ext.dir` 系统变量所指定路径中的所有类库加载到内存中，开发者可以直接使用扩展类加载器。
+
+#### AppClassLoader
+
+`AppClassLoader`，即应用程序类加载器，这个类加载器是由 `AppClassLoader(sun.misc.Launcher\$AppClassLoader)` 实现的。由于这个类加载器是 `ClassLoader` 中的 `getSystemClassLoader()` 方法的返回值，因此一般称为系统类加载器。它负责加载用户类路径（即 `classpath`）上所指定的类库，开发者可以直接使用这个类加载器，如果应用程序中没有自定义过自己的类加载器，一般情况下这个就是程序中默认的类加载器。
+
+### 双亲委派
+
+应用程序都是由以上三种类加载器相互配合进行加载的，如果有必要，还可以自定义类加载器。
+
+下图展示的类加载器之间的层次关系，称为类加载器的**双亲委派模型（Parents Delegation Model）**。**该模型要求除了顶层的 Bootstrap ClassLoader 外，其余的类加载器都应有自己的父类加载器**。**这里类加载器之间的父子关系一般通过组合（Composition）关系来实现，而不是通过继承（Inheritance）的关系实现**。
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jmm-类加载-双亲委派.png" width="500" />
@@ -190,13 +203,13 @@ System.out.println(ConstClass.HELLOWORLD);
 
 **（1）工作过程**
 
-一个类加载器首先将类加载请求传送到父类加载器，只有当父类加载器无法完成类加载请求时才尝试加载。
+**一个类加载器首先将类加载请求传送到父类加载器，只有当父类加载器无法完成类加载请求时才尝试加载**。
 
 **（2）好处**
 
 **使得 Java 类随着它的类加载器一起具有一种带有优先级的层次关系**，从而使得基础类得到统一。
 
-例如 `java.lang.Object` 存放在 rt.jar 中，如果编写另外一个 `java.lang.Object` 的类并放到 ClassPath 中，程序可以编译通过。因为双亲委派模型的存在，所以在 rt.jar 中的 Object 比在 ClassPath 中的 Object 优先级更高，因为 rt.jar 中的 Object 使用的是启动类加载器，而 ClassPath 中的 Object 使用的是应用程序类加载器。正因为 rt.jar 中的 Object 优先级更高，因为程序中所有的 Object 都是这个 Object。
+例如： `java.lang.Object` 存放在 rt.jar 中，如果编写另外一个 `java.lang.Object` 的类并放到 `classpath` 中，程序可以编译通过。因为双亲委派模型的存在，所以在 rt.jar 中的 `Object` 比在 `classpath` 中的 `Object` 优先级更高，因为 rt.jar 中的 `Object` 使用的是启动类加载器，而 `classpath` 中的 `Object` 使用的是应用程序类加载器。正因为 rt.jar 中的 `Object` 优先级更高，因为程序中所有的 `Object` 都是这个 `Object`。
 
 **（3）实现**
 
@@ -249,11 +262,13 @@ public abstract class ClassLoader {
 }
 ```
 
-### 自定义类加载器实现
+### 自定义类加载器
 
-FileSystemClassLoader 是自定义类加载器，继承自 `java.lang.ClassLoader`，用于加载文件系统上的类。它首先根据类的全名在文件系统上查找类的字节代码文件（.class 文件），然后读取该文件内容，最后通过 defineClass() 方法来把这些字节代码转换成 java.lang.Class 类的实例。
+假设，我们需要自定义一个名为 `FileSystemClassLoader` 的类加载器，继承自 `java.lang.ClassLoader`，用于加载文件系统上的类。它首先根据类的全名在文件系统上查找类的字节代码文件（`.class` 文件），然后读取该文件内容，最后通过 `defineClass()` 方法来把这些字节代码转换成 `java.lang.Class` 类的实例。
 
 `java.lang.ClassLoader` 类的方法 `loadClass()` 实现了双亲委派模型的逻辑，因此自定义类加载器一般不去重写它，而是通过重写 `findClass()` 方法。
+
+【示例】自定义一个类加载器
 
 ```java
 public class FileSystemClassLoader extends ClassLoader {
@@ -296,6 +311,130 @@ public class FileSystemClassLoader extends ClassLoader {
                 + className.replace('.', File.separatorChar) + ".class";
     }
 }
+```
+
+### ClassLoader 参数
+
+在生产环境上启动 java 应用时，通常会指定一些 `ClassLoader` 参数，以加载应用所需要的 lib：
+
+```shell
+java -jar xxx.jar -classpath lib/* 
+```
+
+`ClassLoader` 相关参数选项：
+
+| 参数选项                                     | ClassLoader 类型        | 说明                                                         |
+| -------------------------------------------- | ----------------------- | ------------------------------------------------------------ |
+| `-Xbootclasspath`                            | `Bootstrap ClassLoader` | 设置 `Bootstrap ClassLoader` 搜索路径。【不常用】            |
+| `-Xbootclasspath/a`                          | `Bootstrap ClassLoader` | 把路径添加到已存在的 `Bootstrap ClassLoader` 搜索路径后面。【常用】 |
+| `-Xbootclasspath/p`                          | `Bootstrap ClassLoader` | 把路径添加到已存在的 `Bootstrap ClassLoader` 搜索路径前面。【不常用】 |
+| `-Djava.ext.dirs`                            | `ExtClassLoader`        | 设置 `ExtClassLoader` 搜索路径。                             |
+| `-Djava.class.path` 或 `-cp` 或 `-classpath` | `AppClassLoader`        | 设置 `AppClassLoader` 搜索路径。                             |
+
+## 三、ClassLoader 实战
+
+`ClassLoader` 常用的场景：
+
+- 容器 - 典型应用：Servlet 容器（如：Tomcat、Jetty）、udf （Mysql、Hive）等。加载解压 jar 包或 war 包后，加载其 Class 到指定的类加载器中运行（通常需要考虑空间隔离）。
+- 热部署、热插拔 - 应用启动后，动态获得某个类信息，然后加载到 JVM 中工作。很多著名的容器软件、框架（如：Spring 等），都使用 `ClassLoader` 来实现自身的热部署。
+
+------
+
+TODO：补充实战用例。
+
+## 四、加载类错误 FAQ
+
+### ClassNotFoundException
+
+`ClassNotFoundException` 异常出镜率极高。**`ClassNotFoundException` 表示当前 `classpath` 下找不到指定类**。
+
+常见问题原因：
+
+- 调用 `Class` 的 `forName()` 方法，未找到类。
+- 调用 `ClassLoader` 中的 `loadClass()` 方法，未找到类。
+- 调用 `ClassLoader` 中的 `findSystemClass()` 方法，未找到类。
+
+【示例】执行以下代码，会抛出 `ClassNotFoundException` 异常：
+
+```java
+public class ClassNotFoundExceptionDemo {
+    public static void main(String[] args) {
+        try {
+            Class.forName("NotFound");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+解决方法：检查 `classpath` 下有没有相应的 class 文件。
+
+### NoClassDefFoundError
+
+常见问题原因：
+
+- 类依赖的 Class 或者 jar 不存在。
+- 类文件存在，但是存在不同的域中。
+
+解决方法：现代 Java 项目，一般使用 `maven`、`gradle` 等构建工具管理项目，仔细检查找不到的类所在的 jar 包是否已添加为依赖。
+
+### UnsatisfiedLinkError
+
+这个异常倒不是很常见，但是出错的话，通常是在JVM启动的时候如果一不小心将在JVM中的某个lib删除了，可能就会报这个错误了。
+
+【示例】执行以下代码，会抛出 `UnsatisfiedLinkError` 错误。
+
+```java
+public class UnsatisfiedLinkErrorDemo {
+
+    public native void nativeMethod();
+
+    static {
+        System.loadLibrary("NoLib");
+    }
+
+    public static void main(String[] args) {
+        new UnsatisfiedLinkErrorDemo().nativeMethod();
+    }
+
+}
+```
+
+【输出】
+
+```java
+java.lang.UnsatisfiedLinkError: no NoLib in java.library.path
+	at java.lang.ClassLoader.loadLibrary(ClassLoader.java:1867)
+	at java.lang.Runtime.loadLibrary0(Runtime.java:870)
+	at java.lang.System.loadLibrary(System.java:1122)
+	at io.github.dunwu.javacore.jvm.classloader.exception.UnsatisfiedLinkErrorDemo.<clinit>(UnsatisfiedLinkErrorDemo.java:12)
+```
+
+### ClassCastException
+
+`ClassCastException` 异常通常是在程序中强制类型转换失败时出现。
+
+【示例】执行以下代码，会抛出 `ClassCastException` 异常。
+
+```java
+public class ClassCastExceptionDemo {
+
+    public static void main(String[] args) {
+        Object obj = new Object();
+        EmptyClass newObj = (EmptyClass) obj;
+    }
+
+    static class EmptyClass {}
+
+}
+```
+
+【输出】
+
+```java
+Exception in thread "main" java.lang.ClassCastException: java.lang.Object cannot be cast to io.github.dunwu.javacore.jvm.classloader.exception.ClassCastExceptionDemo$EmptyClass
+	at io.github.dunwu.javacore.jvm.classloader.exception.ClassCastExceptionDemo.main(ClassCastExceptionDemo.java:11)
 ```
 
 ## 参考资料

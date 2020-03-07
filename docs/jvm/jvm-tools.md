@@ -1,19 +1,21 @@
 # JVM 工具
 
+> Java 程序员免不了故障排查工作，所以经常需要使用一些 JVM 工具。
+
 ## 命令工具
 
 JDK 自带了一些实用的命令行工具来监控 JVM。
 
-| 名称   | 描述                                                                                                 |
-| ------ | ---------------------------------------------------------------------------------------------------- |
-| jps    | 显示指定系统内所有的 HotSpot 虚拟机进程。                                                            |
-| jstat  | 用于监视虚拟机运行时状态信息，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT 编译等运行数据。 |
-| jmap   | 用于生成堆转储快照（一般称为 heapdump 或 dump 文件）。                                               |
-| jstack | 用于生成 java 虚拟机当前时刻的线程快照（一般称为 threaddump 或 javacore 文件）。                     |
-| jhat   | 用来分析 jmap 生成的 dump 文件。                                                                     |
-| jinfo  | 用于实时查看和调整虚拟机运行参数。                                                                   |
+| 名称     | 描述                                                                                                 |
+| -------- | ---------------------------------------------------------------------------------------------------- |
+| `jps`    | 显示指定系统内所有的 HotSpot 虚拟机进程。                                                            |
+| `jstat`  | 用于监视虚拟机运行时状态信息，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT 编译等运行数据。 |
+| `jmap`   | 用于生成堆转储快照（一般称为 heapdump 或 dump 文件）。                                               |
+| `jstack` | 用于生成 java 虚拟机当前时刻的线程快照（一般称为 threaddump 或 javacore 文件）。                     |
+| `jhat`   | 用来分析 jmap 生成的 dump 文件。                                                                     |
+| `jinfo`  | 用于实时查看和调整虚拟机运行参数。                                                                   |
 
-### jps 虚拟机进程状态工具
+### jps
 
 > **jps(JVM Process Status Tool) 是虚拟机进程状态工具**。它可以显示指定系统内所有的 HotSpot 虚拟机进程状态信息。jps 通过 RMI 协议查询开启了 RMI 服务的远程虚拟机进程状态。
 
@@ -36,7 +38,7 @@ jps [option] [hostid]
 
 其中[option]、[hostid]参数也可以不写。
 
-示例：
+【示例】
 
 ```shell
 $ jps -l -m
@@ -45,7 +47,7 @@ $ jps -l -m
 25816 sun.tools.jps.Jps -l -m
 ```
 
-### jstat：虚拟机统计信息监视工具
+### jstat
 
 > **jstat(JVM statistics Monitoring)，是虚拟机统计信息监视工具**。jstat 用于监视虚拟机运行时状态信息，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT 编译等运行数据。
 
@@ -64,7 +66,54 @@ jstat [option] VMID [interval] [count]
 - `interval` - 查询间隔
 - `count` - 查询次数
 
-示例：
+> 【参考】更详细说明可以参考：[jstat 命令查看 jvm 的 GC 情况](https://www.cnblogs.com/yjd_hycf_space/p/7755633.html)
+
+#### 类加载统计
+
+使用 `jstat -class pid` 命令可以查看编译统计信息。
+
+【示例】
+
+```shell
+$ jstat -class 7129
+Loaded  Bytes  Unloaded  Bytes     Time
+ 26749 50405.3      873  1216.8      19.75
+```
+
+【参数】
+
+- Loaded - 加载 class 的数量
+- Bytes - 所占用空间大小
+- Unloaded - 未加载数量
+- Bytes - 未加载占用空间
+- Time - 时间
+
+#### 编译统计
+
+使用 `jstat -compiler pid` 命令可以查看编译统计信息。
+
+【示例】
+
+```shell
+$ jstat -compiler 7129
+Compiled Failed Invalid   Time   FailedType FailedMethod
+   42030      2       0   302.53          1 org/apache/felix/framework/BundleWiringImpl$BundleClassLoader findClass
+```
+
+【参数】
+
+- Compiled - 编译数量
+- Failed - 失败数量
+- Invalid - 不可用数量
+- Time - 时间
+- FailedType - 失败类型
+- FailedMethod - 失败的方法
+
+#### GC 统计
+
+使用 `jstat -gc pid time` 命令可以查看 GC 统计信息。
+
+【示例】
 
 ```shell
 $ jstat -gc 29527 200 5
@@ -76,7 +125,21 @@ $ jstat -gc 29527 200 5
 22528.0 22016.0  0.0   21388.2 4106752.0 921244.7 5592576.0  2086826.5  110716.0 103441.1 12416.0 11167.7   3189   90.057  10      2.140   92.197
 ```
 
-### jmap：Java 内存映像工具
+【参数】
+
+- `S0C` - 第一个 Survivor 区的大小
+- `S1C` - 第二个 Survivor 区的大小
+- `S0U` - 第一个 Survivor 区的使用大小
+- `S1U` - 第二个 Survivor 区的使用大小
+- `EC` - Eden 区的大小
+- `EU` - Eden 区的使用大小
+- `TT` - 对象在新生代存活的次数
+- `MTT` - 对象在新生代存活的最大次数
+- `DSS` - 期望的 Survivor 区的大小
+- `YGC` - 年轻代垃圾回收次数
+- `YGCT` - 年轻代垃圾回收消耗时间
+
+### jmap
 
 > **jmap(JVM Memory Map) 是 Java 内存映像工具**。jmap 用于生成堆转储快照（一般称为 heapdump 或 dump 文件）。jmap 不仅能生成 dump 文件，还可以查询 `finalize` 执行队列、Java 堆和永久代的详细信息，如当前使用率、当前使用的是哪种收集器等。
 >
@@ -98,7 +161,7 @@ jmap [option] VMID
   - `-permstat` - to print permanent generation statistics
   - `-F` - 当-dump 没有响应时，强制生成 dump 快照
 
-示例：
+【示例】
 
 **（1）生成 heapdump 快照**
 
@@ -179,7 +242,7 @@ PS Perm Generation
    97.06831451706046% used
 ```
 
-### jstack：Java 堆栈跟踪工具
+### jstack
 
 > **jstack(Stack Trace for java) 是 Java 堆栈跟踪工具**。jstack 用于生成 java 虚拟机当前时刻的线程快照（一般称为 threaddump 或 javacore 文件）。
 >
@@ -200,7 +263,7 @@ jstack [option] vmid
   - `-l` - 除堆栈外，显示关于锁的附加信息
   - `-m` - 如果调用到本地方法的话，可以显示 C/C++的堆栈
 
-示例：
+【示例】
 
 （1）找出某 Java 进程中最耗费 CPU 的 Java 线程
 
@@ -257,7 +320,7 @@ synchronized(sigLock) {
 
 它是轮询任务的空闲等待代码，上面的 sigLock.wait(timeUntilContinue) 就对应了前面的 Object.wait()。
 
-### jhat：虚拟机堆转储快照分析工具
+### jhat
 
 > **jhat(JVM Heap Analysis Tool)，是虚拟机堆转储快照分析工具**。jhat 与 jmap 搭配使用，用来分析 jmap 生成的 dump 文件。jhat 内置了一个微型的 HTTP/HTML 服务器，生成 dump 的分析结果后，可以在浏览器中查看。
 >
@@ -269,7 +332,7 @@ synchronized(sigLock) {
 jhat [dumpfile]
 ```
 
-### jinfo：Java 配置信息工具
+### jinfo
 
 > **jinfo(JVM Configuration info)，是 Java 配置信息工具**。jinfo 用于实时查看和调整虚拟机运行参数。
 
@@ -287,7 +350,7 @@ jinfo [option] pid
   - `-flag` - 输出指定 args 参数的值
   - `-sysprops` - 输出系统属性，等同于 `System.getProperties()`
 
-示例：
+【示例】
 
 ```shell
 $ jinfo -sysprops 29527
@@ -300,7 +363,7 @@ JVM version is 25.222-b10
 
 ## UI 工具
 
-### jconsole：Java 监视与管理控制台
+### jconsole
 
 > **jconsole(Java Monitoring and Management Console) 是一种基于 JMX 的可视化监视与管理工具**。它的管理功能是针对 JMX MBean 进行管理，由于 MBean 可以使用代码、中间件服务器的管理控制台或所有符合 JMX 规范的软件进行访问。
 
@@ -336,7 +399,7 @@ Java 应用开启 JMX 后，可以使用 `jconsole` 或 `jvisualvm` 进行监控
 - `VM 摘要` - 显示有关 Java VM 的信息。
 - `MBean` - 显示有关 MBean 的信息。
 
-### jvisualvm：多合一故障处理工具
+### jvisualvm
 
 > **jvisualvm(All-In-One Java Troubleshooting Tool) 是多合一故障处理工具**。它支持运行监视、故障处理、性能分析等功能。
 
@@ -347,3 +410,4 @@ Java 应用开启 JMX 后，可以使用 `jconsole` 或 `jvisualvm` 进行监控
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - [jconsole 官方文档](https://docs.oracle.com/javase/8/docs/technotes/guides/management/jconsole.html)
 - [jconsole 工具使用](https://www.cnblogs.com/kongzhongqijing/articles/3621441.html)
+- [jstat 命令查看 jvm 的 GC 情况](https://www.cnblogs.com/yjd_hycf_space/p/7755633.html)

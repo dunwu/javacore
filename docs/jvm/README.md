@@ -1,45 +1,17 @@
 # Java 虚拟机
 
-> Java 虚拟机 记录了 JVM 的基本机制。
+> 【Java 虚拟机】总结、整理了个人对于 JVM 的学习、应用心得。
 
 ## 内容
 
-- [JVM 内存区域](jvm-memory.md)
+- [JVM 内存管理](jvm-memory.md)
 - [JVM 垃圾收集](jvm-gc.md)
 - [JVM 字节码](jvm-bytecode.md)
 - [JVM 类加载](jvm-class-loader.md)
 - [JVM 工具](jvm-tools.md)
+- [JVM 体系结构](jvm-architecture.md)
 - [JVM 实战](jvm-action.md)
 
-## Java 虚拟机架构
+## 资料
 
-### Hotspot 架构
-
-Java 虚拟机的主要组件，包括**类加载器**、**运行时数据区**和**执行引擎**。
-
-Hotspot 虚拟机拥有一个架构，它支持强大特性和能力的基础平台，支持实现高性能和强大的可伸缩性的能力。举个例子，Hotspot 虚拟机 JIT 编译器生成动态的优化，换句话说，它们在 Java 应用执行期做出优化，为底层系统架构生成高性能的本地机器指令。另外，经过它的运行时环境和多线程垃圾回收成熟的进化和连续的设计， Hotspot 虚拟机在高可用计算系统上产出了高伸缩性。
-
-<div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-hotspot-architecture.png" />
-</div>
-
-### Hotspot 关键组件
-
-Java 虚拟机有三个组件关注着什么时候进行性能优化，堆空间是对象所存储的地方，这个区域被启动时选择的垃圾回收器管理，大部分调优选项与调整堆大小和根据你的情况选择最适当的垃圾收集器相关。即时编译器对性能也有很大的影响，但是使用新版本的 Java 虚拟机时很少需要调整。
-
-<div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-hotspot-key-components.png" />
-</div>
-
-### 性能指标
-
-Java 虚拟机的性能指标主要有两点：
-
-- **停顿时间** - 响应延迟是指一个应用回应一个请求的速度有多快。对关注响应能力的应用来说，长暂停时间是不可接受的，重点是在短的时间周期内能做出响应。
-  - 桌面 UI 响应事件的速度
-  - 网站返回网页的速度
-  - 数据查询返回的速度
-- **吞吐量** - 吞吐量关注在特定的时间周期内一个应用的工作量的最大值。对关注吞吐量的应用来说长暂停时间是可以接受的。由于高吞吐量的应用关注的基准在更长周期时间上，所以快速响应时间不在考虑之内。
-  - 给定时间内完成事务的数量
-  - 一小时内批处理程序完成的工作数量
-  - 一小时内数据查询完成的数量
+- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)

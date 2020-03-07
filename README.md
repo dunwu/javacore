@@ -96,7 +96,7 @@
 - [JVM 内存区域](docs/jvm/jvm-memory.md)
 - [JVM 垃圾收集](docs/jvm/jvm-gc.md)
 - [JVM 字节码](docs/jvm/jvm-bytecode.md)
-- [JVM 类加载](docs/jvm/jvm-class-loader.md)
+- [JVM 类加载](docs/jvm/jvm-class-loader.md) - 关键词：`类加载过程`、`ClassLoader`、`双亲委派`、
 - [JVM 工具](docs/jvm/jvm-tools.md)
 - [JVM 实战](docs/jvm/jvm-action.md)
 
