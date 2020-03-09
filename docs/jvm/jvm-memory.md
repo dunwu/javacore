@@ -141,39 +141,64 @@ Java 堆是垃圾收集的主要区域（因此也被叫做"GC 堆"）。现代�
 | 运行时常量池  | 线程共享       | `OutOfMemoryError`                         |
 | 直接内存      | 非运行时数据区 | `OutOfMemoryError`                         |
 
-## 二、OutOfMemoryError
+## 三、OutOfMemoryError
 
 在 JVM 规范中，**除了程序计数器区域外，其他运行时区域都可能发生 `OutOfMemoryError` 异常（简称 OOM）**。
 
 下面逐一介绍 OOM 发生场景。
 
-### Java 堆溢出
+### Java heap space
 
-【现象】Java 堆空间不足时的错误现象：
+`java.lang.OutOfMemoryError: Java heap space` 这个错误意味着：**堆空间溢出**。
 
-```
-Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
-```
+更细致的说法是：Java 堆内存已经达到 `-Xmx` 设置的最大值。Java 堆用于存储对象实例，只要不断地创建对象，并且保证 GC Roots 到对象之间有可达路径来避免垃圾收集器回收这些对象，那么当堆空间到达最大容量限制后就会产生 OOM。
 
-这个错误是指：Java 堆内存已经达到 `-Xmx` 设置的最大值。Java 堆用于存储对象实例。只要不断地创建对象，并且保证 GC Roots 到对象之间有可达路径来避免垃圾收集器回收这些对象，那么当堆空间到达最大容量限制后就会产生 OOM。
+堆空间溢出有可能是**`内存泄漏（Memory Leak）`** 或 **`内存溢出（Memory Overflow）`** 。需要使用 jstack 和 jmap 生成 threaddump 和 heapdump，然后用内存分析工具（如：MAT）进行分析。
 
-【排查】
+#### Java heap space 分析步骤
 
-排查重点在于：判断是 **`内存泄漏（Memory Leak）`** 还是 **`内存溢出（Memory Overflow）`**。
+1. 使用 `jmap` 或 `-XX:+HeapDumpOnOutOfMemoryError` 获取堆快照。
+2. 使用内存分析工具（visualvm、mat、jProfile 等）对堆快照文件进行分析。
+3. 根据分析图，重点是确认内存中的对象是否是必要的，分清究竟是是内存泄漏（Memory Leak）还是内存溢出（Memory Overflow）。
 
-使用 jstack 和 jmap 生成 threaddump 和 heapdump，然后用内存分析工具（如：Eclipse Memory Analyzer）进行分析。
+#### 内存泄漏
 
-【处理】
+**内存泄漏是指由于疏忽或错误造成程序未能释放已经不再使用的内存的情况**。
 
-- 如果是内存泄漏，可以进一步查看泄漏对象到 GC Roots 的对象引用链。这样就能找到泄漏对象是怎样与 GC Roots 关联并导致 GC 无法回收它们的。掌握了这些原因，就可以较准确的定位出引起内存泄漏的代码。
-- 如果不存在内存泄漏，即内存中的对象确实都必须存活着，则应当检查虚拟机的堆参数（`-Xmx` 和 `-Xms`），与机器物理内存进行对比，看看是否可以调大。并从代码上检查是否存在某些对象生命周期过长、持有时间过长的情况，尝试减少程序运行期的内存消耗。
+内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，失去了对该段内存的控制，因而造成了内存的浪费。内存泄漏随着被执行的次数不断增加，最终会导致内存溢出。
 
-> 可以使用 `-XX:+HeapDumpOnOutOfMemoryError` 参数来让虚拟机出现 OOM 的时候，自动生成 dump 文件，这个文件中记录了当前 Java 堆的快照信息。
+内存泄漏常见场景：
 
-示例：
+- 静态容器
+  - 声明为静态（`static`）的 `HashMap`、`Vector` 等集合
+  - 通俗来讲 A 中有 B，当前只把 B 设置为空，A 没有设置为空，回收时 B 无法回收。因为被 A 引用。
+- 监听器
+  - 监听器被注册后释放对象时没有删除监听器
+- 物理连接
+  - 各种连接池建立了连接，必须通过 `close()` 关闭链接
+- 内部类和外部模块等的引用
+  - 发现它的方式同内存溢出，可再加个实时观察
+  - `jstat -gcutil 7362 2500 70`
+
+重点关注：
+
+- `FGC` — 从应用程序启动到采样时发生 Full GC 的次数。
+- `FGCT` — 从应用程序启动到采样时 Full GC 所用的时间（单位秒）。
+- `FGC` 次数越多，`FGCT` 所需时间越多，越有可能存在内存泄漏。
+
+如果是内存泄漏，可以进一步查看泄漏对象到 GC Roots 的对象引用链。这样就能找到泄漏对象是怎样与 GC Roots 关联并导致 GC 无法回收它们的。掌握了这些原因，就可以较准确的定位出引起内存泄漏的代码。
+
+导致内存泄漏的常见原因是使用容器，且不断向容器中添加元素，但没有清理，导致容器内存不断膨胀。
+
+【示例】
 
 ```java
-public class HeapOOM1 {
+/**
+ * 内存泄漏示例
+ * 错误现象：java.lang.OutOfMemoryError: Java heap space
+ * VM Args：-verbose:gc -Xms10M -Xmx10M -XX:+HeapDumpOnOutOfMemoryError
+ */
+public class HeapOutOfMemoryDemo {
 
     public static void main(String[] args) {
         List<OomObject> list = new ArrayList<>();
@@ -187,98 +212,190 @@ public class HeapOOM1 {
 }
 ```
 
-执行 `java -verbose:gc -Xms10M -Xmx10M -XX:+HeapDumpOnOutOfMemoryError io.github.dunwu.javacore.jvm.memory.HeapOutOfMemoryDemo`
+#### 内存溢出
 
-### 虚拟机栈和本地方法栈溢出
+如果不存在内存泄漏，即内存中的对象确实都必须存活着，则应当检查虚拟机的堆参数（`-Xmx` 和 `-Xms`），与机器物理内存进行对比，看看是否可以调大。并从代码上检查是否存在某些对象生命周期过长、持有时间过长的情况，尝试减少程序运行期的内存消耗。
 
-对于 HotSpot 虚拟机来说，栈容量只由 `-Xss` 参数来决定。
-
-- 如果线程请求的栈深度大于虚拟机所允许的最大深度，将抛出 `StackOverflowError` 异常。
-- 如果虚拟机在扩展栈时无法申请到足够的内存空间，则抛出 `OutOfMemoryError` 异常。
-
-从实战来说，栈溢出的常见原因：
-
-- 递归函数调用层数太深
-- 大量循环或死循环
-- 数组、List、Map 数据过大
-
-示例：递归函数调用层数太深导致 `StackOverflowError`
+【示例】
 
 ```java
-public class StackOverflowDemo {
-
-    private int stackLength = 1;
-
-    public void recursion() {
-        stackLength++;
-        recursion();
-    }
+/**
+ * 堆溢出示例
+ * <p>
+ * 错误现象：java.lang.OutOfMemoryError: Java heap space
+ * <p>
+ * VM Args：-verbose:gc -Xms10M -Xmx10M
+ *
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2019-06-25
+ */
+public class HeapOutOfMemoryDemo {
 
     public static void main(String[] args) {
-        StackOverflowDemo obj = new StackOverflowDemo();
-        try {
-            obj.recursion();
-        } catch (Throwable e) {
-            System.out.println("栈深度：" + obj.stackLength);
-            e.printStackTrace();
+        Double[] array = new Double[999999999];
+        System.out.println("array length = [" + array.length + "]");
+    }
+
+}
+```
+
+执行 `java -verbose:gc -Xms10M -Xmx10M -XX:+HeapDumpOnOutOfMemoryError io.github.dunwu.javacore.jvm.memory.HeapMemoryLeakMemoryErrorDemo`
+
+上面的例子是一个极端的例子，试图创建一个维度很大的数组，堆内存无法分配这么大的内存，从而报错：`Java heap space`。
+
+但如果在现实中，代码并没有问题，仅仅是因为堆内存不足，可以通过 `-Xms` 和 `-Xmx` 适当调整堆内存大小。
+
+### GC overhead limit exceeded
+
+`java.lang.OutOfMemoryError: GC overhead limit exceeded` 这个错误，官方给出的定义是：**超过 `98%` 的时间用来做 GC 并且回收了不到 `2%` 的堆内存时会抛出此异常**。这意味着，发生在 GC 占用大量时间为释放很小空间的时候发生的，是一种保护机制。导致异常的原因：一般是因为堆太小，没有足够的内存。
+
+【示例】
+
+```java
+/**
+ * GC overhead limit exceeded 示例
+ * 错误现象：java.lang.OutOfMemoryError: GC overhead limit exceeded
+ * 发生在GC占用大量时间为释放很小空间的时候发生的，是一种保护机制。导致异常的原因：一般是因为堆太小，没有足够的内存。
+ * 官方对此的定义：超过98%的时间用来做GC并且回收了不到2%的堆内存时会抛出此异常。
+ * VM Args: -Xms10M -Xmx10M
+ */
+public class GcOverheadLimitExceededDemo {
+
+    public static void main(String[] args) {
+        List<Double> list = new ArrayList<>();
+        double d = 0.0;
+        while (true) {
+            list.add(d++);
         }
     }
 
 }
 ```
 
-示例：类成员循环依赖，导致 `StackOverflowError`
+【处理】
+
+与 **Java heap space** 错误处理方法类似，先判断是否存在内存泄漏。如果有，则修正代码；如果没有，则通过 `-Xms` 和 `-Xmx` 适当调整堆内存大小。
+
+### PermGen space
+
+【错误】
+
+```
+java.lang.OutOfMemoryError: PermGen space
+```
+
+【原因】
+
+Perm （永久代）空间主要用于存放 Class 和 Meta 信息，包括类的名称和字段，带有方法字节码的方法，常量池信息，与类关联的对象数组和类型数组以及即时编译器优化。GC 在主程序运行期间不会对永久代空间进行清理，默认是 64M 大小。
+
+根据上面的定义，可以得出 PermGen 大小要求取决于加载的类的数量以及此类声明的大小。因此，可以说造成该错误的主要原因是永久代中装入了太多的类或太大的类。
+
+在 JDK8 之前的版本中，可以通过 `-XX:PermSize` 和 `-XX:MaxPermSize` 设置永久代空间大小，从而限制方法区大小，并间接限制其中常量池的容量。
+
+#### 初始化时永久代空间不足
+
+【示例】
 
 ```java
-public class StackOverflowDemo2 {
+/**
+ * 永久代内存空间不足示例
+ * <p>
+ * 错误现象：
+ * <ul>
+ * <li>java.lang.OutOfMemoryError: PermGen space (JDK8 以前版本)</li>
+ * <li>java.lang.OutOfMemoryError: Metaspace (JDK8 及以后版本)</li>
+ * </ul>
+ * VM Args:
+ * <ul>
+ * <li>-Xmx100M -XX:MaxPermSize=16M (JDK8 以前版本)</li>
+ * <li>-Xmx100M -XX:MaxMetaspaceSize=16M (JDK8 及以后版本)</li>
+ * </ul>
+ */
+public class PermOutOfMemoryErrorDemo {
 
-	public static void main(String[] args) {
-		A obj = new A();
-		System.out.println(obj.toString());
-	}
+    public static void main(String[] args) throws Exception {
+        for (int i = 0; i < 100_000_000; i++) {
+            generate("eu.plumbr.demo.Generated" + i);
+        }
+    }
 
-	static class A {
-
-		private int value;
-
-		private B instance;
-
-		public A() {
-			value = 0;
-			instance = new B();
-		}
-
-		@Override
-		public String toString() {
-			return "<" + value + ", " + instance + ">";
-		}
-
-	}
-
-	static class B {
-
-		private int value;
-
-		private A instance;
-
-		public B() {
-			value = 10;
-			instance = new A();
-		}
-
-		@Override
-		public String toString() {
-			return "<" + value + ", " + instance + ">";
-		}
-
-	}
+    public static Class generate(String name) throws Exception {
+        ClassPool pool = ClassPool.getDefault();
+        return pool.makeClass(name).toClass();
+    }
 
 }
 ```
 
-### 方法区和运行时常量池溢出
+在此示例中，源代码遍历循环并在运行时生成类。javassist 库正在处理类生成的复杂性。
 
-【现象】元数据空间不足的错误提示：
+#### 重部署时永久代空间不足
+
+对于更复杂，更实际的示例，让我们逐步介绍一下在应用程序重新部署期间发生的 Permgen 空间错误。重新部署应用程序时，你希望垃圾回收会摆脱引用所有先前加载的类的加载器，并被加载新类的类加载器取代。
+
+不幸的是，许多第三方库以及对线程，JDBC 驱动程序或文件系统句柄等资源的不良处理使得无法卸载以前使用的类加载器。反过来，这意味着在每次重新部署期间，所有先前版本的类仍将驻留在 PermGen 中，从而在每次重新部署期间生成数十兆的垃圾。
+
+让我们想象一个使用 JDBC 驱动程序连接到关系数据库的示例应用程序。启动应用程序时，初始化代码将加载 JDBC 驱动程序以连接到数据库。对应于规范，JDBC 驱动程序向 java.sql.DriverManager 进行注册。该注册包括将对驱动程序实例的引用存储在 DriverManager 的静态字段中。
+
+现在，当从应用程序服务器取消部署应用程序时，java.sql.DriverManager 仍将保留该引用。我们最终获得了对驱动程序类的实时引用，而驱动程序类又保留了用于加载应用程序的 java.lang.Classloader 实例的引用。反过来，这意味着垃圾回收算法无法回收空间。
+
+而且该 java.lang.ClassLoader 实例仍引用应用程序的所有类，通常在 PermGen 中占据数十兆字节。这意味着只需少量重新部署即可填充通常大小的 PermGen。
+
+#### Permgen space 解决方案
+
+（1）解决初始化时的 OutOfMemoryError
+
+在应用程序启动期间触发由于 PermGen 耗尽导致的 `OutOfMemoryError` 时，解决方案很简单。该应用程序仅需要更多空间才能将所有类加载到 PermGen 区域，因此我们只需要增加其大小即可。为此，更改你的应用程序启动配置并添加（或增加，如果存在）`-XX:MaxPermSize` 参数，类似于以下示例：
+
+```
+java -XX:MaxPermSize=512m com.yourcompany.YourClass
+```
+
+上面的配置将告诉 JVM，PermGen 可以增长到 512MB。
+
+清理应用程序中 `WEB-INF/lib` 下的 jar，用不上的 jar 删除掉，多个应用公共的 jar 移动到 Tomcat 的 lib 目录，减少重复加载。
+
+🔔 注意：`-XX:PermSize` 一般设为 64M
+
+（2）解决重新部署时的 OutOfMemoryError
+
+重新部署应用程序后立即发生 OutOfMemoryError 时，应用程序会遭受类加载器泄漏的困扰。在这种情况下，解决问题的最简单，继续进行堆转储分析–使用类似于以下命令的重新部署后进行堆转储：
+
+```
+jmap -dump:format=b,file=dump.hprof <process-id>
+```
+
+然后使用你最喜欢的堆转储分析器打开转储（Eclipse MAT 是一个很好的工具）。在分析器中可以查找重复的类，尤其是那些正在加载应用程序类的类。从那里，你需要进行所有类加载器的查找，以找到当前活动的类加载器。
+
+对于非活动类加载器，你需要通过从非活动类加载器收集到 GC 根的最短路径来确定阻止它们被垃圾收集的引用。有了此信息，你将找到根本原因。如果根本原因是在第三方库中，则可以进入 Google/StackOverflow 查看是否是已知问题以获取补丁/解决方法。
+
+（3）解决运行时 OutOfMemoryError
+
+第一步是检查是否允许 GC 从 PermGen 卸载类。在这方面，标准的 JVM 相当保守-类是天生的。因此，一旦加载，即使没有代码在使用它们，类也会保留在内存中。当应用程序动态创建许多类并且长时间不需要生成的类时，这可能会成为问题。在这种情况下，允许 JVM 卸载类定义可能会有所帮助。这可以通过在启动脚本中仅添加一个配置参数来实现：
+
+```
+-XX:+CMSClassUnloadingEnabled
+```
+
+默认情况下，此选项设置为 false，因此要启用此功能，你需要在 Java 选项中显式设置。如果启用 CMSClassUnloadingEnabled，GC 也会扫描 PermGen 并删除不再使用的类。请记住，只有同时使用 UseConcMarkSweepGC 时此选项才起作用。
+
+```
+-XX:+UseConcMarkSweepGC
+```
+
+在确保可以卸载类并且问题仍然存在之后，你应该继续进行堆转储分析–使用类似于以下命令的方法进行堆转储：
+
+```
+jmap -dump:file=dump.hprof,format=b <process-id>
+```
+
+然后，使用你最喜欢的堆转储分析器（例如 Eclipse MAT）打开转储，然后根据已加载的类数查找最昂贵的类加载器。从此类加载器中，你可以继续提取已加载的类，并按实例对此类进行排序，以使可疑对象排在首位。
+
+然后，对于每个可疑者，就需要你手动将根本原因追溯到生成此类的应用程序代码。
+
+### Metaspace
+
+【错误】
 
 ```
 Exception in thread "main" java.lang.OutOfMemoryError: Metaspace
@@ -288,15 +405,7 @@ Exception in thread "main" java.lang.OutOfMemoryError: Metaspace
 
 方法区用于存放 Class 的相关信息，如类名、访问修饰符、常量池、字段描述、方法描述等。
 
-一个类要被垃圾收集器回收，判定条件是比较苛刻的。在经常动态生成大量 Class 的应用中，需要特别注意类的回收状况。这类常见除了 CGLib 字节码增强和动态语音意外，常见的还有：大量 JSP 或动态产生 JSP 文件的应用（JSP 第一次运行时需要编译为 Java 类）、基于 OSGi 的应用（即使是同一个类文件，被不同的加载器加载也会视为不同的类）等。
-
-【排查】占用已经达到 `-XX:MaxMetaspaceSize` 设置的最大值，排查思路和上面的一致，参数方面可以通过 `-XX:MaxMetaspaceSize` 来进行调整。
-
-【处理】如何调整元数据空间：
-
-- 在 JDK6 及之前的版本中，可以通过 `-XX:PermSize` 和 `-XX:MaxPermSize` 设置永久代空间大小，从而限制方法区大小，并间接限制其中常量池的容量。
-
-- JDK8 及以后，JVM 永久代内存改为元数据空间，可以通过 `-XX:MetaspaceSize` 和 `-XX:MaxMetaspaceSize` 调整。
+一个类要被垃圾收集器回收，判定条件是比较苛刻的。在经常动态生成大量 Class 的应用中，需要特别注意类的回收状况。这类常见除了 CGLib 字节码增强和动态语言以外，常见的还有：大量 JSP 或动态产生 JSP 文件的应用（JSP 第一次运行时需要编译为 Java 类）、基于 OSGi 的应用（即使是同一个类文件，被不同的加载器加载也会视为不同的类）等。
 
 【示例】方法区出现 `OutOfMemoryError`
 
@@ -323,10 +432,85 @@ public class MethodAreaOutOfMemoryDemo {
 }
 ```
 
-启动时指定如下 VM 参数：
+【解决】
 
-- (JDK8 以前) - `-XX:PermSize=10m -XX:MaxPermSize=10m`
-- (JDK8 及以后) - `-XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m`
+当由于元空间而面临 OutOfMemoryError 时，第一个解决方案应该是显而易见的。如果应用程序耗尽了内存中的 Metaspace 区域，则应增加 Metaspace 的大小。更改应用程序启动配置并增加以下内容：
+
+```
+-XX:MaxMetaspaceSize=512m
+```
+
+上面的配置示例告诉 JVM，允许 Metaspace 增长到 512 MB。
+
+另一种解决方案甚至更简单。你可以通过删除此参数来完全解除对 Metaspace 大小的限制，JVM 默认对 Metaspace 的大小没有限制。但是请注意以下事实：这样做可能会导致大量交换或达到本机物理内存而分配失败。
+
+### Unable to create new native thread
+
+`java.lang.OutOfMemoryError: Unable to create new native thread` 这个错误意味着：**Java 应用程序已达到其可以启动线程数的限制**。
+
+【原因】
+
+当发起一个线程的创建时，虚拟机会在 JVM 内存创建一个 `Thread` 对象同时创建一个操作系统线程，而这个系统线程的内存用的不是 JVM 内存，而是系统中剩下的内存。
+
+那么，究竟能创建多少线程呢？这里有一个公式：
+
+```
+线程数 = (MaxProcessMemory - JVMMemory - ReservedOsMemory) / (ThreadStackSize)
+```
+
+【参数】
+
+- `MaxProcessMemory` - 一个进程的最大内存
+- `JVMMemory` - JVM 内存
+- `ReservedOsMemory` - 保留的操作系统内存
+- `ThreadStackSize` - 线程栈的大小
+
+**给 JVM 分配的内存越多，那么能用来创建系统线程的内存就会越少，越容易发生 `unable to create new native thread`**。所以，JVM 内存不是分配的越大越好。
+
+但是，通常导致 `java.lang.OutOfMemoryError` 的情况：无法创建新的本机线程需要经历以下阶段：
+
+1. JVM 内部运行的应用程序请求新的 Java 线程
+2. JVM 本机代码代理为操作系统创建新本机线程的请求
+3. 操作系统尝试创建一个新的本机线程，该线程需要将内存分配给该线程
+4. 操作系统将拒绝本机内存分配，原因是 32 位 Java 进程大小已耗尽其内存地址空间（例如，已达到（2-4）GB 进程大小限制）或操作系统的虚拟内存已完全耗尽
+5. 引发 `java.lang.OutOfMemoryError: Unable to create new native thread` 错误。
+
+【示例】
+
+```java
+public class UnableCreateNativeThreadErrorDemo {
+
+    public static void main(String[] args) {
+        while (true) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        TimeUnit.MINUTES.sleep(5);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        }
+    }
+}
+```
+
+【处理】
+
+可以通过增加操作系统级别的限制来绕过无法创建新的本机线程问题。例如，如果限制了 JVM 可在用户空间中产生的进程数，则应检查出并可能增加该限制：
+
+```
+[root@dev ~]# ulimit -a
+core file size          (blocks, -c) 0
+--- cut for brevity ---
+max user processes              (-u) 1800
+```
+
+通常，OutOfMemoryError 对新的本机线程的限制表示编程错误。当应用程序产生数千个线程时，很可能出了一些问题—很少有应用程序可以从如此大量的线程中受益。
+
+解决问题的一种方法是开始进行线程转储以了解情况。
 
 ### 直接内存溢出
 
@@ -335,6 +519,11 @@ public class MethodAreaOutOfMemoryDemo {
 示例：直接内存 `OutOfMemoryError`
 
 ```java
+/**
+ * 本机直接内存溢出示例
+ * 错误现象：java.lang.OutOfMemoryError
+ * VM Args：-Xmx20M -XX:MaxDirectMemorySize=10M
+ */
 public class DirectOutOfMemoryDemo {
 
     private static final int _1MB = 1024 * 1024;
@@ -351,9 +540,43 @@ public class DirectOutOfMemoryDemo {
 }
 ```
 
-启动时，指定 VM 参数 `-Xmx20M -XX:MaxDirectMemorySize=10M`
+## 四、StackOverflowError
+
+对于 HotSpot 虚拟机来说，栈容量只由 `-Xss` 参数来决定如果线程请求的栈深度大于虚拟机所允许的最大深度，将抛出 `StackOverflowError` 异常。
+
+从实战来说，栈溢出的常见原因：
+
+- 递归函数调用层数太深
+- 大量循环或死循环
+
+示例：递归函数调用层数太深导致 `StackOverflowError`
+
+```java
+public class StackOverflowDemo {
+
+    private int stackLength = 1;
+
+    public void recursion() {
+        stackLength++;
+        recursion();
+    }
+
+    public static void main(String[] args) {
+        StackOverflowDemo obj = new StackOverflowDemo();
+        try {
+            obj.recursion();
+        } catch (Throwable e) {
+            System.out.println("栈深度：" + obj.stackLength);
+            e.printStackTrace();
+        }
+    }
+
+}
+```
 
 ## 参考资料
 
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
+- [作为测试你应该知道的 JAVA OOM 及定位分析](https://www.jianshu.com/p/28935cbfbae0)
+- [异常、堆内存溢出、OOM 的几种情况](https://blog.csdn.net/sinat_29912455/article/details/51125748)

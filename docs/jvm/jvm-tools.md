@@ -405,9 +405,56 @@ Java 应用开启 JMX 后，可以使用 `jconsole` 或 `jvisualvm` 进行监控
 
 > 注意：使用 jconsole 的前提是 Java 应用开启 JMX。
 
+### MAT
+
+MAT 即 Eclipse Memory Analyzer Tool 的缩写。
+
+MAT 可以独立安装（[官方下载地址](http://www.eclipse.org/mat/downloads.php)），也可以作为 Eclipse IDE 的插件安装。
+
+#### MAT 配置
+
+MAT 解压后，安装目录下有个 `MemoryAnalyzer.ini` 文件。
+
+`MemoryAnalyzer.ini` 中有个重要的参数 `Xmx` 表示最大内存，默认为：`-vmargs -Xmx1024m`
+
+如果试图用 MAT 导入的 dump 文件超过 1024 M，会报错：
+
+```shell
+An internal error occurred during: "Parsing heap dump from XXX"
+```
+
+此时，可以适当调整 `Xmx` 大小。如果设置的 `Xmx` 数值过大，本机内存不足以支撑，启动 MAT 会报错：
+
+```
+Failed to create the Java Virtual Machine
+```
+
+#### MAT 分析
+
+![](http://dunwu.test.upcdn.net/snap/20200308092746.png)
+
+点击 Leak Suspects 可以进入内存泄漏页面。
+
+（1）首先，可以查看饼图了解内存的整体消耗情况
+
+![](http://dunwu.test.upcdn.net/snap/20200308150556.png)
+
+（2）缩小范围，寻找问题疑似点
+
+![img](https://img-blog.csdn.net/20160223202154818)
+
+可以点击进入详情页面，在详情页面 Shortest Paths To the Accumulation Point 表示 GC root 到内存消耗聚集点的最短路径，如果某个内存消耗聚集点有路径到达 GC root，则该内存消耗聚集点不会被当做垃圾被回收。
+
+为了找到内存泄露，我获取了两个堆转储文件，两个文件获取时间间隔是一天（因为内存只是小幅度增长，短时间很难发现问题）。对比两个文件的对象，通过对比后的结果可以很方便定位内存泄露。
+
+MAT 同时打开两个堆转储文件，分别打开 Histogram，如下图。在下图中方框 1 按钮用于对比两个 Histogram，对比后在方框 2 处选择 Group By package，然后对比各对象的变化。不难发现 heap3.hprof 比 heap6.hprof 少了 64 个 eventInfo 对象，如果对代码比较熟悉的话想必这样一个结果是能够给程序员一定的启示的。而我也是根据这个启示差找到了最终内存泄露的位置。
+![img](https://img-blog.csdn.net/20160223203226362)
+
 ## 参考资料
 
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [JVM 性能调优监控工具 jps、jstack、jmap、jhat、jstat、hprof 使用详解](https://my.oschina.net/feichexia/blog/196575)
 - [jconsole 官方文档](https://docs.oracle.com/javase/8/docs/technotes/guides/management/jconsole.html)
 - [jconsole 工具使用](https://www.cnblogs.com/kongzhongqijing/articles/3621441.html)
 - [jstat 命令查看 jvm 的 GC 情况](https://www.cnblogs.com/yjd_hycf_space/p/7755633.html)
+- [利用内存分析工具（Memory Analyzer Tool，MAT）分析 java 项目内存泄露](https://blog.csdn.net/wanghuiqi2008/article/details/50724676)

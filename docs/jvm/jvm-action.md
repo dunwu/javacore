@@ -88,17 +88,17 @@ GC 优化的过程和大多数常见的提升性能的过程相似，下面是�
 
 ### JVM 内存配置
 
-| 配置              | 描述                                                         |
-| ----------------- | ------------------------------------------------------------ |
-| `-Xms`            | 堆空间初始值。                                               |
-| `-Xmx`            | 堆空间最大值。                                               |
-| `-Xmn`            | 新生代空间大小。                                             |
-| `-Xss`            | 虚拟机栈大小。                                               |
-| `-XX:NewSize`     | 新生代空间初始值。                                           |
-| `-XX:MaxNewSize`  | 新生代空间最大值。                                           |
-| `-XX:PermSize`    | 永久代空间的初始值。                                         |
-| `-XX:MaxPermSize` | 永久代空间的最大值。                                         |
-| `NewRatio`        | 新生代与年老代的比例。                                       |
+| 配置              | 描述                                                                                                          |
+| ----------------- | ------------------------------------------------------------------------------------------------------------- |
+| `-Xms`            | 堆空间初始值。                                                                                                |
+| `-Xmx`            | 堆空间最大值。                                                                                                |
+| `-Xmn`            | 新生代空间大小。                                                                                              |
+| `-Xss`            | 虚拟机栈大小。                                                                                                |
+| `-XX:NewSize`     | 新生代空间初始值。                                                                                            |
+| `-XX:MaxNewSize`  | 新生代空间最大值。                                                                                            |
+| `-XX:PermSize`    | 永久代空间的初始值。                                                                                          |
+| `-XX:MaxPermSize` | 永久代空间的最大值。                                                                                          |
+| `NewRatio`        | 新生代与年老代的比例。                                                                                        |
 | `SurvivorRatio`   | 新生代中调整 eden 区与 survivor 区的比例，默认为 8。即 eden 区为 80%的大小，两个 survivor 分别为 10% 的大小。 |
 
 ### GC 类型配置
@@ -115,11 +115,11 @@ GC 优化的过程和大多数常见的提升性能的过程相似，下面是�
 
 ### 垃圾回收器通用参数
 
-| 配置                     | 描述                                                         |
-| ------------------------ | ------------------------------------------------------------ |
-| `PretenureSizeThreshold` | 晋升年老代的对象大小。默认为0。比如设为10M，则超过10M的对象将不在eden区分配，而直接进入年老代。 |
-| `MaxTenuringThreshold`   | 晋升老年代的最大年龄。默认为15。比如设为10，则对象在10次普通GC后将会被放入年老代。 |
-| `DisableExplicitGC`      | 禁用 `System.gc()`                                           |
+| 配置                     | 描述                                                                                                  |
+| ------------------------ | ----------------------------------------------------------------------------------------------------- |
+| `PretenureSizeThreshold` | 晋升年老代的对象大小。默认为 0。比如设为 10M，则超过 10M 的对象将不在 eden 区分配，而直接进入年老代。 |
+| `MaxTenuringThreshold`   | 晋升老年代的最大年龄。默认为 15。比如设为 10，则对象在 10 次普通 GC 后将会被放入年老代。              |
+| `DisableExplicitGC`      | 禁用 `System.gc()`                                                                                    |
 
 ### JMX
 
@@ -256,174 +256,6 @@ Full GC 回收日志:
 
 ![img](http://ityouknow.com/assets/images/2017/jvm/Full%20GC.png)
 
-### 如何分析 OutOfMemory(OOM)
-
-OutOfMemory ，即内存溢出，是一个常见的 JVM 问题。那么分析 OOM 的思路是什么呢？
-
-首先，要知道有三种 OutOfMemoryError：
-
-- **OutOfMemoryError:Java heap space** - 堆空间溢出
-- **OutOfMemoryError:PermGen space** - 方法区和运行时常量池溢出
-- **OutOfMemoryError:unable to create new native thread** - 线程过多
-
-#### OutOfMemoryError:PermGen space
-
-OutOfMemoryError:PermGen space 表示方法区和运行时常量池溢出。
-
-**原因：**
-
-Perm 区主要用于存放 Class 和 Meta 信息的，Class 在被 Loader 时就会被放到 PermGen space，这个区域称为年老代。GC 在主程序运行期间不会对年老区进行清理，默认是 64M 大小。
-
-当程序程序中使用了大量的 jar 或 class，使 java 虚拟机装载类的空间不够，超过 64M 就会报这部分内存溢出了，需要加大内存分配，一般 128m 足够。
-
-**解决方案：**
-
-（1）扩大永久代空间
-
-- JDK7 以前使用 `-XX:PermSize` 和 `-XX:MaxPermSize` 来控制永久代大小。
-- JDK8 以后把原本放在永久代的字符串常量池移出, 放在 Java 堆中(元空间 Metaspace)中，元数据并不在虚拟机中，使用的是本地的内存。使用 `-XX:MetaspaceSize` 和 `-XX:MaxMetaspaceSize` 控制元空间大小。
-
-> 🔔 注意：`-XX:PermSize` 一般设为 64M
-
-（2）清理应用程序中 `WEB-INF/lib` 下的 jar，用不上的 jar 删除掉，多个应用公共的 jar 移动到 Tomcat 的 lib 目录，减少重复加载。
-
-#### OutOfMemoryError:Java heap space
-
-OutOfMemoryError:Java heap space 表示堆空间溢出。
-
-原因：JVM 分配给堆内存的空间已经用满了。
-
-##### 问题定位
-
-（1）使用 jmap 或 -XX:+HeapDumpOnOutOfMemoryError 获取堆快照。
-（2）使用内存分析工具（visualvm、mat、jProfile 等）对堆快照文件进行分析。
-（3）根据分析图，重点是确认内存中的对象是否是必要的，分清究竟是是内存泄漏（Memory Leak）还是内存溢出（Memory Overflow）。
-
-###### 内存泄露
-
-内存泄漏是指由于疏忽或错误造成程序未能释放已经不再使用的内存的情况。
-
-内存泄漏并非指内存在物理上的消失，而是应用程序分配某段内存后，由于设计错误，失去了对该段内存的控制，因而造成了内存的浪费。
-
-内存泄漏随着被执行的次数越多-最终会导致内存溢出。
-
-而因程序死循环导致的不断创建对象-只要被执行到就会产生内存溢出。
-
-内存泄漏常见几个情况：
-
-- 静态集合类
-  - 声明为静态（static）的 HashMap、Vector 等集合
-  - 通俗来讲 A 中有 B，当前只把 B 设置为空，A 没有设置为空，回收时 B 无法回收-因被 A 引用。
-- 监听器
-  - 监听器被注册后释放对象时没有删除监听器
-- 物理连接
-  - DataSource.getConnection()建立链接，必须通过 close()关闭链接
-- 内部类和外部模块等的引用
-  - 发现它的方式同内存溢出，可再加个实时观察
-  - jstat -gcutil 7362 2500 70
-
-重点关注：
-
-- FGC — 从应用程序启动到采样时发生 Full GC 的次数。
-- FGCT — 从应用程序启动到采样时 Full GC 所用的时间（单位秒）。
-- FGC 次数越多，FGCT 所需时间越多-可非常有可能存在内存泄漏。
-
-##### 解决方案
-
-（1）检查程序，看是否有死循环或不必要地重复创建大量对象。有则改之。
-
-下面是一个重复创建内存的示例：
-
-```java
-public class OOM {
-    public static void main(String[] args) {
-        Integer sum1=300000;
-        Integer sum2=400000;
-        OOM oom = new OOM();
-        System.out.println("往ArrayList中加入30w内容");
-        oom.javaHeapSpace(sum1);
-        oom.memoryTotal();
-        System.out.println("往ArrayList中加入40w内容");
-        oom.javaHeapSpace(sum2);
-        oom.memoryTotal();
-    }
-    public void javaHeapSpace(Integer sum){
-        Random random = new Random();
-        ArrayList openList = new ArrayList();
-        for(int i=0;i<sum;i++){
-            String charOrNum = String.valueOf(random.nextInt(10));
-            openList.add(charOrNum);
-        }
-    }
-    public void memoryTotal(){
-        Runtime run = Runtime.getRuntime();
-        long max = run.maxMemory();
-        long total = run.totalMemory();
-        long free = run.freeMemory();
-        long usable = max - total + free;
-        System.out.println("最大内存 = " + max);
-        System.out.println("已分配内存 = " + total);
-        System.out.println("已分配内存中的剩余空间 = " + free);
-        System.out.println("最大可用内存 = " + usable);
-    }
-}
-```
-
-执行结果：
-
-```java
-往ArrayList中加入30w内容
-最大内存 = 20447232
-已分配内存 = 20447232
-已分配内存中的剩余空间 = 4032576
-最大可用内存 = 4032576
-往ArrayList中加入40w内容
-Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
-    at java.util.Arrays.copyOf(Arrays.java:2245)
-    at java.util.Arrays.copyOf(Arrays.java:2219)
-    at java.util.ArrayList.grow(ArrayList.java:242)
-    at java.util.ArrayList.ensureExplicitCapacity(ArrayList.java:216)
-    at java.util.ArrayList.ensureCapacityInternal(ArrayList.java:208)
-    at java.util.ArrayList.add(ArrayList.java:440)
-    at pers.qingqian.study.seven.OOM.javaHeapSpace(OOM.java:36)
-    at pers.qingqian.study.seven.OOM.main(OOM.java:26)
-```
-
-（2）扩大堆内存空间
-
-使用 `-Xms` 和 `-Xmx` 来控制堆内存空间大小。
-
-#### OutOfMemoryError: GC overhead limit exceeded
-
-原因：JDK6 新增错误类型，当 GC 为释放很小空间占用大量时间时抛出；一般是因为堆太小，导致异常的原因，没有足够的内存。
-
-解决方案：
-
-查看系统是否有使用大内存的代码或死循环；
-通过添加 JVM 配置，来限制使用内存：
-
-```xml
-<jvm-arg>-XX:-UseGCOverheadLimit</jvm-arg>
-```
-
-#### OutOfMemoryError：unable to create new native thread
-
-原因：线程过多
-
-那么能创建多少线程呢？这里有一个公式：
-
-```
-(MaxProcessMemory - JVMMemory - ReservedOsMemory) / (ThreadStackSize) = Number of threads
-MaxProcessMemory 指的是一个进程的最大内存
-JVMMemory         JVM内存
-ReservedOsMemory  保留的操作系统内存
-ThreadStackSize      线程栈的大小
-```
-
-当发起一个线程的创建时，虚拟机会在 JVM 内存创建一个 Thread 对象同时创建一个操作系统线程，而这个系统线程的内存用的不是 JVMMemory，而是系统中剩下的内存：
-(MaxProcessMemory - JVMMemory - ReservedOsMemory)
-结论：你给 JVM 内存越多，那么你能用来创建的系统线程的内存就会越少，越容易发生 java.lang.OutOfMemoryError: unable to create new native thread。
-
 #### CPU 过高
 
 定位步骤：
@@ -547,11 +379,9 @@ printf "%x\n" 6800
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [JVM（4）：Jvm 调优-命令篇](http://www.importnew.com/23761.html)
-- [Java系列笔记(4) - JVM 监控与调优](https://www.cnblogs.com/zhguang/p/Java-JVM-GC.html)
-- [Java服务 GC 参数调优案例](https://segmentfault.com/a/1190000005174819)
+- [Java 系列笔记(4) - JVM 监控与调优](https://www.cnblogs.com/zhguang/p/Java-JVM-GC.html)
+- [Java 服务 GC 参数调优案例](https://segmentfault.com/a/1190000005174819)
 - [JVM 调优总结（5）：典型配置](http://www.importnew.com/19264.html)
 - [如何合理的规划一次 jvm 性能调优](https://juejin.im/post/59f02f406fb9a0451869f01c)
 - [jvm 系列(九):如何优化 Java GC「译」](http://www.ityouknow.com/jvm/2017/09/21/How-to-optimize-Java-GC.html)
-- [作为测试你应该知道的 JAVA OOM 及定位分析](https://www.jianshu.com/p/28935cbfbae0)
-- [异常、堆内存溢出、OOM 的几种情况](https://blog.csdn.net/sinat_29912455/article/details/51125748)
 - https://my.oschina.net/feichexia/blog/196575
