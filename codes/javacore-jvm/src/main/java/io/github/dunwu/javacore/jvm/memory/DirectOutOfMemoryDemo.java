@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 /**
  * 本机直接内存溢出示例
  * <p>
- * 错误现象：java.lang.OutOfMemoryError: Java heap space
+ * 错误现象：java.lang.OutOfMemoryError
  * <p>
  * VM Args：-Xmx20M -XX:MaxDirectMemorySize=10M
  *

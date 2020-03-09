@@ -3,7 +3,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
   xmlns="http://maven.apache.org/POM/4.0.0">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>io.github.dunwu.javacore</groupId>
+
+  <parent>
+    <groupId>io.github.dunwu.javacore</groupId>
+    <artifactId>javacore</artifactId>
+    <version>1.0.1</version>
+    <relativePath>../../</relativePath>
+  </parent>
+
   <artifactId>javacore-effective</artifactId>
   <version>1.0.1</version>
   <name>JavaCore :: Effective</name>
@@ -15,12 +22,4 @@
     <maven.compiler.target>${java.version}</maven.compiler.target>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
 </project>
