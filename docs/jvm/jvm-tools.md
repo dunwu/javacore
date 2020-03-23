@@ -431,13 +431,13 @@ Failed to create the Java Virtual Machine
 
 #### MAT 分析
 
-![](http://dunwu.test.upcdn.net/snap/20200308092746.png)
+![img](http://dunwu.test.upcdn.net/snap/20200308092746.png)
 
 点击 Leak Suspects 可以进入内存泄漏页面。
 
 （1）首先，可以查看饼图了解内存的整体消耗情况
 
-![](http://dunwu.test.upcdn.net/snap/20200308150556.png)
+![img](http://dunwu.test.upcdn.net/snap/20200308150556.png)
 
 （2）缩小范围，寻找问题疑似点
 

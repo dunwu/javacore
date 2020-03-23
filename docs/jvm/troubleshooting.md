@@ -4,11 +4,11 @@ Java 应用出现线上故障，如何进行诊断？
 
 系统故障诊断思路：
 
-![](http://dunwu.test.upcdn.net/snap/20200309181645.png)
+![img](http://dunwu.test.upcdn.net/snap/20200309181645.png)
 
 应用故障诊断思路：
 
-![](http://dunwu.test.upcdn.net/snap/20200309181831.png)
+![img](http://dunwu.test.upcdn.net/snap/20200309181831.png)
 
 ## CPU
 
