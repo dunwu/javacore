@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="https://dunwu.github.io/javacore/#/" target="_blank" rel="noopener noreferrer">
-        <img src="http://dunwu.test.upcdn.net/common/logo/java-logo.png" alt="logo" width="100px">
+    <a href="https://dunwu.github.io/javacore/" target="_blank" rel="noopener noreferrer">
+        <img src="http://dunwu.test.upcdn.net/common/logo/dunwu-logo.png" alt="logo" width="150px"/>
     </a>
 </p>
 
@@ -20,7 +20,7 @@
 | :---------------------: | :---------------------: | :---------------------: | :---------------------: | :----------------: | :-------------------------: |
 | [Java 基础](#java-基础) | [Java 高级](#java-高级) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [JavaIO](#java-io) | [Java 虚拟机](#java-虚拟机) |
 
-## 教程内容 📖
+## 📖 内容
 
 ### Java 基础
 
@@ -58,7 +58,7 @@
 - [Java 容器之 List](docs/container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
 - [Java 容器之 Map](docs/container/java-container-map.md) - 关键词：`Map`、`HashMap`、`TreeMap`、`LinkedHashMap`、`WeakHashMap`
 - [Java 容器之 Set](docs/container/java-container-set.md) - 关键词：`Set`、`HashSet`、`TreeSet`、`LinkedHashSet`、`EmumSet`
-- [Java 容器之 Queue](docs/container/java-container-queue.md) - 关键词：
+- [Java 容器之 Queue](docs/container/java-container-queue.md) - 关键词：`Queue`、`Deque`、`ArrayDeque`、`LinkedList`、`PriorityQueue`
 
 ### Java 并发
 
@@ -83,7 +83,7 @@
 
 - [Java 基础 IO 类](docs/io/java-io-base.md) - 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
 - [Java BIO](docs/io/java-bio.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
-- [Java NIO](docs/io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`
+- [Java NIO](docs/io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`、`多路复用`
 - [Java 序列化](docs/io/java-serialization.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`、`transient`
 - [Java 网络编程](docs/io/java-net.md) - 关键词：`Socket`、`ServerSocket`、`DatagramPacket`、`DatagramSocket`
 
@@ -101,22 +101,7 @@
 - [JVM 实战](docs/jvm/jvm-action.md) - 关键词：VM 参数、分析、调优
 - [Java 故障排查](docs/jvm/troubleshooting.md) - 关键词：CPU、内存、磁盘、网络、GC
 
-## 其他教程 📚
-
-> 你可能会感兴趣：
-
-- [我的 Github 博客](https://github.com/dunwu/blog) 🎯
-- [Java 教程](https://github.com/dunwu/java-tutorial) 📚
-- [JavaCore 教程](https://dunwu.github.io/javacore/) 📚
-- [JavaTech 教程](https://dunwu.github.io/javatech/) 📚
-- [Spring 教程](https://dunwu.github.io/spring-tutorial/) 📚
-- [Spring Boot 教程](https://dunwu.github.io/spring-boot-tutorial/) 📚
-- [数据库教程](https://dunwu.github.io/db-tutorial/) 📚
-- [数据结构和算法教程](https://dunwu.github.io/algorithm-tutorial/) 📚
-- [Linux 教程](https://dunwu.github.io/linux-tutorial/) 📚
-- [Nginx 教程](https://github.com/dunwu/nginx-tutorial/) 📚
-
-## 学习资源 💎
+## 📚 资料
 
 - **书籍**
   - Java 四大名著
@@ -143,3 +128,20 @@
   - [Java](https://github.com/TheAlgorithms/Java)
   - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)
   - [advanced-java](https://github.com/doocs/advanced-java)
+
+## 🚪 传送门
+
+◾ 🏠 [LINUX-TUTORIAL 首页](https://github.com/dunwu/linux-tutorial) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+
+> 你可能会感兴趣：
+
+- [我的 Github 博客](https://github.com/dunwu/blog) 🎯
+- [Java 教程](https://github.com/dunwu/java-tutorial) 📚
+- [JavaCore 教程](https://dunwu.github.io/javacore/) 📚
+- [JavaTech 教程](https://dunwu.github.io/javatech/) 📚
+- [Spring 教程](https://dunwu.github.io/spring-tutorial/) 📚
+- [Spring Boot 教程](https://dunwu.github.io/spring-boot-tutorial/) 📚
+- [数据库教程](https://dunwu.github.io/db-tutorial/) 📚
+- [数据结构和算法教程](https://dunwu.github.io/algorithm-tutorial/) 📚
+- [Linux 教程](https://dunwu.github.io/linux-tutorial/) 📚
+- [Nginx 教程](https://github.com/dunwu/nginx-tutorial/) 📚

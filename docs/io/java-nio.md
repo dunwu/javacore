@@ -1,10 +1,10 @@
 # Java NIO
 
+> 新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的，弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。
+>
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-新的输入/输出 (NIO) 库是在 JDK 1.4 中引入的，弥补了原来的 I/O 的不足，提供了高速的、面向块的 I/O。
-
-## NIO 简介
+## 一、NIO 简介
 
 NIO 是一种同步非阻塞的 I/O 模型，在 Java 1.4 中引入了 NIO 框架，对应 `java.nio` 包，提供了 `Channel` 、`Selector`、`Buffer` 等抽象。
 
@@ -59,7 +59,7 @@ NIO 包含下面几个核心的组件：
 - Buffer(缓冲区)
 - Selector(选择器)
 
-## 通道
+## 二、Channel(通道)
 
 通道（`Channel`）是对 BIO 中的流的模拟，可以通过它读写数据。
 
@@ -75,29 +75,21 @@ NIO 包含下面几个核心的组件：
 - `SocketChannel`：通过 TCP 读写网络中数据；
 - `ServerSocketChannel`：可以监听新进来的 TCP 连接，对每一个新进来的连接都会创建一个 SocketChannel。
 
-## 缓冲区
+## 三、Buffer(缓冲区)
 
-**发送给一个通道（`Channel`）的所有数据都必须首先放到缓冲区中，同样地，从通道中读取的任何数据都要先读到缓冲区中**。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。
-
-缓冲区实质上是一个数组，但它不仅仅是一个数组。缓冲区提供了对数据的结构化访问，而且还可以跟踪系统的读/写进程。
-
-BIO 与 NIO 最重要的区别是数据打包和传输的方式：**BIO 以流的方式处理数据，而 NIO 以块的方式处理数据**。
-
-**面向流的 BIO 一次处理一个字节数据**：一个输入流产生一个字节数据，一个输出流消费一个字节数据。为流式数据创建过滤器非常容易，链接几个过滤器，以便每个过滤器只负责复杂处理机制的一部分。不利的一面是，面向流的 I/O 通常相当慢。
-
-**面向块的 NIO 一次处理一个数据块**，按块处理数据比按流处理数据要快得多。但是面向块的 NIO 缺少一些面向流的 BIO 所具有的优雅性和简单性。
+**向  `Channel` 读写的数据都必须先置于缓冲区中**。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。缓冲区实质上是一个数组，但它不仅仅是一个数组。缓冲区提供了对数据的结构化访问，而且还可以跟踪系统的读/写进程。
 
 BIO 和 NIO 已经很好地集成了，`java.io.*` 已经以 NIO 为基础重新实现了，所以现在它可以利用 NIO 的一些特性。例如，`java.io.*` 包中的一些类包含以块的形式读写数据的方法，这使得即使在面向流的系统中，处理速度也会更快。
 
 缓冲区包括以下类型：
 
-- ByteBuffer
-- CharBuffer
-- ShortBuffer
-- IntBuffer
-- LongBuffer
-- FloatBuffer
-- DoubleBuffer
+- `ByteBuffer`
+- `CharBuffer`
+- `ShortBuffer`
+- `IntBuffer`
+- `LongBuffer`
+- `FloatBuffer`
+- `DoubleBuffer`
 
 ### 缓冲区状态变量
 
@@ -157,7 +149,7 @@ public static void fastCopy(String src, String dist) throws IOException {
 }
 ```
 
-## 选择器
+## 四、Selector(选择器)
 
 NIO 常常被叫做非阻塞 IO，主要是因为 NIO 在网络通信中的非阻塞特性被广泛使用。
 
@@ -352,6 +344,13 @@ public class NIOClient {
 ```java
 MappedByteBuffer mbb = fc.map(FileChannel.MapMode.READ_WRITE, 0, 1024);
 ```
+
+## 五、NIO vs. BIO
+
+BIO 与 NIO 最重要的区别是数据打包和传输的方式：**BIO 以流的方式处理数据，而 NIO 以块的方式处理数据**。
+
+- **面向流的 BIO 一次处理一个字节数据**：一个输入流产生一个字节数据，一个输出流消费一个字节数据。为流式数据创建过滤器非常容易，链接几个过滤器，以便每个过滤器只负责复杂处理机制的一部分。不利的一面是，面向流的 I/O 通常相当慢。
+- **面向块的 NIO 一次处理一个数据块**，按块处理数据比按流处理数据要快得多。但是面向块的 NIO 缺少一些面向流的 BIO 所具有的优雅性和简单性。
 
 ## 参考资料
 

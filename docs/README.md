@@ -18,7 +18,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 | :---------------------: | :---------------------: | :---------------------: | :---------------------: | :----------------: | :-------------------------: |
 | [Java 基础](#java-基础) | [Java 高级](#java-高级) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [JavaIO](#java-io) | [Java 虚拟机](#java-虚拟机) |
 
-## 教程内容 📖
+## 📖 内容
 
 ### Java 基础
 
@@ -93,22 +93,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 - [JVM 实战](jvm/jvm-action.md) - 关键词：VM 参数、分析、调优
 - [Java 故障排查](jvm/troubleshooting.md) - 关键词：CPU、内存、磁盘、网络、GC
 
-## 其他教程 📚
-
-> 你可能会感兴趣：
-
-- [我的博客](https://github.com/dunwu/blog) 🎯
-- [Java 教程](https://github.com/dunwu/java-tutorial) 📚
-- [JavaCore 教程](https://dunwu.github.io/javacore/) 📚
-- [JavaTech 教程](https://dunwu.github.io/javatech/) 📚
-- [Spring 教程](https://dunwu.github.io/spring-tutorial/) 📚
-- [Spring Boot 教程](https://dunwu.github.io/spring-boot-tutorial/) 📚
-- [数据库教程](https://dunwu.github.io/db-tutorial/) 📚
-- [数据结构和算法教程](https://dunwu.github.io/algorithm-tutorial/) 📚
-- [Linux 教程](https://dunwu.github.io/linux-tutorial/) 📚
-- [Nginx 教程](https://github.com/dunwu/nginx-tutorial/) 📚
-
-## 学习资源 💎
+## 📚 资料
 
 - **书籍**
   - Java 四大名著
@@ -135,3 +120,20 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
   - [Java](https://github.com/TheAlgorithms/Java)
   - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)
   - [advanced-java](https://github.com/doocs/advanced-java)
+
+## 🚪 传送门
+
+◾ 🏠 [LINUX-TUTORIAL 首页](https://github.com/dunwu/linux-tutorial) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+
+> 你可能会感兴趣：
+
+- [我的 Github 博客](https://github.com/dunwu/blog) 🎯
+- [Java 教程](https://github.com/dunwu/java-tutorial) 📚
+- [JavaCore 教程](https://dunwu.github.io/javacore/) 📚
+- [JavaTech 教程](https://dunwu.github.io/javatech/) 📚
+- [Spring 教程](https://dunwu.github.io/spring-tutorial/) 📚
+- [Spring Boot 教程](https://dunwu.github.io/spring-boot-tutorial/) 📚
+- [数据库教程](https://dunwu.github.io/db-tutorial/) 📚
+- [数据结构和算法教程](https://dunwu.github.io/algorithm-tutorial/) 📚
+- [Linux 教程](https://dunwu.github.io/linux-tutorial/) 📚
+- [Nginx 教程](https://github.com/dunwu/nginx-tutorial/) 📚

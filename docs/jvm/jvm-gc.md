@@ -4,7 +4,7 @@
 
 > 程序计数器、虚拟机栈和本地方法栈这三个区域属于线程私有的，只存在于线程的生命周期内，线程结束之后也会消失，因此不需要对这三个区域进行垃圾回收。**垃圾回收主要是针对 Java 堆和方法区进行**。
 
-## 对象死了吗
+## 一、对象活着吗
 
 ### 引用计数算法
 
@@ -83,13 +83,13 @@ WeakReference<Object> wf = new WeakReference<Object>(obj);
 obj = null;
 ```
 
-WeakHashMap 的 Entry 继承自 WeakReference，主要用来实现缓存。
+`WeakHashMap` 的 `Entry` 继承自 `WeakReference`，主要用来实现缓存。
 
 ```java
 private static class Entry<K,V> extends WeakReference<Object> implements Map.Entry<K,V>
 ```
 
-Tomcat 中的 ConcurrentCache 就使用了 WeakHashMap 来实现缓存功能。ConcurrentCache 采取的是分代缓存，经常使用的对象放入 eden 中，而不常用的对象放入 longterm。eden 使用 ConcurrentHashMap 实现，longterm 使用 WeakHashMap，保证了不常使用的对象容易被回收。
+Tomcat 中的 `ConcurrentCache` 就使用了 `WeakHashMap` 来实现缓存功能。`ConcurrentCache` 采取的是分代缓存，经常使用的对象放入 eden 中，而不常用的对象放入 longterm。eden 使用 `ConcurrentHashMap` 实现，longterm 使用 `WeakHashMap`，保证了不常使用的对象容易被回收。
 
 ```java
 public final class ConcurrentCache<K, V> {
@@ -154,7 +154,7 @@ obj = null;
 
 可以通过 `-Xnoclassgc` 参数来控制是否对类进行卸载。
 
-在大量使用反射、动态代理、CGLib 等 ByteCode 框架、动态生成 JSP 以及 OSGi 这类频繁自定义 `ClassLoader` 的场景都需要虚拟机具备类卸载功能，以保证不会出现内存溢出。
+在大量使用反射、动态代理、CGLib 等字节码框架、动态生成 JSP 以及 OSGi 这类频繁自定义 `ClassLoader` 的场景都需要虚拟机具备类卸载功能，以保证不会出现内存溢出。
 
 ### finalize()
 
@@ -162,7 +162,7 @@ obj = null;
 
 当一个对象可被回收时，如果需要执行该对象的 `finalize()` 方法，那么就有可能通过在该方法中让对象重新被引用，从而实现自救。
 
-## 垃圾收集算法
+## 二、垃圾收集算法
 
 ### 垃圾收集性能
 
@@ -213,7 +213,7 @@ obj = null;
 - 年轻代使用：复制算法
 - 老年代使用：标记 - 清理 或者 标记 - 整理 算法
 
-## 垃圾收集器
+## 三、垃圾收集器
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-gc-overview.jpg" />
@@ -552,7 +552,7 @@ G1 选择活性最低的区域，这些区域能够以最快的速度回收。�
 |        **CMS**        |  并行 + 并发   |     老年代      |      标记-清除       | 响应速度优先 | 集中在互联网站或 B/S 系统服务端上的 Java 应用 |
 |        **G1**         |  并行 + 并发   | 年轻代 + 老年代 | 标记-整理 + 复制算法 | 响应速度优先 |         面向服务端应用，将来替换 CMS          |
 
-## 内存分配与回收策略
+## 四、内存分配与回收策略
 
 对象的内存分配，也就是在堆上分配。主要分配在年轻代的 Eden 区上，少数情况下也可能直接分配在老年代中。
 
@@ -579,35 +579,35 @@ G1 选择活性最低的区域，这些区域能够以最快的速度回收。�
 
 为对象定义年龄计数器，对象在 Eden 出生并经过 Minor GC 依然存活，将移动到 Survivor 中，年龄就增加 1 岁，增加到一定年龄则移动到老年代中。
 
--XX:MaxTenuringThreshold 用来定义年龄的阈值。
+`-XX:MaxTenuringThreshold` 用来定义年龄的阈值。
 
 **（四）动态对象年龄判定**
 
-虚拟机并不是永远地要求对象的年龄必须达到 MaxTenuringThreshold 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无需等到 MaxTenuringThreshold 中要求的年龄。
+虚拟机并不是永远地要求对象的年龄必须达到 `MaxTenuringThreshold` 才能晋升老年代，如果在 Survivor 区中相同年龄所有对象大小的总和大于 Survivor 空间的一半，则年龄大于或等于该年龄的对象可以直接进入老年代，无需等到 `MaxTenuringThreshold` 中要求的年龄。
 
 **（五）空间分配担保**
 
-在发生 Minor GC 之前，虚拟机先检查老年代最大可用的连续空间是否大于年轻代所有对象总空间，如果条件成立的话，那么 Minor GC 可以确认是安全的；如果不成立的话虚拟机会查看 HandlePromotionFailure 设置值是否允许担保失败，如果允许那么就会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试着进行一次 Minor GC，尽管这次 Minor GC 是有风险的；如果小于，或者 HandlePromotionFailure 设置不允许冒险，那这时也要改为进行一次 Full GC。
+在发生 Minor GC 之前，虚拟机先检查老年代最大可用的连续空间是否大于年轻代所有对象总空间，如果条件成立的话，那么 Minor GC 可以确认是安全的；如果不成立的话虚拟机会查看 `HandlePromotionFailure` 设置值是否允许担保失败，如果允许那么就会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小，如果大于，将尝试着进行一次 Minor GC，尽管这次 Minor GC 是有风险的；如果小于，或者 `HandlePromotionFailure` 设置不允许冒险，那这时也要改为进行一次 Full GC。
 
 ### Full GC 的触发条件
 
 对于 Minor GC，其触发条件非常简单，当 Eden 区空间满时，就将触发一次 Minor GC。而 Full GC 则相对复杂，有以下条件：
 
-**（1）调用 System.gc()**
+**（1）调用 `System.gc()`**
 
-此方法的调用是建议虚拟机进行 Full GC，虽然只是建议而非一定，但很多情况下它会触发 Full GC，从而增加 Full GC 的频率，也即增加了间歇性停顿的次数。因此强烈建议能不使用此方法就不要使用，让虚拟机自己去管理它的内存。可通过 -XX:DisableExplicitGC 来禁止 RMI 调用 System.gc()。
+此方法的调用是建议虚拟机进行 Full GC，虽然只是建议而非一定，但很多情况下它会触发 Full GC，从而增加 Full GC 的频率，也即增加了间歇性停顿的次数。因此强烈建议能不使用此方法就不要使用，让虚拟机自己去管理它的内存。可通过 `-XX:DisableExplicitGC` 来禁止 RMI 调用 `System.gc()`。
 
 **（2）老年代空间不足**
 
-老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等，当执行 Full GC 后空间仍然不足，则抛出 Java.lang.OutOfMemoryError。为避免以上原因引起的 Full GC，调优时应尽量做到让对象在 Minor GC 阶段被回收、让对象在年轻代多存活一段时间以及不要创建过大的对象及数组。
+老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等，当执行 Full GC 后空间仍然不足，则抛出 `Java.lang.OutOfMemoryError`。为避免以上原因引起的 Full GC，调优时应尽量做到让对象在 Minor GC 阶段被回收、让对象在年轻代多存活一段时间以及不要创建过大的对象及数组。
 
 **（3）空间分配担保失败**
 
-使用复制算法的 Minor GC 需要老年代的内存空间作担保，如果出现了 HandlePromotionFailure 担保失败，则会触发 Full GC。
+使用复制算法的 Minor GC 需要老年代的内存空间作担保，如果出现了 `HandlePromotionFailure` 担保失败，则会触发 Full GC。
 
 **（4）JDK 1.7 及以前的永久代空间不足**
 
-在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 java.lang.OutOfMemoryError，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
+在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 `java.lang.OutOfMemoryError`，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
 
 **（五）Concurrent Mode Failure**
 

@@ -31,6 +31,8 @@
 
 > ArrayList 从数据结构角度来看，可以视为支持动态扩容的线性表。
 
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221142803.png)
+
 ### ArrayList 要点
 
 `ArrayList` 是一个数组队列，相当于动态数组。**`ArrayList` 默认初始容量大小为 `10` ，添加元素时，如果发现容量已满，会自动扩容为原始大小的 1.5 倍**。因此，应该尽量在初始化 `ArrayList` 时，为其指定合适的初始化容量大小，减少扩容操作产生的性能开销。
@@ -190,6 +192,8 @@ private void writeObject(java.io.ObjectOutputStream s)
 ## 三、LinkedList
 
 > LinkedList 从数据结构角度来看，可以视为双链表。
+
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221142535.png)
 
 ### LinkedList 要点
 
@@ -366,16 +370,6 @@ E unlink(Node<E> x) {
 - unlink 删除节点的方法：
   - 如果当前节点有前驱节点，则让前驱节点指向当前节点的下一个节点；否则，让双链表头指针指向下一个节点。
   - 如果当前节点有后继节点，则让后继节点指向当前节点的前一个节点；否则，让双链表尾指针指向上一个节点。
-
-## 四、总结
-
-### ArrayList 总结
-
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221142803.png)
-
-### LinkedList 总结
-
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221142535.png)
 
 ## 参考资料
 
