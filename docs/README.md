@@ -9,7 +9,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 # JavaCore
 
-> ☕ JavaCore 是一个 Java 核心技术教程。
+> ☕ **JavaCore** 是一个 Java 核心技术教程。
 >
 > - 🔁 项目同步维护：[Github](https://github.com/dunwu/javacore/) | [Gitee](https://gitee.com/turnon/javacore/)
 > - 📖 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore/)
@@ -19,6 +19,8 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 | [Java 基础](#java-基础) | [Java 高级](#java-高级) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [JavaIO](#java-io) | [Java 虚拟机](#java-虚拟机) |
 
 ## 📖 内容
+
+> [Java 面试题集 💯](docs/java-interview.md)
 
 ### Java 基础
 
@@ -50,6 +52,8 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 > [Java 容器](container) 涉及许多数据结构知识点，所以设立专题进行总结。
 
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175550.png)
+
 - [Java 容器简介](container/java-container.md)
 - [Java 容器之 List](container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
 - [Java 容器之 Map](container/java-container-map.md) - 关键词：`Map`、`HashMap`、`LinkedHashMap`、`TreeMap`、`WeakHashMap`
@@ -60,16 +64,17 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 > [Java 并发](concurrent) 知识点庞杂且难懂，特设专题进行总结。
 
-- [Java 并发面试题集 💯](concurrent/java-concurrent-interview.md)
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175827.png)
+
 - [Java 并发简介](concurrent/java-concurrent-introduction.md) - 关键词：`进程`、`线程`
 - [Java 线程基础](concurrent/java-thread.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`
-- [Java 内存模型](concurrent/java-memory-model.md) - 关键词：`JMM`、`原子性`、`可见性`、`有序性`、`Happens-Before`
 - [Java 并发核心机制](concurrent/java-concurrent-basic-mechanism.md) - 关键词：`synchronized`、`volatile`、`CAS`、`ThreadLocal`
-- [Java 并发锁](concurrent/java-lock.md) - 关键词：`AQS`、`ReentrantLockA`、`ReentrantReadWriteLock`、`Condition`
+- [Java 并发锁](concurrent/java-lock.md) - 关键词：`AQS`、`ReentrantLock`、`ReentrantReadWriteLock`、`Condition`
 - [Java 原子类](concurrent/java-atomic-class.md) - 关键词：`CAS`、`Atomic`
 - [Java 并发容器](concurrent/java-concurrent-container.md) - 关键词：`ConcurrentHashMap`、`CopyOnWriteArrayList`
 - [Java 线程池](concurrent/java-thread-pool.md) - 关键词：`Executor`、`ExecutorService`、`ThreadPoolExecutor`、`Executors`
 - [Java 并发工具类](concurrent/java-concurrent-tools.md) - 关键词：`CountDownLatch`、`CyclicBarrier`、`Semaphore`
+- [Java 内存模型](concurrent/java-memory-model.md) - 关键词：`JMM`、`原子性`、`可见性`、`有序性`、`Happens-Before`
 
 ### Java IO
 
@@ -84,6 +89,8 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 ### Java 虚拟机
 
 > [Java 虚拟机](jvm) 记录了 JVM 的基本机制。
+
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221180028.png)
 
 - [JVM 内存区域](jvm/jvm-memory.md) - 关键词：程序计数器、虚拟机栈、本地方法栈、堆、方法区、运行时常量池、直接内存、`OutOfMemoryError`、`StackOverflowError`
 - [JVM 垃圾收集](jvm/jvm-gc.md) - 关键词：`GC Roots`、`Serial`、`Parallel`、`CMS`、`G1`、`Minor GC`、`Full GC`
@@ -121,9 +128,9 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
   - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)
   - [advanced-java](https://github.com/doocs/advanced-java)
 
-## 🚪 传送门
+## 🚪 传送
 
-◾ 🏠 [LINUX-TUTORIAL 首页](https://github.com/dunwu/linux-tutorial) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
 
 > 你可能会感兴趣：
 

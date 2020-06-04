@@ -22,6 +22,8 @@
 
 ## 📖 内容
 
+> [Java 面试题集 💯](docs/java-interview.md)
+
 ### Java 基础
 
 > [Java 基础](docs/basics) 总结 Java 的一些基础特性。
@@ -66,7 +68,6 @@
 
 ![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175827.png)
 
-- [Java 并发面试题集 💯](docs/concurrent/java-concurrent-interview.md)
 - [Java 并发简介](docs/concurrent/java-concurrent-introduction.md) - 关键词：`进程`、`线程`
 - [Java 线程基础](docs/concurrent/java-thread.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`
 - [Java 并发核心机制](docs/concurrent/java-concurrent-basic-mechanism.md) - 关键词：`synchronized`、`volatile`、`CAS`、`ThreadLocal`
@@ -129,9 +130,9 @@
   - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)
   - [advanced-java](https://github.com/doocs/advanced-java)
 
-## 🚪 传送门
+## 🚪 传送
 
-◾ 🏠 [LINUX-TUTORIAL 首页](https://github.com/dunwu/linux-tutorial) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
 
 > 你可能会感兴趣：
 

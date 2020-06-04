@@ -4,7 +4,7 @@
 >
 > 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/reflect)」
 
-## 简介
+## 一、反射简介
 
 ### 什么是反射
 
@@ -27,7 +27,7 @@
 - **破坏封装性** - 反射调用方法时可以忽略权限检查，因此可能会破坏封装性而导致安全问题。
 - **内部曝光** - 由于反射允许代码执行在非反射代码中非法的操作，例如访问私有字段和方法，所以反射的使用可能会导致意想不到的副作用，这可能会导致代码功能失常并可能破坏可移植性。反射代码打破了抽象，因此可能会随着平台的升级而改变行为。
 
-## 反射机制
+## 二、反射机制
 
 ### 类加载过程
 
@@ -57,7 +57,7 @@ User user = new User();
 2. JVM 会去本地磁盘查找 `User.class` 文件并加载 JVM 内存中。
 3. JVM 通过调用类加载器自动创建这个类对应的 `Class` 对象，并且存储在 JVM 的方法区。注意：**一个类有且只有一个 `Class` 对象**。
 
-## 使用反射
+## 三、使用反射
 
 ### java.lang.reflect 包
 
@@ -384,7 +384,7 @@ public static Object newInstance(Class<?> componentType, int length)
 }
 ```
 
-## 动态代理
+## 四、动态代理
 
 动态代理是反射的一个非常重要的应用场景。动态代理常被用于一些 Java 框架中。例如 Spring 的 AOP ，Dubbo 的 SPI 接口，就是基于 Java 动态代理实现的。
 
@@ -435,15 +435,15 @@ class Proxy extends Subject {
 >
 > 静态代理模式固然在访问无法访问的资源，增强现有的接口业务功能方面有很大的优点，但是大量使用这种静态代理，会使我们系统内的类的规模增大，并且不易维护；并且由于 Proxy 和 RealSubject 的功能本质上是相同的，Proxy 只是起到了中介的作用，这种代理在系统中的存在，导致系统结构比较臃肿和松散。
 
-### 动态代理
+### JDK 动态代理
 
 为了解决静态代理的问题，就有了创建动态代理的想法：
 
 在运行状态中，需要代理的地方，根据 Subject 和 RealSubject，动态地创建一个 Proxy，用完之后，就会销毁，这样就可以避免了 Proxy 角色的 class 在系统中冗杂的问题了。
 
-![img](http://dunwu.test.upcdn.net/snap/1553614585028.png!zp)
+![img](http://dunwu.test.upcdn.net/snap/1553614585028.png)
 
-Java 动态代理基于经典代理模式，引入了一个 InvocationHandler，InvocationHandler 负责统一管理所有的方法调用。
+Java 动态代理基于经典代理模式，引入了一个 `InvocationHandler`，`InvocationHandler` 负责统一管理所有的方法调用。
 
 动态代理步骤：
 
@@ -460,7 +460,7 @@ Java 动态代理基于经典代理模式，引入了一个 InvocationHandler，
 
 在 Java 的动态代理机制中，有两个重要的类（接口），一个是 `InvocationHandler` 接口、另一个则是 `Proxy` 类，这一个类和一个接口是实现我们动态代理所必须用到的。
 
-### InvocationHandler 接口
+#### InvocationHandler 接口
 
 `InvocationHandler` 接口定义：
 
@@ -487,7 +487,7 @@ Object invoke(Object proxy, Method method, Object[] args) throws Throwable
 
 如果不是很明白，等下通过一个实例会对这几个参数进行更深的讲解。
 
-### Proxy 类
+#### Proxy 类
 
 `Proxy` 这个类的作用就是用来动态创建一个代理对象的类，它提供了许多的方法，但是我们用的最多的就是 `newProxyInstance` 这个方法：
 
@@ -499,11 +499,11 @@ public static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces,
 
 参数说明：
 
-- **loader** - 一个 ClassLoader 对象，定义了由哪个 ClassLoader 对象来对生成的代理对象进行加载。
-- **interfaces** - 一个 Interface 对象的数组，表示的是我将要给我需要代理的对象提供一组什么接口，如果我提供了一组接口给它，那么这个代理对象就宣称实现了该接口(多态)，这样我就能调用这组接口中的方法了
-- **h** - 一个 InvocationHandler 对象，表示的是当我这个动态代理对象在调用方法的时候，会关联到哪一个 InvocationHandler 对象上
+- **loader** - 一个 `ClassLoader` 对象，定义了由哪个 `ClassLoader` 对象来对生成的代理对象进行加载。
+- **interfaces** - 一个 `Class<?>` 对象的数组，表示的是我将要给我需要代理的对象提供一组什么接口，如果我提供了一组接口给它，那么这个代理对象就宣称实现了该接口(多态)，这样我就能调用这组接口中的方法了
+- **h** - 一个 `InvocationHandler` 对象，表示的是当我这个动态代理对象在调用方法的时候，会关联到哪一个 `InvocationHandler` 对象上
 
-### 动态代理实例
+#### JDK 动态代理实例
 
 上面的内容介绍完这两个接口(类)以后，我们来通过一个实例来看看我们的动态代理模式是什么样的：
 
@@ -644,18 +644,51 @@ public abstract java.lang.String io.github.dunwu.javacore.reflect.InvocationHand
 
 正好就是我们的 Subject 接口中的两个方法，这也就证明了当我通过代理对象来调用方法的时候，起实际就是委托由其关联到的 handler 对象的 invoke 方法中来调用，并不是自己来真实调用，而是通过代理的方式来调用的。
 
-## 小结
+#### JDK 动态代理小结
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java反射.svg!zp)
+代理类与委托类实现同一接口，主要是通过代理类实现 `InvocationHandler` 并重写 `invoke` 方法来进行动态代理的，在 `invoke` 方法中将对方法进行处理。
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java代理.svg!zp)
+JDK 动态代理特点：
+
+- 优点：相对于静态代理模式，不需要硬编码接口，代码复用率高。
+
+- 缺点：强制要求代理类实现 `InvocationHandler` 接口。
+
+
+### CGLIB 动态代理
+
+CGLIB 提供了与 JDK 动态代理不同的方案。很多框架，例如 Spring AOP 中，就使用了 CGLIB 动态代理。
+
+CGLIB 底层，其实是借助了 ASM 这个强大的 Java 字节码框架去进行字节码增强操作。
+
+CGLIB 动态代理的工作步骤：
+
+- 生成代理类的二进制字节码文件；
+- 加载二进制字节码，生成 `Class` 对象( 例如使用 `Class.forName()` 方法 )；
+- 通过反射机制获得实例构造，并创建代理类对象。
+
+CGLIB 动态代理特点：
+
+优点：使用字节码增强，比 JDK 动态代理方式性能高。可以在运行时对类或者是接口进行增强操作，且委托类无需实现接口。
+
+缺点：不能对 `final` 类以及 `final` 方法进行代理。
+
+> 参考：[深入理解 CGLIB 动态代理机制](https://www.jianshu.com/p/9a61af393e41)
+
+## 五、小结
+
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java反射.svg)
+
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java代理.svg)
 
 ## 参考资料
 
-- [Java编程思想](https://book.douban.com/subject/2130190/)
-- [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [Java 编程思想](https://book.douban.com/subject/2130190/)
+- [Java 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
 - [深入解析 Java 反射（1） - 基础](https://www.sczyh30.com/posts/Java/java-reflection-1/)
-- [Java基础之—反射（非常重要）](https://blog.csdn.net/sinat_38259539/article/details/71799078)
+- [Java 基础之—反射（非常重要）](https://blog.csdn.net/sinat_38259539/article/details/71799078)
 - [官方 Reflection API 文档](https://docs.oracle.com/javase/tutorial/reflect/index.html)
-- [Java的动态代理机制详解](https://www.cnblogs.com/xiaoluo501395377/p/3383130.html)
-- [Java动态代理机制详解（JDK 和 CGLIB，Javassist，ASM）](https://blog.csdn.net/luanlouis/article/details/24589193)
+- [Java 的动态代理机制详解](https://www.cnblogs.com/xiaoluo501395377/p/3383130.html)
+- [Java 动态代理机制详解（JDK 和 CGLIB，Javassist，ASM）](https://blog.csdn.net/luanlouis/article/details/24589193)
+- [深入理解 JDK 动态代理机制](https://www.jianshu.com/p/471c80a7e831)
+- [深入理解 CGLIB 动态代理机制](https://www.jianshu.com/p/9a61af393e41)

@@ -183,7 +183,7 @@ J.U.C 包中提供了几个非常有用的并发容器作为线程安全的容�
 | `LinkedBlockingQueue`   | `Queue`        | 链表实现的阻塞队列。                                                                          |
 | `LinkedBlockingDeque`   | `Deque`        | 双向链表实现的双端阻塞队列。                                                                  |
 
-## ConcurrentHashMap
+## 三、ConcurrentHashMap
 
 > `ConcurrentHashMap` 是线程安全的 `HashMap` ，用于替代 `Hashtable`。
 
@@ -268,7 +268,7 @@ public class ConcurrentHashMapDemo {
 
 ##### 数据结构
 
-每一个 segment 都是一个 HashEntry<K,V>[] table， table 中的每一个元素本质上都是一个 HashEntry 的单向队列。比如 table[3]为首节点，table[3]->next 为节点 1，之后为节点 2，依次类推。
+每一个 segment 都是一个 `HashEntry<K,V>[] table`， table 中的每一个元素本质上都是一个 `HashEntry` 的单向队列。比如 `table[3]` 为首节点，`table[3]->next` 为节点 1，之后为节点 2，依次类推。
 
 ```java
 public class ConcurrentHashMap<K, V> extends AbstractMap<K, V>
@@ -297,8 +297,8 @@ public class ConcurrentHashMap<K, V> extends AbstractMap<K, V>
 #### Java 1.8 的实现
 
 - jdk8 中主要做了 2 方面的改进
-- 取消 segments 字段，直接采用 `transient volatile HashEntry<K,V>[] table` 保存数据，采用 table 数组元素作为锁，从而实现了对每一行数据进行加锁，进一步减少并发冲突的概率。
-- 将原先 table 数组＋单向链表的数据结构，变更为 table 数组＋单向链表＋红黑树的结构。对于 hash 表来说，最核心的能力在于将 key hash 之后能均匀的分布在数组中。如果 hash 之后散列的很均匀，那么 table 数组中的每个队列长度主要为 0 或者 1。但实际情况并非总是如此理想，虽然 ConcurrentHashMap 类默认的加载因子为 0.75，但是在数据量过大或者运气不佳的情况下，还是会存在一些队列长度过长的情况，如果还是采用单向列表方式，那么查询某个节点的时间复杂度为 O(n)；因此，对于个数超过 8(默认值)的列表，jdk1.8 中采用了红黑树的结构，那么查询的时间复杂度可以降低到 O(logN)，可以改进性能。
+- 取消 segments 字段，**直接采用 `transient volatile HashEntry<K,V>[] table` 保存数据，采用 table 数组元素作为锁，从而实现了对每一行数据进行加锁，进一步减少并发冲突的概率**。
+- 将原先 **数组＋单链表** 的数据结构，变更为 **数组＋单链表＋红黑树** 的结构。对于 hash 表来说，最核心的能力在于将 key hash 之后能均匀的分布在数组中。如果 hash 之后散列的很均匀，那么 table 数组中的每个队列长度主要为 0 或者 1。但实际情况并非总是如此理想，虽然 `ConcurrentHashMap` 类默认的加载因子为 0.75，但是在数据量过大或者运气不佳的情况下，还是会存在一些队列长度过长的情况，如果还是采用单向列表方式，那么查询某个节点的时间复杂度为 $$O(n)$$；因此，对于个数超过 8(默认值)的列表，jdk1.8 中采用了红黑树的结构，那么查询的时间复杂度可以降低到 $$O(logN)$$，可以改进性能。
 
 ```java
 final V putVal(K key, V value, boolean onlyIfAbsent) {
@@ -374,16 +374,16 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 }
 ```
 
-## CopyOnWriteArrayList
+## 四、CopyOnWriteArrayList
 
 ### 要点
 
-- 作用：CopyOnWrite 字面意思为写入时复制。CopyOnWriteArrayList 是线程安全的 ArrayList。
+- 作用：`CopyOnWrite` 字面意思为写入时复制。`CopyOnWriteArrayList` 是线程安全的 ArrayList。
 - 原理：
-  - 在 CopyOnWriteAarrayList 中，读操作不同步，因为它们在内部数组的快照上工作，所以多个迭代器可以同时遍历而不会相互阻塞（1,2,4）。
+  - 在 `CopyOnWriteAarrayList` 中，读操作不同步，因为它们在内部数组的快照上工作，所以多个迭代器可以同时遍历而不会相互阻塞（1,2,4）。
   - 所有的写操作都是同步的。他们在备份数组（3）的副本上工作。写操作完成后，后备阵列将被替换为复制的阵列，并释放锁定。支持数组变得易变，所以替换数组的调用是原子（5）。
   - 写操作后创建的迭代器将能够看到修改的结构（6,7）。
-  - 写时复制集合返回的迭代器不会抛出 ConcurrentModificationException，因为它们在数组的快照上工作，并且无论后续的修改（2,4）如何，都会像迭代器创建时那样完全返回元素。
+  - 写时复制集合返回的迭代器不会抛出 `ConcurrentModificationException`，因为它们在数组的快照上工作，并且无论后续的修改（2,4）如何，都会像迭代器创建时那样完全返回元素。
 
 <p align="center">
   <img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/CopyOnWriteArrayList.png">
@@ -533,7 +533,7 @@ public class CopyOnWriteArrayListDemo {
 }
 ```
 
-## 二、BlockingQueue 接口
+## 五、BlockingQueue
 
 `BlockingQueue` 接口定义如下：
 
