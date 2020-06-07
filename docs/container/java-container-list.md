@@ -31,7 +31,7 @@
 
 > ArrayList 从数据结构角度来看，可以视为支持动态扩容的线性表。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221142803.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221142803.png)
 
 ### ArrayList 要点
 
@@ -193,7 +193,7 @@ private void writeObject(java.io.ObjectOutputStream s)
 
 > LinkedList 从数据结构角度来看，可以视为双链表。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221142535.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221142535.png)
 
 ### LinkedList 要点
 

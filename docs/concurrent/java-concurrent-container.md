@@ -16,13 +16,15 @@
 
 ### 同步容器的问题
 
-同步容器的同步原理就是在方法上用 `synchronized` 修饰。 **`synchronized` 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块**。
+同步容器的同步原理就是在其 `get`、`set`、`size` 等主要方法上用 `synchronized` 修饰。 **`synchronized` 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块**。
 
-> 想详细了解 `synchronized` 用法和原理可以参考：[Java 并发核心机制 - synchronized](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md#%E4%BA%8Csynchronized)
+> 想详细了解 `synchronized` 用法和原理可以参考：[Java 并发核心机制](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md)
 
 #### 性能问题
 
-`synchronized` 的互斥同步会产生阻塞和唤醒线程的开销。显然，这种方式比没有使用 `synchronized` 的容器性能要差。
+`synchronized` 的互斥同步会产生阻塞和唤醒线程的开销。显然，这种方式比没有使用 `synchronized` 的容器性能要差很多。
+
+> 注：尤其是在 Java 1.6 没有对 `synchronized` 进行优化前，阻塞开销很高。
 
 #### 安全问题
 
@@ -158,7 +160,7 @@ public class VectorDemo2 {
 
 `ConcurrentModificationException` 异常
 
-在对 Vector 等容器并发地进行迭代修改时，会报 `ConcurrentModificationException` 异常，关于这个异常将会在后续文章中讲述。
+在对 `Vector` 等容器并发地进行迭代修改时，会报 `ConcurrentModificationException` 异常，关于这个异常将会在后续文章中讲述。
 
 但是在并发容器中不会出现这个问题。
 
@@ -183,13 +185,21 @@ J.U.C 包中提供了几个非常有用的并发容器作为线程安全的容�
 | `LinkedBlockingQueue`   | `Queue`        | 链表实现的阻塞队列。                                                                          |
 | `LinkedBlockingDeque`   | `Deque`        | 双向链表实现的双端阻塞队列。                                                                  |
 
+J.U.C 包中提供的并发容器命名一般分为三类：
+
+- `Concurrent*`
+  - 这类型的锁竞争相对于 `CopyOnWrite*` 要高一些，但写操作代价要小一些。
+  - 此外，`Concurrent*` 往往提供了较低的遍历一致性，即：当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历。代价就是，在获取容器大小 `size()` ，容器是否为空等方法，不一定完全精确，但这是为了获取并发吞吐量的设计取舍，可以理解。与之相比，如果是使用同步容器，就会出现 `fail-fast` 问题，即：检测到容器在遍历过程中发生了修改，则抛出 `ConcurrentModificationException`，不再继续遍历。
+- `CopyOnWrite*` - 读写分离。读操作时不加锁，写操作时通过在副本上加锁保证并发安全，空间开销较大。
+- `Blocking*` - 内部实现一般是基于锁，提供阻塞队列的能力。
+
 ## 三、ConcurrentHashMap
 
 > `ConcurrentHashMap` 是线程安全的 `HashMap` ，用于替代 `Hashtable`。
 
-### ConcurrentHashMap 的特性
+### `ConcurrentHashMap` 的特性
 
-`ConcurrentHashMap` 实现了 `ConcurrentMap` 接口，而 `ConcurrentMap` 接口扩展了 `Map` 接口。
+`ConcurrentHashMap` `实现了` `ConcurrentMap` 接口，而 `ConcurrentMap` 接口扩展了 `Map` 接口。
 
 ```java
 public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
@@ -259,16 +269,23 @@ public class ConcurrentHashMapDemo {
 
 ### ConcurrentHashMap 的原理
 
-`ConcurrentHashMap` 在 Java 1.8 之前和 Java 1.8 之后的实现有很大差异：
+> `ConcurrentHashMap` 一直在演进，尤其在 Java 1.7 和 Java 1.8，其数据结构和并发机制有很大的差异。
 
-- Java 1.8 之前采用分段锁机制细化锁粒度，降低阻塞，从而提高并发性。
-- Java 1.8 之后基于 CAS 实现。
+- Java 1.7
+  - 数据结构：**数组＋单链表**
+  - 并发机制：采用分段锁机制细化锁粒度，降低阻塞，从而提高并发性。
+- Java 1.8
+  - 数据结构：**数组＋单链表＋红黑树**
+  - 并发机制：取消分段锁，之后基于 CAS + synchronized 实现。
 
 #### Java 1.7 的实现
 
-##### 数据结构
+分段锁，是将内部进行分段（Segment），里面是 `HashEntry` 数组，和 `HashMap` 类似，哈希相同的条目也是以链表形式存放。
+`HashEntry` 内部使用 `volatile` 的 `value` 字段来保证可见性，也利用了不可变对象的机制，以改进利用 `Unsafe` 提供的底层能力，比如 volatile access，去直接完成部分操作，以最优化性能，毕竟 `Unsafe` 中的很多操作都是 JVM intrinsic 优化过的。
 
-每一个 segment 都是一个 `HashEntry<K,V>[] table`， table 中的每一个元素本质上都是一个 `HashEntry` 的单向队列。比如 `table[3]` 为首节点，`table[3]->next` 为节点 1，之后为节点 2，依次类推。
+![](http://dunwu.test.upcdn.net/snap/20200605214405.png)
+
+在进行并发写操作时，`ConcurrentHashMap` 会获取可重入锁（`ReentrantLock`），以保证数据一致性。所以，在并发修改期间，相应 `Segment` 是被锁定的。
 
 ```java
 public class ConcurrentHashMap<K, V> extends AbstractMap<K, V>
@@ -296,9 +313,10 @@ public class ConcurrentHashMap<K, V> extends AbstractMap<K, V>
 
 #### Java 1.8 的实现
 
-- jdk8 中主要做了 2 方面的改进
-- 取消 segments 字段，**直接采用 `transient volatile HashEntry<K,V>[] table` 保存数据，采用 table 数组元素作为锁，从而实现了对每一行数据进行加锁，进一步减少并发冲突的概率**。
-- 将原先 **数组＋单链表** 的数据结构，变更为 **数组＋单链表＋红黑树** 的结构。对于 hash 表来说，最核心的能力在于将 key hash 之后能均匀的分布在数组中。如果 hash 之后散列的很均匀，那么 table 数组中的每个队列长度主要为 0 或者 1。但实际情况并非总是如此理想，虽然 `ConcurrentHashMap` 类默认的加载因子为 0.75，但是在数据量过大或者运气不佳的情况下，还是会存在一些队列长度过长的情况，如果还是采用单向列表方式，那么查询某个节点的时间复杂度为 $$O(n)$$；因此，对于个数超过 8(默认值)的列表，jdk1.8 中采用了红黑树的结构，那么查询的时间复杂度可以降低到 $$O(logN)$$，可以改进性能。
+- 数据结构改进：与 HashMap 一样，将原先 **数组＋单链表** 的数据结构，变更为 **数组＋单链表＋红黑树** 的结构。当出现哈希冲突时，数据会存入数组指定桶的单链表，当链表长度达到 8，则将其转换为红黑树结构，这样其查询的时间复杂度可以降低到 $$O(logN)$$，以改进性能。
+- 并发机制改进：
+  - 取消 segments 字段，**直接采用 `transient volatile HashEntry<K,V>[] table` 保存数据，采用 table 数组元素作为锁，从而实现了对每一行数据进行加锁，进一步减少并发冲突的概率**。
+  - 使用 CAS + `sychronized` 操作，在特定场景进行无锁并发操作。使用 Unsafe、LongAdder 之类底层手段，进行极端情况的优化。现代 JDK 中，synchronized 已经被不断优化，可以不再过分担心性能差异，另外，相比于 ReentrantLock，它可以减少内存消耗，这是个非常大的优势。
 
 ```java
 final V putVal(K key, V value, boolean onlyIfAbsent) {
@@ -378,7 +396,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 
 ### 要点
 
-- 作用：`CopyOnWrite` 字面意思为写入时复制。`CopyOnWriteArrayList` 是线程安全的 ArrayList。
+- 作用：`CopyOnWrite` 字面意思为写入时复制。`CopyOnWriteArrayList` 是线程安全的 `ArrayList`。
 - 原理：
   - 在 `CopyOnWriteAarrayList` 中，读操作不同步，因为它们在内部数组的快照上工作，所以多个迭代器可以同时遍历而不会相互阻塞（1,2,4）。
   - 所有的写操作都是同步的。他们在备份数组（3）的副本上工作。写操作完成后，后备阵列将被替换为复制的阵列，并释放锁定。支持数组变得易变，所以替换数组的调用是原子（5）。
@@ -692,19 +710,28 @@ ArrayBlockingQueue 实现并发同步的原理就是，读操作和写操作都�
 
 ### SynchronousQueue
 
-SynchronousQueue 定义如下：
+`SynchronousQueue` 定义如下：
 
 ```java
 public class SynchronousQueue<E> extends AbstractQueue<E>
     implements BlockingQueue<E>, java.io.Serializable {}
 ```
 
-1.  SynchronousQueue 这个类，不过它在线程池的实现类 ScheduledThreadPoolExecutor 中得到了应用。
-2.  SynchronousQueue 的队列其实是虚的，其不提供任何空间（一个都没有）来存储元素。数据必须从某个写线程交给某个读线程，而不是写到某个队列中等待被消费。
-3.  SynchronousQueue 中不能使用 peek 方法（在这里这个方法直接返回 null），peek 方法的语义是只读取不移除，显然，这个方法的语义是不符合 SynchronousQueue 的特征的。
-4.  SynchronousQueue 也不能被迭代，因为根本就没有元素可以拿来迭代的。
-5.  虽然 SynchronousQueue 间接地实现了 Collection 接口，但是如果你将其当做 Collection 来用的话，那么集合是空的。
-6.  当然，SynchronousQueue 也不允许传递 null 值的（并发包中的容器类好像都不支持插入 null 值，因为 null 值往往用作其他用途，比如用于方法的返回值代表操作失败）。
+`SynchronousQueue` 每个删除操作都要等待插入操作，反之每个插入操作也都要等待删除动作。
+
+1.  `SynchronousQueue` 这个类，在线程池的实现类 `ScheduledThreadPoolExecutor` 中得到了应用。
+2.  `SynchronousQueue` 的队列其实是虚的，即队列容量为 0。数据必须从某个写线程交给某个读线程，而不是写到某个队列中等待被消费。
+3.  `SynchronousQueue` 中不能使用 peek 方法（在这里这个方法直接返回 null），peek 方法的语义是只读取不移除，显然，这个方法的语义是不符合 SynchronousQueue 的特征的。
+4.  `SynchronousQueue` 也不能被迭代，因为根本就没有元素可以拿来迭代的。
+5.  虽然 `SynchronousQueue` 间接地实现了 Collection 接口，但是如果你将其当做 Collection 来用的话，那么集合是空的。
+6.  当然，`SynchronousQueue` 也不允许传递 null 值的（并发包中的容器类好像都不支持插入 null 值，因为 null 值往往用作其他用途，比如用于方法的返回值代表操作失败）。
+
+### ConcurrentLinkedDeque
+
+`Deque` 的侧重点是支持对队列头尾都进行插入和删除，所以提供了特定的方法，如:
+
+- 尾部插入时需要的 `addLast(e)`、`offerLast(e)`。
+- 尾部删除所需要的 `removeLast()`、`pollLast()`。
 
 ## 参考资料
 

@@ -55,7 +55,7 @@ String s = new String("abc");
 
 狗和鸟都是动物。如果将狗、鸟作为类，它们可以继承动物类。
 
-![img](http://dunwu.test.upcdn.net/snap/1552641712126.png!zp)
+![img](http://dunwu.test.upcdn.net/snap/1552641712126.png)
 
 类的继承形式：
 
@@ -114,7 +114,7 @@ Java 中提供的基本数据类型，只能表示单一的数值，这用于数
 
 类的形式如下：
 
-![img](http://dunwu.test.upcdn.net/snap/1552640231731.png!zp)
+![img](http://dunwu.test.upcdn.net/snap/1552640231731.png)
 
 ## 方法
 
@@ -330,6 +330,12 @@ public > protected > 包访问权限（没有任何关键字）> private
 
 ## 接口
 
+接口是对行为的抽象，它是抽象方法的集合，利用接口可以达到 API 定义和实现分离的目的。
+
+接口，不能实例化；不能包含任何非常量成员，任何 field 都是隐含着 `public static final` 的意义；同时，没有非静态方法实现，也就是说要么是抽象方法，要么是静态方法。
+
+Java 标准类库中，定义了非常多的接口，比如 `java.util.List`。
+
 ```java
 public interface Comparable<T> {
     public int compareTo(T o);
@@ -338,13 +344,15 @@ public interface Comparable<T> {
 
 ## 抽象类
 
+抽象类是不能实例化的类，用 `abstract` 关键字修饰 `class`，其目的主要是代码重用。除了不能实例化，形式上和一般的 Java 类并没有太大区别，可以有一个或者多个抽象方法，也可以没有抽象方法。抽象类大多用于抽取相关 Java 类的共用方法实现或者是共同成员变量，然后通过继承的方式达到代码复用的目的。
+
+Java 标准库中，比如 `collection` 框架，很多通用部分就被抽取成为抽象类，例如 `java.util.AbstractList`。
+
 1. 抽象类不能被实例化(初学者很容易犯的错)，如果被实例化，就会报错，编译无法通过。只有抽象类的非抽象子类可以创建对象。
 2. 抽象类中不一定包含抽象方法，但是有抽象方法的类必定是抽象类。
 3. 抽象类中的抽象方法只是声明，不包含方法体，就是不给出方法的具体实现也就是方法的具体功能。
 4. 构造方法，类方法（用 static 修饰的方法）不能声明为抽象方法。
 5. 抽象类的子类必须给出抽象类中的抽象方法的具体实现，除非该子类也是抽象类。
-
-## 内部类
 
 ## 参考资料
 

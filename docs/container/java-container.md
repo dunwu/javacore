@@ -2,7 +2,7 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175550.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221175550.png)
 
 ## 一、容器简介
 
@@ -169,7 +169,7 @@ public interface Comparator<T> {
             return (res != 0) ? res : other.compare(c1, c2);
         };
     }
-  
+
     // thenComparingXXX 方法略
 
     // 静态方法略

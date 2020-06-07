@@ -647,7 +647,7 @@ public class EnumMapDemo {
 
 ## 小结
 
-![img](http://dunwu.test.upcdn.net/snap/1553002212154.png!zp)
+![img](http://dunwu.test.upcdn.net/snap/1553002212154.png)
 
 ## 参考资料
 

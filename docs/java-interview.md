@@ -1,32 +1,56 @@
 ## 基础
 
-### 常用工具类
+### 工具类
 
-#### String 类能被继承吗？
+#### String
 
-不能。因为其被 final 修饰，所以无法被继承。
+> String 类能被继承吗？
+>
+> String，StringBuffer，StringBuilder 的区别。
 
-#### String，StringBuffer，StringBuilder 的区别。
+String 类不能被继承。因为其被 final 修饰，所以无法被继承。
 
 StringBuffer，StringBuilder 拼接字符串，使用 append 比 String 效率高。因为 String 会隐式 new String 对象。
 
 StringBuffer 主要方法都用 synchronized 修饰，是线程安全的；而 StringBuilder 不是。
 
+### 面向对象
+
+> 抽象类和接口的区别？
+>
+> 类可以继承多个类么？接口可以继承多个接口么？类可以实现多个接口么？
+
+类只能继承一个类，但是可以实现多个接口。接口可以继承多个接口。
+
+> 继承和聚合的区别在哪？
+
+一般，能用聚合就别用继承。
+
 ### 反射
 
-#### 反射创建实例有几种方式？
+#### ⭐ 创建实例
+
+> 反射创建实例有几种方式？
 
 通过反射来创建实例对象主要有两种方式：
 
 - 用 `Class` 对象的 `newInstance` 方法。
 - 用 `Constructor` 对象的 `newInstance` 方法。
 
-#### Class.forName("className") 和 ClassLoader.laodClass("className") 有什么区别？
+#### ⭐ 加载实例
+
+> 加载实例有几种方式？
+>
+> Class.forName("className") 和 ClassLoader.laodClass("className") 有什么区别？
 
 - `Class.forName("className")` 加载的是已经初始化到 JVM 中的类。
 - `ClassLoader.laodClass("className")` 装载的是还没有初始化到 JVM 中的类。
 
-#### 动态代理有几种实现方式？有什么特点？
+#### ⭐⭐ 动态代理
+
+> 动态代理有几种实现方式？有什么特点？
+>
+> JDK 动态代理和 CGLIB 动态代理有什么区别？
 
 （1）JDK 方式
 
@@ -47,9 +71,29 @@ CGLIB 动态代理特点：
 
 缺点：不能对 `final` 类以及 `final` 方法进行代理。
 
+### JDK8
+
 ### 其他
 
-#### 有没有可能 2 个不相等的对象有相同的 hashcode
+#### ⭐ hashcode
+
+> 有`==`运算符了，为什么还需要 equals 啊？
+>
+> 说一说你对 java.lang.Object 对象中 hashCode 和 equals 方法的理解。在什么场景下需
+> 要重新实现这两个方法。
+>
+> 有没有可能 2 个不相等的对象有相同的 hashcode
+
+（1）有`==`运算符了，为什么还需要 equals 啊？
+
+equals 等价于`==`,而`==`运算符是判断两个对象是不是同一个对象，即他们的**地址是否相等**。而覆写 equals 更多的是追求两个对象在**逻辑上的相等**，你可以说是**值相等**，也可说是**内容相等**。
+
+（2）说一说你对 java.lang.Object 对象中 hashCode 和 equals 方法的理解。在什么场景下需
+要重新实现这两个方法。
+
+在集合查找时，hashcode 能大大降低对象比较次数，提高查找效率！
+
+（3）有没有可能 2 个不相等的对象有相同的 hashcode
 
 有可能。
 
@@ -62,9 +106,23 @@ CGLIB 动态代理特点：
 
 ### NIO
 
+> 什么是 NIO？
+>
+> NIO 和 BIO、AIO 有何差别？
+
 ### 序列化
 
-#### 序列化、反序列化有哪些问题？如何解决？
+#### ⭐ 序列化问题
+
+> 序列化、反序列化有哪些问题？如何解决？
+
+Java 的序列化能保证对象状态的持久保存，但是遇到一些对象结构复杂的情况还是难以处理，这里归纳一下：
+
+- 当父类继承 `Serializable` 接口时，所有子类都可以被序列化。
+- 子类实现了 `Serializable` 接口，父类没有，则父类的属性不会被序列化（不报错，数据丢失），子类的属性仍可以正确序列化。
+- 如果序列化的属性是对象，则这个对象也必须实现 `Serializable` 接口，否则会报错。
+- 在反序列化时，如果对象的属性有修改或删减，则修改的部分属性会丢失，但不会报错。
+- 在反序列化时，如果 `serialVersionUID` 被修改，则反序列化时会失败。
 
 ## 容器
 
@@ -155,7 +213,7 @@ LinkedList 是双链表，数据有序存储。
 
 #### Java 线程生命周期中有哪些状态？各状态之间如何切换？
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread_1.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread_1.png)
 
 `java.lang.Thread.State` 中定义了 **6** 种不同的线程状态，在给定的一个时刻，线程只能处于其中的一个状态。
 
@@ -934,6 +992,10 @@ Executors 为 Executor，ExecutorService，ScheduledExecutorService，ThreadFact
 创建一个大小无限的线程池。此线程池支持定时以及周期性执行任务的需求。
 
 ## JVM
+
+### 内存管理
+
+### OOM
 
 ## 参考资料
 

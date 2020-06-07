@@ -711,15 +711,15 @@ WeakHashMap 的 key 是**弱键**，即是 WeakReference 类型的；ReferenceQu
 
 ### Map 简介
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221162002.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221162002.png)
 
 ### HashMap
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221162111.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221162111.png)
 
 ### 其他 Map
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221161913.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221161913.png)
 
 ## 参考资料
 

@@ -28,7 +28,7 @@ Java 启动后，作为一个进程运行在操作系统中。
 
 JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁。如下图所示：
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-memory-runtime-data-area.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-memory-runtime-data-area.png)
 
 ### 程序计数器
 
@@ -142,6 +142,10 @@ Java 堆是垃圾收集的主要区域（因此也被叫做"GC 堆"）。现代�
 | 直接内存      | 非运行时数据区 | `OutOfMemoryError`                         |
 
 ## 三、OutOfMemoryError
+
+### 什么是 OutOfMemoryError
+
+`OutOfMemoryError` 简称为 OOM。Java 中对 OOM 的解释是，没有空闲内存，并且垃圾收集器也无法提供更多内存。通俗的解释是：JVM 内存不足了。
 
 在 JVM 规范中，**除了程序计数器区域外，其他运行时区域都可能发生 `OutOfMemoryError` 异常（简称 OOM）**。
 
@@ -401,7 +405,11 @@ jmap -dump:file=dump.hprof,format=b <process-id>
 Exception in thread "main" java.lang.OutOfMemoryError: Metaspace
 ```
 
-【原因】**元数据区的内存不足，即方法区和运行时常量池的空间不足**。
+【原因】
+
+Java8 以后，JVM 内存空间发生了很大的变化。取消了永久代，转而变为元数据区。
+
+**元数据区的内存不足，即方法区和运行时常量池的空间不足**。
 
 方法区用于存放 Class 的相关信息，如类名、访问修饰符、常量池、字段描述、方法描述等。
 
@@ -434,7 +442,7 @@ public class MethodAreaOutOfMemoryDemo {
 
 【解决】
 
-当由于元空间而面临 OutOfMemoryError 时，第一个解决方案应该是显而易见的。如果应用程序耗尽了内存中的 Metaspace 区域，则应增加 Metaspace 的大小。更改应用程序启动配置并增加以下内容：
+当由于元空间而面临 `OutOfMemoryError` 时，第一个解决方案应该是显而易见的。如果应用程序耗尽了内存中的 Metaspace 区域，则应增加 Metaspace 的大小。更改应用程序启动配置并增加以下内容：
 
 ```
 -XX:MaxMetaspaceSize=512m
@@ -508,7 +516,7 @@ core file size          (blocks, -c) 0
 max user processes              (-u) 1800
 ```
 
-通常，OutOfMemoryError 对新的本机线程的限制表示编程错误。当应用程序产生数千个线程时，很可能出了一些问题—很少有应用程序可以从如此大量的线程中受益。
+通常，`OutOfMemoryError` 对新的本机线程的限制表示编程错误。当应用程序产生数千个线程时，很可能出了一些问题—很少有应用程序可以从如此大量的线程中受益。
 
 解决问题的一种方法是开始进行线程转储以了解情况。
 
@@ -546,8 +554,8 @@ public class DirectOutOfMemoryDemo {
 
 从实战来说，栈溢出的常见原因：
 
-- 递归函数调用层数太深
-- 大量循环或死循环
+- **递归函数调用层数太深**
+- **大量循环或死循环**
 
 示例：递归函数调用层数太深导致 `StackOverflowError`
 

@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /images/dunwu-logo-200.png
+heroImage: http://dunwu.test.upcdn.net/common/logo/dunwu-logo.png
 heroText: JAVACORE
 tagline: ☕ JavaCore 是一个 Java 核心技术教程。
 actionLink: /
@@ -20,7 +20,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ## 📖 内容
 
-> [Java 面试题集 💯](docs/java-interview.md)
+> [Java 面试题集 💯](java-interview.md)
 
 ### Java 基础
 
@@ -52,19 +52,19 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 > [Java 容器](container) 涉及许多数据结构知识点，所以设立专题进行总结。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175550.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221175550.png)
 
-- [Java 容器简介](container/java-container.md)
+- [Java 容器简介](container/java-container.md) - 关键词：`Collection`、`泛型`、`Iterable`、`Iterator`、`Comparable`、`Comparator`、`Cloneable`、`fail-fast`
 - [Java 容器之 List](container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
-- [Java 容器之 Map](container/java-container-map.md) - 关键词：`Map`、`HashMap`、`LinkedHashMap`、`TreeMap`、`WeakHashMap`
-- [Java 容器之 Set](container/java-container-set.md)
-- [Java 容器之 Queue](container/java-container-queue.md)
+- [Java 容器之 Map](container/java-container-map.md) - 关键词：`Map`、`HashMap`、`TreeMap`、`LinkedHashMap`、`WeakHashMap`
+- [Java 容器之 Set](container/java-container-set.md) - 关键词：`Set`、`HashSet`、`TreeSet`、`LinkedHashSet`、`EmumSet`
+- [Java 容器之 Queue](container/java-container-queue.md) - 关键词：`Queue`、`Deque`、`ArrayDeque`、`LinkedList`、`PriorityQueue`
 
 ### Java 并发
 
-> [Java 并发](concurrent) 知识点庞杂且难懂，特设专题进行总结。
+> [Java 并发](concurrent) 总结、整理 Java 并发编程相关知识点。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175827.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221175827.png)
 
 - [Java 并发简介](concurrent/java-concurrent-introduction.md) - 关键词：`进程`、`线程`
 - [Java 线程基础](concurrent/java-thread.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`
@@ -82,7 +82,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 - [Java 基础 IO 类](io/java-io-base.md) - 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
 - [Java BIO](io/java-bio.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
-- [Java NIO](io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`
+- [Java NIO](io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`、`多路复用`
 - [Java 序列化](io/java-serialization.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`、`transient`
 - [Java 网络编程](io/java-net.md) - 关键词：`Socket`、`ServerSocket`、`DatagramPacket`、`DatagramSocket`
 
@@ -90,7 +90,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 > [Java 虚拟机](jvm) 记录了 JVM 的基本机制。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221180028.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221180028.png)
 
 - [JVM 内存区域](jvm/jvm-memory.md) - 关键词：程序计数器、虚拟机栈、本地方法栈、堆、方法区、运行时常量池、直接内存、`OutOfMemoryError`、`StackOverflowError`
 - [JVM 垃圾收集](jvm/jvm-gc.md) - 关键词：`GC Roots`、`Serial`、`Parallel`、`CMS`、`G1`、`Minor GC`、`Full GC`
@@ -118,6 +118,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
     - [《Java 从入门到精通》](https://item.jd.com/12555860.html)
     - [《疯狂 Java 讲义》](https://item.jd.com/12518025.html)
   - 其他
+    - 《Head First 设计模式》
     - [《 Java 网络编程》](https://item.jd.com/11544991.html)
     - [《Java 加密与解密的艺术》](https://item.jd.com/26122568270.html)
     - [《Java 程序员面试宝典》](https://item.jd.com/11772823.html)
@@ -134,7 +135,6 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 > 你可能会感兴趣：
 
-- [我的 Github 博客](https://github.com/dunwu/blog) 🎯
 - [Java 教程](https://github.com/dunwu/java-tutorial) 📚
 - [JavaCore 教程](https://dunwu.github.io/javacore/) 📚
 - [JavaTech 教程](https://dunwu.github.io/javatech/) 📚

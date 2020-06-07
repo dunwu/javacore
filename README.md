@@ -54,7 +54,7 @@
 
 > [Java 容器](docs/container) 涉及许多数据结构知识点，所以设立专题进行总结。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175550.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221175550.png)
 
 - [Java 容器简介](docs/container/java-container.md) - 关键词：`Collection`、`泛型`、`Iterable`、`Iterator`、`Comparable`、`Comparator`、`Cloneable`、`fail-fast`
 - [Java 容器之 List](docs/container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
@@ -66,7 +66,7 @@
 
 > [Java 并发](docs/concurrent) 总结、整理 Java 并发编程相关知识点。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175827.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221175827.png)
 
 - [Java 并发简介](docs/concurrent/java-concurrent-introduction.md) - 关键词：`进程`、`线程`
 - [Java 线程基础](docs/concurrent/java-thread.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`
@@ -76,7 +76,7 @@
 - [Java 并发容器](docs/concurrent/java-concurrent-container.md) - 关键词：`ConcurrentHashMap`、`CopyOnWriteArrayList`
 - [Java 线程池](docs/concurrent/java-thread-pool.md) - 关键词：`Executor`、`ExecutorService`、`ThreadPoolExecutor`、`Executors`
 - [Java 并发工具类](docs/concurrent/java-concurrent-tools.md) - 关键词：`CountDownLatch`、`CyclicBarrier`、`Semaphore`
-- [Java 内存模型](docs/concurrent/java-memory-model.md) - 关键词：`JMM`、`原子性`、`可见性`、`有序性`、`Happens-Before`
+- [Java 内存模型](docs/concurrent/java-memory-model.md) - 关键词：`JMM`、`原子性`、`可见性`、`有序性`、`Happens-Before`、`内存屏障`
 
 ### Java IO
 
@@ -92,7 +92,7 @@
 
 > [Java 虚拟机](docs/jvm) 记录了 JVM 的基本机制。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221180028.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221180028.png)
 
 - [JVM 内存区域](docs/jvm/jvm-memory.md) - 关键词：程序计数器、虚拟机栈、本地方法栈、堆、方法区、运行时常量池、直接内存、`OutOfMemoryError`、`StackOverflowError`
 - [JVM 垃圾收集](docs/jvm/jvm-gc.md) - 关键词：`GC Roots`、`Serial`、`Parallel`、`CMS`、`G1`、`Minor GC`、`Full GC`
@@ -120,6 +120,7 @@
     - [《Java 从入门到精通》](https://item.jd.com/12555860.html)
     - [《疯狂 Java 讲义》](https://item.jd.com/12518025.html)
   - 其他
+    - 《Head First 设计模式》
     - [《 Java 网络编程》](https://item.jd.com/11544991.html)
     - [《Java 加密与解密的艺术》](https://item.jd.com/26122568270.html)
     - [《Java 程序员面试宝典》](https://item.jd.com/11772823.html)
@@ -136,7 +137,6 @@
 
 > 你可能会感兴趣：
 
-- [我的 Github 博客](https://github.com/dunwu/blog) 🎯
 - [Java 教程](https://github.com/dunwu/java-tutorial) 📚
 - [JavaCore 教程](https://dunwu.github.io/javacore/) 📚
 - [JavaTech 教程](https://dunwu.github.io/javatech/) 📚

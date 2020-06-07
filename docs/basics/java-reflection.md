@@ -31,7 +31,7 @@
 
 ### 类加载过程
 
-![img](http://dunwu.test.upcdn.net/snap/1553611895164.png!zp)
+![img](http://dunwu.test.upcdn.net/snap/1553611895164.png)
 
 类加载的完整过程如下：
 
@@ -386,7 +386,9 @@ public static Object newInstance(Class<?> componentType, int length)
 
 ## 四、动态代理
 
-动态代理是反射的一个非常重要的应用场景。动态代理常被用于一些 Java 框架中。例如 Spring 的 AOP ，Dubbo 的 SPI 接口，就是基于 Java 动态代理实现的。
+动态代理是一种方便运行时动态构建代理、动态处理代理方法调用的机制，很多场景都是利用类似机制做到的，比如用来包装 RPC 调用、面向切面的编程（AOP）。
+
+实现动态代理的方式很多，比如 JDK 自身提供的动态代理，就是主要利用了上面提到的反射机制。还有其他的实现方式，比如利用传说中更高性能的字节码操作机制，类似 ASM、cglib（基于 ASM）、Javassist 等。
 
 ### 静态代理
 

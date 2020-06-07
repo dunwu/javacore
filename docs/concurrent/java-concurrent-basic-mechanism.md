@@ -210,7 +210,9 @@ public class SynchronizedDemo3 implements Runnable {
 
 ### synchronized 的原理
 
-`synchronized` 经过编译后，会在同步块的前后分别形成 `monitorenter` 和 `monitorexit` 这两个字节码指令，这两个字节码指令都需要一个引用类型的参数来指明要锁定和解锁的对象。如果 `synchronized` 明确制定了对象参数，那就是这个对象的引用；如果没有明确指定，那就根据 `synchronized` 修饰的是实例方法还是静态方法，去对对应的对象实例或 `Class` 对象来作为锁对象。
+**`synchronized` 代码块是由一对 `monitorenter` 和 `monitorexit` 指令实现的，`Monitor` 对象是同步的基本实现单元**。在 Java 6 之前，`Monitor` 的实现完全是依靠操作系统内部的互斥锁，因为需要进行用户态到内核态的切换，所以同步操作是一个无差别的重量级操作。
+
+如果 `synchronized` 明确制定了对象参数，那就是这个对象的引用；如果没有明确指定，那就根据 `synchronized` 修饰的是实例方法还是静态方法，去对对应的对象实例或 `Class` 对象来作为锁对象。
 
 `synchronized` 同步块对同一线程来说是可重入的，不会出现锁死问题。
 
@@ -230,18 +232,25 @@ public class SynchronizedDemo3 implements Runnable {
 
 ### synchronized 的优化
 
-> Java 1.6 以后，`synchronized` 做了大量的优化，其性能已经与 `Lock` 、`ReadWriteLock` 基本上持平。
+> **Java 1.6 以后，`synchronized` 做了大量的优化，其性能已经与 `Lock` 、`ReadWriteLock` 基本上持平**。
 
-Java 1.6 以后，`synchronized` 做了大量的优化，其性能已经与 `Lock` 、`ReadWriteLock` 基本上持平。
-
-Java 1.6 引入了偏向锁和轻量级锁，从而让锁拥有了四个状态：
+Java 1.6 引入了偏向锁和轻量级锁，从而让 `synchronized` 拥有了四个状态：
 
 - **无锁状态（unlocked）**
 - **偏向锁状态（biasble）**
 - **轻量级锁状态（lightweight locked）**
 - **重量级锁状态（inflated）**
 
-`synchronized` 的优化是将锁粒度分为不同级别，`synchronized` 会根据运行状态动态的由低到高调整锁级别（**偏向锁** -> **轻量级锁** -> **重量级锁**），以减少阻塞。
+当 JVM 检测到不同的竞争状况时，会自动切换到适合的锁实现。
+
+当没有竞争出现时，默认会使用偏向锁。JVM 会利用 CAS 操作（compare and swap），
+在对象头上的 Mark Word 部分设置线程 ID，以表示这个对象偏向于当前线程，所以并不
+涉及真正的互斥锁。这样做的假设是基于在很多应用场景中，大部分对象生命周期中最多会
+被一个线程锁定，使用偏斜锁可以降低无竞争开销。
+
+如果有另外的线程试图锁定某个已经被偏斜过的对象，JVM 就需要撤销（revoke）偏向
+锁，并切换到轻量级锁实现。轻量级锁依赖 CAS 操作 Mark Word 来试图获取锁，如果重
+试成功，就使用普通的轻量级锁；否则，进一步升级为重量级锁。
 
 #### 偏向锁
 
@@ -321,7 +330,7 @@ public static String concatString(String s1, String s2, String s3) {
 通常来说，**使用 `volatile` 必须具备以下 2 个条件**：
 
 - 对变量的写操作不依赖于当前值
-- 该变量没有包含在具有其他变量的不变式中 
+- 该变量没有包含在具有其他变量的不变式中
 
 示例：状态标记量
 

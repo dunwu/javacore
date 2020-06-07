@@ -171,7 +171,7 @@ obj = null;
 - **停顿时间** - 停顿时间是因为 GC 而导致程序不能工作的时间长度。
 - **吞吐量** - 吞吐量关注在特定的时间周期内一个应用的工作量的最大值。对关注吞吐量的应用来说长暂停时间是可以接受的。由于高吞吐量的应用关注的基准在更长周期时间上，所以快速响应时间不在考虑之内。
 
-### 标记 - 清除
+### 标记 - 清除（Mark-Sweep）
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-gc-mark-sweep.jpg" />
@@ -184,7 +184,7 @@ obj = null;
 - 标记和清除过程效率都不高；
 - 会产生大量不连续的内存碎片，导致无法给大对象分配内存。
 
-### 标记 - 整理
+### 标记 - 整理（Mark-Compact）
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-gc-mark-compact.jpg" />
@@ -192,7 +192,7 @@ obj = null;
 
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
-### 复制
+### 复制（Copying）
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-gc-copying.jpg" />
@@ -210,8 +210,43 @@ obj = null;
 
 一般将 Java 堆分为年轻代和老年代。
 
-- 年轻代使用：复制算法
-- 老年代使用：标记 - 清理 或者 标记 - 整理 算法
+- 年轻代使用：**复制** 算法
+- 老年代使用：**标记 - 清理** 或者 **标记 - 整理** 算法
+
+<div align="center">
+<img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-hotspot-heap-structure.png" />
+</div>
+
+#### 新生代
+
+新生代是大部分对象创建和销毁的区域，在通常的 Java 应用中，绝大部分对象生命周期都是很短暂的。其内部又分为 `Eden` 区域，作为对象初始分配的区域；两个 `Survivor`，有时候也叫 `from`、`to` 区域，被用来放置从 Minor GC 中保留下来的对象。
+
+JVM 会随意选取一个 `Survivor` 区域作为`to`，然后会在 GC 过程中进行区域间拷贝，也就是将 Eden 中存活下来的对象和 `from` 区域的对象，拷贝到这个`to`区域。这种设计主要是为了防止内存的碎片化，并进一步清理无用对象。
+
+#### 老年代
+
+放置长生命周期的对象，通常都是从 `Survivor` 区域拷贝过来的对象。当然，也有特殊情况，如果对象较大，JVM 会试图直接分配在 `Eden` 其他位置上；如果对象太大，完全无法在新生代找到足够长的连续空闲空间，JVM 就会直接分配到老年代。
+
+#### 永久代
+
+这部分就是早期 Hotspot JVM 的方法区实现方式了，储存 Java 类元数据、常量池、Intern 字符串缓存。在 JDK 8 之后就不存在永久代这块儿了。
+
+#### JVM 参数
+
+这里顺便提一下，JVM 允许对堆空间大小、各代空间大小进行设置，以调整 JVM GC。
+
+| 配置                | 描述                                                                                                               |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `-Xss`              | 虚拟机栈大小。                                                                                                     |
+| `-Xms`              | 堆空间初始值。                                                                                                     |
+| `-Xmx`              | 堆空间最大值。                                                                                                     |
+| `-Xmn`              | 新生代空间大小。                                                                                                   |
+| `-XX:NewSize`       | 新生代空间初始值。                                                                                                 |
+| `-XX:MaxNewSize`    | 新生代空间最大值。                                                                                                 |
+| `-XX:NewRatio`      | 新生代与年老代的比例。默认为 2，意味着老年代是新生代的 2 倍。                                                      |
+| `-XX:SurvivorRatio` | 新生代中调整 eden 区与 survivor 区的比例，默认为 8。即 `eden` 区为 80% 的大小，两个 `survivor` 分别为 10% 的大小。 |
+| `-XX:PermSize`      | 永久代空间的初始值。                                                                                               |
+| `-XX:MaxPermSize`   | 永久代空间的最大值。                                                                                               |
 
 ## 三、垃圾收集器
 
@@ -225,7 +260,7 @@ obj = null;
 
 ### 串行收集器
 
-串行收集器是最基本、发展历史最悠久的收集器。
+串行收集器（Serial）是最基本、发展历史最悠久的收集器。
 
 串行收集器是 **`client` 模式下的默认收集器配置**。因为在客户端模式下，分配给虚拟机管理的内存一般来说不会很大。Serial 收集器收集几十兆甚至一两百兆的年轻代停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿是可以接受的。
 
@@ -242,7 +277,7 @@ obj = null;
 
 > 开启选项：`-XX:+SerialGC`
 >
-> 打开此开关后，使用 Serial + Serial Old 收集器组合来进行内存回收。
+> 打开此开关后，使用 **Serial** + **Serial Old** 收集器组合来进行内存回收。
 
 #### Serial Old 收集器
 
@@ -255,11 +290,11 @@ Serial Old 是 Serial 收集器的老年代版本，也是给 Client 模式下�
 
 > 开启选项：`-XX:+UseParallelGC`
 >
-> 打开此开关后，使用 Parallel Scavenge + Serial Old 收集器组合来进行内存回收。
+> 打开此开关后，使用 **Parallel Scavenge** + **Serial Old** 收集器组合来进行内存回收。
 >
 > 开启选项：`-XX:+UseParallelOldGC`
 >
-> 打开此开关后，使用 Parallel Scavenge + Parallel Old 收集器组合来进行内存回收。
+> 打开此开关后，使用 **Parallel Scavenge** + **Parallel Old** 收集器组合来进行内存回收。
 
 其他收集器都是以关注停顿时间为目标，而**并行收集器是以关注吞吐量（Throughput）为目标的垃圾收集器**。
 
@@ -300,7 +335,7 @@ Parallel Scavenge 收集器还提供了一个参数 `-XX:+UseAdaptiveSizePolicy`
 
 > 开启选项：`-XX:+UseConcMarkSweepGC`
 >
-> 打开此开关后，使用 CMS + ParNew + Serial Old 收集器组合来进行内存回收。
+> 打开此开关后，使用 **CMS** + **ParNew** + **Serial Old** 收集器组合来进行内存回收。
 
 并发标记清除收集器是以获取最短停顿时间为目标。
 
@@ -412,27 +447,17 @@ ParNew 收集器默认开启的线程数量与 CPU 数量相同，可以使用 -
 
 ### G1 收集器
 
-> 参考资料：
->
-> - [G1 垃圾收集器入门](https://blog.csdn.net/zhanggang807/article/details/45956325)
-> - [详解 JVM Garbage First(G1) 垃圾收集器](https://blog.csdn.net/coderlius/article/details/79272773)
-> - [Getting Started with the G1 Garbage Collector](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)
+> 开启选项：`-XX:+UseG1GC`
 
-G1（Garbage-First），是面向服务器应用的垃圾回收器。
+前面提到的垃圾收集器一般策略是关注吞吐量或停顿时间。而 **_G1 是一种兼顾吞吐量和停顿时间的 GC 收集器_**。G1 是 Oracle JDK9 以后的默认 GC 收集器。G1 可以直观的设定停顿时间的目标，相比于 CMS GC，G1 未必能做到 CMS 在最好情况下的延时停顿，但是最差情况要好很多。
 
-G1 也是关注最短停顿时间的垃圾回收器。G1 也同样适合大尺寸堆内存的垃圾收集，官方推荐使用 G1 来代替 CMS。
-
-G1 最大的特点是引入分区的思路，弱化了分代的概念，合理利用垃圾收集各个周期的资源，解决了其他收集器甚至 CMS 的众多缺陷。Java 堆被分为年轻代、老年代和永久代，其它收集器进行收集的范围都是整个年轻代或者老生代，而 G1 可以直接对年轻代和永久代一起回收。
+G1 最大的特点是引入分区的思路，弱化了分代的概念，合理利用垃圾收集各个周期的资源，解决了其他收集器甚至 CMS 的众多缺陷。
 
 #### 分代和分区
 
-旧的垃圾收集器（串行的：serial，并行的：parallel，并发标记清除：CMS）都把堆结构化为三个部分：年轻代、年老代和固定大小的永久代。
+旧的垃圾收集器一般采取分代收集，Java 堆被分为年轻代、老年代和永久代。收集的范围都是整个年轻代或者整个老年代。
 
-<div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-hotspot-heap-structure.png" />
-</div>
-
-G1 把年轻代和老年代划分成多个大小相等的独立区域（Region），年轻代和永久代不再物理隔离。
+G1 取消了永久代，并把年轻代和老年代划分成多个大小相等的独立区域（Region），年轻代和老年代不再物理隔离。G1 可以直接对年轻代和老年代一起回收。
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-gc-g1-heap-allocation.png" />
@@ -556,10 +581,19 @@ G1 选择活性最低的区域，这些区域能够以最快的速度回收。�
 
 对象的内存分配，也就是在堆上分配。主要分配在年轻代的 Eden 区上，少数情况下也可能直接分配在老年代中。
 
-### Minor GC 和 Full GC
+### Minor GC
 
-- Minor GC：发生在年轻代上，因为年轻代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快。
-- Full GC：发生在老年代上，老年代对象和年轻代的相反，其存活时间长，因此 Full GC 很少执行，而且执行速度会比 Minor GC 慢很多。
+Minor GC 发生在年轻代上，因为年轻代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快。
+
+（1）Java 应用不断创建对象，通常都是分配在 Eden 区域，当其空间占用达到一定阈值时，触发 minor GC。仍然被引用的对象（绿色方块）存活下来，被复制到 JVM 选择的 Survivor 区域，而没有被引用的对象（黄色方块）则被回收。
+
+（2）经过一次 Minor GC，Eden 就会空闲下来，直到再次达到 Minor GC 触发条件。这时候，另外一个 Survivor 区域则会成为 to 区域，Eden 区域的存活对象和 From 区域对象，都会被复制到 to 区域，并且存活的年龄计数会被加 1。
+
+（3）类似第二步的过程会发生很多次，直到有对象年龄计数达到阈值，这时候就会发生所谓的晋升（Promotion）过程，如下图所示，超过阈值的对象会被晋升到老年代。这个阈值是可以通过 `-XX:MaxTenuringThreshold` 参数指定。
+
+### Full GC
+
+Full GC 发生在老年代上，老年代对象和年轻代的相反，其存活时间长，因此 Full GC 很少执行，而且执行速度会比 Minor GC 慢很多。
 
 ### 内存分配策略
 
@@ -618,3 +652,6 @@ G1 选择活性最低的区域，这些区域能够以最快的速度回收。�
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [详解 JVM Garbage First(G1) 垃圾收集器](https://blog.csdn.net/coderlius/article/details/79272773)
+- [G1 垃圾收集器入门](https://blog.csdn.net/zhanggang807/article/details/45956325)
+- [详解 JVM Garbage First(G1) 垃圾收集器](https://blog.csdn.net/coderlius/article/details/79272773)
+- [Getting Started with the G1 Garbage Collector](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)

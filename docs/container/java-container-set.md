@@ -226,7 +226,7 @@ public abstract class EnumSet<E extends Enum<E>> extends AbstractSet<E>
 
 ## 六、要点总结
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221190717.png)
+![img](http://dunwu.test.upcdn.net/snap/20200221190717.png)
 
 ## 参考资料
 

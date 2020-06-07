@@ -438,14 +438,14 @@ Java 官方的序列化主要体现在以下方面：
 
 ## 要点总结
 
-![img](http://dunwu.test.upcdn.net/snap/1553227663192.png!zp)
+![img](http://dunwu.test.upcdn.net/snap/1553227663192.png)
 
 ## 参考资料
 
-- [Java编程思想](https://book.douban.com/subject/2130190/)
-- [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [Java 编程思想](https://book.douban.com/subject/2130190/)
+- [Java 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
 - http://www.hollischuang.com/archives/1140
 - http://www.codenuclear.com/serialization-deserialization-java/
 - http://www.blogjava.net/jiangshachina/archive/2012/02/13/369898.html
-- [Java序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
+- [Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
 - https://agapple.iteye.com/blog/859052

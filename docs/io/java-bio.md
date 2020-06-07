@@ -1,10 +1,41 @@
 # Java BIO
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
->
-> **BIO，即同步阻塞 I/O 模式，指数据的读取写入必须阻塞在一个线程内等待其完成**。
 
-## 一、流
+## 一、简介
+
+Java IO 方式有很多种，基于不同的 IO 抽象模型和交互方式，可以进行简单区分。
+
+### 基本概念
+
+- 区分同步或异步（synchronous/asynchronous）。简单来说，同步是一种可靠的有序运行机制，当我们进行同步操作时，后续的任务是等待当前调用返回，才会进行下一步；而异步则相反，其他任务不需要等待当前调用返回，通常依靠事件、回调等机制来实现任务间次序关系。
+- 区分阻塞与非阻塞（blocking/non-blocking）。在进行阻塞操作时，当前线程会处于阻塞状态，无法从事其他任务，只有当条件就绪才能继续，比如 ServerSocket 新连接建立完毕，或数据读取、写入操作完成；而非阻塞则是不管 IO 操作是否结束，直接返回，相应操作在后台继续处理。
+
+不能一概而论认为同步或阻塞就是低效，具体还要看应用和系统特征。
+
+### BIO
+
+> BIO（blocking IO） 即阻塞 IO。指的主要是传统的 `java.io` 包，它基于流模型实现。
+
+`java.io` 包提供了我们最熟知的一些 IO 功能，比如 File 抽象、输入输出流等。交互方式是同步、阻塞的方式，也就是说，在读取输入流或者写入输出流时，在读、写动作完成之前，线程会一直阻塞在那里，它们之间的调用是可靠的线性顺序。
+
+`java.io` 包的好处是代码比较简单、直观；缺点则是 IO 效率和扩展性存在局限性，容易成为应用性能的瓶颈。
+
+很多时候，人们也把 java.net 下面提供的部分网络 API，比如 `Socket`、`ServerSocket`、`HttpURLConnection` 也归类到同步阻塞 IO 类库，因为网络通信同样是 IO 行为。
+
+### NIO
+
+> NIO（non-blocking IO） 即非阻塞 IO。指的是 Java 1.4 中引入的 `java.nio` 包。
+
+`java.nio` 包提供了 `Channel`、`Selector`、`Buffer` 等新的抽象，可以构建多路复用的、同步非阻塞 IO 程序，同时提供了更接近操作系统底层的高性能数据操作方式。
+
+### AIO
+
+> AIO（Asynchronous IO） 即异步非阻塞 IO，指的是 Java 7 中，对 NIO 有了进一步的改进，也称为 NIO2，引入了异步非阻塞 IO 方式。
+
+在 Java 7 中，NIO 有了进一步的改进，也就是 NIO 2，引入了异步非阻塞 IO 方式，也有很多人叫它 AIO（Asynchronous IO）。异步 IO 操作基于事件和回调机制，可以简单理解为，应用操作直接返回，而不会阻塞在那里，当后台处理完成，操作系统会通知相应线程进行后续工作。
+
+## 二、IO 流
 
 流从概念上来说是一个连续的数据流。当程序需要读数据的时候就需要使用输入流读取数据，当需要往外写数据的时候就需要输出流。
 
@@ -17,7 +48,7 @@ BIO 中操作的流主要有两大类，字节流和字符流，两类根据流�
   - 输入字符流：`Reader`
   - 输出字符流：`Writer`
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200219130627.png)
+![img](http://dunwu.test.upcdn.net/snap/20200219130627.png)
 
 ### 字节流
 
@@ -25,7 +56,7 @@ BIO 中操作的流主要有两大类，字节流和字符流，两类根据流�
 
 字节流有两个核心抽象类：`InputStream` 和 `OutputStream`。所有的字节流类都继承自这两个抽象类。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200219133627.png)
+![img](http://dunwu.test.upcdn.net/snap/20200219133627.png)
 
 #### 文件字节流
 
@@ -336,7 +367,7 @@ public class SequenceInputStreamDemo {
 
 字符流有两个核心类：`Reader` 类和 `Writer` 。所有的字符流类都继承自这两个抽象类。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200219133648.png)
+![img](http://dunwu.test.upcdn.net/snap/20200219133648.png)
 
 #### 文件字符流
 
@@ -409,7 +440,7 @@ public class FileReadWriteDemo {
 
 `OutputStreamWriter` 示例：
 
-```
+```java
 public class OutputStreamWriterDemo {
 
     public static void main(String[] args) throws IOException {
@@ -460,11 +491,11 @@ public class InputStreamReaderDemo {
 
 所以，除了纯文本数据文件使用字符流以外，其他文件类型都应该使用字节流方式。
 
-## 二、传统 BIO
+## 三、传统 BIO
 
 在 Linux 中，当应用进程调用 `recvfrom` 方法调用数据的时候，如果内核没有把数据准备好不会立刻返回，而是会经历等待数据准备就绪，数据从内核复制到用户空间之后再返回，这期间应用进程一直阻塞直到返回，所以被称为阻塞 IO 模型。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200219153310.png)
+![img](http://dunwu.test.upcdn.net/snap/20200219153310.png)
 
 阻塞 IO 模型 **不适用高并发场景**。因为一个请求 IO 会阻塞进程，所以，得为每请求分配一个处理进程（线程）以及时响应，系统开销大。
 
@@ -476,11 +507,11 @@ public class InputStreamReaderDemo {
 
 在 Java 虚拟机中，线程是宝贵的资源，线程的创建和销毁成本很高，除此之外，线程的切换成本也是很高的。尤其在 Linux 这样的操作系统中，线程本质上就是一个进程，创建和销毁线程都是重量级的系统函数。如果并发访问量增加会导致线程数急剧膨胀可能会导致线程堆栈溢出、创建新线程失败等问题，最终导致进程宕机或者僵死，不能对外提供服务。
 
-## 三、伪异步 BIO
+## 四、伪异步 BIO
 
 为了解决同步阻塞 I/O 面临的一个链路需要一个线程处理的问题，后来有人对它的线程模型进行了优化一一一后端通过一个线程池来处理多个客户端的请求接入，形成客户端个数 M：线程池最大线程数 N 的比例关系，其中 M 可以远远大于 N。通过线程池可以灵活地调配线程资源，设置线程的最大值，防止由于海量并发接入导致线程耗尽。
 
-![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200219153340.png)
+![img](http://dunwu.test.upcdn.net/snap/20200219153340.png)
 
 采用线程池和任务队列可以实现一种叫做伪异步的 I/O 通信框架，它的模型图如上图所示。当有新的客户端接入时，将客户端的 Socket 封装成一个 Task（该任务实现 java.lang.Runnable 接口）投递到后端的线程池中进行处理，JDK 的线程池维护一个消息队列和 N 个活跃线程，对消息队列中的任务进行处理。由于线程池可以设置消息队列的大小和最大线程数，因此，它的资源占用是可控的，无论多少个客户端并发访问，都不会导致资源的耗尽和宕机。
 
@@ -491,4 +522,5 @@ public class InputStreamReaderDemo {
 - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
 - [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
 - [《Java 从入门到精通》](https://item.jd.com/12555860.html)
+- [《Java 核心技术面试精讲》](https://time.geekbang.org/column/intro/100006701)
 - [BIO,NIO,AIO 总结](https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/BIO-NIO-AIO.md)

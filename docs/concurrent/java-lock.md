@@ -200,7 +200,7 @@ public abstract class AbstractQueuedSynchronizer
   - 这个整数状态的意义由子类来赋予，如`ReentrantLock` 中该状态值表示所有者线程已经重复获取该锁的次数，`Semaphore` 中该状态值表示剩余的许可数量。
 - `head` 和 `tail` - AQS **维护了一个 `Node` 类型（AQS 的内部类）的双链表来完成同步状态的管理**。这个双链表是一个双向的 FIFO 队列，通过 `head` 和 `tail` 指针进行访问。当 **有线程获取锁失败后，就被添加到队列末尾**。
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_1.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_1.png)
 
 再来看一下 `Node` 的源码
 
@@ -249,13 +249,13 @@ AQS 中使用 `acquire(int arg)` 方法获取独占锁，其大致流程如下�
 2. 如果获取同步状态不成功，AQS 会不断尝试利用 CAS 操作将当前线程插入等待同步队列的队尾，直到成功为止。
 3. 接着，不断尝试为等待队列中的线程节点获取独占锁。
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_2.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_2.png)
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_3.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_3.png)
 
 详细流程可以用下图来表示，请结合源码来理解（一图胜千言）：
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_4.png!zp)
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/aqs_4.png)
 
 ##### 释放独占锁
 
@@ -862,7 +862,7 @@ public static class WriteLock implements Lock, java.io.Serializable {
 
 前文中提过 `Lock` 接口中 有一个 `newCondition()` 方法用于返回一个绑定到 `Lock` 对象上的 `Condition` 实例。`Condition` 是什么？有什么作用？本节将一一讲解。
 
-在单线程中，一段代码的执行可能依赖于某个状态，如果不满足状态条件，代码就不会被执行（典型的场景，如：if ... else ...）。在并发环境中，当一个线程判断某个状态条件时，其状态可能是由于其他线程的操作而改变，这时就需要有一定的协调机制来确保在同一时刻，数据只能被一个线程锁修改，且修改的数据状态被所有线程所感知。
+在单线程中，一段代码的执行可能依赖于某个状态，如果不满足状态条件，代码就不会被执行（典型的场景，如：`if ... else ...`）。在并发环境中，当一个线程判断某个状态条件时，其状态可能是由于其他线程的操作而改变，这时就需要有一定的协调机制来确保在同一时刻，数据只能被一个线程锁修改，且修改的数据状态被所有线程所感知。
 
 Java 1.5 之前，主要是利用 `Object` 类中的 `wait`、`notify`、`notifyAll` 配合 `synchronized` 来进行线程间通信（如果不了解其特性，可以参考：[Java 线程基础 - wait/notify/notifyAll](https://dunwu.github.io/javacore/#/concurrent/java-thread?id=waitnotifynotifyall)）。
 
@@ -1035,7 +1035,18 @@ public class LockConditionDemo {
 
 ## 六、死锁
 
-如何避免死锁？
+### 什么是死锁
+
+死锁是一种特定的程序状态，在实体之间，由于循环依赖导致彼此一直处于等待之中，没有任何个体可以继续前进。死锁不仅仅是在线程之间会发生，存在资源独占的进程之间同样也
+可能出现死锁。通常来说，我们大多是聚焦在多线程场景中的死锁，指两个或多个线程之间，由于互相持有对方需要的锁，而永久处于阻塞的状态。
+
+### 如何定位死锁
+
+定位死锁最常见的方式就是利用 jstack 等工具获取线程栈，然后定位互相之间的依赖关系，进而找到死锁。如果是比较明显的死锁，往往 jstack 等就能直接定位，类似 JConsole 甚至可以在图形界面进行有限的死锁检测。
+
+如果我们是开发自己的管理工具，需要用更加程序化的方式扫描服务进程、定位死锁，可以考虑使用 Java 提供的标准管理 API，`ThreadMXBean`，其直接就提供了 `findDeadlockedThreads()` 方法用于定位。
+
+### 如何避免死锁
 
 - 避免一个线程同时获取多个锁。
 - 避免一个线程在锁内同时占用多个资源，尽量保证每个锁只占用一个资源。
