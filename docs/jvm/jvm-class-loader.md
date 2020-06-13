@@ -2,6 +2,8 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
+[TOC]
+
 ## 一、类加载机制
 
 > 类是在运行期间动态加载的。

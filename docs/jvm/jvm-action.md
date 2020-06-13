@@ -2,6 +2,8 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
+[TOC]
+
 ## 一、JVM 调优概述
 
 对于 JVM 调优来说，需要先明确调优的目标。

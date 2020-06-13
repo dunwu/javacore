@@ -4,6 +4,7 @@
 
 ## 📖 内容
 
+- [JVM 体系结构](jvm-architecture.md)
 - [JVM 内存管理](jvm-memory.md)
 - [JVM 垃圾收集](jvm-gc.md)
 - [JVM 字节码](jvm-bytecode.md)
@@ -15,6 +16,7 @@
 ## 📚 资料
 
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 
 ## 🚪 传送
 

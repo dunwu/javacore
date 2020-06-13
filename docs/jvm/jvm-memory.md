@@ -2,6 +2,8 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
+[TOC]
+
 ## 一、内存简介
 
 ### 物理内存和虚拟内存
@@ -290,9 +292,9 @@ java.lang.OutOfMemoryError: PermGen space
 
 【原因】
 
-Perm （永久代）空间主要用于存放 Class 和 Meta 信息，包括类的名称和字段，带有方法字节码的方法，常量池信息，与类关联的对象数组和类型数组以及即时编译器优化。GC 在主程序运行期间不会对永久代空间进行清理，默认是 64M 大小。
+Perm （永久代）空间主要用于存放 `Class` 和 Meta 信息，包括类的名称和字段，带有方法字节码的方法，常量池信息，与类关联的对象数组和类型数组以及即时编译器优化。GC 在主程序运行期间不会对永久代空间进行清理，默认是 64M 大小。
 
-根据上面的定义，可以得出 PermGen 大小要求取决于加载的类的数量以及此类声明的大小。因此，可以说造成该错误的主要原因是永久代中装入了太多的类或太大的类。
+根据上面的定义，可以得出 **PermGen 大小要求取决于加载的类的数量以及此类声明的大小**。因此，可以说造成该错误的主要原因是永久代中装入了太多的类或太大的类。
 
 在 JDK8 之前的版本中，可以通过 `-XX:PermSize` 和 `-XX:MaxPermSize` 设置永久代空间大小，从而限制方法区大小，并间接限制其中常量池的容量。
 
@@ -345,9 +347,9 @@ public class PermOutOfMemoryErrorDemo {
 
 而且该 java.lang.ClassLoader 实例仍引用应用程序的所有类，通常在 PermGen 中占据数十兆字节。这意味着只需少量重新部署即可填充通常大小的 PermGen。
 
-#### Permgen space 解决方案
+#### PermGen space 解决方案
 
-（1）解决初始化时的 OutOfMemoryError
+（1）解决初始化时的 `OutOfMemoryError`
 
 在应用程序启动期间触发由于 PermGen 耗尽导致的 `OutOfMemoryError` 时，解决方案很简单。该应用程序仅需要更多空间才能将所有类加载到 PermGen 区域，因此我们只需要增加其大小即可。为此，更改你的应用程序启动配置并添加（或增加，如果存在）`-XX:MaxPermSize` 参数，类似于以下示例：
 
@@ -361,7 +363,7 @@ java -XX:MaxPermSize=512m com.yourcompany.YourClass
 
 🔔 注意：`-XX:PermSize` 一般设为 64M
 
-（2）解决重新部署时的 OutOfMemoryError
+（2）解决重新部署时的 `OutOfMemoryError`
 
 重新部署应用程序后立即发生 OutOfMemoryError 时，应用程序会遭受类加载器泄漏的困扰。在这种情况下，解决问题的最简单，继续进行堆转储分析–使用类似于以下命令的重新部署后进行堆转储：
 
@@ -373,7 +375,7 @@ jmap -dump:format=b,file=dump.hprof <process-id>
 
 对于非活动类加载器，你需要通过从非活动类加载器收集到 GC 根的最短路径来确定阻止它们被垃圾收集的引用。有了此信息，你将找到根本原因。如果根本原因是在第三方库中，则可以进入 Google/StackOverflow 查看是否是已知问题以获取补丁/解决方法。
 
-（3）解决运行时 OutOfMemoryError
+（3）解决运行时 `OutOfMemoryError`
 
 第一步是检查是否允许 GC 从 PermGen 卸载类。在这方面，标准的 JVM 相当保守-类是天生的。因此，一旦加载，即使没有代码在使用它们，类也会保留在内存中。当应用程序动态创建许多类并且长时间不需要生成的类时，这可能会成为问题。在这种情况下，允许 JVM 卸载类定义可能会有所帮助。这可以通过在启动脚本中仅添加一个配置参数来实现：
 
@@ -509,7 +511,7 @@ public class UnableCreateNativeThreadErrorDemo {
 
 可以通过增加操作系统级别的限制来绕过无法创建新的本机线程问题。例如，如果限制了 JVM 可在用户空间中产生的进程数，则应检查出并可能增加该限制：
 
-```
+```shell
 [root@dev ~]# ulimit -a
 core file size          (blocks, -c) 0
 --- cut for brevity ---

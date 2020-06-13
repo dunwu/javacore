@@ -2,7 +2,9 @@
 
 > Java 程序员免不了故障排查工作，所以经常需要使用一些 JVM 工具。
 
-## 命令工具
+[TOC]
+
+## 一、JVM CLI 工具
 
 JDK 自带了一些实用的命令行工具来监控 JVM。
 
@@ -17,7 +19,7 @@ JDK 自带了一些实用的命令行工具来监控 JVM。
 
 ### jps
 
-> **jps(JVM Process Status Tool) 是虚拟机进程状态工具**。它可以显示指定系统内所有的 HotSpot 虚拟机进程状态信息。jps 通过 RMI 协议查询开启了 RMI 服务的远程虚拟机进程状态。
+> **[jps(JVM Process Status Tool)](https://docs.oracle.com/en/java/javase/11/tools/jps.html#GUID-6EB65B96-F9DD-4356-B825-6146E9EEC81E) 是虚拟机进程状态工具**。它可以显示指定系统内所有的 HotSpot 虚拟机进程状态信息。jps 通过 RMI 协议查询开启了 RMI 服务的远程虚拟机进程状态。
 
 命令格式：
 
@@ -49,7 +51,7 @@ $ jps -l -m
 
 ### jstat
 
-> **jstat(JVM statistics Monitoring)，是虚拟机统计信息监视工具**。jstat 用于监视虚拟机运行时状态信息，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT 编译等运行数据。
+> **[jstat(JVM statistics Monitoring)](https://docs.oracle.com/en/java/javase/11/tools/jstat.html)，是虚拟机统计信息监视工具**。jstat 用于监视虚拟机运行时状态信息，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT 编译等运行数据。
 
 命令格式：
 
@@ -72,14 +74,6 @@ jstat [option] VMID [interval] [count]
 
 使用 `jstat -class pid` 命令可以查看编译统计信息。
 
-【示例】
-
-```shell
-$ jstat -class 7129
-Loaded  Bytes  Unloaded  Bytes     Time
- 26749 50405.3      873  1216.8      19.75
-```
-
 【参数】
 
 - Loaded - 加载 class 的数量
@@ -87,6 +81,25 @@ Loaded  Bytes  Unloaded  Bytes     Time
 - Unloaded - 未加载数量
 - Bytes - 未加载占用空间
 - Time - 时间
+
+【示例】查看类加载信息
+
+```shell
+$ jstat -class 7129
+Loaded  Bytes  Unloaded  Bytes     Time
+ 26749 50405.3      873  1216.8      19.75
+```
+
+【示例】每秒打印 1 次 GC 信息，打印 4 次
+
+```shell
+$ jstat -gc 25196 1s 4
+ S0C    S1C    S0U    S1U      EC       EU        OC         OU       MC     MU    CCSC   CCSU   YGC     YGCT    FGC    FGCT     GCT   
+20928.0 20928.0  0.0    0.0   167936.0  8880.5   838912.0   80291.2   106668.0 100032.1 12772.0 11602.2    760   14.332  580   656.218  670.550
+20928.0 20928.0  0.0    0.0   167936.0  8880.5   838912.0   80291.2   106668.0 100032.1 12772.0 11602.2    760   14.332  580   656.218  670.550
+20928.0 20928.0  0.0    0.0   167936.0  8880.5   838912.0   80291.2   106668.0 100032.1 12772.0 11602.2    760   14.332  580   656.218  670.550
+20928.0 20928.0  0.0    0.0   167936.0  8880.5   838912.0   80291.2   106668.0 100032.1 12772.0 11602.2    760   14.332  580   656.218  670.550
+```
 
 #### 编译统计
 
@@ -141,7 +154,7 @@ $ jstat -gc 29527 200 5
 
 ### jmap
 
-> **jmap(JVM Memory Map) 是 Java 内存映像工具**。jmap 用于生成堆转储快照（一般称为 heapdump 或 dump 文件）。jmap 不仅能生成 dump 文件，还可以查询 `finalize` 执行队列、Java 堆和永久代的详细信息，如当前使用率、当前使用的是哪种收集器等。
+> **[jmap(JVM Memory Map)](https://docs.oracle.com/en/java/javase/11/tools/jmap.html) 是 Java 内存映像工具**。jmap 用于生成堆转储快照（一般称为 heapdump 或 dump 文件）。jmap 不仅能生成 dump 文件，还可以查询 `finalize` 执行队列、Java 堆和永久代的详细信息，如当前使用率、当前使用的是哪种收集器等。
 >
 > 如果不使用这个命令，还可以使用 `-XX:+HeapDumpOnOutOfMemoryError` 参数来让虚拟机出现 OOM 的时候，自动生成 dump 文件。
 
@@ -154,10 +167,10 @@ jmap [option] VMID
 常用参数：
 
 - `option` - 选项参数
-  - `-dump` - 生成堆转储快照
-  - `-finalizerinfo` - 显示在 F-Queue 队列等待 Finalizer 线程执行 finalizer 方法的对象
-  - `-heap` - 显示 Java 堆详细信息
-  - `-histo` - 显示堆中对象的统计信息，包括类、实例数量、合计容量
+  - `-dump` - 生成堆转储快照。`-dump:live` 只保存堆中的存活对象。
+  - `-finalizerinfo` - 显示在 F-Queue 队列等待执行 `finalizer` 方法的对象
+  - `-heap` - 显示 Java 堆详细信息。
+  - `-histo` - 显示堆中对象的统计信息，包括类、实例数量、合计容量。`-histo:live` 只统计堆中的存活对象。
   - `-permstat` - to print permanent generation statistics
   - `-F` - 当-dump 没有响应时，强制生成 dump 快照
 
@@ -192,7 +205,7 @@ $ jmap -histo 29527 | head -n 6
 注意：使用 CMS GC 情况下，`jmap -heap PID` 的执行有可能会导致 java 进程挂起。
 
 ```shell
-$ ./jmap -heap 12379
+$ jmap -heap 12379
 Attaching to process ID 12379, please wait...
 Debugger attached successfully.
 Server compiler detected.
@@ -244,7 +257,7 @@ PS Perm Generation
 
 ### jstack
 
-> **jstack(Stack Trace for java) 是 Java 堆栈跟踪工具**。jstack 用于生成 java 虚拟机当前时刻的线程快照（一般称为 threaddump 或 javacore 文件）。
+> **[jstack(Stack Trace for java)](https://docs.oracle.com/en/java/javase/11/tools/jstack.html) 是 Java 堆栈跟踪工具**。jstack 用来打印目标 Java 进程中各个线程的栈轨迹，以及这些线程所持有的锁，并可以生成 java 虚拟机当前时刻的线程快照（一般称为 threaddump 或 javacore 文件）。
 >
 > **线程快照是当前虚拟机内每一条线程正在执行的方法堆栈的集合，生成线程快照的主要目的是定位线程出现长时间停顿的原因，如线程间死锁、死循环、请求外部资源导致的长时间等待等**。
 
@@ -334,7 +347,7 @@ jhat [dumpfile]
 
 ### jinfo
 
-> **jinfo(JVM Configuration info)，是 Java 配置信息工具**。jinfo 用于实时查看和调整虚拟机运行参数。
+> **[jinfo(JVM Configuration info)](https://docs.oracle.com/en/java/javase/11/tools/jinfo.html)，是 Java 配置信息工具**。jinfo 用于实时查看和调整虚拟机运行参数。如传递给 Java 虚拟机的`-X`（即输出中的 jvm_args）、`-XX`参数（即输出中的 VM Flags），以及可在 Java 层面通过`System.getProperty`获取的`-D`参数（即输出中的 System Properties）。
 
 之前的 `jps -v` 口令只能查看到显示指定的参数，如果想要查看未被显示指定的参数的值就要使用 jinfo 口令。
 
@@ -361,7 +374,7 @@ JVM version is 25.222-b10
 ...
 ```
 
-## UI 工具
+## 二、JVM GUI 工具
 
 ### jconsole
 
@@ -407,7 +420,9 @@ Java 应用开启 JMX 后，可以使用 `jconsole` 或 `jvisualvm` 进行监控
 
 ### MAT
 
-MAT 即 Eclipse Memory Analyzer Tool 的缩写。
+[MAT](https://www.eclipse.org/mat/) 即 Eclipse Memory Analyzer Tool 的缩写。
+
+MAT 本身也能够获取堆的二进制快照。该功能将借助 `jps` 列出当前正在运行的 Java 进程，以供选择并获取快照。由于 `jps` 会将自己列入其中，因此你会在列表中发现一个已经结束运行的 `jps` 进程。
 
 MAT 可以独立安装（[官方下载地址](http://www.eclipse.org/mat/downloads.php)），也可以作为 Eclipse IDE 的插件安装。
 

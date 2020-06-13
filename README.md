@@ -94,6 +94,7 @@
 
 ![img](http://dunwu.test.upcdn.net/snap/20200221180028.png)
 
+- [JVM 体系结构](docs/jvm/jvm-architecture.md)
 - [JVM 内存区域](docs/jvm/jvm-memory.md) - 关键词：程序计数器、虚拟机栈、本地方法栈、堆、方法区、运行时常量池、直接内存、`OutOfMemoryError`、`StackOverflowError`
 - [JVM 垃圾收集](docs/jvm/jvm-gc.md) - 关键词：`GC Roots`、`Serial`、`Parallel`、`CMS`、`G1`、`Minor GC`、`Full GC`
 - [JVM 字节码](docs/jvm/jvm-bytecode.md) - 关键词：`bytecode`、`asm`、`javassist`
