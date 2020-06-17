@@ -2,7 +2,33 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-[TOC]
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [一、内存简介](#一内存简介)
+  - [物理内存和虚拟内存](#物理内存和虚拟内存)
+  - [内核空间和用户空间](#内核空间和用户空间)
+  - [使用内存的 Java 组件](#使用内存的-java-组件)
+- [二、运行时数据区域](#二运行时数据区域)
+  - [程序计数器](#程序计数器)
+  - [Java 虚拟机栈](#java-虚拟机栈)
+  - [本地方法栈](#本地方法栈)
+  - [Java 堆](#java-堆)
+  - [方法区](#方法区)
+  - [运行时常量池](#运行时常量池)
+  - [直接内存](#直接内存)
+  - [Java 内存区域对比](#java-内存区域对比)
+- [三、OutOfMemoryError](#三outofmemoryerror)
+  - [什么是 OutOfMemoryError](#什么是-outofmemoryerror)
+  - [Java heap space](#java-heap-space)
+  - [GC overhead limit exceeded](#gc-overhead-limit-exceeded)
+  - [PermGen space](#permgen-space)
+  - [Metaspace](#metaspace)
+  - [Unable to create new native thread](#unable-to-create-new-native-thread)
+  - [直接内存溢出](#直接内存溢出)
+- [四、StackOverflowError](#四stackoverflowerror)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 
 ## 一、内存简介
 
@@ -590,3 +616,5 @@ public class StackOverflowDemo {
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [作为测试你应该知道的 JAVA OOM 及定位分析](https://www.jianshu.com/p/28935cbfbae0)
 - [异常、堆内存溢出、OOM 的几种情况](https://blog.csdn.net/sinat_29912455/article/details/51125748)
+- [介绍JVM中OOM的8种类型](https://tianmingxing.com/2019/11/17/%E4%BB%8B%E7%BB%8DJVM%E4%B8%ADOOM%E7%9A%848%E7%A7%8D%E7%B1%BB%E5%9E%8B/)
+

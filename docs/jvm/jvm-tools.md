@@ -2,7 +2,22 @@
 
 > Java 程序员免不了故障排查工作，所以经常需要使用一些 JVM 工具。
 
-[TOC]
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [一、JVM CLI 工具](#一jvm-cli-工具)
+  - [jps](#jps)
+  - [jstat](#jstat)
+  - [jmap](#jmap)
+  - [jstack](#jstack)
+  - [jhat](#jhat)
+  - [jinfo](#jinfo)
+- [二、JVM GUI 工具](#二jvm-gui-工具)
+  - [jconsole](#jconsole)
+  - [jvisualvm](#jvisualvm)
+  - [MAT](#mat)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 
 ## 一、JVM CLI 工具
 
