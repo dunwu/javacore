@@ -90,7 +90,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 > [Java 虚拟机](jvm) 记录了 JVM 的基本机制。
 
-![img](http://dunwu.test.upcdn.net/snap/20200221180028.png)
+![img](http://dunwu.test.upcdn.net/snap/20200628154803.png)
 
 - [JVM 体系结构](jvm/jvm-architecture.md)
 - [JVM 内存区域](jvm/jvm-memory.md) - 关键词：程序计数器、虚拟机栈、本地方法栈、堆、方法区、运行时常量池、直接内存、`OutOfMemoryError`、`StackOverflowError`

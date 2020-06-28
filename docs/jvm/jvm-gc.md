@@ -56,19 +56,18 @@ public class ReferenceCountingGC {
 
 ### 可达性分析算法
 
-通过 GC Roots 作为起始点进行搜索，能够到达到的对象都是存活的，不可达的对象可被回收。
+通过 **GC Roots** 作为起始点进行搜索，JVM 将能够到达到的对象视为**存活**，不可达的对象视为**死亡**。
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-gc-root.png" />
 <p>可达性分析算法</p>
 </div>
-
-Java 虚拟机使用该算法来判断对象是否可被回收，在 Java 中 GC Roots 一般包含以下内容：
+**可作为 GC Roots 的对象**包括下面几种：
 
 - 虚拟机栈中引用的对象
-- 本地方法栈中引用的对象
-- 方法区中类静态属性引用的对象
-- 方法区中的常量引用的对象
+- 本地方法栈中引用的对象（Native 方法）
+- 方法区中，类静态属性引用的对象
+- 方法区中，常量引用的对象
 
 ### 引用类型
 
@@ -291,7 +290,7 @@ JVM 会随意选取一个 `Survivor` 区域作为`to`，然后会在 GC 过程�
 
 串行收集器是 **`client` 模式下的默认收集器配置**。因为在客户端模式下，分配给虚拟机管理的内存一般来说不会很大。Serial 收集器收集几十兆甚至一两百兆的年轻代停顿时间可以控制在一百多毫秒以内，只要不是太频繁，这点停顿是可以接受的。
 
-串行收集器采用单线程 **stop-the-world** 的方式进行收集。当内存不足时，串行 GC 设置停顿标识，待所有线程都进入安全点（Safepoint）时，应用线程暂停，串行 GC 开始工作，**采用单线程方式回收空间并整理内存**。
+**串行收集器采用单线程 stop-the-world 的方式进行收集**。当内存不足时，串行 GC 设置停顿标识，待所有线程都进入安全点（Safepoint）时，应用线程暂停，串行 GC 开始工作，**采用单线程方式回收空间并整理内存**。
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-gc-serial.jpg" />
@@ -610,17 +609,22 @@ G1 选择活性最低的区域，这些区域能够以最快的速度回收。�
 
 ### Minor GC
 
-Minor GC 发生在年轻代上，因为年轻代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快。
+**当 `Eden` 区空间不足时，触发 Minor GC**。
 
-（1）Java 应用不断创建对象，通常都是分配在 Eden 区域，当其空间占用达到一定阈值时，触发 minor GC。仍然被引用的对象（绿色方块）存活下来，被复制到 JVM 选择的 Survivor 区域，而没有被引用的对象（黄色方块）则被回收。
+**Minor GC 发生在年轻代上**，因为年轻代对象存活时间很短，因此 Minor GC 会频繁执行，执行的速度一般也会比较快。
 
-（2）经过一次 Minor GC，Eden 就会空闲下来，直到再次达到 Minor GC 触发条件。这时候，另外一个 Survivor 区域则会成为 to 区域，Eden 区域的存活对象和 From 区域对象，都会被复制到 to 区域，并且存活的年龄计数会被加 1。
+Minor GC 工作流程：
 
-（3）类似第二步的过程会发生很多次，直到有对象年龄计数达到阈值，这时候就会发生所谓的晋升（Promotion）过程，如下图所示，超过阈值的对象会被晋升到老年代。这个阈值是可以通过 `-XX:MaxTenuringThreshold` 参数指定。
+1. Java 应用不断创建对象，通常都是分配在 `Eden` 区域，当其空间不足时（达到设定的阈值），触发 minor GC。仍然被引用的对象（绿色方块）存活下来，被复制到 JVM 选择的 Survivor 区域，而没有被引用的对象（黄色方块）则被回收。
+
+2. 经过一次 Minor GC，Eden 就会空闲下来，直到再次达到 Minor GC 触发条件。这时候，另外一个 Survivor 区域则会成为 `To` 区域，Eden 区域的存活对象和 `From` 区域对象，都会被复制到 `To` 区域，并且存活的年龄计数会被加 1。
+
+3. 类似第二步的过程会发生很多次，直到有对象年龄计数达到阈值，这时候就会发生所谓的晋升（Promotion）过程，如下图所示，超过阈值的对象会被晋升到老年代。这个阈值是可以通过 `-XX:MaxTenuringThreshold` 参数指定。
+
 
 ### Full GC
 
-Full GC 发生在老年代上，老年代对象和年轻代的相反，其存活时间长，因此 Full GC 很少执行，而且执行速度会比 Minor GC 慢很多。
+**Full GC 发生在老年代上**，老年代对象和年轻代的相反，其存活时间长，因此 Full GC 很少执行，而且执行速度会比 Minor GC 慢很多。
 
 #### 内存分配策略
 
@@ -660,19 +664,19 @@ Full GC 发生在老年代上，老年代对象和年轻代的相反，其存活
 
 **（2）老年代空间不足**
 
-老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等，当执行 Full GC 后空间仍然不足，则抛出 `Java.lang.OutOfMemoryError`。为避免以上原因引起的 Full GC，调优时应尽量做到让对象在 Minor GC 阶段被回收、让对象在年轻代多存活一段时间以及不要创建过大的对象及数组。
+老年代空间不足的常见场景为前文所讲的大对象直接进入老年代、长期存活的对象进入老年代等，当执行 Full GC 后空间仍然不足，则抛出 `java.lang.OutOfMemoryError: Java heap space`。为避免以上原因引起的 Full GC，调优时应尽量做到让对象在 Minor GC 阶段被回收、让对象在年轻代多存活一段时间以及不要创建过大的对象及数组。
 
-**（3）空间分配担保失败**
+**（3）方法区空间不足**
 
-使用复制算法的 Minor GC 需要老年代的内存空间作担保，如果出现了 `HandlePromotionFailure` 担保失败，则会触发 Full GC。
+JVM 规范中运行时数据区域中的**方法区**，在 HotSpot 虚拟机中又被习惯称为**永久代**，永久代中存放的是类的描述信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么 JVM 会抛出 `java.lang.OutOfMemoryError: PermGen space` 错误。为避免永久代占满造成 Full GC 现象，可采用的方法为增大 Perm Gen 空间或转为使用 CMS GC。
 
-**（4）JDK 1.7 及以前的永久代空间不足**
+**（4）Minor GC 的平均晋升空间大小大于老年代可用空间**
 
-在 JDK 1.7 及以前，HotSpot 虚拟机中的方法区是用永久代实现的，永久代中存放的为一些 Class 的信息、常量、静态变量等数据，当系统中要加载的类、反射的类和调用的方法较多时，永久代可能会被占满，在未配置为采用 CMS GC 的情况下也会执行 Full GC。如果经过 Full GC 仍然回收不了，那么虚拟机会抛出 `java.lang.OutOfMemoryError`，为避免以上原因引起的 Full GC，可采用的方法为增大永久代空间或转为使用 CMS GC。
+如果发现统计数据说之前 Minor GC 的平均晋升大小比目前老年代剩余的空间大，则不会触发 Minor GC 而是转为触发 Full GC。
 
-**（五）Concurrent Mode Failure**
+**（5）对象大小大于 To 区和老年代的可用内存**
 
-执行 CMS GC 的过程中同时有对象要放入老年代，而此时老年代空间不足（有时候“空间不足”是 CMS GC 时当前的浮动垃圾过多导致暂时性的空间不足触发 Full GC），便会报 Concurrent Mode Failure 错误，并触发 Full GC。
+由 `Eden` 区、`From` 区向 `To` 区复制时，对象大小大于 To 区可用内存，则把该对象转存到老年代，且老年代的可用内存小于该对象大小。
 
 ## 参考资料
 
@@ -680,5 +684,4 @@ Full GC 发生在老年代上，老年代对象和年轻代的相反，其存活
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [详解 JVM Garbage First(G1) 垃圾收集器](https://blog.csdn.net/coderlius/article/details/79272773)
 - [G1 垃圾收集器入门](https://blog.csdn.net/zhanggang807/article/details/45956325)
-- [详解 JVM Garbage First(G1) 垃圾收集器](https://blog.csdn.net/coderlius/article/details/79272773)
 - [Getting Started with the G1 Garbage Collector](https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/G1GettingStarted/index.html)

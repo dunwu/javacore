@@ -19,11 +19,11 @@
   - [Java 内存区域对比](#java-内存区域对比)
 - [三、OutOfMemoryError](#三outofmemoryerror)
   - [什么是 OutOfMemoryError](#什么是-outofmemoryerror)
-  - [Java heap space](#java-heap-space)
-  - [GC overhead limit exceeded](#gc-overhead-limit-exceeded)
-  - [PermGen space](#permgen-space)
-  - [Metaspace](#metaspace)
-  - [Unable to create new native thread](#unable-to-create-new-native-thread)
+  - [堆空间溢出](#堆空间溢出)
+  - [GC 开销超过限制](#gc-开销超过限制)
+  - [永久代空间不足](#永久代空间不足)
+  - [元数据区空间不足](#元数据区空间不足)
+  - [无法新建本地线程](#无法新建本地线程)
   - [直接内存溢出](#直接内存溢出)
 - [四、StackOverflowError](#四stackoverflowerror)
 - [参考资料](#参考资料)
@@ -179,7 +179,7 @@ Java 堆是垃圾收集的主要区域（因此也被叫做"GC 堆"）。现代�
 
 下面逐一介绍 OOM 发生场景。
 
-### Java heap space
+### 堆空间溢出
 
 `java.lang.OutOfMemoryError: Java heap space` 这个错误意味着：**堆空间溢出**。
 
@@ -277,7 +277,7 @@ public class HeapOutOfMemoryDemo {
 
 但如果在现实中，代码并没有问题，仅仅是因为堆内存不足，可以通过 `-Xms` 和 `-Xmx` 适当调整堆内存大小。
 
-### GC overhead limit exceeded
+### GC 开销超过限制
 
 `java.lang.OutOfMemoryError: GC overhead limit exceeded` 这个错误，官方给出的定义是：**超过 `98%` 的时间用来做 GC 并且回收了不到 `2%` 的堆内存时会抛出此异常**。这意味着，发生在 GC 占用大量时间为释放很小空间的时候发生的，是一种保护机制。导致异常的原因：一般是因为堆太小，没有足够的内存。
 
@@ -308,7 +308,7 @@ public class GcOverheadLimitExceededDemo {
 
 与 **Java heap space** 错误处理方法类似，先判断是否存在内存泄漏。如果有，则修正代码；如果没有，则通过 `-Xms` 和 `-Xmx` 适当调整堆内存大小。
 
-### PermGen space
+### 永久代空间不足
 
 【错误】
 
@@ -425,7 +425,7 @@ jmap -dump:file=dump.hprof,format=b <process-id>
 
 然后，对于每个可疑者，就需要你手动将根本原因追溯到生成此类的应用程序代码。
 
-### Metaspace
+### 元数据区空间不足
 
 【错误】
 
@@ -480,7 +480,7 @@ public class MethodAreaOutOfMemoryDemo {
 
 另一种解决方案甚至更简单。你可以通过删除此参数来完全解除对 Metaspace 大小的限制，JVM 默认对 Metaspace 的大小没有限制。但是请注意以下事实：这样做可能会导致大量交换或达到本机物理内存而分配失败。
 
-### Unable to create new native thread
+### 无法新建本地线程
 
 `java.lang.OutOfMemoryError: Unable to create new native thread` 这个错误意味着：**Java 应用程序已达到其可以启动线程数的限制**。
 
@@ -552,7 +552,7 @@ max user processes              (-u) 1800
 
 由直接内存导致的内存溢出，一个明显的特征是在 Head Dump 文件中不会看见明显的异常，如果发现 OOM 之后 Dump 文件很小，而程序中又直接或间接使用了 NIO，就可以考虑检查一下是不是这方面的原因。
 
-示例：直接内存 `OutOfMemoryError`
+【示例】直接内存 `OutOfMemoryError`
 
 ```java
 /**
@@ -585,7 +585,7 @@ public class DirectOutOfMemoryDemo {
 - **递归函数调用层数太深**
 - **大量循环或死循环**
 
-示例：递归函数调用层数太深导致 `StackOverflowError`
+【示例】递归函数调用层数太深导致 `StackOverflowError`
 
 ```java
 public class StackOverflowDemo {
@@ -616,5 +616,4 @@ public class StackOverflowDemo {
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [作为测试你应该知道的 JAVA OOM 及定位分析](https://www.jianshu.com/p/28935cbfbae0)
 - [异常、堆内存溢出、OOM 的几种情况](https://blog.csdn.net/sinat_29912455/article/details/51125748)
-- [介绍JVM中OOM的8种类型](https://tianmingxing.com/2019/11/17/%E4%BB%8B%E7%BB%8DJVM%E4%B8%ADOOM%E7%9A%848%E7%A7%8D%E7%B1%BB%E5%9E%8B/)
-
+- [介绍 JVM 中 OOM 的 8 种类型](https://tianmingxing.com/2019/11/17/%E4%BB%8B%E7%BB%8DJVM%E4%B8%ADOOM%E7%9A%848%E7%A7%8D%E7%B1%BB%E5%9E%8B/)

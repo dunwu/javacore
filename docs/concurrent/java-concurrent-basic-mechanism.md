@@ -731,7 +731,7 @@ public class ThreadLocalDemo {
 
 #### 内存泄漏问题
 
-ThreadLocalMap 的 `Entry` 继承了 `WeakReference`，所以它的 key （`ThreadLocal` 对象）是弱引用，而 value （变量副本）是强引用。
+`ThreadLocalMap` 的 `Entry` 继承了 `WeakReference`，所以它的 key （`ThreadLocal` 对象）是弱引用，而 value （变量副本）是强引用。
 
 - 如果 `ThreadLocal` 对象没有外部强引用来引用它，那么 `ThreadLocal` 对象会在下次 GC 时被回收。
 - 此时，`Entry` 中的 key 已经被回收，但是 value 由于是强引用不会被垃圾收集器回收。如果创建 `ThreadLocal` 的线程一直持续运行，那么 value 就会一直得不到回收，产生内存泄露。
