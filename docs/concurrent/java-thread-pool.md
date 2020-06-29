@@ -2,6 +2,31 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [一、简介](#一简介)
+  - [什么是线程池](#什么是线程池)
+  - [为什么要用线程池](#为什么要用线程池)
+- [二、Executor 框架](#二executor-框架)
+  - [核心 API 概述](#核心-api-概述)
+  - [Executor](#executor)
+  - [ExecutorService](#executorservice)
+  - [ScheduledExecutorService](#scheduledexecutorservice)
+- [三、ThreadPoolExecutor](#三threadpoolexecutor)
+  - [重要字段](#重要字段)
+  - [构造方法](#构造方法)
+  - [execute 方法](#execute-方法)
+  - [其他重要方法](#其他重要方法)
+  - [使用示例](#使用示例)
+- [四、Executors](#四executors)
+  - [newSingleThreadExecutor](#newsinglethreadexecutor)
+  - [newFixedThreadPool](#newfixedthreadpool)
+  - [newCachedThreadPool](#newcachedthreadpool)
+  - [newScheduleThreadPool](#newschedulethreadpool)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
+
 ## 一、简介
 
 ### 什么是线程池
@@ -217,7 +242,7 @@ public ThreadPoolExecutor(int corePoolSize,
   - `AbortPolicy` - 丢弃任务并抛出异常。这也是默认策略。
   - `DiscardPolicy` - 丢弃任务，但不抛出异常。
   - `DiscardOldestPolicy` - 丢弃队列最前面的任务，然后重新尝试执行任务（重复此过程）。
-  - `CallerRunsPolicy` - 只用调用者所在的线程来运行任务。
+  - `CallerRunsPolicy` - 直接调用 `run` 方法并且阻塞执行。
   - 如果以上策略都不能满足需要，也可以通过实现 `RejectedExecutionHandler` 接口来定制处理策略。如记录日志或持久化不能处理的任务。
 
 ### execute 方法

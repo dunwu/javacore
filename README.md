@@ -82,7 +82,7 @@
 
 > Java IO 知识点
 
-- [Java 基础 IO 类](docs/io/java-io-base.md) - 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
+- [Java IO 工具类](docs/io/java-io-base.md) - 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
 - [Java BIO](docs/io/java-bio.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 - [Java NIO](docs/io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`、`多路复用`
 - [Java 序列化](docs/io/java-serialization.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`、`transient`
@@ -121,7 +121,7 @@
     - [《Java 从入门到精通》](https://item.jd.com/12555860.html)
     - [《疯狂 Java 讲义》](https://item.jd.com/12518025.html)
   - 其他
-    - 《Head First 设计模式》
+    - [《Head First 设计模式》](https://item.jd.com/10100236.html)
     - [《 Java 网络编程》](https://item.jd.com/11544991.html)
     - [《Java 加密与解密的艺术》](https://item.jd.com/26122568270.html)
     - [《Java 程序员面试宝典》](https://item.jd.com/11772823.html)

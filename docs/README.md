@@ -80,7 +80,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 > Java IO 知识点
 
-- [Java 基础 IO 类](io/java-io-base.md) - 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
+- [Java IO 工具类](io/java-io-base.md) - 关键词：`File`、`RandomAccessFile`、`System`、`Scanner`
 - [Java BIO](io/java-bio.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 - [Java NIO](io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`、`多路复用`
 - [Java 序列化](io/java-serialization.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`、`transient`

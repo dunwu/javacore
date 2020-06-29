@@ -2,6 +2,39 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [一、并发锁简介](#一并发锁简介)
+  - [可重入锁](#可重入锁)
+  - [公平锁与非公平锁](#公平锁与非公平锁)
+  - [独享锁与共享锁](#独享锁与共享锁)
+  - [悲观锁与乐观锁](#悲观锁与乐观锁)
+  - [偏向锁、轻量级锁、重量级锁](#偏向锁轻量级锁重量级锁)
+  - [分段锁](#分段锁)
+  - [显示锁和内置锁](#显示锁和内置锁)
+- [二、AQS](#二aqs)
+  - [AQS 的要点](#aqs-的要点)
+  - [AQS 的应用](#aqs-的应用)
+  - [AQS 的原理](#aqs-的原理)
+- [三、ReentrantLock](#三reentrantlock)
+  - [ReentrantLock 的特性](#reentrantlock-的特性)
+  - [ReentrantLock 的用法](#reentrantlock-的用法)
+  - [ReentrantLock 的原理](#reentrantlock-的原理)
+- [四、ReentrantReadWriteLock](#四reentrantreadwritelock)
+  - [ReentrantReadWriteLock 的特性](#reentrantreadwritelock-的特性)
+  - [ReentrantReadWriteLock 的用法](#reentrantreadwritelock-的用法)
+  - [ReentrantReadWriteLock 的原理](#reentrantreadwritelock-的原理)
+- [五、Condition](#五condition)
+  - [Condition 的特性](#condition-的特性)
+  - [Condition 的用法](#condition-的用法)
+- [六、死锁](#六死锁)
+  - [什么是死锁](#什么是死锁)
+  - [如何定位死锁](#如何定位死锁)
+  - [如何避免死锁](#如何避免死锁)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
+
 ## 一、并发锁简介
 
 确保线程安全最常见的做法是利用锁机制（`Lock`、`sychronized`）来对共享数据做互斥同步，这样在同一个时刻，只有一个线程可以执行某个方法或者某个代码块，那么操作必然是原子性的，线程安全的。
@@ -65,7 +98,7 @@ synchronized void setB() throws Exception{
 
 - 悲观锁在 Java 中的应用就是通过使用 `synchronized` 和 `Lock` 显示加锁来进行互斥同步，这是一种阻塞同步。
 
-- 乐观锁在 Java 中的应用就是采用 CAS 机制（CAS 操作通过 `Unsafe` 类提供，但这个类不直接暴露为 API，所以都是间接使用，如各种原子类）。
+- 乐观锁在 Java 中的应用就是采用 `CAS` 机制（`CAS` 操作通过 `Unsafe` 类提供，但这个类不直接暴露为 API，所以都是间接使用，如各种原子类）。
 
 ### 偏向锁、轻量级锁、重量级锁
 
@@ -131,13 +164,15 @@ Java 1.5 之后，增加了新的机制：`ReentrantLock`、`ReentrantReadWriteL
 
 ## 二、AQS
 
-> `AbstractQueuedSynchronizer`（简称 **AQS**）是**队列同步器**，顾名思义，其主要作用是处理同步。它是并发锁和很多同步工具类的实现基石（如 `ReentrantLock`、`ReentrantReadWriteLock`、`Semaphore` 等）。
->
-> 因此，要想深入理解 `ReentrantLock`、`ReentrantReadWriteLock` 等并发锁和同步工具，必须先理解 AQS 的要点和原理。
+> `AbstractQueuedSynchronizer`（简称 **AQS**）是**队列同步器**，顾名思义，其主要作用是处理同步。它是并发锁和很多同步工具类的实现基石（如 `ReentrantLock`、`ReentrantReadWriteLock`、`CountDownLatch`、`Semaphore`、`FutureTask` 等）。
 
 ### AQS 的要点
 
-在 `java.util.concurrent.locks` 包中的相关锁(常用的有 `ReentrantLock`、 `ReadWriteLock`)都是基于 AQS 来实现。这些锁都没有直接继承 AQS，而是定义了一个 `Sync` 类去继承 AQS。为什么要这样呢？因为锁面向的是使用用户，而同步器面向的则是线程控制，那么在锁的实现中聚合同步器而不是直接继承 AQS 就可以很好的隔离二者所关注的事情。
+**AQS 提供了对独享锁与共享锁的支持**。
+
+在 `java.util.concurrent.locks` 包中的相关锁（常用的有 `ReentrantLock`、 `ReadWriteLock`）都是基于 AQS 来实现。这些锁都没有直接继承 AQS，而是定义了一个 `Sync` 类去继承 AQS。为什么要这样呢？因为锁面向的是使用用户，而同步器面向的则是线程控制，那么在锁的实现中聚合同步器而不是直接继承 AQS 就可以很好的隔离二者所关注的事情。
+
+### AQS 的应用
 
 **AQS 提供了对独享锁与共享锁的支持**。
 
@@ -238,6 +273,18 @@ static final class Node {
   - `CONDITION(-2)` - 此状态表示：该节点的线程 **处于等待条件状态**，不会被当作是同步队列上的节点，直到被唤醒(`signal`)，设置其值为 0，再重新进入阻塞状态。
   - `PROPAGATE(-3)` - 此状态表示：下一个 `acquireShared` 应无条件传播。
   - 0 - 非以上状态。
+
+AQS 围绕 state 提供两种基本操作“获取”和“释放”，并将阻塞的等待线程存入双链表中，并提供一系列判断和处理方法，简单说几点：
+
+- state 是独占的，还是共享的；
+
+- state 被获取后，其他线程需要等待；
+
+- state 被释放后，唤醒等待线程；
+
+- 线程等不及时，如何退出等待。
+
+至于线程是否可以获得 state，如何释放 state，就不是 AQS 关心的了，要由子类具体实现。
 
 #### 独占锁的获取和释放
 

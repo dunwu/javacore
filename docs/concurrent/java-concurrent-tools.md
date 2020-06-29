@@ -4,6 +4,16 @@
 >
 > JDK 的 `java.util.concurrent` 包（即 J.U.C）中提供了几个非常有用的并发工具类。
 
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [一、CountDownLatch](#一countdownlatch)
+- [二、CyclicBarrier](#二cyclicbarrier)
+- [三、Semaphore](#三semaphore)
+- [四、总结](#四总结)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
+
 ## 一、CountDownLatch
 
 > 字面意思为 **递减计数锁**。用于控制一个或者多个线程等待多个线程。
@@ -176,7 +186,7 @@ public class CyclicBarrierDemo {
 
 ## 三、Semaphore
 
-> 字面意思为 **信号量**。`Semaphore` 用来控制同时访问某个特定资源的操作数量，或者同时执行某个指定操作的数量。
+> 字面意思为 **信号量**。`Semaphore` 用来控制某段代码块的并发数。
 >
 > `Semaphore` 管理着一组虚拟的许可（permit），permit 的初始数量可通过构造方法来指定。每次执行 `acquire` 方法可以获取一个 permit，如果没有就等待；而 `release` 方法可以释放一个 permit。
 
@@ -190,7 +200,9 @@ public class CyclicBarrierDemo {
 `Semaphore` 提供了 2 个构造方法：
 
 ```java
+// 参数 permits 表示许可数目，即同时可以允许多少线程进行访问
 public Semaphore(int permits) {}
+// 参数 fair 表示是否是公平的，即等待时间越久的越先获取许可
 public Semaphore(int permits, boolean fair) {}
 ```
 
