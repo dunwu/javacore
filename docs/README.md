@@ -29,6 +29,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 - [Java 开发环境](basics/java-develop-env.md)
 - [Java 基础语法特性](basics/java-basic-grammar.md)
 - [Java 基本数据类型](basics/java-data-type.md)
+- [Java String 类型](basics/java-string.md)
 - [Java 类和对象](basics/java-class.md)
 - [Java 方法](basics/java-method.md)
 - [Java 数组](basics/java-array.md)

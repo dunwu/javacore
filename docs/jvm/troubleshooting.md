@@ -22,6 +22,9 @@
   - [OOM](#oom)
   - [Minor GC](#minor-gc)
   - [Full GC 过频](#full-gc-过频)
+- [七、常用 Linux 命令](#七常用-linux-命令)
+  - [top](#top)
+  - [vmstat](#vmstat)
 - [参考资料](#参考资料)
 
 <!-- /TOC -->
@@ -60,7 +63,7 @@ ps -ef | grep xxx
 
 （2）如果应用有多个进程，可以用 `top` 命令查看哪个占用 CPU 较高。
 
-（3）用 `top -H -p pid` 来找到 CPU 使用率比较高的一些线程。
+（3）用 `top -Hp pid` 来找到 CPU 使用率比较高的一些线程。
 
 （4）将占用 CPU 最高的 PID 转换为 16 进制，使用 `printf '%x\n' pid` 得到 `nid`
 
@@ -367,7 +370,41 @@ jinfo -flag +HeapDumpAfterFullGC pid
 
 这样得到 2 份 dump 文件，对比后主要关注被 gc 掉的问题对象来定位问题。
 
+## 七、常用 Linux 命令
+
+在故障排查时，有一些 Linux 命令十分有用，建议掌握。
+
+### top
+
+top 命令可以实时动态地查看系统的整体运行情况，是一个综合了多方信息监测系统性能和运行信息的实用工具。
+
+通常，会使用 `top -Hp pid` 查看具体线程使用系统资源情况。
+
+> 命令详情参考：http://man.linuxde.net/top
+
+### vmstat
+
+vmstat 是一款指定采样周期和次数的功能性监测工具，我们可以看到，它不仅可以统计内存的使用情况，还可以观测到 CPU 的使用率、swap 的使用情况。但 vmstat 一般很少用来查看内存的使用情况，而是经常被用来观察进程的上下文切换。
+
+- r：等待运行的进程数；
+- b：处于非中断睡眠状态的进程数；
+- swpd：虚拟内存使用情况；
+- free：空闲的内存；
+- buff：用来作为缓冲的内存数；
+- si：从磁盘交换到内存的交换页数量；
+- so：从内存交换到磁盘的交换页数量；
+- bi：发送到块设备的块数；
+- bo：从块设备接收到的块数；
+- in：每秒中断数；
+- cs：每秒上下文切换次数；
+- us：用户 CPU 使用时间；
+- sy：内核 CPU 系统使用时间；
+- id：空闲时间；
+- wa：等待 I/O 时间；
+- st：运行虚拟机窃取的时间。
+
 ## 参考资料
 
+- [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
 - [JAVA 线上故障诊断全套路](https://fredal.xin/java-error-check)
 - [从实际案例聊聊Java应用的GC优化](https://tech.meituan.com/2017/12/29/jvm-optimize.html)

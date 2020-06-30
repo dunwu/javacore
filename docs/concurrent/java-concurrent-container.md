@@ -217,6 +217,16 @@ J.U.C 包中提供的并发容器命名一般分为三类：
 - `CopyOnWrite*` - 读写分离。读操作时不加锁，写操作时通过在副本上加锁保证并发安全，空间开销较大。
 - `Blocking*` - 内部实现一般是基于锁，提供阻塞队列的能力。
 
+### 并发场景下的 Map
+
+如果对数据有强一致要求，则需使用 Hashtable；在大部分场景通常都是弱一致性的情况下，使用 ConcurrentHashMap 即可；如果数据量在千万级别，且存在大量增删改操作，则可以考虑使用 ConcurrentSkipListMap。
+
+### 并发场景下的 List
+
+读多写少用 `CopyOnWriteArrayList`。
+
+写多读少用 `ConcurrentLinkedQueue` ，但由于是无界的，要有容量限制，避免无限膨胀，导致内存溢出。
+
 ## 三、ConcurrentHashMap
 
 > `ConcurrentHashMap` 是线程安全的 `HashMap` ，用于替代 `Hashtable`。

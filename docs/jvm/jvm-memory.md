@@ -17,7 +17,8 @@
   - [运行时常量池](#运行时常量池)
   - [直接内存](#直接内存)
   - [Java 内存区域对比](#java-内存区域对比)
-- [三、OutOfMemoryError](#三outofmemoryerror)
+- [三、JVM 运行原理](#三jvm-运行原理)
+- [四、OutOfMemoryError](#四outofmemoryerror)
   - [什么是 OutOfMemoryError](#什么是-outofmemoryerror)
   - [堆空间溢出](#堆空间溢出)
   - [GC 开销超过限制](#gc-开销超过限制)
@@ -25,7 +26,7 @@
   - [元数据区空间不足](#元数据区空间不足)
   - [无法新建本地线程](#无法新建本地线程)
   - [直接内存溢出](#直接内存溢出)
-- [四、StackOverflowError](#四stackoverflowerror)
+- [五、StackOverflowError](#五stackoverflowerror)
 - [参考资料](#参考资料)
 
 <!-- /TOC -->
@@ -60,9 +61,9 @@ JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干�
 
 ### 程序计数器
 
-**`程序计数器（Program Counter Register）`** 是一块较小的内存空间，它可以看做是**当前线程所执行的字节码的行号指示器**。
+**`程序计数器（Program Counter Register）`** 是一块较小的内存空间，它可以看做是**当前线程所执行的字节码的行号指示器**。例如，分支、循环、跳转、异常、线程恢复等都依赖于计数器。
 
-为了线程切换后能恢复到正确的执行位置，每条线程都需要一个独立的程序计数器，各条线程间的计数器互不影响，独立存储，我们称这类内存区域为 “线程私有” 的内存。
+当执行的线程数量超过 CPU 数量时，线程之间会根据时间片轮询争夺 CPU 资源。如果一个线程的时间片用完了，或者是其它原因导致这个线程的 CPU 资源被提前抢夺，那么这个退出的线程就需要单独的一个程序计数器，来记录下一条运行的指令，从而在线程切换后能恢复到正确的执行位置。各条线程间的计数器互不影响，独立存储，我们称这类内存区域为 “线程私有” 的内存。
 
 - 如果线程正在执行的是一个 Java 方法，这个计数器记录的是正在执行的虚拟机字节码指令的地址；
 - 如果正在执行的是 Native 方法，这个计数器值则为空（Undefined）。
@@ -101,7 +102,7 @@ JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干�
 
 **`本地方法栈（Native Method Stack）`** 与虚拟机栈的作用相似。
 
-二者的区别在于：**虚拟机栈为 Java 方法服务；本地方法栈为 Native 方法服务**。
+二者的区别在于：**虚拟机栈为 Java 方法服务；本地方法栈为 Native 方法服务**。本地方法并不是用 Java 实现的，而是由 C 语言实现的。
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-native-method-stack.gif!w640)
 
@@ -181,7 +182,95 @@ Java 堆是垃圾收集的主要区域（因此也被叫做"GC 堆"）。现代�
 | 运行时常量池  | 线程共享       | `OutOfMemoryError`                         |
 | 直接内存      | 非运行时数据区 | `OutOfMemoryError`                         |
 
-## 三、OutOfMemoryError
+## 三、JVM 运行原理
+
+```java
+public class JVMCase {
+ 
+	// 常量
+	public final static String MAN_SEX_TYPE = "man";
+ 
+	// 静态变量
+	public static String WOMAN_SEX_TYPE = "woman";
+ 
+	public static void main(String[] args) {
+		
+		Student stu = new Student();
+		stu.setName("nick");
+		stu.setSexType(MAN_SEX_TYPE);
+		stu.setAge(20);
+		
+		JVMCase jvmcase = new JVMCase();
+		
+		// 调用静态方法
+		print(stu);
+		// 调用非静态方法
+		jvmcase.sayHello(stu);
+	}
+ 
+ 
+	// 常规静态方法
+	public static void print(Student stu) {
+		System.out.println("name: " + stu.getName() + "; sex:" + stu.getSexType() + "; age:" + stu.getAge()); 
+	}
+ 
+ 
+	// 非静态方法
+	public void sayHello(Student stu) {
+		System.out.println(stu.getName() + "say: hello"); 
+	}
+}
+ 
+class Student{
+	String name;
+	String sexType;
+	int age;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getSexType() {
+		return sexType;
+	}
+	public void setSexType(String sexType) {
+		this.sexType = sexType;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+}
+```
+
+运行以上代码时，JVM 处理过程如下：
+
+（1）JVM 向操作系统申请内存，JVM 第一步就是通过配置参数或者默认配置参数向操作系统申请内存空间，根据内存大小找到具体的内存分配表，然后把内存段的起始地址和终止地址分配给 JVM，接下来 JVM 就进行内部分配。
+
+（2）JVM 获得内存空间后，会根据配置参数分配堆、栈以及方法区的内存大小。
+
+（3）class 文件加载、验证、准备以及解析，其中准备阶段会为类的静态变量分配内存，初始化为系统的初始值（这部分我在第 21 讲还会详细介绍）。
+
+![](http://dunwu.test.upcdn.net/snap/20200630094250.png)
+
+（4）完成上一个步骤后，将会进行最后一个初始化阶段。在这个阶段中，JVM 首先会执行构造器 `<clinit>` 方法，编译器会在 `.java` 文件被编译成 `.class` 文件时，收集所有类的初始化代码，包括静态变量赋值语句、静态代码块、静态方法，收集在一起成为 `<clinit>()` 方法。
+
+![](http://dunwu.test.upcdn.net/snap/20200630094329.png)
+
+（5）执行方法。启动 main 线程，执行 main 方法，开始执行第一行代码。此时堆内存中会创建一个 student 对象，对象引用 student 就存放在栈中。
+
+![](http://dunwu.test.upcdn.net/snap/20200630094651.png)
+
+（6）此时再次创建一个 JVMCase 对象，调用 sayHello 非静态方法，sayHello 方法属于对象 JVMCase，此时 sayHello 方法入栈，并通过栈中的 student 引用调用堆中的 Student 对象；之后，调用静态方法 print，print 静态方法属于 JVMCase 类，是从静态方法中获取，之后放入到栈中，也是通过 student 引用调用堆中的 student 对象。
+
+![](http://dunwu.test.upcdn.net/snap/20200630094714.png)
+
+## 四、OutOfMemoryError
 
 ### 什么是 OutOfMemoryError
 
@@ -588,7 +677,7 @@ public class DirectOutOfMemoryDemo {
 }
 ```
 
-## 四、StackOverflowError
+## 五、StackOverflowError
 
 对于 HotSpot 虚拟机来说，栈容量只由 `-Xss` 参数来决定如果线程请求的栈深度大于虚拟机所允许的最大深度，将抛出 `StackOverflowError` 异常。
 
@@ -625,6 +714,7 @@ public class StackOverflowDemo {
 ## 参考资料
 
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [作为测试你应该知道的 JAVA OOM 及定位分析](https://www.jianshu.com/p/28935cbfbae0)
 - [异常、堆内存溢出、OOM 的几种情况](https://blog.csdn.net/sinat_29912455/article/details/51125748)

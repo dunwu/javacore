@@ -35,7 +35,7 @@
 
 ### ArrayList 要点
 
-`ArrayList` 是一个数组队列，相当于动态数组。**`ArrayList` 默认初始容量大小为 `10` ，添加元素时，如果发现容量已满，会自动扩容为原始大小的 1.5 倍**。因此，应该尽量在初始化 `ArrayList` 时，为其指定合适的初始化容量大小，减少扩容操作产生的性能开销。
+`ArrayList` 是一个数组队列，相当于**动态数组**。**`ArrayList` 默认初始容量大小为 `10` ，添加元素时，如果发现容量已满，会自动扩容为原始大小的 1.5 倍**。因此，应该尽量在初始化 `ArrayList` 时，为其指定合适的初始化容量大小，减少扩容操作产生的性能开销。
 
 `ArrayList` 定义：
 
@@ -70,7 +70,7 @@ private int size;
 
 `ArrayList` 具有动态扩容特性，因此保存元素的数组不一定都会被使用，那么就没必要全部进行序列化。为此，`ArrayList` 定制了其序列化方式。具体做法是：
 
-- 存储元素的 `Object` 数组（即 `elementData`）使用 `transient` 修饰，使得它可以被 Java 默认序列化方式所忽略。
+- 存储元素的 `Object` 数组（即 `elementData`）使用 `transient` 修饰，使得它可以被 Java 序列化所忽略。
 - `ArrayList` 重写了 `writeObject()` 和 `readObject()` 来控制序列化数组中有元素填充那部分内容。
 
 > :bulb: 不了解 Java 序列化方式，可以参考：[Java 序列化](https://github.com/dunwu/javacore/blob/master/docs/io/java-serialization.md)
@@ -254,7 +254,7 @@ private static class Node<E> {
 
 `LinkedList` 与 `ArrayList` 一样也定制了自身的序列化方式。具体做法是：
 
-- 将 `size` （双链表容量大小）、`first` 和`last` （双链表的头尾节点）修饰为 `transient`，使得它们可以被 Java 默认序列化方式所忽略。
+- 将 `size` （双链表容量大小）、`first` 和`last` （双链表的头尾节点）修饰为 `transient`，使得它们可以被 Java 序列化所忽略。
 - 重写了 `writeObject()` 和 `readObject()` 来控制序列化时，只处理双链表中能被头节点链式引用的节点元素。
 
 #### LinkedList 的访问元素

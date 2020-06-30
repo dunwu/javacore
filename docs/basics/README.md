@@ -7,6 +7,7 @@
 - [Java 开发环境](java-develop-env.md)
 - [Java 基础语法特性](java-basic-grammar.md)
 - [Java 基本数据类型](java-data-type.md)
+- [Java String 类型](java-string.md)
 - [Java 类和对象](java-class.md)
 - [Java 方法](java-method.md)
 - [Java 数组](java-array.md)

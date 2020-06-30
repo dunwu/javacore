@@ -89,11 +89,9 @@ public class SerializeDemo01 {
 
 ## 三、Serializable 接口
 
-**被序列化的类必须属于 Enum、Array 和 Serializable 类型其中的任何一种**。
+**被序列化的类必须属于 Enum、Array 和 Serializable 类型其中的任何一种，否则将抛出 `NotSerializableException` 异常**。这是因为：在序列化操作过程中会对类型进行检查，如果不满足序列化类型要求，就会抛出异常。
 
-**如果不是 Enum、Array 的类，如果需要序列化，必须实现 `java.io.Serializable` 接口，否则将抛出 `NotSerializableException` 异常**。这是因为：在序列化操作过程中会对类型进行检查，如果不满足序列化类型要求，就会抛出异常。
-
-我们不妨做一个小尝试：将 SerializeDemo01 示例中 Person 类改为如下实现，然后看看运行结果。
+【示例】`NotSerializableException` 错误
 
 ```java
 public class UnSerializeDemo {
@@ -413,32 +411,32 @@ public class SerializeDemo05 {
 
 Java 的序列化能保证对象状态的持久保存，但是遇到一些对象结构复杂的情况还是难以处理，这里归纳一下：
 
-- 当父类继承 `Serializable` 接口时，所有子类都可以被序列化。
-- 子类实现了 `Serializable` 接口，父类没有，则父类的属性不会被序列化（不报错，数据丢失），子类的属性仍可以正确序列化。
-- 如果序列化的属性是对象，则这个对象也必须实现 `Serializable` 接口，否则会报错。
-- 在反序列化时，如果对象的属性有修改或删减，则修改的部分属性会丢失，但不会报错。
-- 在反序列化时，如果 `serialVersionUID` 被修改，则反序列化时会失败。
+- 父类是 `Serializable`，所有子类都可以被序列化。
+- 子类是 `Serializable` ，父类不是，则子类可以正确序列化，但父类的属性不会被序列化（不报错，数据丢失）。
+- 如果序列化的属性是对象，则这个对象也必须是 `Serializable` ，否则报错。
+- 反序列化时，如果对象的属性有修改或删减，则修改的部分属性会丢失，但不会报错。
+- 反序列化时，如果 `serialVersionUID` 被修改，则反序列化会失败。
 
-## 六、序列化工具
+## 六、序列化技术选型
 
-Java 官方的序列化存在许多问题，因此，很多人更愿意使用优秀的第三方序列化工具来替代 Java 自身的序列化机制。
+Java 官方的序列化存在许多问题，因此，建议使用第三方序列化工具来替代。
 
 Java 官方的序列化主要体现在以下方面：
 
+- Java 官方的序列**无法跨语言**使用。
 - Java 官方的序列化**性能不高**，序列化后的数据相对于一些优秀的序列化的工具，还是要大不少，这大大影响存储和传输的效率。
 - Java 官方的序列化一定**需要实现 `Serializable` 接口**。
 - Java 官方的序列化**需要关注 `serialVersionUID`**。
-- Java 官方的序列**无法跨语言**使用。
 
 当然我们还有更加优秀的一些序列化和反序列化的工具，根据不同的使用场景可以自行选择！
 
-- [thrift](https://github.com/apache/thrift)、[protobuf](https://github.com/protocolbuffers/protobuf) - 适用于对性能敏感，对开发体验要求不高的内部系统。
-- [hessian](http://hessian.caucho.com/doc/hessian-overview.xtp) - 适用于对开发体验敏感，性能有要求的内外部系统。
-- [jackson](https://github.com/FasterXML/jackson)、[gson](https://github.com/google/gson)、[fastjson](https://github.com/alibaba/fastjson) - 适用于对序列化后的数据要求有良好的可读性（转为 json 、xml 形式）。
+- [thrift](https://github.com/apache/thrift)、[protobuf](https://github.com/protocolbuffers/protobuf) - 适用于**对性能敏感，对开发体验要求不高**。
+- [hessian](http://hessian.caucho.com/doc/hessian-overview.xtp) - 适用于**对开发体验敏感，性能有要求**。
+- [jackson](https://github.com/FasterXML/jackson)、[gson](https://github.com/google/gson)、[fastjson](https://github.com/alibaba/fastjson) - 适用于对序列化后的数据要求有**良好的可读性**（转为 json 、xml 形式）。
 
 ## 要点总结
 
-![img](http://dunwu.test.upcdn.net/snap/1553227663192.png)
+![img](http://dunwu.test.upcdn.net/snap/20200629184539.png)
 
 ## 参考资料
 

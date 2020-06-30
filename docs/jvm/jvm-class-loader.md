@@ -7,20 +7,21 @@
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [一、类加载机制](#一类加载机制)
-  - [类加载过程](#类加载过程)
-  - [类初始化时机](#类初始化时机)
-- [二、ClassLoader](#二classloader)
+  - [什么是类加载](#什么是类加载)
+- [二、类的生命周期](#二类的生命周期)
+  - [（一）加载](#一加载)
+  - [（二）验证](#二验证)
+  - [（三）准备](#三准备)
+  - [（四）解析](#四解析)
+  - [（五）初始化](#五初始化)
+- [三、ClassLoader](#三classloader)
   - [类与类加载器](#类与类加载器)
   - [类加载器分类](#类加载器分类)
   - [双亲委派](#双亲委派)
-  - [自定义类加载器](#自定义类加载器)
   - [ClassLoader 参数](#classloader-参数)
-- [三、ClassLoader 实战](#三classloader-实战)
-- [四、加载类错误 FAQ](#四加载类错误-faq)
-  - [ClassNotFoundException](#classnotfoundexception)
-  - [NoClassDefFoundError](#noclassdeffounderror)
-  - [UnsatisfiedLinkError](#unsatisfiedlinkerror)
-  - [ClassCastException](#classcastexception)
+- [四、类的加载](#四类的加载)
+  - [类加载方式](#类加载方式)
+  - [加载类错误](#加载类错误)
 - [参考资料](#参考资料)
 
 <!-- /TOC -->
@@ -58,13 +59,11 @@ Java 类的完整生命周期包括以下几个阶段：
 
 加载是类加载的一个阶段，注意不要混淆。
 
-加载通俗来说，就是**将 `*.java` 转化为 `*.class`**。
-
 加载过程完成以下三件事：
 
 - 通过一个类的全限定名来获取定义此类的二进制字节流。
 - 将这个字节流所代表的静态存储结构转化为方法区的运行时存储结构。
-- 在内存中生成一个代表这个类的 Class 对象，作为方法区这个类的各种数据的访问入口。
+- 在内存中生成一个代表这个类的 `Class` 对象，作为方法区这个类的各种数据的访问入口。
 
 其中二进制字节流可以从以下方式中获取：
 

@@ -11,6 +11,7 @@
 - [三、引用类型](#三引用类型)
 - [四、数组类型](#四数组类型)
 - [五、属性更新器类型](#五属性更新器类型)
+- [六、LongAddr](#六longaddr)
 - [参考资料](#参考资料)
 
 <!-- /TOC -->
@@ -434,6 +435,16 @@ public class AtomicReferenceFieldUpdaterDemo {
 
 }
 ```
+
+## 六、LongAddr
+
+在 JDK1.8 中，Java 提供了一个新的原子类 LongAdder。LongAdder 在高并发场景下会比 AtomicInteger 和 AtomicLong 的性能更好，代价就是会消耗更多的内存空间。
+
+LongAdder 内部由一个 base 变量和一个 cell[] 数组组成。当只有一个写线程，没有竞争的情况下，LongAdder 会直接使用 base 变量作为原子操作变量，通过 CAS 操作修改变量；当有多个写线程竞争的情况下，除了占用 base 变量的一个写线程之外，其它各个线程会将修改的变量写入到自己的槽 cell[] 数组中，最终结果可通过以下公式计算得出：
+
+$$value = base + \sum_{i=0}^ncell[i]$$
+
+我们可以发现，LongAdder 在操作后的返回值只是一个近似准确的数值，但是 LongAdder 最终返回的是一个准确的数值， 所以在一些对实时性要求比较高的场景下，LongAdder 并不能取代 AtomicInteger 或 AtomicLong。
 
 ## 参考资料
 

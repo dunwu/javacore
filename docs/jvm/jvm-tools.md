@@ -78,12 +78,44 @@ jstat [option] VMID [interval] [count]
 
 - `option` - 选项参数，用于指定用户需要查询的虚拟机信息
   - `-class` - 监视类装载、卸载数量、总空间以及类装载所耗费的时间
-  - `-gc` - 监视 Java 堆状况，包括 Eden 区、两个 survivor 区、老年代、永久代等区的容量、已用空间、GC 时间合计等信息。
+  - `-compiler`：显示 JIT 编译的相关信息；
+  - `-gc`：监视 Java 堆状况，包括 Eden 区、两个 survivor 区、老年代、永久代等区的容量、已用空间、GC 时间合计等信息。
+  - `-gccapacity`：显示各个代的容量以及使用情况；
+  - `-gcmetacapacity`：显示 Metaspace 的大小；
+  - `-gcnew`：显示新生代信息；
+  - `-gcnewcapacity`：显示新生代大小和使用情况；
+  - `-gcold`：显示老年代和永久代的信息；
+  - `-gcoldcapacity`：显示老年代的大小；
+  - `-gcutil`：显示垃圾收集信息；
+  - `-gccause`：显示垃圾回收的相关信息（通 -gcutil），同时显示最后一次或当前正在发生的垃圾回收的诱因；
+  - `-printcompilation`：输出 JIT 编译的方法信息。
 - `VMID` - 如果是本地虚拟机进程，则 VMID 与 LVMID 是一致的；如果是远程虚拟机进程，那 VMID 的格式应当是：`[protocol:][//]lvmid[@hostname[:port]/servername]`
 - `interval` - 查询间隔
 - `count` - 查询次数
 
 > 【参考】更详细说明可以参考：[jstat 命令查看 jvm 的 GC 情况](https://www.cnblogs.com/yjd_hycf_space/p/7755633.html)
+
+【示例】jstat -gc pid 查看 Java 堆
+
+![](http://dunwu.test.upcdn.net/snap/20200630105411.png)
+
+参数说明：
+
+- S0C：年轻代中 To Survivor 的容量（单位 KB）；
+- S1C：年轻代中 From Survivor 的容量（单位 KB）；
+- S0U：年轻代中 To Survivor 目前已使用空间（单位 KB）；
+- S1U：年轻代中 From Survivor 目前已使用空间（单位 KB）；
+- EC：年轻代中 Eden 的容量（单位 KB）；
+- EU：年轻代中 Eden 目前已使用空间（单位 KB）；
+- OC：Old 代的容量（单位 KB）；
+- OU：Old 代目前已使用空间（单位 KB）；
+- MC：Metaspace 的容量（单位 KB）；
+- MU：Metaspace 目前已使用空间（单位 KB）；
+- YGC：从应用程序启动到采样时年轻代中 gc 次数；
+- YGCT：从应用程序启动到采样时年轻代中 gc 所用时间 (s)；
+- FGC：从应用程序启动到采样时 old 代（全 gc）gc 次数；
+- FGCT：从应用程序启动到采样时 old 代（全 gc）gc 所用时间 (s)；
+- GCT：从应用程序启动到采样时 gc 用的总时间 (s)。
 
 #### 类加载统计
 
@@ -275,6 +307,8 @@ PS Perm Generation
 > **[jstack(Stack Trace for java)](https://docs.oracle.com/en/java/javase/11/tools/jstack.html) 是 Java 堆栈跟踪工具**。jstack 用来打印目标 Java 进程中各个线程的栈轨迹，以及这些线程所持有的锁，并可以生成 java 虚拟机当前时刻的线程快照（一般称为 threaddump 或 javacore 文件）。
 >
 > **线程快照是当前虚拟机内每一条线程正在执行的方法堆栈的集合，生成线程快照的主要目的是定位线程出现长时间停顿的原因，如线程间死锁、死循环、请求外部资源导致的长时间等待等**。
+
+`jstack` 通常会结合 `top -Hp pid` 或 `pidstat -p pid -t` 一起查看具体线程的状态，也经常用来排查一些死锁的异常。
 
 线程出现停顿的时候通过 jstack 来查看各个线程的调用堆栈，就可以知道没有响应的线程到底在后台做什么事情，或者等待什么资源。 如果 java 程序崩溃生成 core 文件，jstack 工具可以用来获得 core 文件的 java stack 和 native stack 的信息，从而可以轻松地知道 java 程序是如何崩溃和在程序何处发生问题。另外，jstack 工具还可以附属到正在运行的 java 程序中，看到当时运行的 java 程序的 java stack 和 native stack 的信息, 如果现在运行的 java 程序呈现 hung 的状态，jstack 是非常有用的。
 
@@ -483,6 +517,7 @@ MAT 同时打开两个堆转储文件，分别打开 Histogram，如下图。在
 ## 参考资料
 
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
 - [JVM 性能调优监控工具 jps、jstack、jmap、jhat、jstat、hprof 使用详解](https://my.oschina.net/feichexia/blog/196575)
 - [jconsole 官方文档](https://docs.oracle.com/javase/8/docs/technotes/guides/management/jconsole.html)
 - [jconsole 工具使用](https://www.cnblogs.com/kongzhongqijing/articles/3621441.html)
