@@ -1,6 +1,27 @@
 # 深入理解 Java 序列化
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
+>
+> ***关键词：`Serializable`、`serialVersionUID`、`transient`、`Externalizable`、`writeObject`、`readObject`***
+
+![img](http://dunwu.test.upcdn.net/snap/20200630204142.png)
+
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [一、序列化简介](#一序列化简介)
+- [二、序列化和反序列化](#二序列化和反序列化)
+- [三、Serializable 接口](#三serializable-接口)
+  - [serialVersionUID](#serialversionuid)
+  - [默认序列化机制](#默认序列化机制)
+  - [transient](#transient)
+- [四、Externalizable 接口](#四externalizable-接口)
+  - [Externalizable 接口的替代方法](#externalizable-接口的替代方法)
+  - [readResolve() 方法](#readresolve-方法)
+- [五、序列化问题](#五序列化问题)
+- [六、序列化技术选型](#六序列化技术选型)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 
 ## 一、序列化简介
 
@@ -433,10 +454,6 @@ Java 官方的序列化主要体现在以下方面：
 - [thrift](https://github.com/apache/thrift)、[protobuf](https://github.com/protocolbuffers/protobuf) - 适用于**对性能敏感，对开发体验要求不高**。
 - [hessian](http://hessian.caucho.com/doc/hessian-overview.xtp) - 适用于**对开发体验敏感，性能有要求**。
 - [jackson](https://github.com/FasterXML/jackson)、[gson](https://github.com/google/gson)、[fastjson](https://github.com/alibaba/fastjson) - 适用于对序列化后的数据要求有**良好的可读性**（转为 json 、xml 形式）。
-
-## 要点总结
-
-![img](http://dunwu.test.upcdn.net/snap/20200629184539.png)
 
 ## 参考资料
 

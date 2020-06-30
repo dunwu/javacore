@@ -1,6 +1,10 @@
 # Java IO 工具类
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
+>
+> ***关键词：`File`、`RandomAccessFile`、`System`、`Scanner`***
+>
+> 本文介绍 Java IO 的一些常见工具类的用法和特性。
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -178,11 +182,11 @@ public class RandomAccessFileDemo02 {
 
 ## 三、System
 
-`System` 类中提供了大量的静态方法，可以获取与系统相关的信息或系统级操作，其中提供了三个常用于 IO 的静态成员：
+`System` 类中提供了大量的静态方法，可以获取系统相关的信息或系统级操作，其中提供了三个常用于 IO 的静态成员：
 
-- `System.out`
-- `System.err`
-- `System.in`
+- `System.out` - 一个 PrintStream 流。System.out 一般会把你写到其中的数据输出到控制台上。System.out 通常仅用在类似命令行工具的控制台程序上。System.out 也经常用于打印程序的调试信息(尽管它可能并不是获取程序调试信息的最佳方式)。
+- `System.err` - 一个 PrintStream 流。System.err 与 System.out 的运行方式类似，但它更多的是用于打印错误文本。一些类似 Eclipse 的程序，为了让错误信息更加显眼，会将错误信息以红色文本的形式通过 System.err 输出到控制台上。
+- `System.in` - 一个典型的连接控制台程序和键盘输入的 InputStream 流。通常当数据通过命令行参数或者配置文件传递给命令行 Java 程序的时候，System.in 并不是很常用。图形界面程序通过界面传递参数给程序，这是一块单独的 Java IO 输入机制。
 
 【示例】重定向 `System.out` 输出流
 
@@ -302,3 +306,4 @@ null
 
 - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
 - [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
+- [System 官方 API 手册](https://docs.oracle.com/javase/7/docs/api/java/lang/System.html)
