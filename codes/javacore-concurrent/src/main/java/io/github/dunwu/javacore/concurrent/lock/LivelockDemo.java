@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.concurrent.chapter01;
+package io.github.dunwu.javacore.concurrent.lock;
 
 /**
  * 活锁问题示例

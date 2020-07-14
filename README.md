@@ -43,7 +43,7 @@
 ### [Java 高级](docs/advanced)
 
 - [Java 正则](docs/advanced/java-regex.md)
-- [Java 编码和加密](docs/advanced/java-crypto.md)
+- [Java 编码和加密](docs/advanced/java-crypto.md) - 关键词：`Base64`、`消息摘要`、`数字签名`、`对称加密`、`非对称加密`、`MD5`、`SHA`、`HMAC`、`AES`、`DES`、`DESede`、`RSA`
 - [Java 本地化](docs/advanced/java-locale.md)
 - [Java JDK8](docs/advanced/jdk8.md)
 
@@ -61,15 +61,16 @@
 
 ![img](http://dunwu.test.upcdn.net/snap/20200221175827.png)
 
-- [Java 并发简介](docs/concurrent/java-concurrent-introduction.md) - 关键词：`进程`、`线程`
-- [Java 线程基础](docs/concurrent/java-thread.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`
+- [Java 并发简介](docs/concurrent/java-concurrent-introduction.md) - 关键词：`进程`、`线程`、`安全性`、`活跃性`、`性能`、`死锁`、`饥饿`、`上下文切换`
+- [Java 线程基础](docs/concurrent/java-thread.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`、`wait`、`notify`、`notifyAll`、`join`、`sleep`、`yeild`、`线程状态`、`线程通信`
 - [Java 并发核心机制](docs/concurrent/java-concurrent-basic-mechanism.md) - 关键词：`synchronized`、`volatile`、`CAS`、`ThreadLocal`
 - [Java 并发锁](docs/concurrent/java-lock.md) - 关键词：`AQS`、`ReentrantLock`、`ReentrantReadWriteLock`、`Condition`
 - [Java 原子类](docs/concurrent/java-atomic-class.md) - 关键词：`CAS`、`Atomic`
 - [Java 并发容器](docs/concurrent/java-concurrent-container.md) - 关键词：`ConcurrentHashMap`、`CopyOnWriteArrayList`
 - [Java 线程池](docs/concurrent/java-thread-pool.md) - 关键词：`Executor`、`ExecutorService`、`ThreadPoolExecutor`、`Executors`
 - [Java 并发工具类](docs/concurrent/java-concurrent-tools.md) - 关键词：`CountDownLatch`、`CyclicBarrier`、`Semaphore`
-- [Java 内存模型](docs/concurrent/java-memory-model.md) - 关键词：`JMM`、`原子性`、`可见性`、`有序性`、`Happens-Before`、`内存屏障`
+- [Java 内存模型](docs/concurrent/java-memory-model.md) - 关键词：`JMM`、`volatile`、`synchronized`、`final`、`Happens-Before`、`内存屏障`
+- [Java Fork Join](docs/concurrent/java-fork-join.md) - 关键词：
 
 ### [Java IO](docs/io)
 
@@ -118,9 +119,16 @@
     - [《Java 程序员面试宝典》](https://item.jd.com/11772823.html)
 - **教程、社区**
   - [Runoob Java 教程](https://www.runoob.com/java/java-tutorial.html)
-  - [JavaGuide](https://github.com/Snailclimb/JavaGuide)
-  - [Java](https://github.com/TheAlgorithms/Java)
   - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)
+  - [Java](https://github.com/TheAlgorithms/Java)
+  - [Java 核心技术面试精讲](https://time.geekbang.org/column/intro/82)
+  - [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
+  - [Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
+  - [深入拆解 Java 虚拟机](https://time.geekbang.org/column/intro/100010301)
+  - [Java 并发编程实战](https://time.geekbang.org/column/intro/100023901)
+- **面试**
+  - [CS-Notes](https://github.com/CyC2018/CS-Notes)
+  - [JavaGuide](https://github.com/Snailclimb/JavaGuide)
   - [advanced-java](https://github.com/doocs/advanced-java)
 
 ## 🚪 传送

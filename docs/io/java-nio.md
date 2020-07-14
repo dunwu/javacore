@@ -378,11 +378,11 @@ BIO 与 NIO 最重要的区别是数据打包和传输的方式：**BIO 以流�
 
 BIO 模式：
 
-![](http://dunwu.test.upcdn.net/snap/20200630212345.png)
+![img](http://dunwu.test.upcdn.net/snap/20200630212345.png)
 
 NIO 模式：
 
-![](http://dunwu.test.upcdn.net/snap/20200630212248.png)
+![img](http://dunwu.test.upcdn.net/snap/20200630212248.png)
 
 ## 参考资料
 

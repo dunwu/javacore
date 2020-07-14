@@ -97,7 +97,7 @@ jstat [option] VMID [interval] [count]
 
 【示例】jstat -gc pid 查看 Java 堆
 
-![](http://dunwu.test.upcdn.net/snap/20200630105411.png)
+![img](http://dunwu.test.upcdn.net/snap/20200630105411.png)
 
 参数说明：
 

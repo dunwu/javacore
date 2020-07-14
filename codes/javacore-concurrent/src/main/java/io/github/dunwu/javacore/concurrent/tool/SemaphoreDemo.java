@@ -5,7 +5,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 /**
- * Semaphore 示例 字面意思为信号量，Semaphore 可以控同时访问的线程个数，通过 acquire() 获取一个许可， 如果没有就等待，而 release() 释放一个许可。
+ * Semaphore 示例 字面意思为信号量
+ * <p>
+ * Semaphore 可以控制同时访问的线程个数，通过 acquire() 获取一个许可，如果没有就等待，而 release() 释放一个许可。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see java.util.concurrent.Semaphore
@@ -14,14 +16,13 @@ import java.util.concurrent.Semaphore;
 public class SemaphoreDemo {
 
     private static final int THREAD_COUNT = 30;
-
-    private static ExecutorService threadPool = Executors.newFixedThreadPool(THREAD_COUNT);
-
     private static Semaphore semaphore = new Semaphore(10);
 
     public static void main(String[] args) {
+        final ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
+
         for (int i = 0; i < THREAD_COUNT; i++) {
-            threadPool.execute(new Runnable() {
+            executorService.execute(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -35,7 +36,7 @@ public class SemaphoreDemo {
             });
         }
 
-        threadPool.shutdown();
+        executorService.shutdown();
     }
 
 }

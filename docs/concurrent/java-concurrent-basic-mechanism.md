@@ -147,6 +147,75 @@ public class SynchronizedDemo implements Runnable {
 }
 ```
 
+【示例】错误示例
+
+```java
+class Account {
+  private int balance;
+  // 转账
+  synchronized void transfer(
+      Account target, int amt){
+    if (this.balance > amt) {
+      this.balance -= amt;
+      target.balance += amt;
+    }
+  }
+}
+```
+
+在这段代码中，临界区内有两个资源，分别是转出账户的余额 this.balance 和转入账户的余额 target.balance，并且用的是一把锁 this，符合我们前面提到的，多个资源可以用一把锁来保护，这看上去完全正确呀。真的是这样吗？可惜，这个方案仅仅是看似正确，为什么呢？
+
+问题就出在 this 这把锁上，this 这把锁可以保护自己的余额 this.balance，却保护不了别人的余额 target.balance，就像你不能用自家的锁来保护别人家的资产，也不能用自己的票来保护别人的座位一样。
+
+![img](http://dunwu.test.upcdn.net/snap/20200701135257.png)
+
+应该保证使用的**锁能覆盖所有受保护资源**。
+
+【示例】正确姿势
+
+```java
+class Account {
+  private Object lock；
+  private int balance;
+  private Account();
+  // 创建 Account 时传入同一个 lock 对象
+  public Account(Object lock) {
+    this.lock = lock;
+  }
+  // 转账
+  void transfer(Account target, int amt){
+    // 此处检查所有对象共享的锁
+    synchronized(lock) {
+      if (this.balance > amt) {
+        this.balance -= amt;
+        target.balance += amt;
+      }
+    }
+  }
+}
+```
+
+这个办法确实能解决问题，但是有点小瑕疵，它要求在创建 Account 对象的时候必须传入同一个对象，如果创建 Account 对象时，传入的 lock 不是同一个对象，那可就惨了，会出现锁自家门来保护他家资产的荒唐事。在真实的项目场景中，创建 Account 对象的代码很可能分散在多个工程中，传入共享的 lock 真的很难。
+
+上面的方案缺乏实践的可行性，我们需要更好的方案。还真有，就是**用 Account.class 作为共享的锁**。Account.class 是所有 Account 对象共享的，而且这个对象是 Java 虚拟机在加载 Account 类的时候创建的，所以我们不用担心它的唯一性。使用 Account.class 作为共享的锁，我们就无需在创建 Account 对象时传入了，代码更简单。
+
+【示例】正确姿势
+
+```java
+class Account {
+  private int balance;
+  // 转账
+  void transfer(Account target, int amt){
+    synchronized(Account.class) {
+      if (this.balance > amt) {
+        this.balance -= amt;
+        target.balance += amt;
+      }
+    }
+  }
+}
+```
+
 #### 同步静态方法
 
 静态方法的同步是指同步在该方法所在的类对象上。因为在 JVM 中一个类只能对应一个类对象，所以同时只允许一个线程执行同一个类中的静态同步方法。
@@ -269,7 +338,7 @@ public class SynchronizedDemo3 implements Runnable {
 
 Mark Word 记录了对象和锁有关的信息。Mark Word 在 64 位 JVM 中的长度是 64bit，我们可以一起看下 64 位 JVM 的存储结构是怎么样的。如下图所示：
 
-![](http://dunwu.test.upcdn.net/snap/20200629191250.png)
+![img](http://dunwu.test.upcdn.net/snap/20200629191250.png)
 
 锁升级功能主要依赖于 Mark Word 中的锁标志位和释放偏向锁标志位，`synchronized` 同步锁就是从偏向锁开始的，随着竞争越来越激烈，偏向锁升级到轻量级锁，最终升级到重量级锁。
 
@@ -290,7 +359,7 @@ Java 1.6 引入了偏向锁和轻量级锁，从而让 `synchronized` 拥有了�
 
 偏向锁的思想是偏向于**第一个获取锁对象的线程，这个线程在之后获取该锁就不再需要进行同步操作，甚至连 CAS 操作也不再需要**。
 
-![](http://dunwu.test.upcdn.net/snap/20200604105151.png)
+![img](http://dunwu.test.upcdn.net/snap/20200604105151.png)
 
 #### 轻量级锁
 
@@ -298,7 +367,7 @@ Java 1.6 引入了偏向锁和轻量级锁，从而让 `synchronized` 拥有了�
 
 当尝试获取一个锁对象时，如果锁对象标记为 `0|01`，说明锁对象的锁未锁定（unlocked）状态。此时虚拟机在当前线程的虚拟机栈中创建 Lock Record，然后使用 CAS 操作将对象的 Mark Word 更新为 Lock Record 指针。如果 CAS 操作成功了，那么线程就获取了该对象上的锁，并且对象的 Mark Word 的锁标记变为 00，表示该对象处于轻量级锁状态。
 
-![](http://dunwu.test.upcdn.net/snap/20200604105248.png)
+![img](http://dunwu.test.upcdn.net/snap/20200604105248.png)
 
 #### 锁消除 / 锁粗化
 
@@ -436,7 +505,7 @@ class Singleton {
 
 为什么说乐观锁需要 **硬件指令集的发展** 才能进行？因为需要操作和冲突检测这两个步骤具备原子性。而这点是由硬件来完成，如果再使用互斥同步来保证就失去意义了。硬件支持的原子性操作最典型的是：CAS。
 
-***CAS（Compare and Swap），字面意思为比较并交换。CAS 有 3 个操作数，分别是：内存值 M，期望值 E，更新值 U。当且仅当内存值 M 和期望值 E 相等时，将内存值 M 修改为 U，否则什么都不做***。
+**_CAS（Compare and Swap），字面意思为比较并交换。CAS 有 3 个操作数，分别是：内存值 M，期望值 E，更新值 U。当且仅当内存值 M 和期望值 E 相等时，将内存值 M 修改为 U，否则什么都不做_**。
 
 ### CAS 的应用
 

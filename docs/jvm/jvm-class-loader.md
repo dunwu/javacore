@@ -38,7 +38,7 @@
 
 ## 二、类的生命周期
 
-![](http://dunwu.test.upcdn.net/snap/20200617115110.png)
+![img](http://dunwu.test.upcdn.net/snap/20200617115110.png)
 
 Java 类的完整生命周期包括以下几个阶段：
 
@@ -245,7 +245,7 @@ JVM 加载 `class` 文件到内存有两种方式：
 
 ### 类加载器分类
 
-![](http://dunwu.test.upcdn.net/snap/20200617115936.png)
+![img](http://dunwu.test.upcdn.net/snap/20200617115936.png)
 
 #### Bootstrap ClassLoader
 

@@ -256,19 +256,19 @@ class Student{
 
 （3）class 文件加载、验证、准备以及解析，其中准备阶段会为类的静态变量分配内存，初始化为系统的初始值（这部分我在第 21 讲还会详细介绍）。
 
-![](http://dunwu.test.upcdn.net/snap/20200630094250.png)
+![img](http://dunwu.test.upcdn.net/snap/20200630094250.png)
 
 （4）完成上一个步骤后，将会进行最后一个初始化阶段。在这个阶段中，JVM 首先会执行构造器 `<clinit>` 方法，编译器会在 `.java` 文件被编译成 `.class` 文件时，收集所有类的初始化代码，包括静态变量赋值语句、静态代码块、静态方法，收集在一起成为 `<clinit>()` 方法。
 
-![](http://dunwu.test.upcdn.net/snap/20200630094329.png)
+![img](http://dunwu.test.upcdn.net/snap/20200630094329.png)
 
 （5）执行方法。启动 main 线程，执行 main 方法，开始执行第一行代码。此时堆内存中会创建一个 student 对象，对象引用 student 就存放在栈中。
 
-![](http://dunwu.test.upcdn.net/snap/20200630094651.png)
+![img](http://dunwu.test.upcdn.net/snap/20200630094651.png)
 
 （6）此时再次创建一个 JVMCase 对象，调用 sayHello 非静态方法，sayHello 方法属于对象 JVMCase，此时 sayHello 方法入栈，并通过栈中的 student 引用调用堆中的 Student 对象；之后，调用静态方法 print，print 静态方法属于 JVMCase 类，是从静态方法中获取，之后放入到栈中，也是通过 student 引用调用堆中的 student 对象。
 
-![](http://dunwu.test.upcdn.net/snap/20200630094714.png)
+![img](http://dunwu.test.upcdn.net/snap/20200630094714.png)
 
 ## 四、OutOfMemoryError
 

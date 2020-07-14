@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.concurrent.chapter01;
+package io.github.dunwu.javacore.concurrent.lock;
 
 import java.awt.*;
 import javax.swing.*;

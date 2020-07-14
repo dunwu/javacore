@@ -2,27 +2,37 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-## 术语
+<!-- TOC depthFrom:2 depthTo:3 -->
 
-- **明文(Plaintext)**：指待加密信息。明文可以是文本文件、图片文件、二进制数据等。
-- **密文(Ciphertext)**：指经过加密后的明文。密文通常以文本、二进制等形式存在。
-- **加密(Encryption)**：指将明文转换为密文的过程。
-- **解密(Decryption)**：指将密文转换为明文的过程。
-- **加密密钥(Encryption Key)**：指通过加密算法进行加密操作用的密钥。
-- **解密密钥(Decryption Key)**：指通过解密算法进行解密操作用的密钥。
-- **信道(Channel)**：通信的通道，是信号传输的媒介。
+- [一、Base64 编码](#一base64-编码)
+  - [Base64 原理](#base64-原理)
+  - [Base64 应用](#base64-应用)
+- [二、消息摘要](#二消息摘要)
+  - [消息摘要概述](#消息摘要概述)
+  - [消息摘要特点](#消息摘要特点)
+  - [消息摘要常用算法](#消息摘要常用算法)
+  - [消息摘要应用](#消息摘要应用)
+- [三、数字签名](#三数字签名)
+  - [数字签名概述](#数字签名概述)
+  - [数字签名算法应用](#数字签名算法应用)
+- [四、对称加密](#四对称加密)
+  - [对称加密概述](#对称加密概述)
+  - [对称加密应用](#对称加密应用)
+- [五、非对称加密](#五非对称加密)
+  - [非对称加密概述](#非对称加密概述)
+  - [非对称加密算法应用](#非对称加密算法应用)
+- [六、术语](#六术语)
+- [参考资料](#参考资料)
 
-## Base64 编码
+<!-- /TOC -->
 
-### 算法简述
+## 一、Base64 编码
 
-#### 定义
+### Base64 原理
 
 Base64 内容传送编码是一种以任意 8 位字节序列组合的描述形式，这种形式不易被人直接识别。
 
 Base64 是一种很常见的编码规范，其作用是将二进制序列转换为人类可读的 ASCII 字符序列，常用在需用通过文本协议（比如 HTTP 和 SMTP）来传输二进制数据的情况下。**Base64 并不是加密解密算法**，尽管我们有时也听到使用 Base64 来加密解密的说法，但这里所说的加密与解密实际是指**编码（encode）**和**解码（decode）**的过程，其变换是非常简单的，仅仅能够避免信息被直接识别。
-
-#### 原理
 
 Base64 算法主要是将给定的字符以字符编码(如 ASCII 码，UTF-8 码)对应的十进制数为基准，做编码操作：
 
@@ -55,7 +65,7 @@ Base64 算法主要是将给定的字符以字符编码(如 ASCII 码，UTF-8 �
 | 15       | P            | 32       | g            | 49       | x            |          |              |
 | 16       | Q            | 33       | h            | 50       | y            |          |              |
 
-#### 应用
+### Base64 应用
 
 Base64 编码可用于在 HTTP 环境下传递较长的标识信息。在其他应用程序中，也常常需要把二进制数据编码为适合放在 URL(包括隐藏表单域)中的形式。此时，采用 Base64 编码具有不可读性，即所编码的数据不会被人用肉眼所直接看到，算是起到一个加密的作用。
 
@@ -65,66 +75,329 @@ Base64 编码可用于在 HTTP 环境下传递较长的标识信息。在其他�
 
 另有一种用于正则表达式的改进 Base64 变种，它将 `+` 和 `/` 改成了 `!` 和 `-`，因为 `+`, `*` 以及前面在 IRCu 中用到的 `[` 和 `]` 在正则表达式中都可能具有特殊含义。
 
-### 算法实现
+【示例】`java.util.Base64` 编码、解码示例
 
-`commons-codec`开源包提供了对于 Base64 的实现，推荐使用。
+`Base64.getEncoder()` 和 `Base64.getDecoder()` 提供了的是标准的 Base64 编码、解码方式；
 
-请在 maven 工程中添加依赖：
-
-```xml
-<dependency>
-  <groupId>commons-codec</groupId>
-  <artifactId>commons-codec</artifactId>
-  <version>1.10</version>
-</dependency>
-```
-
-***范例***
-
-注：在 commons-codec 包中的 Base64 这个类中提供了 Base64 的编码、解码方式。
-
-其中，`encodeBase64`提供的是标准的 Base64 编码方式；`encodeBase64URLSafe`提供了 URL 安全的 Base64 编码方式（将+ 和 /替换为 - 和 \_）。
+`Base64.getUrlEncoder()` 和 `Base64.getUrlDecoder()` 提供了 URL 安全的 Base64 编码、解码方式（将 `+` 和 `/` 替换为 `-` 和 `_`）。
 
 ```java
-package org.zp.javase.security.encrypt;
-
-import org.apache.commons.codec.binary.Base64;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 public class Base64Demo {
-    public static void main(String[] args) throws UnsupportedEncodingException {
-        String url = "https://www.baidu.com/s?wd=Base64&rsv_spt=1&rsv_iqid=0xa9188d560005131f&issp=1&f=3&rsv_bp=0&rsv_idx=2&ie=utf-8&tn=baiduhome_pg&rsv_enter=1&rsv_sug3=1&rsv_sug1=1&rsv_sug7=001&rsv_sug2=1&rsp=0&rsv_sug9=es_2_1&rsv_sug4=2153&rsv_sug=9";
-        // byte[] encoded = Base64.encodeBase64(url.getBytes("UTF8")); // 标准的Base64编码
-        byte[] encoded = Base64.encodeBase64URLSafe(url.getBytes("UTF8")); // URL安全的Base64编码
-        byte[] decoded = Base64.decodeBase64(encoded);
+
+    public static void main(String[] args) {
+        String url = "https://www.baidu.com";
         System.out.println("url:" + url);
-        System.out.println("encoded:" + new String(encoded));
-        System.out.println("decoded:" + new String(decoded));
+        // 标准的 Base64 编码、解码
+        byte[] encoded = Base64.getEncoder().encode(url.getBytes(StandardCharsets.UTF_8));
+        byte[] decoded = Base64.getDecoder().decode(encoded);
+        System.out.println("Url Safe Base64 encoded:" + new String(encoded));
+        System.out.println("Url Safe Base64 decoded:" + new String(decoded));
+        // URL 安全的 Base64 编码、解码
+        byte[] encoded2 = Base64.getUrlEncoder().encode(url.getBytes(StandardCharsets.UTF_8));
+        byte[] decoded2 = Base64.getUrlDecoder().decode(encoded2);
+        System.out.println("Base64 encoded:" + new String(encoded2));
+        System.out.println("Base64 decoded:" + new String(decoded2));
     }
+
 }
 ```
 
-## 对称加密
+输出：
 
-### 算法简述
+```
+url:https://www.baidu.com
+Url Safe Base64 encoded:aHR0cHM6Ly93d3cuYmFpZHUuY29t
+Url Safe Base64 decoded:https://www.baidu.com
+Base64 encoded:aHR0cHM6Ly93d3cuYmFpZHUuY29t
+Base64 decoded:https://www.baidu.com
+```
+
+## 二、消息摘要
+
+### 消息摘要概述
+
+**消息摘要，其实就是将需要摘要的数据作为参数，经过哈希函数(Hash)的计算，得到的散列值**。
+
+消息摘要是一个唯一对应一个消息或文本的固定长度的值，它由一个单向 Hash 加密函数对消息进行作用而产生。如果消息在途中改变了，则接收者通过对收到消息的新产生的摘要与原摘要比较，就可知道消息是否被改变了。因此消息摘要保证了消息的完整性。消息摘要采用单向 Hash 函数将需加密的明文"摘要"成一串密文，这一串密文亦称为数字指纹(Finger Print)。它有固定的长度，且不同的明文摘要成密文，其结果总是不同的，而同样的明文其摘要必定一致。这样这串摘要便可成为验证明文是否是"真身"的"指纹"了。
+
+### 消息摘要特点
+
+- 唯一性：数据只要有一点改变，那么再通过消息摘要算法得到的摘要也会发生变化。虽然理论上有可能会发生碰撞，但是概率极其低。
+- 不可逆：消息摘要算法的密文无法被解密。
+- 不需要密钥，可使用于分布式网络。
+- 无论输入的明文有多长，计算出来的消息摘要的长度总是固定的。
+
+### 消息摘要常用算法
+
+消息摘要算法包括**MD(Message Digest，消息摘要算法)**、**SHA(Secure Hash Algorithm，安全散列算法)**、**MAC(Message AuthenticationCode，消息认证码算法)**共 3 大系列，常用于验证数据的完整性，是数字签名算法的核心算法。
+
+**MD5**和**SHA1**分别是**MD**、**SHA**算法系列中最有代表性的算法。
+
+如今，MD5 已被发现有许多漏洞，从而不再安全。SHA 算法比 MD 算法的摘要长度更长，也更加安全。
+
+### 消息摘要应用
+
+#### MD5、SHA 的范例
+
+JDK 中使用 MD5 和 SHA 这两种消息摘要的方式基本一致，步骤如下：
+
+1.  初始化 MessageDigest 对象
+2.  更新要计算的内容
+3.  生成摘要
+
+```java
+import java.security.MessageDigest;
+import java.util.Base64;
+
+public class MessageDigestDemo {
+
+    public static byte[] encode(byte[] input, Type type) throws Exception {
+        // 根据类型，初始化消息摘要对象
+        MessageDigest md5Digest = MessageDigest.getInstance(type.getName());
+
+        // 更新要计算的内容
+        md5Digest.update(input);
+
+        // 完成哈希计算，返回摘要
+        return md5Digest.digest();
+    }
+
+    public static byte[] encodeWithBase64(byte[] input, Type type) throws Exception {
+        return Base64.getUrlEncoder().encode(encode(input, type));
+    }
+
+    public static String encodeWithBase64String(byte[] input, Type type) throws Exception {
+        return Base64.getUrlEncoder().encodeToString(encode(input, type));
+    }
+
+    public enum Type {
+        MD2("MD2"),
+        MD5("MD5"),
+        SHA1("SHA1"),
+        SHA256("SHA-256"),
+        SHA384("SHA-384"),
+        SHA512("SHA-512");
+
+        private String name;
+
+        Type(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return this.name;
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        String msg = "Hello World!";
+        System.out.println("MD2: " + encodeWithBase64String(msg.getBytes(), Type.MD2));
+        System.out.println("MD5: " + encodeWithBase64String(msg.getBytes(), Type.MD5));
+        System.out.println("SHA1: " + encodeWithBase64String(msg.getBytes(), Type.SHA1));
+        System.out.println("SHA256: " + encodeWithBase64String(msg.getBytes(), Type.SHA256));
+        System.out.println("SHA384: " + encodeWithBase64String(msg.getBytes(), Type.SHA384));
+        System.out.println("SHA512: " + encodeWithBase64String(msg.getBytes(), Type.SHA512));
+    }
+
+}
+```
+
+【输出】
+
+```
+MD2: MV98ZyI_Aft8q0uVEA6HLg==
+MD5: 7Qdih1MuhjZehB6Sv8UNjA==
+SHA1: Lve95gjOVATpfV8EL5X4nxwjKHE=
+SHA256: f4OxZX_x_FO5LcGBSKHWXfwtSx-j1ncoSt3SABJtkGk=
+SHA384: v9dsDrvQBv7lg0EFR8GIewKSvnbVgtlsJC0qeScj4_1v0GH51c_RO4-WE1jmrbpK
+SHA512: hhhE1nBOhXP-w02WfiC8_vPUJM9IvgTm3AjyvVjHKXQzcQFerYkcw88cnTS0kmS1EHUbH_nlN5N7xGtdb_TsyA==
+```
+
+#### HMAC 的范例
+
+```java
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+public class HmacMessageDigest {
+
+    public static void main(String[] args) throws Exception {
+        String msg = "Hello World!";
+        byte[] salt = "My Salt".getBytes(StandardCharsets.UTF_8);
+        System.out.println("原文: " + msg);
+        System.out.println("HmacMD5: " + encodeWithBase64String(msg.getBytes(), salt, HmacTypeEn.HmacMD5));
+        System.out.println("HmacSHA1: " + encodeWithBase64String(msg.getBytes(), salt, HmacTypeEn.HmacSHA1));
+        System.out.println("HmacSHA256: " + encodeWithBase64String(msg.getBytes(), salt, HmacTypeEn.HmacSHA256));
+        System.out.println("HmacSHA384: " + encodeWithBase64String(msg.getBytes(), salt, HmacTypeEn.HmacSHA384));
+        System.out.println("HmacSHA512: " + encodeWithBase64String(msg.getBytes(), salt, HmacTypeEn.HmacSHA512));
+    }
+
+    public static byte[] encode(byte[] plaintext, byte[] salt, HmacTypeEn type) throws Exception {
+        SecretKeySpec keySpec = new SecretKeySpec(salt, type.name());
+        Mac mac = Mac.getInstance(keySpec.getAlgorithm());
+        mac.init(keySpec);
+        return mac.doFinal(plaintext);
+    }
+
+    public static byte[] encodeWithBase64(byte[] plaintext, byte[] salt, HmacTypeEn type) throws Exception {
+        return Base64.getUrlEncoder().encode(encode(plaintext, salt, type));
+    }
+
+    public static String encodeWithBase64String(byte[] plaintext, byte[] salt, HmacTypeEn type) throws Exception {
+        return Base64.getUrlEncoder().encodeToString(encode(plaintext, salt, type));
+    }
+
+    /**
+     * JDK支持 HmacMD5, HmacSHA1, HmacSHA256, HmacSHA384, HmacSHA512
+     */
+    public enum HmacTypeEn {
+
+        HmacMD5, HmacSHA1, HmacSHA256, HmacSHA384, HmacSHA512;
+    }
+
+}
+```
+
+**输出**
+
+```
+原文: Hello World!
+HmacMD5: re6BLRsB1Q26SfJTwXZUSQ==
+HmacSHA1: CFu8a9H6CbY9C5fo0OmJ2bnuILM=
+HmacSHA256: Z1czUqDWWfYYl7qEDJ2sUH6iieHVI7o83dXMl0JYER0=
+HmacSHA384: 34mKtRQBOYnwwznmQubjrDk_MsLDGqM2PmgcplZUpLsKNrG_cwfz4bLPJCbBW88b
+HmacSHA512: 6n77htTZ_atc04-SsmxhSK3wzh1sAmdudCl0Cb_RZp4DpienG4LZkhXMbq8lcK7XSnz6my_wIpnStDp6PC_-5w==
+```
+
+## 三、数字签名
+
+### 数字签名概述
+
+数字签名算法可以看做是一种带有密钥的消息摘要算法，并且这种密钥包含了公钥和私钥。也就是说，**数字签名算法是非对称加密算法和消息摘要算法的结合体**。
+
+数字签名算法要求能够验证数据完整性、认证数据来源，并起到抗否认的作用。
+
+数字签名算法包含签名和验证两项操作，遵循私钥签名，公钥验证的方式。
+
+签名时要使用私钥和待签名数据，验证时则需要公钥、签名值和待签名数据，其核心算法主要是消息摘要算法。
+
+![img](http://dunwu.test.upcdn.net/cs/java/advanced/java-message-digest-process.jpg)
+
+数字签名常用算法：**RSA**、**DSA**、**ECDSA**
+
+### 数字签名算法应用
+
+#### DSA 的范例
+
+数字签名有两个流程：签名和验证。
+
+它们的前提都是要有一个公钥、密钥对。
+
+数字签名用私钥为消息计算签名。
+
+【示例】用公钥验证摘要
+
+```java
+public class DsaCoder {
+
+    public static final String KEY_ALGORITHM = "DSA";
+
+    public static final String SIGN_ALGORITHM = "SHA1withDSA";
+
+    /**
+     * DSA密钥长度默认1024位。 密钥长度必须是64的整数倍，范围在512~1024之间
+     */
+    private static final int KEY_SIZE = 1024;
+
+    private KeyPair keyPair;
+
+    public DsaCoder() throws Exception {
+        this.keyPair = initKey();
+    }
+
+    private KeyPair initKey() throws Exception {
+        // 初始化密钥对生成器
+        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(DsaCoder.KEY_ALGORITHM);
+        // 实例化密钥对生成器
+        keyPairGen.initialize(KEY_SIZE);
+        // 实例化密钥对
+        return keyPairGen.genKeyPair();
+    }
+
+    public byte[] signature(byte[] data, byte[] privateKey) throws Exception {
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKey);
+        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+        PrivateKey key = keyFactory.generatePrivate(keySpec);
+
+        Signature signature = Signature.getInstance(SIGN_ALGORITHM);
+        signature.initSign(key);
+        signature.update(data);
+        return signature.sign();
+    }
+
+    public byte[] getPrivateKey() {
+        return keyPair.getPrivate().getEncoded();
+    }
+
+    public boolean verify(byte[] data, byte[] publicKey, byte[] sign) throws Exception {
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKey);
+        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+        PublicKey key = keyFactory.generatePublic(keySpec);
+
+        Signature signature = Signature.getInstance(SIGN_ALGORITHM);
+        signature.initVerify(key);
+        signature.update(data);
+        return signature.verify(sign);
+    }
+
+    public byte[] getPublicKey() {
+        return keyPair.getPublic().getEncoded();
+    }
+
+    public static void main(String[] args) throws Exception {
+        String msg = "Hello World";
+        DsaCoder dsa = new DsaCoder();
+        byte[] sign = dsa.signature(msg.getBytes(), dsa.getPrivateKey());
+        boolean flag = dsa.verify(msg.getBytes(), dsa.getPublicKey(), sign);
+        String result = flag ? "数字签名匹配" : "数字签名不匹配";
+        System.out.println("数字签名：" + Base64.getUrlEncoder().encodeToString(sign));
+        System.out.println("验证结果：" + result);
+    }
+
+}
+```
+
+【输出】
+
+```
+数字签名：MCwCFDPUO_VrONl5ST0AWary-MLXJuSCAhRMeMnUVhpizfa2H2M37tne0pUtoA==
+验证结果：数字签名匹配
+```
+
+## 四、对称加密
+
+### 对称加密概述
+
+对称加密算法主要有 DES、3DES（TripleDES）、AES、IDEA、RC2、RC4、RC5 和 Blowfish 等。
 
 对称加密算法是应用较早的加密算法，技术成熟。在对称加密算法中，数据发信方将明文（原始数据）和加密密钥（mi yao）一起经过特殊加密算法处理后，使其变成复杂的加密密文发送出去。收信方收到密文后，若想解读原文，则需要使用加密用过的密钥及相同算法的逆算法对密文进行解密，才能使其恢复成可读明文。在对称加密算法中，使用的密钥只有一个，发收信双方都使用这个密钥对数据进行加密和解密，这就要求解密方事先必须知道加密密钥。
 
-#### 特点
+对称加密特点：
 
-##### 优点：
-
-计算量小、加密速度快、加密效率高。
-
-##### 缺点：
-
-算法是公开的，安全性得不到保证。
+- 优点：计算量小、加密速度快、加密效率高。
+- 缺点：算法是公开的，安全性得不到保证。
 
 通信双方每次使用对称加密算法时，都需要使用其他人不知道的惟一密钥，这会使得通信双方所拥有的密钥数量呈几何级数增长，密钥管理成为用户的负担。对称加密算法在分布式网络系统上使用较为困难，主要是因为密钥管理困难，使用成本较高。
 
 而与公钥、密钥加密算法比起来，对称加密算法能够提供加密和认证却缺乏了签名功能，使得使用范围有所缩小。
 
-#### 原理
+#### 对称加密原理
 
 对称加密要求加密与解密使用同一个密钥，解密是加密的逆运算。由于加密、解密使用同一个密钥，这要求通信双方必须在通信前商定该密钥，并妥善保存该密钥。
 
@@ -140,7 +413,7 @@ public class Base64Demo {
 
 ![img](http://dunwu.test.upcdn.net/cs/java/advanced/symmetric-encryption-progress.png)
 
-#### 工作模式
+#### 对称加密工作模式
 
 以 DES 算法的工作模式为例，DES 算法根据其加密算法所定义的明文分组的大小（56 位），将数据分割成若干 56 位的加密区块，再以加密区块为单位，分别进行加密处理。如果最后剩下不足一个区块的大小，称之为**短块**。短块的处理方法有填充法、流密码加密法、密文挪用技术。
 
@@ -170,7 +443,7 @@ AES 算法除了以上 4 中模式外，还有一种新的工作模式：
 
 本文对于各种工作模式的原理展开描述。个人认为，作为工程应用，了解其用途即可。
 
-#### 填充方法
+#### 对称加密填充方法
 
 Java 中对称加密对于短块的处理，一般是采用填充方式。
 
@@ -196,11 +469,7 @@ F1 F2 F3 F4 F5 F6 F7 F8 //第一块
 
 F9 07 07 07 07 07 07 07 //第二块
 
-#### 常用算法
-
-对称加密算法主要有 DES、3DES（TripleDES）、AES、IDEA、RC2、RC4、RC5 和 Blowfish 等。
-
-### 算法实现
+### 对称加密应用
 
 #### 基于密钥加密的流程（DES、DESede、AES 和 IDEA）
 
@@ -235,43 +504,39 @@ String plaintext = "Hello World";
 byte[] ciphertext = cipher.doFinal(plaintext.getBytes());
 ```
 
-##### 完整实例
-
 一个完整的 DES 加密解密范例
 
 ```java
-import org.bouncycastle.util.encoders.Base64;
-import org.zp.javase.security.encode.Encode;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
+import java.util.Base64;
+import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.SecureRandom;
 
 /**
- * @Title DESCoder
- * @Description DES安全编码：是经典的对称加密算法。密钥仅56位，且迭代次数偏少。已被视为并不安全的加密算法。
- * @Author Victor Zhang
- * @Date 2016年7月14日
+ * DES安全编码：是经典的对称加密算法。密钥仅56位，且迭代次数偏少。已被视为并不安全的加密算法。
+ *
+ * @author Zhang Peng
+ * @since 2016年7月14日
  */
-public class DESCoder implements Encode {
+public class DESCoder {
+
     public static final String KEY_ALGORITHM_DES = "DES";
+
     public static final String CIPHER_DES_DEFAULT = "DES";
+
     public static final String CIPHER_DES_ECB_PKCS5PADDING = "DES/ECB/PKCS5Padding"; // 算法/模式/补码方式
+
     public static final String CIPHER_DES_CBC_PKCS5PADDING = "DES/CBC/PKCS5Padding";
+
     public static final String CIPHER_DES_CBC_NOPADDING = "DES/CBC/NoPadding";
+
     private static final String SEED = "%%%today is nice***"; // 用于生成随机数的种子
 
     private Key key;
+
     private Cipher cipher;
+
     private String transformation;
 
     public DESCoder() throws NoSuchAlgorithmException, NoSuchPaddingException, NoSuchProviderException {
@@ -280,65 +545,14 @@ public class DESCoder implements Encode {
         this.transformation = CIPHER_DES_DEFAULT;
     }
 
-    public DESCoder(String transformation)
-            throws NoSuchAlgorithmException, NoSuchPaddingException, NoSuchProviderException {
-        this.key = initKey();
-        this.cipher = Cipher.getInstance(transformation);
-        this.transformation = transformation;
-    }
-
     /**
-     * @Title decrypt
-     * @Description 解密
-     * @Author Victor Zhang
-     * @Date 2016年7月20日
-     * @param input 密文
-     * @return byte[] 明文
-     * @throws InvalidKeyException
-     * @throws IllegalBlockSizeException
-     * @throws BadPaddingException
-     * @throws InvalidAlgorithmParameterException
-     */
-    public byte[] decrypt(byte[] input) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException,
-            InvalidAlgorithmParameterException {
-        if (transformation.equals(CIPHER_DES_CBC_PKCS5PADDING) || transformation.equals(CIPHER_DES_CBC_NOPADDING)) {
-            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(getIV()));
-        } else {
-            cipher.init(Cipher.DECRYPT_MODE, key);
-        }
-        return cipher.doFinal(input);
-    }
-
-    /**
-     * @Title encrypt
-     * @Description 加密
-     * @Author Victor Zhang
-     * @Date 2016年7月20日
-     * @param input 明文
-     * @return byte[] 密文
-     * @throws InvalidKeyException
-     * @throws IllegalBlockSizeException
-     * @throws BadPaddingException
-     * @throws InvalidAlgorithmParameterException
-     */
-    public byte[] encrypt(byte[] input) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException,
-            InvalidAlgorithmParameterException {
-        if (transformation.equals(CIPHER_DES_CBC_PKCS5PADDING) || transformation.equals(CIPHER_DES_CBC_NOPADDING)) {
-            cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(getIV()));
-        } else {
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-        }
-        return cipher.doFinal(input);
-    }
-
-    /**
-     * @Title initKey
-     * @Description 根据随机数种子生成一个密钥
-     * @Author Victor Zhang
-     * @Date 2016年7月14日
-     * @Return Key
+     * 根据随机数种子生成一个密钥
+     *
+     * @return Key
      * @throws NoSuchAlgorithmException
      * @throws NoSuchProviderException
+     * @author Zhang Peng
+     * @since 2016年7月14日
      */
     private Key initKey() throws NoSuchAlgorithmException, NoSuchProviderException {
         // 根据种子生成一个安全的随机数
@@ -348,6 +562,57 @@ public class DESCoder implements Encode {
         KeyGenerator keyGen = KeyGenerator.getInstance(KEY_ALGORITHM_DES);
         keyGen.init(secureRandom);
         return keyGen.generateKey();
+    }
+
+    public DESCoder(String transformation)
+        throws NoSuchAlgorithmException, NoSuchPaddingException, NoSuchProviderException {
+        this.key = initKey();
+        this.cipher = Cipher.getInstance(transformation);
+        this.transformation = transformation;
+    }
+
+    /**
+     * 加密
+     *
+     * @param input 明文
+     * @return byte[] 密文
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidAlgorithmParameterException
+     * @author Zhang Peng
+     * @since 2016年7月20日
+     */
+    public byte[] encrypt(byte[] input) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException,
+        InvalidAlgorithmParameterException {
+        if (transformation.equals(CIPHER_DES_CBC_PKCS5PADDING) || transformation.equals(CIPHER_DES_CBC_NOPADDING)) {
+            cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(getIV()));
+        } else {
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+        }
+        return cipher.doFinal(input);
+    }
+
+    /**
+     * 解密
+     *
+     * @param input 密文
+     * @return byte[] 明文
+     * @throws InvalidKeyException
+     * @throws IllegalBlockSizeException
+     * @throws BadPaddingException
+     * @throws InvalidAlgorithmParameterException
+     * @author Zhang Peng
+     * @since 2016年7月20日
+     */
+    public byte[] decrypt(byte[] input) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException,
+        InvalidAlgorithmParameterException {
+        if (transformation.equals(CIPHER_DES_CBC_PKCS5PADDING) || transformation.equals(CIPHER_DES_CBC_NOPADDING)) {
+            cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(getIV()));
+        } else {
+            cipher.init(Cipher.DECRYPT_MODE, key);
+        }
+        return cipher.doFinal(input);
     }
 
     private byte[] getIV() {
@@ -360,14 +625,15 @@ public class DESCoder implements Encode {
 
         String msg = "Hello World!";
         System.out.println("原文: " + msg);
-        byte[] encoded = aes.encrypt(msg.getBytes("UTF8"));
-        String encodedBase64 = Base64.toBase64String(encoded);
+        byte[] encoded = aes.encrypt(msg.getBytes(StandardCharsets.UTF_8));
+        String encodedBase64 = Base64.getUrlEncoder().encodeToString(encoded);
         System.out.println("密文: " + encodedBase64);
 
-        byte[] decodedBase64 = Base64.decode(encodedBase64);
+        byte[] decodedBase64 = Base64.getUrlDecoder().decode(encodedBase64);
         byte[] decoded = aes.decrypt(decodedBase64);
         System.out.println("明文: " + new String(decoded));
     }
+
 }
 ```
 
@@ -375,7 +641,7 @@ public class DESCoder implements Encode {
 
 ```
 原文: Hello World!
-密文: TtnEu9ezNQtxFKpmq/37Qw==
+密文: TtnEu9ezNQtxFKpmq_37Qw==
 明文: Hello World!
 ```
 
@@ -426,23 +692,112 @@ byte[] plaintext = "Hello World".getBytes();
 byte[] ciphertext = cipher.doFinal(plaintext);
 ```
 
-## 非对称加密
+（5）完整 PBE 示例
 
-### 算法简述
+```java
+import java.security.Key;
+import java.security.SecureRandom;
+import java.util.Base64;
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.PBEParameterSpec;
+
+/**
+ * 基于口令加密(Password Based Encryption, PBE)，是一种对称加密算法。 其特点是：口令由用户自己掌管，采用随机数（这里叫做盐）杂凑多重加密等方法保证数据的安全性。
+ * PBE没有密钥概念，密钥在其他对称加密算法中是经过计算得出的，PBE则使用口令替代了密钥。
+ *
+ * @author Zhang Peng
+ * @since 2016年7月20日
+ */
+public class PBECoder {
+
+    public static final String KEY_ALGORITHM = "PBEWITHMD5andDES";
+
+    public static final int ITERATION_COUNT = 100;
+
+    private Key key;
+
+    private byte[] salt;
+
+    public PBECoder(String password) throws Exception {
+        this.salt = initSalt();
+        this.key = initKey(password);
+    }
+
+    private byte[] initSalt() {
+        SecureRandom secureRandom = new SecureRandom();
+        return secureRandom.generateSeed(8); // 盐长度必须为8字节
+    }
+
+    private Key initKey(String password) throws Exception {
+        PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray());
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(KEY_ALGORITHM);
+        return keyFactory.generateSecret(keySpec);
+    }
+
+    public byte[] encrypt(byte[] plaintext) throws Exception {
+        PBEParameterSpec paramSpec = new PBEParameterSpec(salt, ITERATION_COUNT);
+        Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
+        return cipher.doFinal(plaintext);
+    }
+
+    public byte[] decrypt(byte[] ciphertext) throws Exception {
+        PBEParameterSpec paramSpec = new PBEParameterSpec(salt, ITERATION_COUNT);
+        Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
+        return cipher.doFinal(ciphertext);
+    }
+
+    public static void test1() throws Exception {
+
+        // 产生盐
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] salt = secureRandom.generateSeed(8); // 盐长度必须为8字节
+
+        // 产生Key
+        String password = "123456";
+        PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray());
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(KEY_ALGORITHM);
+        SecretKey secretKey = keyFactory.generateSecret(keySpec);
+
+        PBEParameterSpec paramSpec = new PBEParameterSpec(salt, ITERATION_COUNT);
+        Cipher cipher = Cipher.getInstance(KEY_ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, paramSpec);
+
+        byte[] plaintext = "Hello World".getBytes();
+        byte[] ciphertext = cipher.doFinal(plaintext);
+        new String(ciphertext);
+    }
+
+    public static void main(String[] args) throws Exception {
+        PBECoder encode = new PBECoder("123456");
+        String message = "Hello World!";
+        byte[] ciphertext = encode.encrypt(message.getBytes());
+        byte[] plaintext = encode.decrypt(ciphertext);
+
+        System.out.println("原文：" + message);
+        System.out.println("密文：" + Base64.getUrlEncoder().encodeToString(ciphertext));
+        System.out.println("明文：" + new String(plaintext));
+    }
+
+}
+```
+
+## 五、非对称加密
+
+### 非对称加密概述
+
+非对称加密常用算法：DH(Diffie-Hellman，密钥交换算法)、RSA
 
 非对称加密算法和对称加密算法的主要差别在于非对称加密算法用于加密和解密的密钥是不同的。一个公开，称为公钥（public key）；一个保密，称为私钥（private key）。因此，非对称加密算法也称为双钥加密算法或公钥加密算法。
 
-#### 特点
+非对称加密特点：
 
-##### 优点
-
-非对称加密算法解决了对称加密算法的密钥分配问题，并极大地提高了算法安全性。
-
-##### 缺点
-
-算法比对称算法更复杂，因此加密、解密速度都比对称算法慢很多。
-
-#### 原理
+- 优点：非对称加密算法解决了对称加密算法的密钥分配问题，并极大地提高了算法安全性。
+- 缺点：算法比对称算法更复杂，因此加密、解密速度都比对称算法慢很多。
 
 ![img](http://dunwu.test.upcdn.net/cs/java/advanced/asymmetric-encryption.png)
 
@@ -452,41 +807,41 @@ byte[] ciphertext = cipher.doFinal(plaintext);
 
 甲方只能用其私钥解密，由其公钥加密后的任何信息。 非对称加密算法的保密性比较好，它消除了最终用户交换密钥的需要。
 
-#### 常用算法
-
-DH(Diffie-Hellman，密钥交换算法)、RSA
-
-### 算法实现
-
-#### 完整范例
+### 非对称加密算法应用
 
 ```java
-import org.apache.commons.codec.binary.Base64;
-
-import javax.crypto.Cipher;
-import java.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
+import java.nio.charset.StandardCharsets;
+import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
+import javax.crypto.Cipher;
 
+/**
+ * RSA安全编码：非对称加密算法。它既可以用来加密、解密，也可以用来做数字签名
+ *
+ * @author Zhang Peng
+ * @since 2016年7月20日
+ */
 public class RSACoder {
-    private final static String KEY_ALGORITHM = "RSA";
+
+    public final static String KEY_ALGORITHM = "RSA";
+
+    public final static String SIGN_ALGORITHM = "MD5WithRSA";
+
     private KeyPair keyPair;
 
     public RSACoder() throws Exception {
         this.keyPair = initKeyPair();
     }
 
-    public byte[] encryptByPublicKey(byte[] plaintext, byte[] key) throws Exception {
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(key);
-        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-        PublicKey publicKey = keyFactory.generatePublic(keySpec);
-        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-        return cipher.doFinal(plaintext);
+    private KeyPair initKeyPair() throws Exception {
+        // KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象
+        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
+        // 初始化密钥对生成器，密钥大小为1024位
+        keyPairGen.initialize(1024);
+        // 生成一个密钥对
+        return keyPairGen.genKeyPair();
     }
 
     public byte[] encryptByPrivateKey(byte[] plaintext, byte[] key) throws Exception {
@@ -507,6 +862,15 @@ public class RSACoder {
         return cipher.doFinal(ciphertext);
     }
 
+    public byte[] encryptByPublicKey(byte[] plaintext, byte[] key) throws Exception {
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(key);
+        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+        PublicKey publicKey = keyFactory.generatePublic(keySpec);
+        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        return cipher.doFinal(plaintext);
+    }
+
     public byte[] decryptByPrivateKey(byte[] ciphertext, byte[] key) throws Exception {
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(key);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
@@ -516,38 +880,75 @@ public class RSACoder {
         return cipher.doFinal(ciphertext);
     }
 
-    private KeyPair initKeyPair() throws Exception {
-        // KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象
-        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-        // 初始化密钥对生成器，密钥大小为1024位
-        keyPairGen.initialize(1024);
-        // 生成一个密钥对
-        return keyPairGen.genKeyPair();
+    public byte[] signature(byte[] data, byte[] privateKey, RsaSignTypeEn type) throws Exception {
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKey);
+        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+        PrivateKey key = keyFactory.generatePrivate(keySpec);
+
+        Signature signature = Signature.getInstance(type.name());
+        signature.initSign(key);
+        signature.update(data);
+        return signature.sign();
+    }
+
+    public byte[] getPrivateKey() {
+        return keyPair.getPrivate().getEncoded();
+    }
+
+    public boolean verify(byte[] data, byte[] publicKey, byte[] sign, RsaSignTypeEn type) throws Exception {
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKey);
+        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
+        PublicKey key = keyFactory.generatePublic(keySpec);
+
+        Signature signature = Signature.getInstance(type.name());
+        signature.initVerify(key);
+        signature.update(data);
+        return signature.verify(sign);
+    }
+
+    public byte[] getPublicKey() {
+        return keyPair.getPublic().getEncoded();
+    }
+
+    public enum RsaSignTypeEn {
+
+        MD2WithRSA,
+        MD5WithRSA,
+        SHA1WithRSA
     }
 
     public static void main(String[] args) throws Exception {
         String msg = "Hello World!";
         RSACoder coder = new RSACoder();
         // 私钥加密，公钥解密
-        byte[] ciphertext = coder.encryptByPrivateKey(msg.getBytes("UTF8"), coder.keyPair.getPrivate().getEncoded());
+        byte[] ciphertext = coder.encryptByPrivateKey(msg.getBytes(StandardCharsets.UTF_8), coder.keyPair.getPrivate().getEncoded());
         byte[] plaintext = coder.decryptByPublicKey(ciphertext, coder.keyPair.getPublic().getEncoded());
 
         // 公钥加密，私钥解密
         byte[] ciphertext2 = coder.encryptByPublicKey(msg.getBytes(), coder.keyPair.getPublic().getEncoded());
         byte[] plaintext2 = coder.decryptByPrivateKey(ciphertext2, coder.keyPair.getPrivate().getEncoded());
 
+        byte[] sign = coder.signature(msg.getBytes(), coder.getPrivateKey(), RsaSignTypeEn.SHA1WithRSA);
+        boolean flag = coder.verify(msg.getBytes(), coder.getPublicKey(), sign, RsaSignTypeEn.SHA1WithRSA);
+        String result = flag ? "数字签名匹配" : "数字签名不匹配";
+
         System.out.println("原文：" + msg);
-        System.out.println("公钥：" + Base64.encodeBase64URLSafeString(coder.keyPair.getPublic().getEncoded()));
-        System.out.println("私钥：" + Base64.encodeBase64URLSafeString(coder.keyPair.getPrivate().getEncoded()));
+        System.out.println("公钥：" + Base64.getUrlEncoder().encodeToString(coder.keyPair.getPublic().getEncoded()));
+        System.out.println("私钥：" + Base64.getUrlEncoder().encodeToString(coder.keyPair.getPrivate().getEncoded()));
 
         System.out.println("============== 私钥加密，公钥解密 ==============");
-        System.out.println("密文：" + Base64.encodeBase64URLSafeString(ciphertext));
+        System.out.println("密文：" + Base64.getUrlEncoder().encodeToString(ciphertext));
         System.out.println("明文：" + new String(plaintext));
 
         System.out.println("============== 公钥加密，私钥解密 ==============");
-        System.out.println("密文：" + Base64.encodeBase64URLSafeString(ciphertext2));
+        System.out.println("密文：" + Base64.getUrlEncoder().encodeToString(ciphertext2));
         System.out.println("明文：" + new String(plaintext2));
+
+        System.out.println("============== 数字签名 ==============");
+        System.out.println("数字签名：" + Base64.getUrlEncoder().encodeToString(sign));
+        System.out.println("验证结果：" + result);
     }
+
 }
 ```
 
@@ -555,255 +956,30 @@ public class RSACoder {
 
 ```
 原文：Hello World!
-公钥：MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCVN2mWAMdatpo2l8dwavaX2VC8mRleVTdjwjyahsyCE6UxkdqHsKD6Ecq3OBbuJhEfHxnr7MAD_zoE6zalFs7_si09XTgpVFsFCztPXJpPw-rpQdvaaxYEXJHkY07M_DBrxh1URg2gQl9dEDaruIFrZ12ugTwwEkLA1K_LN7yZrwIDAQAB
-私钥：MIICdQIBADANBgkqhkiG9w0BAQEFAASCAl8wggJbAgEAAoGBAJU3aZYAx1q2mjaXx3Bq9pfZULyZGV5VN2PCPJqGzIITpTGR2oewoPoRyrc4Fu4mER8fGevswAP_OgTrNqUWzv-yLT1dOClUWwULO09cmk_D6ulB29prFgRckeRjTsz8MGvGHVRGDaBCX10QNqu4gWtnXa6BPDASQsDUr8s3vJmvAgMBAAECgYBvU1M8LcKOJFQzzNNoRPVLX0AEJXkuzwcvL1hFtbJYjc2eiQHwYFAJokKKpZc-ADqf7HVLdmvfz4h66P3w925hYHjSF3cs6jiibI7fc9lrdrJLMpv44phPlRCiIanD-U6pyN3bZxRl4Giuz5uGL0SVU6Dxh2Sw7mtnvUBbHCyyaQJBAOixpR-t81Qnpdy4jlbZL8ufTTF1TzlSh0NEDB4tlpHlVolVmZB2M-rdJ3nP8fJXazdsGZMP0q38vgiN2HHMtxsCQQCkKWAaA6KxKNbj0mJDSP1p4qUJ4EAcgXBz4B_PKMZa3ZU2CdmFlhlLRRTOIjZX2VC6IjHKWssa-3V2EqBzCSz9AkBsiK9kH1anofaTBOIfUB4i86KltvnE2uGMVmjwioL4eefrFqoR35BHs-99uag4SN4Rc7JaDb9Ot9xLUR3rtniRAkB8dFXEQx9Teie4HmaapjpgzQ_b9eQE-GjdoHvdHQeMGdMmXb9IVGwmsV-9ixhx73IROx1OURkMArmhYyu7KqitAkBkeQ-7AYOIROJnTUSQTMUELUmZFF1Io_SJGXyRYLgDqz7JCmmhfH7sNm8Gcn6f2VWg-U2D9-G5IHO-vHfz2DS6
+公钥：MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCzPtRLErTUcYtr8GmIpvbso7FN18thuEq02U21mh7TA4FH4TjvNgOZrZEORYu94dxrPdnrPjh0p62P5pDIjx_dtGlZr0aGWgtTvBbPwAKE4keXyPqv4VV6iXRzyQ2HdOvFOovim5eu0Tu_TxGeNpFfp0pYj2LXCzpsgSrdUPuPmwIDAQAB
+私钥：MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBALM-1EsStNRxi2vwaYim9uyjsU3Xy2G4SrTZTbWaHtMDgUfhOO82A5mtkQ5Fi73h3Gs92es-OHSnrY_mkMiPH920aVmvRoZaC1O8Fs_AAoTiR5fI-q_hVXqJdHPJDYd068U6i-Kbl67RO79PEZ42kV-nSliPYtcLOmyBKt1Q-4-bAgMBAAECgYBJxOXiL8S0WjajKcKFNxIQuh3Sh6lwgkRcwcI1p0RgW-TtDEg-SuCYctJsKTsl3rq0eDQjmOvrNsc7ngygPidCiTdbD1H6m3tLrebBB-wZdXMSWPsHtQJsq4dE0e93mmfysciOP6QExOs0JqVjTyyBSK37LpUcLdalj2IJDtC0gQJBAPfMngZAuIPmXued7PUuWNBuwxnkmdMcs308eC_9vnLLXWhDB9xKMuXCMwqk16MJ6j1FQWtJu62T21yniWWQHIsCQQC5LWqKfRxVukgnBg0Pa95NVWWY01Yttnb125JsLxeKbR97KU4VgBaBcB9TyUdPr9lxAzGFg6Y3A1wfsfukaGsxAkEA1l719oLXHYSWZdmBvTozK14m-qeBS9lwjc9aSmpB8B1u2Vvj2Pd3wLyYW4Tv5-QT-J2JUr-e1TMseqOVgX-CsQJAETRoBq_zFv_0vjNwuTMTd2nsw5M3GY4vZU5eP1Dsxf63gxDmYVcCQEpzjqxPxNaYxEhArJ_7rHbSc1ts_ux4sQJBAIlbGQC4-92foXGzWT80rsqZlMQ8J8Nbjpoo7RUN9tgx60Vkr3xv26Vos77oqdufWlt5IiBZBS9acTA2suav6Qg=
 ============== 私钥加密，公钥解密 ==============
-密文：U2otXypy1Fg4wcXK187xAuOxWM88oORVDJfaNxvG74Q_rqZ-sT4fEZYLZO80KmsWiufkJbD9Gskgkg7dRPRCwG90pRaU3PD9_sTmksN0v8MUwCX2p80zUeG3gWU6BJwMMUZrltJaHFbKn-BhzoNrn3Q-4BJA8lt6-cKtH0TPeN4
+密文：qn6iGjSJV45EnH21RYRx2UZfMueqplbm1g3VIpBBQBuF63RdHdSgMJsVPAuB__V0rxpPlU3gR6qLyWu1mpaJ-ix_6KogAH64wqTWqPRh7E6aj767rybNpt9JyVlCmmpy9DiqHAUFWtBJDo34q-a7Fhq9c8bWrJ6jnn47IdmzHfU=
 明文：Hello World!
 ============== 公钥加密，私钥解密 ==============
-密文：O_rknvo12qaFfWieyTI_Ay8_ph49y3V4jJVs1BykpI81GM3ozCPSnOjHbtdWdjPtgJHFfCjbspAnIT2eM4PtJldIJg6k_2HZCmCCaheUj2pxcvkrhb6GdhSlH-K2FhFGAnlxUAp-3tZpYpxzAteEw1-suldelHdikrCV_uXxAEM
+密文：fsz2IFs69d7JDrH-yoe5pi5WKQU1Zml7SDSpPqTZUn6muSCjNp6x312deQCXKMGSeAdMpVeb01yZBfa0MT_6eYJYVseU7Rd6bDf6YIg3AZFC41yh5ITiTvQ-XzxugnppS12sLpXSWg0faa5qjcVZnoTX9p7nHr8n20y4CNMI6Rw=
 明文：Hello World!
+============== 数字签名 ==============
+数字签名：dTtUUlWX1wRQbW1PcA8O6WJcWcrHinEZRXwgLKEwBOm2DpvHnynvV_HYKS-qFE5_4vJQcPGJ2hZqWbfv1VKLHMUWuiXM7VJk70g3g7BF8i8RWbrCDOxgTR77jrEwidpr1PYJzWJVGq_HP36MxInGFLcVh2sN0fu8MppzsXUENZQ=
+验证结果：数字签名匹配
 ```
 
-## 消息摘要
-
-### 算法简述
-
-#### 定义
-
-它是一个唯一对应一个消息或文本的固定长度的值，它由一个单向 Hash 加密函数对消息进行作用而产生。如果消息在途中改变了，则接收者通过对收到消息的新产生的摘要与原摘要比较，就可知道消息是否被改变了。因此消息摘要保证了消息的完整性。消息摘要采用单向 Hash 函数将需加密的明文"摘要"成一串密文，这一串密文亦称为数字指纹(Finger Print)。它有固定的长度，且不同的明文摘要成密文，其结果总是不同的，而同样的明文其摘要必定一致。这样这串摘要便可成为验证明文是否是"真身"的"指纹"了。
-
-#### 特点
-
-消息摘要具有以下特点：
-
-- 唯一性：数据只要有一点改变，那么再通过消息摘要算法得到的摘要也会发生变化。虽然理论上有可能会发生碰撞，但是概率极其低。
-- 不可逆：消息摘要算法的密文无法被解密。
-- 不需要密钥，可使用于分布式网络。
-- 无论输入的明文有多长，计算出来的消息摘要的长度总是固定的。
-
-#### 原理
-
-消息摘要，其实就是将需要摘要的数据作为参数，经过哈希函数(Hash)的计算，得到的散列值。
-
-#### 常用算法
-
-消息摘要算法包括**MD(Message Digest，消息摘要算法)**、**SHA(Secure Hash Algorithm，安全散列算法)**、**MAC(Message AuthenticationCode，消息认证码算法)**共 3 大系列，常用于验证数据的完整性，是数字签名算法的核心算法。
-
-**MD5**和**SHA1**分别是**MD**、**SHA**算法系列中最有代表性的算法。
-
-如今，MD5 已被发现有许多漏洞，从而不再安全。SHA 算法比 MD 算法的摘要长度更长，也更加安全。
-
-### 算法实现
-
-#### MD5、SHA 的范例
-
-JDK 中使用 MD5 和 SHA 这两种消息摘要的方式基本一致，步骤如下：
-
-1.  初始化 MessageDigest 对象
-2.  更新要计算的内容
-3.  生成摘要
-
-**范例**
-
-```java
-importjava.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-import org.apache.commons.codec.binary.Base64;
-
-public class MsgDigestDemo{
-    public static void main(String args[]) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        String msg = "Hello World!";
-
-        MessageDigest md5Digest = MessageDigest.getInstance("MD5");
-        // 更新要计算的内容
-        md5Digest.update(msg.getBytes());
-        // 完成哈希计算，得到摘要
-        byte[] md5Encoded = md5Digest.digest();
-
-        MessageDigest shaDigest = MessageDigest.getInstance("SHA");
-        // 更新要计算的内容
-        shaDigest.update(msg.getBytes());
-        // 完成哈希计算，得到摘要
-        byte[] shaEncoded = shaDigest.digest();
-
-        System.out.println("原文: " + msg);
-        System.out.println("MD5摘要: " + Base64.encodeBase64URLSafeString(md5Encoded));
-        System.out.println("SHA摘要: " + Base64.encodeBase64URLSafeString(shaEncoded));
-    }
-}
-```
-
-**输出**
-
-```
-原文:Hello World!
-MD5摘要: 7Qdih1MuhjZehB6Sv8UNjA
-SHA摘要:Lve95gjOVATpfV8EL5X4nxwjKHE
-```
-
-#### HMAC 的范例
-
-```java
-importjavax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
-
-public class HmacCoder{
-    /**
-     * JDK支持HmacMD5, HmacSHA1,HmacSHA256, HmacSHA384, HmacSHA512
-     */
-    public enum HmacTypeEn {
-        HmacMD5, HmacSHA1, HmacSHA256, HmacSHA384, HmacSHA512;
-    }
-
-    public static byte[] encode(byte[] plaintext, byte[] secretKey, HmacTypeEn type) throwsException {
-        SecretKeySpec keySpec = new SecretKeySpec(secretKey, type.name());
-        Mac mac = Mac.getInstance(keySpec.getAlgorithm());
-        mac.init(keySpec);
-        return mac.doFinal(plaintext);
-    }
-
-    public static void main(String[] args) throws Exception {
-        String msg = "Hello World!";
-        byte[] secretKey = "Secret_Key".getBytes("UTF8");
-        byte[] digest = HmacCoder.encode(msg.getBytes(), secretKey, HmacTypeEn.HmacSHA256);
-        System.out.println("原文: " + msg);
-        System.out.println("摘要: " + Base64.encodeBase64URLSafeString(digest));
-    }
-}
-```
-
-**输出**
-
-```
-原文:Hello World!
-摘要: b8-eUifaOJ5OUFweOoq08HbGAMsIpC3Nt-Yv-S91Yr4
-```
-
-## 数字签名
-
-### 算法简述
-
-数字签名算法可以看做是一种带有密钥的消息摘要算法，并且这种密钥包含了公钥和私钥。也就是说，数字签名算法是非对称加密算法和消息摘要算法的结合体。
-
-#### 特点
-
-数字签名算法要求能够验证数据完整性、认证数据来源，并起到抗否认的作用。
-
-#### 原理
-
-数字签名算法包含签名和验证两项操作，遵循私钥签名，公钥验证的方式。
-
-签名时要使用私钥和待签名数据，验证时则需要公钥、签名值和待签名数据，其核心算法主要是消息摘要算法。
-
-![img](http://dunwu.test.upcdn.net/cs/java/advanced/java-message-digest-process.jpg)
-
-#### 常用算法
-
-RSA、DSA、ECDSA
-
-### 算法实现
-
-#### DSA 的范例
-
-数字签名有两个流程：签名和验证。
-
-它们的前提都是要有一个公钥、密钥对。
-
-**签名**
-
-用私钥为消息计算签名
-
-**范例**
-
-用公钥验证摘要
-
-```java
-importjava.security.KeyFactory;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.Signature;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
-
-public class DsaCoder{
-    public static final String KEY_ALGORITHM = "DSA";
-
-    public enum DsaTypeEn {
-        MD5withDSA, SHA1withDSA
-    }
-
-    /**
-     * DSA密钥长度默认1024位。 密钥长度必须是64的整数倍，范围在512~1024之间
-     */
-    private static final int KEY_SIZE = 1024;
-
-    private KeyPair keyPair;
-
-    public DsaCoder() throws Exception {
-        keyPair = initKey();
-    }
-
-    public byte[] signature(byte[] data, byte[] privateKey) throws Exception {
-        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(privateKey);
-        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-        PrivateKey key =keyFactory.generatePrivate(keySpec);
-
-        Signature signature = Signature.getInstance(DsaTypeEn.SHA1withDSA.name());
-        signature.initSign(key);
-        signature.update(data);
-        return signature.sign();
-    }
-
-    public boolean verify(byte[] data, byte[] publicKey, byte[] sign) throws Exception {
-        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKey);
-        KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
-        PublicKey key =keyFactory.generatePublic(keySpec);
-
-        Signature signature = Signature.getInstance(DsaTypeEn.SHA1withDSA.name());
-        signature.initVerify(key);
-        signature.update(data);
-        return signature.verify(sign);
-    }
-
-    private KeyPair initKey() throws Exception {
-        // 初始化密钥对生成器
-        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
-        // 实例化密钥对生成器
-        keyPairGen.initialize(KEY_SIZE);
-        // 实例化密钥对
-        return keyPairGen.genKeyPair();
-    }
-
-    public byte[] getPublicKey() {
-        return keyPair.getPublic().getEncoded();
-    }
-
-    public byte[] getPrivateKey() {
-        return keyPair.getPrivate().getEncoded();
-    }
-
-    public static void main(String[] args) throws Exception {
-        String msg = "Hello World";
-        DsaCoder dsa = new DsaCoder();
-        byte[] sign = dsa.signature(msg.getBytes(), dsa.getPrivateKey());
-        boolean flag = dsa.verify(msg.getBytes(), dsa.getPublicKey(), sign);
-        String result = flag ? "数字签名匹配" : "数字签名不匹配";
-        System.out.println("数字签名：" + Base64.encodeBase64URLSafeString(sign));
-        System.out.println("验证结果：" + result);
-    }
-}
-```
+## 六、术语
+
+- **明文(Plaintext)**：指待加密信息。明文可以是文本文件、图片文件、二进制数据等。
+- **密文(Ciphertext)**：指经过加密后的明文。密文通常以文本、二进制等形式存在。
+- **加密(Encryption)**：指将明文转换为密文的过程。
+- **解密(Decryption)**：指将密文转换为明文的过程。
+- **加密密钥(Encryption Key)**：指通过加密算法进行加密操作用的密钥。
+- **解密密钥(Decryption Key)**：指通过解密算法进行解密操作用的密钥。
+- **信道(Channel)**：通信的通道，是信号传输的媒介。
 
 ## 参考资料
 
-- 《Core Java Volume2》
-- 《Java 加密与解密技术》
+- [《Java 核心技术 卷 II 高级特性》](https://item.jd.com/12791368.html)
+- [《Java 加密与解密的艺术》](https://item.jd.com/26122568270.html)

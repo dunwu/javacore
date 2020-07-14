@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.concurrent;
+package io.github.dunwu.javacore.concurrent.threadlocal;
 
 /**
  * {@link ThreadLocal} 示例

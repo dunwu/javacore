@@ -16,7 +16,7 @@
 
 ## 一、CountDownLatch
 
-> 字面意思为 **递减计数锁**。用于控制一个或者多个线程等待多个线程。
+> 字面意思为 **递减计数锁**。用于**控制一个线程等待多个线程**。
 >
 > `CountDownLatch` 维护一个计数器 count，表示需要等待的事件数量。`countDown` 方法递减计数器，表示有一个事件已经发生。调用 `await` 方法的线程会一直阻塞直到计数器为零，或者等待中的线程中断，或者等待超时。
 
@@ -31,9 +31,9 @@
 public CountDownLatch(int count) {};
 ```
 
-> 说明：
->
-> - count 为统计值。
+说明：
+
+- count 为统计值。
 
 `CountDownLatch` 的重要方法：
 
@@ -43,11 +43,11 @@ public boolean await(long timeout, TimeUnit unit) throws InterruptedException { 
 public void countDown() { };
 ```
 
-> 说明：
->
-> - `await()` - 调用 `await()` 方法的线程会被挂起，它会等待直到 count 值为 0 才继续执行。
-> - `await(long timeout, TimeUnit unit)` - 和 `await()` 类似，只不过等待一定的时间后 count 值还没变为 0 的话就会继续执行
-> - `countDown()` - 将统计值 count 减 1
+说明：
+
+- `await()` - 调用 `await()` 方法的线程会被挂起，它会等待直到 count 值为 0 才继续执行。
+- `await(long timeout, TimeUnit unit)` - 和 `await()` 类似，只不过等待一定的时间后 count 值还没变为 0 的话就会继续执行
+- `countDown()` - 将统计值 count 减 1
 
 示例：
 
@@ -97,7 +97,7 @@ public class CountDownLatchDemo {
 
 ## 二、CyclicBarrier
 
-> 字面意思是 **循环栅栏**。**`CyclicBarrier` 可以让一组线程等待至某个状态（遵循字面意思，不妨称这个状态为栅栏）之后再全部同时执行**。之所以叫循环栅栏是因为：当所有等待线程都被释放以后，`CyclicBarrier` 可以被重用。
+> 字面意思是 **循环栅栏**。**`CyclicBarrier` 可以让一组线程等待至某个状态（遵循字面意思，不妨称这个状态为栅栏）之后再全部同时执行**。之所以叫循环栅栏是因为：**当所有等待线程都被释放以后，`CyclicBarrier` 可以被重用**。
 >
 > `CyclicBarrier` 维护一个计数器 count。每次执行 `await` 方法之后，count 加 1，直到计数器的值和设置的值相等，等待的所有线程才会继续执行。
 
