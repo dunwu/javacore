@@ -14,11 +14,13 @@
 
 ### [JVM 类加载](jvm-class-loader.md)
 
-### [JVM 工具](jvm-tools.md)
-
-### [JVM 体系结构](jvm-architecture.md)
-
 ### [JVM 实战](jvm-action.md)
+
+### [JDK 命令行工具](jvm-cli-tools.md)
+
+### [JDK GUI 工具](jvm-gui-tools.md)
+
+### [TroubleShooting](trouble-shooting.md)
 
 ## 📚 资料
 

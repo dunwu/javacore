@@ -84,13 +84,14 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 ![img](http://dunwu.test.upcdn.net/snap/20200628154803.png)
 
 - [JVM 体系结构](jvm/jvm-architecture.md)
-- [JVM 内存区域](jvm/jvm-memory.md) - 关键词：程序计数器、虚拟机栈、本地方法栈、堆、方法区、运行时常量池、直接内存、`OutOfMemoryError`、`StackOverflowError`
+- [JVM 内存区域](jvm/jvm-memory.md) - 关键词：`程序计数器`、`虚拟机栈`、`本地方法栈`、`堆`、`方法区`、`运行时常量池`、`直接内存`、`OutOfMemoryError`、`StackOverflowError`
 - [JVM 垃圾收集](jvm/jvm-gc.md) - 关键词：`GC Roots`、`Serial`、`Parallel`、`CMS`、`G1`、`Minor GC`、`Full GC`
 - [JVM 字节码](jvm/jvm-bytecode.md) - 关键词：`bytecode`、`asm`、`javassist`
-- [JVM 类加载](jvm/jvm-class-loader.md) - 关键词：类加载过程、`ClassLoader`、双亲委派、
-- [JVM 工具](jvm/jvm-tools.md) - 关键词：`jps`、`jstat`、`jmap` 、`jstack`、`jhat`、`jinfo`、`jconsole`、`jvisualvm`、`MAT`
-- [JVM 实战](jvm/jvm-action.md) - 关键词：VM 参数、分析、调优
-- [Java 故障排查](jvm/troubleshooting.md) - 关键词：CPU、内存、磁盘、网络、GC
+- [JVM 类加载](jvm/jvm-class-loader.md) - 关键词：`ClassLoader`、`双亲委派`
+- [JVM 实战](jvm/jvm-action.md) - 关键词：`配置`、`调优`
+- [JVM 命令行工具](jvm/jvm-cli-tools.md) - 关键词：`jps`、`jstat`、`jmap` 、`jstack`、`jhat`、`jinfo`
+- [JVM GUI 工具](jvm/jvm-gui-tools.md) - 关键词：`jconsole`、`jvisualvm`、`MAT`、`JProfile`、`Arthas`
+- [TroubleShooting](jvm/trouble-shooting.md) - 关键词：`CPU`、`内存`、`磁盘`、`网络`、`GC`
 
 ## 📚 资料
 
