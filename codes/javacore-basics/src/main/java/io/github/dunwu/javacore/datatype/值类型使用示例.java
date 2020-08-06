@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-03-26
  */
-public class DataTypeDemo01 {
+public class 值类型使用示例 {
 
     public static void demo1() {
         // compile error
@@ -95,7 +95,7 @@ public class DataTypeDemo01 {
     public static void main(String[] args)
         throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         for (int i = 1; i <= 10; i++) {
-            Method method = DataTypeDemo01.class.getMethod("demo" + i);
+            Method method = 值类型使用示例.class.getMethod("demo" + i);
             method.invoke(null);
         }
     }

@@ -432,13 +432,182 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 }
 ```
 
+#### ConcurrentHashMap 的实战
+
+> 示例摘自：[Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
+
+##### ConcurrentHashMap 错误示例
+
+```java
+    //线程个数
+    private static int THREAD_COUNT = 10;
+    //总元素数量
+    private static int ITEM_COUNT = 1000;
+
+    public static void main(String[] args) throws InterruptedException {
+        ConcurrentHashMap<String, Long> concurrentHashMap = getData(ITEM_COUNT - 100);
+        //初始900个元素
+        System.out.println("init size:" + concurrentHashMap.size());
+        ForkJoinPool forkJoinPool = new ForkJoinPool(THREAD_COUNT);
+        //使用线程池并发处理逻辑
+        forkJoinPool.execute(() -> IntStream.rangeClosed(1, 10).parallel().forEach(i -> {
+            //查询还需要补充多少个元素
+            int gap = ITEM_COUNT - concurrentHashMap.size();
+            System.out.println("gap size:" + gap);
+            //补充元素
+            concurrentHashMap.putAll(getData(gap));
+        }));
+        //等待所有任务完成
+        forkJoinPool.shutdown();
+        forkJoinPool.awaitTermination(1, TimeUnit.HOURS);
+        //最后元素个数会是1000吗？
+        System.out.println("finish size:" + concurrentHashMap.size());
+    }
+
+    private static ConcurrentHashMap<String, Long> getData(int count) {
+        return LongStream.rangeClosed(1, count)
+            .boxed()
+            .collect(
+                Collectors.toConcurrentMap(
+                    i -> UUID.randomUUID().toString(),
+                    i -> i,
+                    (o1, o2) -> o1,
+                    ConcurrentHashMap::new));
+    }
+```
+
+初始大小 900 符合预期，还需要填充 100 个元素。
+
+预期结果为 1000 个元素，实际大于 1000 个元素。
+
+【分析】
+
+ConcurrentHashMap 对外提供的方法或能力的限制：
+
+- 使用了 ConcurrentHashMap，不代表对它的多个操作之间的状态是一致的，是没有其他线程在操作它的，如果需要确保需要手动加锁。
+- 诸如 size、isEmpty 和 containsValue 等聚合方法，在并发情况下可能会反映ConcurrentHashMap 的中间状态。因此在并发情况下，这些方法的返回值只能用作参考，而不能用于流程控制。显然，利用 size 方法计算差异值，是一个流程控制。
+- 诸如 putAll 这样的聚合方法也不能确保原子性，在 putAll 的过程中去获取数据可能会获取到部分数据。
+
+##### ConcurrentHashMap 错误示例修正1.0版
+
+通过 synchronized 加锁，当然可以保证数据一致性，但是牺牲了 ConcurrentHashMap 的性能，没哟真正发挥出 ConcurrentHashMap 的特性。
+
+```java
+
+    //线程个数
+    private static int THREAD_COUNT = 10;
+    //总元素数量
+    private static int ITEM_COUNT = 1000;
+
+    public static void main(String[] args) throws InterruptedException {
+        ConcurrentHashMap<String, Long> concurrentHashMap = getData(ITEM_COUNT - 100);
+        //初始900个元素
+        System.out.println("init size:" + concurrentHashMap.size());
+        ForkJoinPool forkJoinPool = new ForkJoinPool(THREAD_COUNT);
+        //使用线程池并发处理逻辑
+        forkJoinPool.execute(() -> IntStream.rangeClosed(1, 10).parallel().forEach(i -> {
+            //查询还需要补充多少个元素
+            synchronized (concurrentHashMap) {
+                int gap = ITEM_COUNT - concurrentHashMap.size();
+                System.out.println("gap size:" + gap);
+                //补充元素
+                concurrentHashMap.putAll(getData(gap));
+            }
+        }));
+        //等待所有任务完成
+        forkJoinPool.shutdown();
+        forkJoinPool.awaitTermination(1, TimeUnit.HOURS);
+        //最后元素个数会是1000吗？
+        System.out.println("finish size:" + concurrentHashMap.size());
+    }
+
+    private static ConcurrentHashMap<String, Long> getData(int count) {
+        return LongStream.rangeClosed(1, count)
+            .boxed()
+            .collect(
+                Collectors.toConcurrentMap(
+                    i -> UUID.randomUUID().toString(),
+                    i -> i,
+                    (o1, o2) -> o1,
+                    ConcurrentHashMap::new));
+    }
+```
+
+##### ConcurrentHashMap 错误示例修正2.0版
+
+```java
+
+    //循环次数
+    private static int LOOP_COUNT = 10000000;
+    //线程个数
+    private static int THREAD_COUNT = 10;
+    //总元素数量
+    private static int ITEM_COUNT = 1000;
+
+    public static void main(String[] args) throws InterruptedException {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start("normaluse");
+        Map<String, Long> normaluse = normaluse();
+        stopWatch.stop();
+        Assert.isTrue(normaluse.size() == ITEM_COUNT, "normaluse size error");
+        Assert.isTrue(normaluse.values().stream()
+                .mapToLong(aLong -> aLong).reduce(0, Long::sum) == LOOP_COUNT
+            , "normaluse count error");
+        stopWatch.start("gooduse");
+        Map<String, Long> gooduse = gooduse();
+        stopWatch.stop();
+        Assert.isTrue(gooduse.size() == ITEM_COUNT, "gooduse size error");
+        Assert.isTrue(gooduse.values().stream()
+                .mapToLong(l -> l)
+                .reduce(0, Long::sum) == LOOP_COUNT
+            , "gooduse count error");
+        System.out.println(stopWatch.prettyPrint());
+    }
+
+    private static Map<String, Long> normaluse() throws InterruptedException {
+        ConcurrentHashMap<String, Long> freqs = new ConcurrentHashMap<>(ITEM_COUNT);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(THREAD_COUNT);
+        forkJoinPool.execute(() -> IntStream.rangeClosed(1, LOOP_COUNT).parallel().forEach(i -> {
+                String key = "item" + ThreadLocalRandom.current().nextInt(ITEM_COUNT);
+                synchronized (freqs) {
+                    if (freqs.containsKey(key)) {
+                        freqs.put(key, freqs.get(key) + 1);
+                    } else {
+                        freqs.put(key, 1L);
+                    }
+                }
+            }
+        ));
+        forkJoinPool.shutdown();
+        forkJoinPool.awaitTermination(1, TimeUnit.HOURS);
+        return freqs;
+    }
+
+    private static Map<String, Long> gooduse() throws InterruptedException {
+        ConcurrentHashMap<String, LongAdder> freqs = new ConcurrentHashMap<>(ITEM_COUNT);
+        ForkJoinPool forkJoinPool = new ForkJoinPool(THREAD_COUNT);
+        forkJoinPool.execute(() -> IntStream.rangeClosed(1, LOOP_COUNT).parallel().forEach(i -> {
+                String key = "item" + ThreadLocalRandom.current().nextInt(ITEM_COUNT);
+                freqs.computeIfAbsent(key, k -> new LongAdder()).increment();
+            }
+        ));
+        forkJoinPool.shutdown();
+        forkJoinPool.awaitTermination(1, TimeUnit.HOURS);
+        return freqs.entrySet().stream()
+            .collect(Collectors.toMap(
+                e -> e.getKey(),
+                e -> e.getValue().longValue())
+            );
+    }
+```
+
 ## 四、List
 
 ### CopyOnWriteArrayList
 
 `CopyOnWriteArrayList` 是线程安全的 `ArrayList`。`CopyOnWrite` 字面意思为**写的时候会将共享变量新复制一份**出来。复制的好处在于**读操作是无锁的**（也就是无阻塞）。
 
-CopyOnWriteArrayList **仅适用于写操作非常少的场景**，而且能够容忍读写的短暂不一致。
+CopyOnWriteArrayList **仅适用于写操作非常少的场景**，而且能够容忍读写的短暂不一致。如果读写比例均衡或者有大量写操作的话，使用 CopyOnWriteArrayList 的性能会非常糟糕。
 
 #### CopyOnWriteArrayList 原理
 
@@ -594,6 +763,73 @@ public class CopyOnWriteArrayListDemo {
     }
 }
 ```
+
+#### CopyOnWriteArrayList 实战
+
+```java
+@Slf4j
+public class WrongCopyOnWriteList {
+
+    public static void main(String[] args) {
+        testRead();
+        testWrite();
+    }
+
+    public static Map testWrite() {
+        List<Integer> copyOnWriteArrayList = new CopyOnWriteArrayList<>();
+        List<Integer> synchronizedList = Collections.synchronizedList(new ArrayList<>());
+        StopWatch stopWatch = new StopWatch();
+        int loopCount = 100000;
+        stopWatch.start("Write:copyOnWriteArrayList");
+        IntStream.rangeClosed(1, loopCount)
+            .parallel()
+            .forEach(__ -> copyOnWriteArrayList.add(ThreadLocalRandom.current().nextInt(loopCount)));
+        stopWatch.stop();
+        stopWatch.start("Write:synchronizedList");
+        IntStream.rangeClosed(1, loopCount)
+            .parallel()
+            .forEach(__ -> synchronizedList.add(ThreadLocalRandom.current().nextInt(loopCount)));
+        stopWatch.stop();
+        log.info(stopWatch.prettyPrint());
+        Map result = new HashMap();
+        result.put("copyOnWriteArrayList", copyOnWriteArrayList.size());
+        result.put("synchronizedList", synchronizedList.size());
+        return result;
+    }
+
+    private static void addAll(List<Integer> list) {
+        list.addAll(IntStream.rangeClosed(1, 1000000).boxed().collect(Collectors.toList()));
+    }
+
+    public static Map testRead() {
+        List<Integer> copyOnWriteArrayList = new CopyOnWriteArrayList<>();
+        List<Integer> synchronizedList = Collections.synchronizedList(new ArrayList<>());
+        addAll(copyOnWriteArrayList);
+        addAll(synchronizedList);
+        StopWatch stopWatch = new StopWatch();
+        int loopCount = 1000000;
+        int count = copyOnWriteArrayList.size();
+        stopWatch.start("Read:copyOnWriteArrayList");
+        IntStream.rangeClosed(1, loopCount)
+            .parallel()
+            .forEach(__ -> copyOnWriteArrayList.get(ThreadLocalRandom.current().nextInt(count)));
+        stopWatch.stop();
+        stopWatch.start("Read:synchronizedList");
+        IntStream.range(0, loopCount)
+            .parallel()
+            .forEach(__ -> synchronizedList.get(ThreadLocalRandom.current().nextInt(count)));
+        stopWatch.stop();
+        log.info(stopWatch.prettyPrint());
+        Map result = new HashMap();
+        result.put("copyOnWriteArrayList", copyOnWriteArrayList.size());
+        result.put("synchronizedList", synchronizedList.size());
+        return result;
+    }
+
+}
+```
+
+读性能差不多是写性能的一百倍。
 
 ## 五、Set
 

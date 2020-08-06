@@ -2,6 +2,19 @@
 
 > 📌 **关键词：** JAVA_HOME、CLASSPATH、Path、环境变量、IDE
 
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [下载](#下载)
+- [安装](#安装)
+- [环境变量](#环境变量)
+  - [Windows](#windows)
+  - [Linux](#linux)
+- [测试安装成功](#测试安装成功)
+- [开发工具](#开发工具)
+- [第一个程序：Hello World](#第一个程序hello-world)
+
+<!-- /TOC -->
+
 ## 下载
 
 进入 [JDK 官方下载地址](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) ，根据自己的环境选择下载所需版本。

@@ -2,8 +2,6 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 >
-> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/control)」
->
 > Java 控制语句大致可分为三大类：
 >
 > - 选择语句
@@ -18,6 +16,28 @@
 >   - break
 >   - continue
 >   - return
+
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [选择语句](#选择语句)
+  - [if 语句](#if-语句)
+  - [if...else 语句](#ifelse-语句)
+  - [if...else if...else 语句](#ifelse-ifelse-语句)
+  - [嵌套的 if…else 语句](#嵌套的-ifelse-语句)
+  - [switch 语句](#switch-语句)
+- [循环语句](#循环语句)
+  - [while 循环](#while-循环)
+  - [do while 循环](#do-while-循环)
+  - [for 循环](#for-循环)
+  - [foreach 循环](#foreach-循环)
+- [中断语句](#中断语句)
+  - [break 关键字](#break-关键字)
+  - [continue 关键字](#continue-关键字)
+  - [return 关键字](#return-关键字)
+- [最佳实践](#最佳实践)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 
 ## 选择语句
 

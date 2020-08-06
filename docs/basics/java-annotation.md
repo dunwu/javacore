@@ -3,8 +3,36 @@
 > 本文内容基于 JDK8。注解是 JDK5 引入的，后续 JDK 版本扩展了一些内容，本文中没有明确指明版本的注解都是 JDK5 就已经支持的注解。
 >
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
->
-> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/annotation)」
+
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [简介](#简介)
+  - [注解的形式](#注解的形式)
+  - [什么是注解](#什么是注解)
+  - [注解的作用](#注解的作用)
+  - [注解的代价](#注解的代价)
+  - [注解的应用范围](#注解的应用范围)
+- [内置注解](#内置注解)
+  - [@Override](#override)
+  - [@Deprecated](#deprecated)
+  - [@SuppressWarnnings](#suppresswarnnings)
+  - [@SafeVarargs](#safevarargs)
+  - [@FunctionalInterface](#functionalinterface)
+- [元注解](#元注解)
+  - [@Retention](#retention)
+  - [@Documented](#documented)
+  - [@Target](#target)
+  - [@Inherited](#inherited)
+  - [@Repeatable](#repeatable)
+- [自定义注解](#自定义注解)
+  - [注解的定义](#注解的定义)
+  - [注解属性](#注解属性)
+  - [注解处理器](#注解处理器)
+  - [使用注解](#使用注解)
+- [小结](#小结)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 
 ## 简介
 

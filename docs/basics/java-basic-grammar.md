@@ -2,6 +2,24 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [注释](#注释)
+- [基本数据类型](#基本数据类型)
+- [变量](#变量)
+- [数组](#数组)
+- [枚举](#枚举)
+- [操作符](#操作符)
+- [方法](#方法)
+- [控制语句](#控制语句)
+- [异常](#异常)
+- [泛型](#泛型)
+- [反射](#反射)
+- [注解](#注解)
+- [序列化](#序列化)
+
+<!-- /TOC -->
+
 ## 注释
 
 空白行，或者注释的内容，都会被 Java 编译器忽略掉。
@@ -132,3 +150,5 @@ Java 中支持的操作符类型如下：
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java序列化.svg)
 
 > 👉 扩展阅读：[深入理解 Java 序列化](https://github.com/dunwu/javacore/blob/master/docs/io/Java序列化.md)
+
+## 参考资料

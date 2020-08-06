@@ -30,7 +30,7 @@
 - [Java 基础语法特性](docs/basics/java-basic-grammar.md)
 - [Java 基本数据类型](docs/basics/java-data-type.md)
 - [Java String 类型](docs/basics/java-string.md)
-- [Java 类和对象](docs/basics/java-class.md)
+- [Java 面向对象](docs/basics/java-oop.md)
 - [Java 方法](docs/basics/java-method.md)
 - [Java 数组](docs/basics/java-array.md)
 - [Java 枚举](docs/basics/java-enum.md)

@@ -1,8 +1,27 @@
 # 深入理解 Java 异常
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
->
-> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/exception)」
+
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [异常框架](#异常框架)
+  - [Throwable](#throwable)
+  - [Error](#error)
+  - [Exception](#exception)
+  - [RuntimeException](#runtimeexception)
+- [自定义异常](#自定义异常)
+- [抛出异常](#抛出异常)
+- [捕获异常](#捕获异常)
+- [异常链](#异常链)
+- [异常注意事项](#异常注意事项)
+  - [finally 覆盖异常](#finally-覆盖异常)
+  - [覆盖抛出异常的方法](#覆盖抛出异常的方法)
+  - [异常和线程](#异常和线程)
+- [最佳实践](#最佳实践)
+- [小结](#小结)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 
 ## 异常框架
 

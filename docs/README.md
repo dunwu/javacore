@@ -28,7 +28,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 - [Java 基础语法特性](basics/java-basic-grammar.md)
 - [Java 基本数据类型](basics/java-data-type.md)
 - [Java String 类型](basics/java-string.md)
-- [Java 类和对象](basics/java-class.md)
+- [Java 面向对象](basics/java-oop.md)
 - [Java 方法](basics/java-method.md)
 - [Java 数组](basics/java-array.md)
 - [Java 枚举](basics/java-enum.md)
@@ -117,9 +117,16 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
     - [《Java 程序员面试宝典》](https://item.jd.com/11772823.html)
 - **教程、社区**
   - [Runoob Java 教程](https://www.runoob.com/java/java-tutorial.html)
-  - [JavaGuide](https://github.com/Snailclimb/JavaGuide)
-  - [Java](https://github.com/TheAlgorithms/Java)
   - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)
+  - [Java](https://github.com/TheAlgorithms/Java)
+  - [Java 核心技术面试精讲](https://time.geekbang.org/column/intro/82)
+  - [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
+  - [Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
+  - [深入拆解 Java 虚拟机](https://time.geekbang.org/column/intro/100010301)
+  - [Java 并发编程实战](https://time.geekbang.org/column/intro/100023901)
+- **面试**
+  - [CS-Notes](https://github.com/CyC2018/CS-Notes)
+  - [JavaGuide](https://github.com/Snailclimb/JavaGuide)
   - [advanced-java](https://github.com/doocs/advanced-java)
 
 ## 🚪 传送

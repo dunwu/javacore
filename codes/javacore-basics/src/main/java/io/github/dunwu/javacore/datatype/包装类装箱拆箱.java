@@ -6,7 +6,7 @@ package io.github.dunwu.javacore.datatype;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-03-10
  */
-public class BoxingDemo {
+public class 包装类装箱拆箱 {
 
     public static void main(String[] args) {
         Integer i1 = 10; // 自动装箱

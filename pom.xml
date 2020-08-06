@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.github.dunwu</groupId>
     <artifactId>dunwu-parent</artifactId>
-    <version>0.5.3</version>
+    <version>0.5.7</version>
   </parent>
 
   <groupId>io.github.dunwu.javacore</groupId>
@@ -29,13 +29,37 @@
     <module>codes/javacore-concurrent</module>
     <module>codes/javacore-utils</module>
     <module>codes/javacore-oop</module>
+    <module>codes/javacore-in-web</module>
   </modules>
 
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.github.dunwu</groupId>
+      <artifactId>dunwu-tool-core</artifactId>
     </dependency>
   </dependencies>
 

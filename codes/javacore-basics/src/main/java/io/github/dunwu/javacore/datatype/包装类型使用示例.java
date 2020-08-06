@@ -4,7 +4,7 @@ package io.github.dunwu.javacore.datatype;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-03-26
  */
-public class DataTypeDemo02 {
+public class 包装类型使用示例 {
 
     public static void main(String[] args) {
         printByte();

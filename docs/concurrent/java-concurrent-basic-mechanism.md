@@ -419,6 +419,178 @@ public static String concatString(String s1, String s2, String s3) {
 
 在 Java 1.6 中引入了自适应的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。
 
+### synchronized 的误区
+
+> 示例摘自：[Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
+
+#### synchronized 使用范围不当导致的错误
+
+```java
+public class Interesting {
+
+    volatile int a = 1;
+    volatile int b = 1;
+
+    public static void main(String[] args) {
+        Interesting interesting = new Interesting();
+        new Thread(() -> interesting.add()).start();
+        new Thread(() -> interesting.compare()).start();
+    }
+
+    public synchronized void add() {
+        log.info("add start");
+        for (int i = 0; i < 10000; i++) {
+            a++;
+            b++;
+        }
+        log.info("add done");
+    }
+
+    public void compare() {
+        log.info("compare start");
+        for (int i = 0; i < 10000; i++) {
+            //a始终等于b吗？
+            if (a < b) {
+                log.info("a:{},b:{},{}", a, b, a > b);
+                //最后的a>b应该始终是false吗？
+            }
+        }
+        log.info("compare done");
+    }
+
+}
+```
+
+【输出】
+
+```
+16:05:25.541 [Thread-0] INFO io.github.dunwu.javacore.concurrent.sync.synchronized使用范围不当 - add start
+16:05:25.544 [Thread-0] INFO io.github.dunwu.javacore.concurrent.sync.synchronized使用范围不当 - add done
+16:05:25.544 [Thread-1] INFO io.github.dunwu.javacore.concurrent.sync.synchronized使用范围不当 - compare start
+16:05:25.544 [Thread-1] INFO io.github.dunwu.javacore.concurrent.sync.synchronized使用范围不当 - compare done
+```
+
+之所以出现这种错乱，是因为两个线程是交错执行 add 和 compare 方法中的业务逻辑，而且这些业务逻辑不是原子性的：a++ 和 b++ 操作中可以穿插在 compare 方法的比较代码中；更需要注意的是，a<b 这种比较操作在字节码层面是加载 a、加载 b 和比较三步，代码虽然是一行但也不是原子性的。
+
+所以，正确的做法应该是，为 add 和 compare 都加上方法锁，确保 add 方法执行时，compare 无法读取 a 和 b：
+
+```
+public synchronized void add()
+public synchronized void compare()
+```
+
+所以，使用锁解决问题之前一定要理清楚，我们要保护的是什么逻辑，多线程执行的情况又是怎样的。
+
+#### synchronized 保护对象不对导致的错误
+
+加锁前要清楚锁和被保护的对象是不是一个层面的。
+
+静态字段属于类，类级别的锁才能保护；而非静态字段属于类实例，实例级别的锁就可以保护。
+
+```java
+public class synchronized错误使用示例2 {
+
+    public static void main(String[] args) {
+        synchronized错误使用示例2 demo = new synchronized错误使用示例2();
+        System.out.println(demo.wrong(1000000));
+        System.out.println(demo.right(1000000));
+    }
+
+    public int wrong(int count) {
+        Data.reset();
+        IntStream.rangeClosed(1, count).parallel().forEach(i -> new Data().wrong());
+        return Data.getCounter();
+    }
+
+    public int right(int count) {
+        Data.reset();
+        IntStream.rangeClosed(1, count).parallel().forEach(i -> new Data().right());
+        return Data.getCounter();
+    }
+
+    private static class Data {
+
+        @Getter
+        private static int counter = 0;
+        private static Object locker = new Object();
+
+        public static int reset() {
+            counter = 0;
+            return counter;
+        }
+
+        public synchronized void wrong() {
+            counter++;
+        }
+
+        public void right() {
+            synchronized (locker) {
+                counter++;
+            }
+        }
+
+    }
+
+}
+```
+
+wrong 方法中试图对一个静态对象加对象级别的 synchronized 锁，并不能保证线程安全。
+
+#### 锁粒度导致的问题
+
+要尽可能的缩小加锁的范围，这可以提高并发吞吐。
+
+如果精细化考虑了锁应用范围后，性能还无法满足需求的话，我们就要考虑另一个维度的粒度问题了，即：区分读写场景以及资源的访问冲突，考虑使用悲观方式的锁还是乐观方式的锁。
+
+```java
+public class synchronized锁粒度不当 {
+
+    public static void main(String[] args) {
+        Demo demo = new Demo();
+        demo.wrong();
+        demo.right();
+    }
+
+    private static class Demo {
+
+        private List<Integer> data = new ArrayList<>();
+
+        private void slow() {
+            try {
+                TimeUnit.MILLISECONDS.sleep(10);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        public int wrong() {
+            long begin = System.currentTimeMillis();
+            IntStream.rangeClosed(1, 1000).parallel().forEach(i -> {
+                synchronized (this) {
+                    slow();
+                    data.add(i);
+                }
+            });
+            log.info("took:{}", System.currentTimeMillis() - begin);
+            return data.size();
+        }
+
+        public int right() {
+            long begin = System.currentTimeMillis();
+            IntStream.rangeClosed(1, 1000).parallel().forEach(i -> {
+                slow();
+                synchronized (data) {
+                    data.add(i);
+                }
+            });
+            log.info("took:{}", System.currentTimeMillis() - begin);
+            return data.size();
+        }
+
+    }
+
+}
+```
+
 ## 三、volatile
 
 ### volatile 的要点
@@ -897,6 +1069,80 @@ try {
 }
 ```
 
+### ThreadLocal 的误区
+
+> 示例摘自：[Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
+
+ThreadLocal 适用于变量在线程间隔离，而在方法或类间共享的场景。
+
+前文提到，ThreadLocal 是线程隔离的，那么是不是使用 ThreadLocal 就一定高枕无忧呢？
+
+#### ThreadLocal 错误案例
+
+使用 Spring Boot 创建一个 Web 应用程序，使用 ThreadLocal 存放一个 Integer 的值，来暂且代表需要在线程中保存的用户信息，这个值初始是 null。
+
+```java
+    private ThreadLocal<Integer> currentUser = ThreadLocal.withInitial(() -> null);
+
+    @GetMapping("wrong")
+    public Map<String, String> wrong(@RequestParam("id") Integer userId) {
+        //设置用户信息之前先查询一次ThreadLocal中的用户信息
+        String before = Thread.currentThread().getName() + ":" + currentUser.get();
+        //设置用户信息到ThreadLocal
+        currentUser.set(userId);
+        //设置用户信息之后再查询一次ThreadLocal中的用户信息
+        String after = Thread.currentThread().getName() + ":" + currentUser.get();
+        //汇总输出两次查询结果
+        Map<String, String> result = new HashMap<>();
+        result.put("before", before);
+        result.put("after", after);
+        return result;
+    }
+```
+
+【预期】从代码逻辑来看，我们预期第一次获取的值始终应该是 null。
+
+【实际】
+
+为了方便复现，将 Tomcat 工作线程设为 1：
+
+```
+server.tomcat.max-threads=1
+```
+
+当访问 id = 1 时，符合预期
+
+![](http://dunwu.test.upcdn.net/snap/20200731111854.png)
+
+当访问 id = 2 时，before 的应答不是 null，而是 1，不符合预期。
+
+![image-20200731111921591](C:\Users\zp\AppData\Roaming\Typora\typora-user-images\image-20200731111921591.png)
+
+【分析】实际情况和预期存在偏差。Spring Boot 程序运行在 Tomcat 中，执行程序的线程是 Tomcat 的工作线程，而 Tomcat 的工作线程是基于线程池的。**线程池会重用固定的几个线程，一旦线程重用，那么很可能首次从**
+**ThreadLocal 获取的值是之前其他用户的请求遗留的值。这时，ThreadLocal 中的用户信息就是其他用户的信息**。
+
+**并不能认为没有显式开启多线程就不会有线程安全问题**。使用类似 ThreadLocal 工具来存放一些数据时，需要特别注意在代码运行完后，显式地去清空设置的数据。
+
+#### ThreadLocal 错误案例修正
+
+```java
+    @GetMapping("right")
+    public Map<String, String> right(@RequestParam("id") Integer userId) {
+        String before = Thread.currentThread().getName() + ":" + currentUser.get();
+        currentUser.set(userId);
+        try {
+            String after = Thread.currentThread().getName() + ":" + currentUser.get();
+            Map<String, String> result = new HashMap<>();
+            result.put("before", before);
+            result.put("after", after);
+            return result;
+        } finally {
+            //在finally代码块中删除ThreadLocal中的数据，确保数据不串
+            currentUser.remove();
+        }
+    }
+```
+
 ### InheritableThreadLocal
 
 `InheritableThreadLocal` 类是 `ThreadLocal` 类的子类。
@@ -910,6 +1156,7 @@ try {
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
 - [Java 并发编程：volatile 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
 - [Java 并发编程：synchronized](http://www.cnblogs.com/dolphin0520/p/3923737.html)
 - [深入理解 Java 并发之 synchronized 实现原理](https://blog.csdn.net/javazejian/article/details/72828483)

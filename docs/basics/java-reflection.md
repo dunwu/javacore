@@ -1,8 +1,33 @@
 # 深入理解 Java 反射和动态代理
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
->
-> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/reflect)」
+
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [一、反射简介](#一反射简介)
+  - [什么是反射](#什么是反射)
+  - [反射的应用场景](#反射的应用场景)
+  - [反射的缺点](#反射的缺点)
+- [二、反射机制](#二反射机制)
+  - [类加载过程](#类加载过程)
+  - [Class 对象](#class-对象)
+- [三、使用反射](#三使用反射)
+  - [java.lang.reflect 包](#javalangreflect-包)
+  - [获得 Class 对象](#获得-class-对象)
+  - [判断是否为某个类的实例](#判断是否为某个类的实例)
+  - [创建实例](#创建实例)
+  - [Field](#field)
+  - [Method](#method)
+  - [Constructor](#constructor)
+  - [Array](#array)
+- [四、动态代理](#四动态代理)
+  - [静态代理](#静态代理)
+  - [JDK 动态代理](#jdk-动态代理)
+  - [CGLIB 动态代理](#cglib-动态代理)
+- [五、小结](#五小结)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 
 ## 一、反射简介
 

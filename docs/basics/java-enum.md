@@ -1,8 +1,31 @@
 # 深入理解 Java 枚举
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
->
-> 🔁 本文中的示例代码已归档到：「[javacore](https://github.com/dunwu/javacore/tree/master/codes/javacore-basics/src/main/java/io/github/dunwu/javacore/enumeration)」
+
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [简介](#简介)
+- [枚举的本质](#枚举的本质)
+- [枚举的方法](#枚举的方法)
+- [枚举的特性](#枚举的特性)
+  - [基本特性](#基本特性)
+  - [枚举可以添加方法](#枚举可以添加方法)
+  - [枚举可以实现接口](#枚举可以实现接口)
+  - [枚举不可以继承](#枚举不可以继承)
+- [枚举的应用](#枚举的应用)
+  - [组织常量](#组织常量)
+  - [switch 状态机](#switch-状态机)
+  - [错误码](#错误码)
+  - [组织枚举](#组织枚举)
+  - [策略枚举](#策略枚举)
+  - [枚举实现单例模式](#枚举实现单例模式)
+- [枚举工具类](#枚举工具类)
+  - [EnumSet](#enumset)
+  - [EnumMap](#enummap)
+- [小结](#小结)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
 
 ## 简介
 

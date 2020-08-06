@@ -469,6 +469,57 @@ public class ScheduledThreadPoolDemo {
 
 使用有界队列，当任务过多时，线程池会触发执行拒绝策略，线程池默认的拒绝策略会 throw RejectedExecutionException 这是个运行时异常，对于运行时异常编译器并不强制 catch 它，所以开发人员很容易忽略。因此**默认拒绝策略要慎重使用**。如果线程池处理的任务非常重要，建议自定义自己的拒绝策略；并且在实际工作中，自定义的拒绝策略往往和降级策略配合使用。
 
+## 六、线程池使用误区
+
+《阿里巴巴 Java 开发手册》中提到，禁止使用这些方法来创建线程池，而应该手动 `new ThreadPoolExecutor` 来创建线程池。制订这条规则是因为容易导致生产事故，最典型的就是 newFixedThreadPool 和 newCachedThreadPool，可能因为资源耗尽导致 OOM 问题。
+
+【示例】newFixedThreadPool OOM
+
+```java
+ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
+printStats(threadPool);
+for (int i = 0; i < 100000000; i++) {
+	threadPool.execute(() -> {
+		String payload = IntStream.rangeClosed(1, 1000000)
+			.mapToObj(__ -> "a")
+			.collect(Collectors.joining("")) + UUID.randomUUID().toString();
+		try {
+			TimeUnit.HOURS.sleep(1);
+		} catch (InterruptedException e) {
+		}
+		log.info(payload);
+	});
+}
+
+threadPool.shutdown();
+threadPool.awaitTermination(1, TimeUnit.HOURS);
+```
+
+newFixedThreadPool 使用的工作队列是 `LinkedBlockingQueue` ，而默认构造方法的 `LinkedBlockingQueue` 是一个 `Integer.MAX_VALUE` 长度的队列，可以认为是无界的。如果任务较多并且执行较慢的话，队列可能会快速积压，撑爆内存导致 OOM。
+
+【示例】newCachedThreadPool OOM
+
+```java
+ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+printStats(threadPool);
+for (int i = 0; i < 100000000; i++) {
+	threadPool.execute(() -> {
+		String payload = UUID.randomUUID().toString();
+		try {
+			TimeUnit.HOURS.sleep(1);
+		} catch (InterruptedException e) {
+		}
+		log.info(payload);
+	});
+}
+threadPool.shutdown();
+threadPool.awaitTermination(1, TimeUnit.HOURS);
+```
+
+`newCachedThreadPool` 的最大线程数是 `Integer.MAX_VALUE`，可以认为是没有上限的，而其工作队列 `SynchronousQueue` 是一个没有存储空间的阻塞队列。这意味着，只要有请求到来，就必须找到一条工作线程来处理，如果当前没有空闲的线程就再创建一条新的。
+
+如果大量的任务进来后会创建大量的线程。我们知道线程是需要分配一定的内存空间作为线程栈的，比如 1MB，因此无限制创建线程必然会导致 OOM。
+
 ## 参考资料
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)

@@ -15,7 +15,17 @@ assertSame(str2==str3);
 assertSame(str1==str3)
 ```
 
-## String 的不可变性
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [String 的不可变性](#string-的不可变性)
+- [String 的优化](#string-的优化)
+  - [字符串拼接](#字符串拼接)
+  - [如何使用 String.intern 节省内存](#如何使用-stringintern-节省内存)
+- [参考资料](#参考资料)
+
+<!-- /TOC -->
+
+## 一、String 的不可变性
 
 我们先来看下 `String` 的定义：
 
@@ -40,9 +50,9 @@ public final class String
 
 使用第一种方式创建字符串对象时，JVM 首先会检查该对象是否在字符串常量池中，如果在，就返回该对象引用，否则新的字符串将在常量池中被创建。这种方式可以减少同一个值的字符串对象的重复创建，节约内存。
 
- `String str = new String("abc")` 这种方式，首先在编译类文件时，`"abc"` 常量字符串将会放入到常量结构中，在类加载时，`"abc"` 将会在常量池中创建；其次，在调用 new 时，JVM 命令将会调用 `String` 的构造函数，同时引用常量池中的 `"abc"`  字符串，在堆内存中创建一个 `String` 对象；最后，str 将引用 `String` 对象。
+`String str = new String("abc")` 这种方式，首先在编译类文件时，`"abc"` 常量字符串将会放入到常量结构中，在类加载时，`"abc"` 将会在常量池中创建；其次，在调用 new 时，JVM 命令将会调用 `String` 的构造函数，同时引用常量池中的 `"abc"` 字符串，在堆内存中创建一个 `String` 对象；最后，str 将引用 `String` 对象。
 
-## String 的优化
+## 二、String 的优化
 
 ### 字符串拼接
 
@@ -70,7 +80,7 @@ String str= "ab" + "cd" + "ef";
 
 ```java
 public class SharedLocation {
- 
+
 	private String city;
 	private String region;
 	private String countryCode;
@@ -81,11 +91,11 @@ sharedLocation.setCity(messageInfo.getCity().intern());		sharedLocation.setCount
 sharedLocation.setRegion(messageInfo.getCountryCode().intern());
 ```
 
-
+虽然使用 new 声明的字符串调用 intern 方法，也可以让字符串进行驻留，但在业务代码中滥用 intern，可能会产生性能问题。
 
 ## 参考资料
 
 - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
 - [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
-- [Java基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
+- [Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
 - [深入剖析 Java 中的装箱和拆箱](https://www.cnblogs.com/dolphin0520/p/3780005.html)
