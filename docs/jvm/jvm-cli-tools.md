@@ -13,7 +13,8 @@
 | `jmap`   | JVM 堆内存分析工具。用于打印 JVM 进程对象直方图、类加载统计。并且可以生成堆转储快照（一般称为 heapdump 或 dump 文件）。 |
 | `jstack` | JVM 栈查看工具。用于打印 JVM 进程的线程和锁的情况。并且可以生成线程快照（一般称为 threaddump 或 javacore 文件）。 |
 | `jhat`   | 用来分析 jmap 生成的 dump 文件。                             |
-| `jinfo`  | 用于实时查看和调整虚拟机运行参数。                           |
+| `jinfo`  | JVM 信息查看工具。用于实时查看和调整 JVM 进程参数。          |
+| `jcmd`   | JVM 命令行调试 工具。用于向 JVM 进程发送调试命令。           |
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

@@ -13,8 +13,10 @@ import java.util.List;
  * 官方对此的定义：超过98%的时间用来做GC并且回收了不到2%的堆内存时会抛出此异常。
  * <p>
  * VM Args: -Xms10M -Xmx10M
- *
- * Linux Test Cli: java -verbose:gc -Xms10M -Xmx10M -cp target/javacore-jvm-1.0.1.jar io.github.dunwu.javacore.jvm.memory.GcOverheadLimitExceededDemo
+ * <p>
+ * Linux Test Cli: nohup java -verbose:gc -Xms10M -Xmx10M -XX:+HeapDumpOnOutOfMemoryError -classpath
+ * "target/javacore-jvm-1.0.1.jar:target/lib/*" io.github.dunwu.javacore.jvm.memory.GcOverheadLimitExceededDemo >>
+ * output.log 2>&1 &
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25
