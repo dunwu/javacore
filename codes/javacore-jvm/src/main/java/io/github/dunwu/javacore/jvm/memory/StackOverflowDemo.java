@@ -13,8 +13,10 @@ package io.github.dunwu.javacore.jvm.memory;
  * <p>
  * VM 参数：
  * <ul>
- * <li>-Xss128k - 设置栈大小为 128k</li>
+ * <li>-Xss228k - 设置栈大小为 228k</li>
  * </ul>
+ * <p>
+ * Linux Test Cli: nohup java -verbose:gc -Xss228k -cp target/javacore-jvm-1.0.1.jar io.github.dunwu.javacore.jvm.memory.StackOverflowDemo >> output.log 2>&1 &
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25

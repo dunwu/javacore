@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
  * <p>
  * 错误现象：java.lang.OutOfMemoryError
  * <p>
- * VM Args：-Xmx20M -XX:MaxDirectMemorySize=10M
+ * VM Args：-verbose:gc -Xmx20M -XX:MaxDirectMemorySize=10M
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25

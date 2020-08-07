@@ -14,6 +14,8 @@ import java.util.List;
  * <p>
  * VM Args: -Xms10M -Xmx10M
  *
+ * Linux Test Cli: java -verbose:gc -Xms10M -Xmx10M -cp target/javacore-jvm-1.0.1.jar io.github.dunwu.javacore.jvm.memory.GcOverheadLimitExceededDemo
+ *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25
  */
