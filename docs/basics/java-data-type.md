@@ -543,6 +543,159 @@ Lombok 自动生成的方法可能就不是我们期望的了。
 
 @EqualsAndHashCode 默认实现没有使用父类属性。为解决这个问题，我们可以手动设置 callSuper 开关为 true，来覆盖这种默认行为。
 
+## 五、数值计算
+
+### 浮点数计算问题
+
+计算机是把数值保存在了变量中，不同类型的数值变量能保存的数值范围不同，当数值超过类型能表达的数值上限则会发生溢出问题。
+
+```java
+System.out.println(0.1 + 0.2); // 0.30000000000000004
+System.out.println(1.0 - 0.8); // 0.19999999999999996
+System.out.println(4.015 * 100); // 401.49999999999994
+System.out.println(123.3 / 100); // 1.2329999999999999
+double amount1 = 2.15;
+double amount2 = 1.10;
+System.out.println(amount1 - amount2); // 1.0499999999999998
+```
+
+上面的几个示例，输出结果和我们预期的很不一样。为什么会是这样呢？
+
+出现这种问题的主要原因是，计算机是以二进制存储数值的，浮点数也不例外。Java 采用了 IEEE 754 标准实现浮点数的表达和运算，你可以通过这里查看数值转化为二进制的结果。
+
+比如，0.1 的二进制表示为 0.0 0011 0011 0011… （0011 无限循环)，再转换为十进制就是 0.1000000000000000055511151231257827021181583404541015625。对于计算机而言，0.1 无法精确表达，这是浮点数计算造成精度损失的根源。
+
+**浮点数无法精确表达和运算的场景，一定要使用 BigDecimal 类型**。
+
+使用 BigDecimal 时，有个细节要格外注意。让我们来看一段代码：
+
+```java
+System.out.println(new BigDecimal(0.1).add(new BigDecimal(0.2)));
+// Output: 0.3000000000000000166533453693773481063544750213623046875
+
+System.out.println(new BigDecimal(1.0).subtract(new BigDecimal(0.8)));
+// Output: 0.1999999999999999555910790149937383830547332763671875
+
+System.out.println(new BigDecimal(4.015).multiply(new BigDecimal(100)));
+// Output: 401.49999999999996802557689079549163579940795898437500
+
+System.out.println(new BigDecimal(123.3).divide(new BigDecimal(100)));
+// Output: 1.232999999999999971578290569595992565155029296875
+```
+
+为什么输出结果仍然不符合预期呢？
+
+**使用 BigDecimal 表示和计算浮点数，且务必使用字符串的构造方法来初始化 BigDecimal**。
+
+### 浮点数精度和格式化
+
+**浮点数的字符串格式化也要通过 BigDecimal 进行**。
+
+```java
+private static void wrong1() {
+    double num1 = 3.35;
+    float num2 = 3.35f;
+    System.out.println(String.format("%.1f", num1)); // 3.4
+    System.out.println(String.format("%.1f", num2)); // 3.3
+}
+
+private static void wrong2() {
+    double num1 = 3.35;
+    float num2 = 3.35f;
+    DecimalFormat format = new DecimalFormat("#.##");
+    format.setRoundingMode(RoundingMode.DOWN);
+    System.out.println(format.format(num1)); // 3.35
+    format.setRoundingMode(RoundingMode.DOWN);
+    System.out.println(format.format(num2)); // 3.34
+}
+
+private static void right() {
+    BigDecimal num1 = new BigDecimal("3.35");
+    BigDecimal num2 = num1.setScale(1, BigDecimal.ROUND_DOWN);
+    System.out.println(num2); // 3.3
+    BigDecimal num3 = num1.setScale(1, BigDecimal.ROUND_HALF_UP);
+    System.out.println(num3); // 3.4
+}
+```
+
+### BigDecimal 判等问题
+
+```java
+private static void wrong() {
+    System.out.println(new BigDecimal("1.0").equals(new BigDecimal("1")));
+}
+
+private static void right() {
+    System.out.println(new BigDecimal("1.0").compareTo(new BigDecimal("1")) == 0);
+}
+```
+
+BigDecimal 的 equals 方法的注释中说明了原因，equals 比较的是 BigDecimal 的 value 和 scale，1.0 的 scale 是 1，1 的 scale 是 0，所以结果一定是 false。
+
+**如果我们希望只比较 BigDecimal 的 value，可以使用 compareTo 方法**。
+
+BigDecimal 的 equals 和 hashCode 方法会同时考虑 value 和 scale，如果结合 HashSet 或 HashMap 使用的话就可能会出现麻烦。比如，我们把值为 1.0 的 BigDecimal 加入 HashSet，然后判断其是否存在值为 1 的 BigDecimal，得到的结果是 false。
+
+```java
+Set<BigDecimal> hashSet1 = new HashSet<>();
+hashSet1.add(new BigDecimal("1.0"));
+System.out.println(hashSet1.contains(new BigDecimal("1")));//返回false
+
+
+```
+
+解决办法有两个：
+
+第一个方法是，使用 TreeSet 替换 HashSet。TreeSet 不使用 hashCode 方法，也不使用 equals 比较元素，而是使用 compareTo 方法，所以不会有问题。
+
+第二个方法是，把 BigDecimal 存入 HashSet 或 HashMap 前，先使用 stripTrailingZeros 方法去掉尾部的零，比较的时候也去掉尾部的 0，确保 value 相同的 BigDecimal，scale 也是一致的。
+
+```java
+Set<BigDecimal> hashSet2 = new HashSet<>();
+hashSet2.add(new BigDecimal("1.0").stripTrailingZeros());
+System.out.println(hashSet2.contains(new BigDecimal("1.000").stripTrailingZeros()));//返回true
+
+Set<BigDecimal> treeSet = new TreeSet<>();
+treeSet.add(new BigDecimal("1.0"));
+System.out.println(treeSet.contains(new BigDecimal("1")));//返回true
+```
+
+### 数值溢出
+
+数值计算还有一个要小心的点是溢出，不管是 int 还是 long，所有的基本数值类型都有超出表达范围的可能性。
+
+```java
+long l = Long.MAX_VALUE;
+System.out.println(l + 1); // -9223372036854775808
+System.out.println(l + 1 == Long.MIN_VALUE); // true
+```
+
+**显然这是发生了溢出，而且是默默的溢出，并没有任何异常**。这类问题非常容易被忽略，改进方式有下面 2 种。
+
+方法一是，考虑使用 Math 类的 addExact、subtractExact 等 xxExact 方法进行数值运算，这些方法可以在数值溢出时主动抛出异常。
+
+```java
+try {
+    long l = Long.MAX_VALUE;
+    System.out.println(Math.addExact(l, 1));
+} catch (Exception ex) {
+    ex.printStackTrace();
+}
+```
+
+方法二是，使用大数类 BigInteger。BigDecimal 是处理浮点数的专家，而 BigInteger 则是对大数进行科学计算的专家。
+
+```java
+BigInteger i = new BigInteger(String.valueOf(Long.MAX_VALUE));
+System.out.println(i.add(BigInteger.ONE).toString());
+
+try {
+    long l = i.add(BigInteger.ONE).longValueExact();
+} catch (Exception ex) {
+    ex.printStackTrace();
+}
+```
+
 ## 参考资料
 
 - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)

@@ -371,6 +371,182 @@ E unlink(Node<E> x) {
   - 如果当前节点有前驱节点，则让前驱节点指向当前节点的下一个节点；否则，让双链表头指针指向下一个节点。
   - 如果当前节点有后继节点，则让后继节点指向当前节点的前一个节点；否则，让双链表尾指针指向上一个节点。
 
+## 四、List 常见问题
+
+### Arrays.asList 问题点
+
+在业务开发中，我们常常会把原始的数组转换为 `List` 类数据结构，来继续展开各种 `Stream` 操作。通常，我们会使用 `Arrays.asList` 方法可以把数组一键转换为 `List`。
+
+【示例】Arrays.asList 转换基本类型数组
+
+```java
+int[] arr = { 1, 2, 3 };
+List list = Arrays.asList(arr);
+log.info("list:{} size:{} class:{}", list, list.size(), list.get(0).getClass());
+```
+
+【输出】
+
+```
+11:26:33.214 [main] INFO io.github.dunwu.javacore.container.list.AsList示例 - list:[[I@ae45eb6] size:1 class:class [I
+```
+
+数组元素个数为 3，但转换后的列表个数为 1。
+
+由此可知， `Arrays.asList` 第一个问题点：**不能直接使用 `Arrays.asList` 来转换基本类型数组**。
+
+其原因是：`Arrays.asList` 方法传入的是一个泛型 T 类型可变参数，最终 `int` 数组整体作为了一个对象成为了泛型类型 T：
+
+```java
+public static <T> List<T> asList(T... a) {
+    return new ArrayList<>(a);
+}
+```
+
+直接遍历这样的 `List` 必然会出现 Bug，修复方式有两种，如果使用 Java8 以上版本可以使用 `Arrays.stream` 方法来转换，否则可以把 `int` 数组声明为包装类型 `Integer` 数组：
+
+【示例】转换整型数组为 List 的正确方式
+
+```java
+int[] arr1 = { 1, 2, 3 };
+List list1 = Arrays.stream(arr1).boxed().collect(Collectors.toList());
+log.info("list:{} size:{} class:{}", list1, list1.size(), list1.get(0).getClass());
+
+Integer[] arr2 = { 1, 2, 3 };
+List list2 = Arrays.asList(arr2);
+log.info("list:{} size:{} class:{}", list2, list2.size(), list2.get(0).getClass());
+```
+
+【示例】Arrays.asList 转换引用类型数组
+
+```java
+String[] arr = { "1", "2", "3" };
+List list = Arrays.asList(arr);
+arr[1] = "4";
+try {
+    list.add("5");
+} catch (Exception ex) {
+    ex.printStackTrace();
+}
+log.info("arr:{} list:{}", Arrays.toString(arr), list);
+```
+
+抛出 `java.lang.UnsupportedOperationException`。
+
+抛出异常的原因在于 `Arrays.asList` 第二个问题点：**`Arrays.asList` 返回的 `List` 不支持增删操作**。`Arrays.asList` 返回的 List 并不是我们期望的 `java.util.ArrayList`，而是 `Arrays` 的内部类 `ArrayList`。
+
+查看源码，我们可以发现 `Arrays.asList` 返回的 `ArrayList` 继承了 `AbstractList`，但是并没有覆写 `add` 和 `remove` 方法。
+
+```java
+private static class ArrayList<E> extends AbstractList<E>
+    implements RandomAccess, java.io.Serializable
+{
+    private static final long serialVersionUID = -2764017481108945198L;
+    private final E[] a;
+
+    ArrayList(E[] array) {
+        a = Objects.requireNonNull(array);
+    }
+
+    // ...
+
+    @Override
+    public E set(int index, E element) {
+        E oldValue = a[index];
+        a[index] = element;
+        return oldValue;
+    }
+
+}
+
+public abstract class AbstractList<E> extends AbstractCollection<E> implements List<E> {
+    public void add(int index, E element) {
+        throw new UnsupportedOperationException();
+    }
+  
+    public E remove(int index) {
+        throw new UnsupportedOperationException();
+    }
+}
+```
+
+ `Arrays.asList` 第三个问题点：**对原始数组的修改会影响到我们获得的那个 `List`**。`ArrayList` 其实是直接使用了原始的数组。
+
+解决方法很简单，重新 `new` 一个 `ArrayList` 初始化 `Arrays.asList` 返回的 `List` 即可：
+
+```java
+String[] arr = { "1", "2", "3" };
+List list = new ArrayList(Arrays.asList(arr));
+arr[1] = "4";
+try {
+    list.add("5");
+} catch (Exception ex) {
+    ex.printStackTrace();
+}
+log.info("arr:{} list:{}", Arrays.toString(arr), list);
+```
+
+### List.subList 问题点
+
+List.subList 直接引用了原始的 List，也可以认为是共享“存储”，而且对原始 List 直接进行结构性修改会导致 SubList 出现异常。
+
+```java
+private static List<List<Integer>> data = new ArrayList<>();
+
+private static void oom() {
+    for (int i = 0; i < 1000; i++) {
+        List<Integer> rawList = IntStream.rangeClosed(1, 100000).boxed().collect(Collectors.toList());
+        data.add(rawList.subList(0, 1));
+    }
+}
+```
+
+出现 OOM 的原因是，循环中的 1000 个具有 10 万个元素的 List 始终得不到回收，因为它始终被 subList 方法返回的 List 强引用。
+
+解决方法是：
+
+```java
+private static void oomfix() {
+    for (int i = 0; i < 1000; i++) {
+        List<Integer> rawList = IntStream.rangeClosed(1, 100000).boxed().collect(Collectors.toList());
+        data.add(new ArrayList<>(rawList.subList(0, 1)));
+    }
+}
+```
+
+【示例】子 List 强引用原始的 List
+
+```java
+private static void wrong() {
+    List<Integer> list = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toList());
+    List<Integer> subList = list.subList(1, 4);
+    System.out.println(subList);
+    subList.remove(1);
+    System.out.println(list);
+    list.add(0);
+    try {
+        subList.forEach(System.out::println);
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }
+}
+```
+
+抛出 `java.util.ConcurrentModificationException`。
+
+解决方法：
+
+一种是，不直接使用 subList 方法返回的 SubList，而是重新使用 new ArrayList，在构造方法传入 SubList，来构建一个独立的 ArrayList；
+
+另一种是，对于 Java 8 使用 Stream 的 skip 和 limit API 来跳过流中的元素，以及限制流中元素的个数，同样可以达到 SubList 切片的目的。
+
+```java
+//方式一：
+List<Integer> subList = new ArrayList<>(list.subList(1, 4));
+//方式二：
+List<Integer> subList = list.stream().skip(1).limit(3).collect(Collectors.toList());
+```
+
 ## 参考资料
 
 - [Java 编程思想（第 4 版）](https://item.jd.com/10058164.html)
