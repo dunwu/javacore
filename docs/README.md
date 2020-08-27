@@ -43,7 +43,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 - [Java 正则](advanced/java-regex.md)
 - [Java 编码和加密](advanced/java-crypto.md)
 - [Java 本地化](advanced/java-locale.md)
-- [JavaJDK8](advanced/jdk8.md)
+- [JavaJDK8](advanced/jdk8.md) - 关键词：`Stream`、`lambda`、`Optional`、`@FunctionalInterface`
 
 ### [Java 容器](container)
 

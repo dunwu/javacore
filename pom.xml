@@ -18,6 +18,10 @@
   <description>JavaCore 经验总结</description>
   <url>https://github.com/dunwu/javacore</url>
 
+  <properties>
+    <maven.javadoc.skip>true</maven.javadoc.skip>
+  </properties>
+
   <modules>
     <module>codes/javacore-basics</module>
     <module>codes/javacore-advanced</module>

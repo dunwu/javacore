@@ -1,8 +1,11 @@
 package io.github.dunwu.javacore.jdk8.nashorn;
 
+import cn.hutool.core.io.resource.ResourceUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
@@ -33,7 +36,8 @@ public class Nashorn2 {
 
     public static void main(String[] args) throws Exception {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-        engine.eval(new FileReader("res/nashorn2.js"));
+        BufferedReader reader = ResourceUtil.getReader("META-INF/scripts/nashorn2.js", Charset.defaultCharset());
+        engine.eval(reader);
     }
 
 }

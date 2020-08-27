@@ -1,5 +1,6 @@
 package io.github.dunwu.javacore.jdk8.nashorn;
 
+import cn.hutool.core.io.resource.ResourceUtil;
 import jdk.nashorn.api.scripting.NashornScriptEngine;
 
 import java.util.concurrent.TimeUnit;
@@ -13,7 +14,8 @@ public class Nashorn9 {
 
     public static void main(String[] args) throws ScriptException, NoSuchMethodException {
         NashornScriptEngine engine = (NashornScriptEngine) new ScriptEngineManager().getEngineByName("nashorn");
-        engine.eval("load('res/nashorn9.js')");
+        String filename = ResourceUtil.getResource("META-INF/scripts/nashorn9.js").getFile();
+        engine.eval("load('" + filename + "')");
 
         long t0 = System.nanoTime();
 

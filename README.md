@@ -45,7 +45,7 @@
 - [Java 正则](docs/advanced/java-regex.md)
 - [Java 编码和加密](docs/advanced/java-crypto.md) - 关键词：`Base64`、`消息摘要`、`数字签名`、`对称加密`、`非对称加密`、`MD5`、`SHA`、`HMAC`、`AES`、`DES`、`DESede`、`RSA`
 - [Java 本地化](docs/advanced/java-locale.md)
-- [Java JDK8](docs/advanced/jdk8.md)
+- [Java JDK8](docs/advanced/jdk8.md) - 关键词：`Stream`、`lambda`、`Optional`、`@FunctionalInterface`
 
 ### [Java 容器](docs/container)
 

@@ -224,7 +224,7 @@ class Lambda4 {
 
 默认方法**不能**被 lambda 表达式访问。下面的代码不能编译通过：
 
-```
+```java
 Formula formula = (a) -> sqrt(a * 100);
 ```
 
@@ -298,7 +298,7 @@ comparator.reversed().compare(p1, p2);  // < 0
 
 `Optional` 不是功能性接口，而是防止 `NullPointerException` 的好工具。这是下一节的一个重要概念，所以让我们快速看看 `Optional` 是如何工作的。
 
-可选是一个简单的容器，其值可以是 null 或非 null。想想一个可能返回一个非空结果的方法，但有时候什么都不返回。不是返回 null，而是返回 Java 8 中的 `Optional`。
+`Optional` 是一个简单的容器，其值可以是 null 或非 null。想想一个可能返回一个非空结果的方法，但有时候什么都不返回。不是返回 null，而是返回 Java 8 中的 `Optional`。
 
 ```java
 Optional<String> optional = Optional.of("bam");
@@ -620,7 +620,7 @@ System.out.println(leetTime);   // 13:37
 
 `LocalDate` 表示不同的日期，例如：2014 年 3 月 11 日。它是不可变的，并且与 `LocalTime` 完全类似。该示例演示如何通过加减日、月或年来计算新日期。请记住，每个操作都会返回一个新的实例。
 
-```
+```java
 LocalDate today = LocalDate.now();
 LocalDate tomorrow = today.plus(1, ChronoUnit.DAYS);
 LocalDate yesterday = tomorrow.minusDays(2);
@@ -632,7 +632,7 @@ System.out.println(dayOfWeek);    // FRIDAY
 
 从一个字符串中解析出 LocalDate 对象，和解析 LocalTime 一样的简单：
 
-```
+```java
 DateTimeFormatter germanFormatter =
     DateTimeFormatter
         .ofLocalizedDate(FormatStyle.MEDIUM)
@@ -692,7 +692,7 @@ Java 8 中的注释是可重复的。让我们直接看一个例子来解决这�
 
 首先，我们定义一个包含实际注释数组的外层注释：
 
-```
+```java
 @interface Hints {
     Hint[] value();
 }
@@ -707,14 +707,14 @@ Java8 允许我们通过使用 `@Repeatable` 注解来引入多个同类型的�
 
 ### Variant 1: 使用容器注解 (老套路)
 
-```
+```java
 @Hints({@Hint("hint1"), @Hint("hint2")})
 class Person {}
 ```
 
 ### Variant 2: 使用 repeatable 注解 (新套路)
 
-```
+```java
 @Hint("hint1")
 @Hint("hint2")
 class Person {}
@@ -735,7 +735,7 @@ Hint[] hints2 = Person.class.getAnnotationsByType(Hint.class);
 System.out.println(hints2.length);          // 2
 ```
 
-尽管，我门从没有在 Person 类上声明 `@Hints` 注解，但是仍可以通过`getAnnotation(Hints.class)` 读取它。然而，更便利的方式是 `getAnnotationsByType` ，它可以直接访问所有 `@Hint` 注解。
+尽管，我们从没有在 Person 类上声明 `@Hints` 注解，但是仍可以通过`getAnnotation(Hints.class)` 读取它。然而，更便利的方式是 `getAnnotationsByType` ，它可以直接访问所有 `@Hint` 注解。
 
 此外，Java 8 中的注释使用扩展了两个新的目标：
 
@@ -743,6 +743,10 @@ System.out.println(hints2.length);          // 2
 @Target({ElementType.TYPE_PARAMETER, ElementType.TYPE_USE})
 @interface MyAnnotation {}
 ```
+
+水平线以上为 [java8-tutorial](https://github.com/winterbe/java8-tutorial) 翻译内容。
+
+------
 
 ## JDK8 升级常见问题
 

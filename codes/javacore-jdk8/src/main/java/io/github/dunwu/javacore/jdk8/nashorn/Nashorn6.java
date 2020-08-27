@@ -1,5 +1,6 @@
 package io.github.dunwu.javacore.jdk8.nashorn;
 
+import cn.hutool.core.io.resource.ResourceUtil;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import javax.script.Invocable;
@@ -19,7 +20,8 @@ public class Nashorn6 {
 
     public static void main(String[] args) throws Exception {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("nashorn");
-        engine.eval("load('res/nashorn6.js')");
+        String filename = ResourceUtil.getResource("META-INF/scripts/nashorn6.js").getFile();
+        engine.eval("load('" + filename + "')");
 
         Invocable invocable = (Invocable) engine;
 
