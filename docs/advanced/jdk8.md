@@ -61,7 +61,7 @@ Collections.sort(names, (String a, String b) -> {
 });
 ```
 
-如您缩减，这段代码比上段代码简洁很多。但是，还可以更加简洁：
+如您所见，这段代码比上段代码简洁很多。但是，还可以更加简洁：
 
 ```java
 Collections.sort(names, (String a, String b) -> b.compareTo(a));
