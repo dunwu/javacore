@@ -189,7 +189,7 @@ private static final long serialVersionUID = 2L;
 
 在现实应用中，有些时候不能使用默认序列化机制。比如，希望在序列化过程中忽略掉敏感数据，或者简化序列化过程。下面将介绍若干影响序列化的方法。
 
-**当某个字段被声明为 `transient` 后，默认序列化机制就会忽略该字段**。
+**当某个字段被声明为 `transient` 后，默认序列化机制就会忽略该字段的内容,该字段的内容在序列化后无法获得访问**。
 
 我们将 SerializeDemo01 示例中的内部类 Person 的 age 字段声明为 `transient`，如下所示：
 
