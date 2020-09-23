@@ -287,7 +287,7 @@ final Node<K,V> getNode(int hash, Object key) {
 
 #### hash 方法的实现
 
-HashMap **计算桶下标（index）公式：`key.hashCode()) ^ (h >>> 16)`**。
+HashMap **计算桶下标（index）公式：`key.hashCode() ^ (h >>> 16)`**。
 
 下面针对这个公式来详细讲解。
 
