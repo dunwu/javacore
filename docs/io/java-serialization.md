@@ -405,7 +405,7 @@ public class SerializeDemo04 {
 // false
 ```
 
-值得注意的是，从文件中获取的 Person 对象与 Person 类中的单例对象并不相等。**为了能在单例类中仍然保持序列的特性，可以使用 `readResolve()` 方法**。在该方法中直接返回 Person 的单例对象。我们在 SerializeDemo04 示例的基础上添加一个 `readObject` 方法， 如下所示：
+值得注意的是，从文件中获取的 Person 对象与 Person 类中的单例对象并不相等。**为了能在单例类中仍然保持序列的特性，可以使用 `readResolve()` 方法**。在该方法中直接返回 Person 的单例对象。我们在 SerializeDemo04 示例的基础上添加一个 `readResolve` 方法， 如下所示：
 
 ```java
 public class SerializeDemo05 {
@@ -413,10 +413,14 @@ public class SerializeDemo05 {
 
     static class Person implements Serializable {
 
+        // private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        //     in.defaultReadObject();
+        //     age = in.readInt();
+        // }
+        
         // 添加此方法
-        private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-            in.defaultReadObject();
-            age = in.readInt();
+        private Object readResolve() {
+            return instatnce;
         }
         // 其他内容略
     }
