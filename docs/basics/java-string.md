@@ -25,7 +25,7 @@ assertSame(str1==str3)
 
 <!-- /TOC -->
 
-## 一、String 的不可变性
+## String 的不可变性
 
 我们先来看下 `String` 的定义：
 
@@ -52,7 +52,7 @@ public final class String
 
 `String str = new String("abc")` 这种方式，首先在编译类文件时，`"abc"` 常量字符串将会放入到常量结构中，在类加载时，`"abc"` 将会在常量池中创建；其次，在调用 new 时，JVM 命令将会调用 `String` 的构造函数，同时引用常量池中的 `"abc"` 字符串，在堆内存中创建一个 `String` 对象；最后，str 将引用 `String` 对象。
 
-## 二、String 的优化
+## String 的优化
 
 ### 字符串拼接
 
@@ -93,9 +93,22 @@ sharedLocation.setRegion(messageInfo.getCountryCode().intern());
 
 虽然使用 new 声明的字符串调用 intern 方法，也可以让字符串进行驻留，但在业务代码中滥用 intern，可能会产生性能问题。
 
+## String、StringBuffer、StringBuilder 有什么区别
+
+`String` 是 Java 语言非常基础和重要的类，提供了构造和管理字符串的各种基本逻辑。它是典型的 `Immutable` 类，被声明成为 `final class`，所有属性也都是 `final` 的。也由于它的不可变性，类似拼接、裁剪字符串等动作，都会产生新的 `String` 对象。由于字符串操作的普遍性，所以相关操作的效率往往对应用性能有明显影响。
+
+`StringBuffer` 是为解决上面提到拼接产生太多中间对象的问题而提供的一个类，我们可以用 `append` 或者 `add` 方法，把字符串添加到已有序列的末尾或者指定位置。`StringBuffer` 是一个**线程安全的**可修改字符序列。`StringBuffer` 的线程安全是通过在各种修改数据的方法上用 `synchronized` 关键字修饰实现的。
+
+`StringBuilder` 是 Java 1.5 中新增的，在能力上和 StringBuffer 没有本质区别，但是它去掉了线程安全的部分，有效减小了开销，是绝大部分情况下进行字符串拼接的首选。
+
+`StringBuffer` 和 `StringBuilder` 底层都是利用可修改的（char，JDK 9 以后是 byte）数组，二者都继承了 `AbstractStringBuilder`，里面包含了基本操作，区别仅在于最终的方法是否加了 `synchronized`。构建时初始字符串长度加 16（这意味着，如果没有构建对象时输入最初的字符串，那么初始值就是 16）。我们如果确定拼接会发生非常多次，而且大概是可预计的，那么就可以指定合适的大小，避免很多次扩容的开销。扩容会产生多重开销，因为要抛弃原有数组，创建新的（可以简单认为是倍数）数组，还要进行 `arraycopy`。
+
+**除非有线程安全的需要，不然一般都使用 `StringBuilder`**。
+
 ## 参考资料
 
 - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
 - [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
+- [Java 核心技术面试精讲](https://time.geekbang.org/column/intro/82)
 - [Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
 - [深入剖析 Java 中的装箱和拆箱](https://www.cnblogs.com/dolphin0520/p/3780005.html)
