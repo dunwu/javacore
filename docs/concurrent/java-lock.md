@@ -16,46 +16,46 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、并发锁简介](#一并发锁简介)
-  - [可重入锁](#可重入锁)
-  - [公平锁与非公平锁](#公平锁与非公平锁)
-  - [独享锁与共享锁](#独享锁与共享锁)
-  - [悲观锁与乐观锁](#悲观锁与乐观锁)
-  - [偏向锁、轻量级锁、重量级锁](#偏向锁轻量级锁重量级锁)
-  - [分段锁](#分段锁)
-  - [显示锁和内置锁](#显示锁和内置锁)
-- [二、Lock 和 Condition](#二lock-和-condition)
-  - [为何引入 Lock 和 Condition](#为何引入-lock-和-condition)
-  - [Lock 接口](#lock-接口)
-  - [Condition](#condition)
-- [三、ReentrantLock](#三reentrantlock)
-  - [ReentrantLock 的特性](#reentrantlock-的特性)
-  - [ReentrantLock 的用法](#reentrantlock-的用法)
-  - [ReentrantLock 的原理](#reentrantlock-的原理)
-- [四、ReentrantReadWriteLock](#四reentrantreadwritelock)
-  - [ReentrantReadWriteLock 的特性](#reentrantreadwritelock-的特性)
-  - [ReentrantReadWriteLock 的用法](#reentrantreadwritelock-的用法)
-  - [ReentrantReadWriteLock 的原理](#reentrantreadwritelock-的原理)
-- [五、StampedLock](#五stampedlock)
-- [六、AQS](#六aqs)
-  - [AQS 的要点](#aqs-的要点)
-  - [AQS 的应用](#aqs-的应用)
-  - [AQS 的原理](#aqs-的原理)
-- [七、死锁](#七死锁)
-  - [什么是死锁](#什么是死锁)
-  - [如何定位死锁](#如何定位死锁)
-  - [如何避免死锁](#如何避免死锁)
-- [参考资料](#参考资料)
+- [1. 并发锁简介](#1-并发锁简介)
+    - [1.1. 可重入锁](#11-可重入锁)
+    - [1.2. 公平锁与非公平锁](#12-公平锁与非公平锁)
+    - [1.3. 独享锁与共享锁](#13-独享锁与共享锁)
+    - [1.4. 悲观锁与乐观锁](#14-悲观锁与乐观锁)
+    - [1.5. 偏向锁、轻量级锁、重量级锁](#15-偏向锁轻量级锁重量级锁)
+    - [1.6. 分段锁](#16-分段锁)
+    - [1.7. 显示锁和内置锁](#17-显示锁和内置锁)
+- [2. Lock 和 Condition](#2-lock-和-condition)
+    - [2.1. 为何引入 Lock 和 Condition](#21-为何引入-lock-和-condition)
+    - [2.2. Lock 接口](#22-lock-接口)
+    - [2.3. Condition](#23-condition)
+- [3. ReentrantLock](#3-reentrantlock)
+    - [3.1. ReentrantLock 的特性](#31-reentrantlock-的特性)
+    - [3.2. ReentrantLock 的用法](#32-reentrantlock-的用法)
+    - [3.3. ReentrantLock 的原理](#33-reentrantlock-的原理)
+- [4. ReentrantReadWriteLock](#4-reentrantreadwritelock)
+    - [4.1. ReentrantReadWriteLock 的特性](#41-reentrantreadwritelock-的特性)
+    - [4.2. ReentrantReadWriteLock 的用法](#42-reentrantreadwritelock-的用法)
+    - [4.3. ReentrantReadWriteLock 的原理](#43-reentrantreadwritelock-的原理)
+- [5. StampedLock](#5-stampedlock)
+- [6. AQS](#6-aqs)
+    - [6.1. AQS 的要点](#61-aqs-的要点)
+    - [6.2. AQS 的应用](#62-aqs-的应用)
+    - [6.3. AQS 的原理](#63-aqs-的原理)
+- [7. 死锁](#7-死锁)
+    - [7.1. 什么是死锁](#71-什么是死锁)
+    - [7.2. 如何定位死锁](#72-如何定位死锁)
+    - [7.3. 如何避免死锁](#73-如何避免死锁)
+- [8. 参考资料](#8-参考资料)
 
 <!-- /TOC -->
 
-## 一、并发锁简介
+## 1. 并发锁简介
 
 确保线程安全最常见的做法是利用锁机制（`Lock`、`sychronized`）来对共享数据做互斥同步，这样在同一个时刻，只有一个线程可以执行某个方法或者某个代码块，那么操作必然是原子性的，线程安全的。
 
 在工作、面试中，经常会听到各种五花八门的锁，听的人云里雾里。锁的概念术语很多，它们是针对不同的问题所提出的，通过简单的梳理，也不难理解。
 
-### 可重入锁
+### 1.1. 可重入锁
 
 **可重入锁，顾名思义，指的是线程可以重复获取同一把锁**。即同一个线程在外层方法获取了锁，在进入内层方法会自动获取锁。
 
@@ -118,7 +118,7 @@ class Task {
 }
 ```
 
-### 公平锁与非公平锁
+### 1.2. 公平锁与非公平锁
 
 - **公平锁** - 公平锁是指 **多线程按照申请锁的顺序来获取锁**。
 - **非公平锁** - 非公平锁是指 **多线程不按照申请锁的顺序来获取锁** 。这就可能会出现优先级反转（后来者居上）或者饥饿现象（某线程总是抢不过别的线程，导致始终无法执行）。
@@ -130,7 +130,7 @@ class Task {
 - **`synchronized` 只支持非公平锁**。
 - **`ReentrantLock` 、`ReentrantReadWriteLock`，默认是非公平锁，但支持公平锁**。
 
-### 独享锁与共享锁
+### 1.3. 独享锁与共享锁
 
 独享锁与共享锁是一种广义上的说法，从实际用途上来看，也常被称为互斥锁与读写锁。
 
@@ -142,7 +142,7 @@ class Task {
 - **`synchronized` 、`ReentrantLock` 只支持独享锁**。
 - **`ReentrantReadWriteLock` 其写锁是独享锁，其读锁是共享锁**。读锁是共享锁使得并发读是非常高效的，读写，写读 ，写写的过程是互斥的。
 
-### 悲观锁与乐观锁
+### 1.4. 悲观锁与乐观锁
 
 乐观锁与悲观锁不是指具体的什么类型的锁，而是**处理并发同步的策略**。
 
@@ -155,7 +155,7 @@ class Task {
 
 - 乐观锁在 Java 中的应用就是采用 `CAS` 机制（`CAS` 操作通过 `Unsafe` 类提供，但这个类不直接暴露为 API，所以都是间接使用，如各种原子类）。
 
-### 偏向锁、轻量级锁、重量级锁
+### 1.5. 偏向锁、轻量级锁、重量级锁
 
 所谓轻量级锁与重量级锁，指的是锁控制粒度的粗细。显然，控制粒度越细，阻塞开销越小，并发性也就越高。
 
@@ -168,7 +168,7 @@ Java 1.6 以后，针对 `synchronized` 做了大量优化，引入 4 种锁状�
 
 - **重量级锁** - 是指当锁为轻量级锁的时候，另一个线程虽然是自旋，但自旋不会一直持续下去，当自旋一定次数的时候，还没有获取到锁，就会进入阻塞，该锁膨胀为重量级锁。重量级锁会让其他申请的线程进入阻塞，性能降低。
 
-### 分段锁
+### 1.6. 分段锁
 
 分段锁其实是一种锁的设计，并不是具体的一种锁。所谓分段锁，就是把锁的对象分成多段，每段独立控制，使得锁粒度更细，减少阻塞开销，从而提高并发性。这其实很好理解，就像高速公路上的收费站，如果只有一个收费口，那所有的车只能排成一条队缴费；如果有多个收费口，就可以分流了。
 
@@ -182,7 +182,7 @@ final Segment<K,V>[] segments;
 
 当有线程访问 `ConcurrentHashMap` 的数据时，`ConcurrentHashMap` 会先根据 hashCode 计算出数据在哪个桶（即哪个 Segment），然后锁住这个 `Segment`。
 
-### 显示锁和内置锁
+### 1.7. 显示锁和内置锁
 
 Java 1.5 之前，协调对共享对象的访问时可以使用的机制只有 `synchronized` 和 `volatile`。这两个都属于内置锁，即锁的申请和释放都是由 JVM 所控制。
 
@@ -217,9 +217,9 @@ Java 1.5 之后，增加了新的机制：`ReentrantLock`、`ReentrantReadWriteL
   - `synchronized` 不支持读写锁分离；
   - `ReentrantReadWriteLock` 支持读写锁，从而使阻塞读写的操作分开，有效提高并发性。
 
-## 二、Lock 和 Condition
+## 2. Lock 和 Condition
 
-### 为何引入 Lock 和 Condition
+### 2.1. 为何引入 Lock 和 Condition
 
 并发编程领域，有两大核心问题：一个是**互斥**，即同一时刻只允许一个线程访问共享资源；另一个是**同步**，即线程之间如何通信、协作。这两大问题，管程都是能够解决的。**Java SDK 并发包通过 Lock 和 Condition 两个接口来实现管程，其中 Lock 用于解决互斥问题，Condition 用于解决同步问题**。
 
@@ -235,7 +235,7 @@ synchronized 无法通过**破坏不可抢占条件**来避免死锁。原因是
 - **支持超时**。如果线程在一段时间之内没有获取到锁，不是进入阻塞状态，而是返回一个错误，那这个线程也有机会释放曾经持有的锁。这样也能破坏不可抢占条件。
 - **非阻塞地获取锁**。如果尝试获取锁失败，并不进入阻塞状态，而是直接返回，那这个线程也有机会释放曾经持有的锁。这样也能破坏不可抢占条件。
 
-### Lock 接口
+### 2.2. Lock 接口
 
 `Lock` 的接口定义如下：
 
@@ -257,7 +257,7 @@ public interface Lock {
 - `lockInterruptibly()` - 锁未被另一个线程持有，且线程没有被中断的情况下，才能获取锁。
 - `newCondition()` - 返回一个绑定到 `Lock` 对象上的 `Condition` 实例。
 
-### Condition
+### 2.3. Condition
 
 **Condition 实现了管程模型里面的条件变量**。
 
@@ -434,11 +434,11 @@ public class LockConditionDemo {
 }
 ```
 
-## 三、ReentrantLock
+## 3. ReentrantLock
 
 `ReentrantLock` 类是 `Lock` 接口的具体实现，与内置锁 `synchronized` 相同的是，它是一个**可重入锁**。
 
-### ReentrantLock 的特性
+### 3.1. ReentrantLock 的特性
 
 `ReentrantLock` 的特性如下：
 
@@ -448,7 +448,7 @@ public class LockConditionDemo {
   - `synchronized` 无法中断一个正在等待获取锁的线程
   - `synchronized` 无法在请求获取一个锁时无休止地等待
 
-### ReentrantLock 的用法
+### 3.2. ReentrantLock 的用法
 
 前文了解了 `ReentrantLock` 的特性，接下来，我们要讲述其具体用法。
 
@@ -645,7 +645,7 @@ public void execute() {
 
 `newCondition()` - 返回一个绑定到 `Lock` 对象上的 `Condition` 实例。`Condition` 的特性和具体方法请阅读下文 [`Condition`](#五condition)。
 
-### ReentrantLock 的原理
+### 3.3. ReentrantLock 的原理
 
 #### ReentrantLock 的可见性
 
@@ -761,7 +761,7 @@ final void lock() {
 }
 ```
 
-## 四、ReentrantReadWriteLock
+## 4. ReentrantReadWriteLock
 
 `ReadWriteLock` 适用于**读多写少的场景**。
 
@@ -775,7 +775,7 @@ final void lock() {
 
 读写锁与互斥锁的一个重要区别就是**读写锁允许多个线程同时读共享变量**，而互斥锁是不允许的，这是读写锁在读多写少场景下性能优于互斥锁的关键。但**读写锁的写操作是互斥的**，当一个线程在写共享变量的时候，是不允许其他线程执行写操作和读操作。
 
-### ReentrantReadWriteLock 的特性
+### 4.1. ReentrantReadWriteLock 的特性
 
 ReentrantReadWriteLock 的特性如下：
 
@@ -804,7 +804,7 @@ public interface ReadWriteLock {
 - **降级** - 如果一个线程持有写入锁，那么它能否在不释放该锁的情况下获得读锁？这可能会使得写锁被降级为读锁，同时不允许其他写线程修改被保护的资源。
 - **升级** - 读锁能否优先于其他正在等待的读线程和写线程而升级为一个写锁？在大多数的读写锁实现中并不支持升级，因为如果没有显式的升级操作，那么很容易造成死锁。
 
-### ReentrantReadWriteLock 的用法
+### 4.2. ReentrantReadWriteLock 的用法
 
 前文了解了 `ReentrantReadWriteLock` 的特性，接下来，我们要讲述其具体用法。
 
@@ -949,7 +949,7 @@ main 读数据 0:21
 // ...
 ```
 
-### ReentrantReadWriteLock 的原理
+### 4.3. ReentrantReadWriteLock 的原理
 
 前面了解了 `ReentrantLock` 的原理，理解 `ReentrantReadWriteLock` 就容易多了。
 
@@ -1003,7 +1003,7 @@ public static class WriteLock implements Lock, java.io.Serializable {
 }
 ```
 
-## 五、StampedLock
+## 5. StampedLock
 
 ReadWriteLock 支持两种模式：一种是读锁，一种是写锁。而 StampedLock 支持三种模式，分别是：**写锁**、**悲观读锁**和**乐观读**。其中，写锁、悲观读锁的语义和 ReadWriteLock 的写锁、读锁的语义非常类似，允许多个线程同时获取悲观读锁，但是只允许一个线程获取写锁，写锁和悲观读锁是互斥的。不同的是：StampedLock 里的写锁和悲观读锁加锁成功之后，都会返回一个 stamp；然后解锁的时候，需要传入这个 stamp。
 
@@ -1086,17 +1086,17 @@ try {
 }
 ```
 
-## 六、AQS
+## 6. AQS
 
 > `AbstractQueuedSynchronizer`（简称 **AQS**）是**队列同步器**，顾名思义，其主要作用是处理同步。它是并发锁和很多同步工具类的实现基石（如 `ReentrantLock`、`ReentrantReadWriteLock`、`CountDownLatch`、`Semaphore`、`FutureTask` 等）。
 
-### AQS 的要点
+### 6.1. AQS 的要点
 
 **AQS 提供了对独享锁与共享锁的支持**。
 
 在 `java.util.concurrent.locks` 包中的相关锁（常用的有 `ReentrantLock`、 `ReadWriteLock`）都是基于 AQS 来实现。这些锁都没有直接继承 AQS，而是定义了一个 `Sync` 类去继承 AQS。为什么要这样呢？因为锁面向的是使用用户，而同步器面向的则是线程控制，那么在锁的实现中聚合同步器而不是直接继承 AQS 就可以很好的隔离二者所关注的事情。
 
-### AQS 的应用
+### 6.2. AQS 的应用
 
 **AQS 提供了对独享锁与共享锁的支持**。
 
@@ -1135,7 +1135,7 @@ public final boolean releaseShared(int arg)
 - `tryAcquireSharedNanos` - 尝试在指定时间内获取可中断的共享锁。
 - `release` - 释放共享锁。
 
-### AQS 的原理
+### 6.3. AQS 的原理
 
 > ASQ 原理要点：
 >
@@ -1285,27 +1285,38 @@ AQS 中使用 `tryAcquireSharedNanos(int arg)` 方法获取超时等待式的共
 
 `tryAcquireSharedNanos` 方法与 `tryAcquireNanos` 几乎一致，不再赘述。
 
-## 七、死锁
+## 7. 死锁
 
-### 什么是死锁
+### 7.1. 什么是死锁
 
 死锁是一种特定的程序状态，在实体之间，由于循环依赖导致彼此一直处于等待之中，没有任何个体可以继续前进。死锁不仅仅是在线程之间会发生，存在资源独占的进程之间同样也
 可能出现死锁。通常来说，我们大多是聚焦在多线程场景中的死锁，指两个或多个线程之间，由于互相持有对方需要的锁，而永久处于阻塞的状态。
 
-### 如何定位死锁
+### 7.2. 如何定位死锁
 
 定位死锁最常见的方式就是利用 jstack 等工具获取线程栈，然后定位互相之间的依赖关系，进而找到死锁。如果是比较明显的死锁，往往 jstack 等就能直接定位，类似 JConsole 甚至可以在图形界面进行有限的死锁检测。
 
 如果我们是开发自己的管理工具，需要用更加程序化的方式扫描服务进程、定位死锁，可以考虑使用 Java 提供的标准管理 API，`ThreadMXBean`，其直接就提供了 `findDeadlockedThreads()` 方法用于定位。
 
-### 如何避免死锁
+### 7.3. 如何避免死锁
 
-- 避免一个线程同时获取多个锁。
-- 避免一个线程在锁内同时占用多个资源，尽量保证每个锁只占用一个资源。
-- 尝试使用定时锁 `lock.tryLock(timeout)`，避免锁一直不能释放。
-- 对于数据库锁，加锁和解锁必须在一个数据库连接中里，否则会出现解锁失败的情况。
+基本上死锁的发生是因为：
 
-## 参考资料
+- 互斥，类似 Java 中 Monitor 都是独占的。
+- 长期保持互斥，在使用结束之前，不会释放，也不能被其他线程抢占。
+- 循环依赖，多个个体之间出现了锁的循环依赖，彼此依赖上一环释放锁。
+
+由此，我们可以分析出避免死锁的思路和方法。
+
+（1）避免一个线程同时获取多个锁。
+
+避免一个线程在锁内同时占用多个资源，尽量保证每个锁只占用一个资源。
+
+尝试使用定时锁 `lock.tryLock(timeout)`，避免锁一直不能释放。
+
+对于数据库锁，加锁和解锁必须在一个数据库连接中里，否则会出现解锁失败的情况。
+
+## 8. 参考资料
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
