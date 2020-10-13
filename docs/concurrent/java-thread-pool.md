@@ -4,38 +4,41 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、简介](#一简介)
-  - [什么是线程池](#什么是线程池)
-  - [为什么要用线程池](#为什么要用线程池)
-- [二、Executor 框架](#二executor-框架)
-  - [核心 API 概述](#核心-api-概述)
-  - [Executor](#executor)
-  - [ExecutorService](#executorservice)
-  - [ScheduledExecutorService](#scheduledexecutorservice)
-- [三、ThreadPoolExecutor](#三threadpoolexecutor)
-  - [重要字段](#重要字段)
-  - [构造方法](#构造方法)
-  - [execute 方法](#execute-方法)
-  - [其他重要方法](#其他重要方法)
-  - [使用示例](#使用示例)
-- [四、Executors](#四executors)
-  - [newSingleThreadExecutor](#newsinglethreadexecutor)
-  - [newFixedThreadPool](#newfixedthreadpool)
-  - [newCachedThreadPool](#newcachedthreadpool)
-  - [newScheduleThreadPool](#newschedulethreadpool)
-- [五、线程池优化](#五线程池优化)
-  - [计算线程数量](#计算线程数量)
-- [参考资料](#参考资料)
+- [1. 简介](#1-简介)
+  - [1.1. 什么是线程池](#11-什么是线程池)
+  - [1.2. 为什么要用线程池](#12-为什么要用线程池)
+- [2. Executor 框架](#2-executor-框架)
+  - [2.1. 核心 API 概述](#21-核心-api-概述)
+  - [2.2. Executor](#22-executor)
+  - [2.3. ExecutorService](#23-executorservice)
+  - [2.4. ScheduledExecutorService](#24-scheduledexecutorservice)
+- [3. ThreadPoolExecutor](#3-threadpoolexecutor)
+  - [3.1. 重要字段](#31-重要字段)
+  - [3.2. 构造方法](#32-构造方法)
+  - [3.3. execute 方法](#33-execute-方法)
+  - [3.4. 其他重要方法](#34-其他重要方法)
+  - [3.5. 使用示例](#35-使用示例)
+- [4. Executors](#4-executors)
+  - [4.1. newSingleThreadExecutor](#41-newsinglethreadexecutor)
+  - [4.2. newFixedThreadPool](#42-newfixedthreadpool)
+  - [4.3. newCachedThreadPool](#43-newcachedthreadpool)
+  - [4.4. newScheduleThreadPool](#44-newschedulethreadpool)
+  - [4.5. newWorkStealingPool](#45-newworkstealingpool)
+- [5. 线程池最佳实践](#5-线程池最佳实践)
+  - [5.1. 计算线程数量](#51-计算线程数量)
+  - [5.2. 建议使用有界阻塞队列](#52-建议使用有界阻塞队列)
+  - [5.3. 重要任务应该自定义拒绝策略](#53-重要任务应该自定义拒绝策略)
+- [6. 参考资料](#6-参考资料)
 
 <!-- /TOC -->
 
-## 一、简介
+## 1. 简介
 
-### 什么是线程池
+### 1.1. 什么是线程池
 
 线程池是一种多线程处理形式，处理过程中将任务添加到队列，然后在创建线程后自动启动这些任务。
 
-### 为什么要用线程池
+### 1.2. 为什么要用线程池
 
 如果并发请求数量很多，但每个线程执行的时间很短，就会出现频繁的创建和销毁线程。如此一来，会大大降低系统的效率，可能频繁创建和销毁线程的时间、资源开销要大于实际工作的所需。
 
@@ -45,11 +48,11 @@
 - **提高响应速度** - 当任务到达时，任务可以不需要等到线程创建就能立即执行。
 - **提高线程的可管理性** - 线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。但是要做到合理的利用线程池，必须对其原理了如指掌。
 
-## 二、Executor 框架
+## 2. Executor 框架
 
 > Executor 框架是一个根据一组执行策略调用，调度，执行和控制的异步任务的框架，目的是提供一种将”任务提交”与”任务如何运行”分离开来的机制。
 
-### 核心 API 概述
+### 2.1. 核心 API 概述
 
 Executor 框架核心 API 如下：
 
@@ -65,7 +68,7 @@ Executor 框架核心 API 如下：
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/exexctor-uml.png)
 
-### Executor
+### 2.2. Executor
 
 `Executor` 接口中只定义了一个 `execute` 方法，用于接收一个 `Runnable` 对象。
 
@@ -75,7 +78,7 @@ public interface Executor {
 }
 ```
 
-### ExecutorService
+### 2.3. ExecutorService
 
 `ExecutorService` 接口继承了 `Executor` 接口，它还提供了 `invokeAll`、`invokeAny`、`shutdown`、`submit` 等方法。
 
@@ -120,7 +123,7 @@ public interface ExecutorService extends Executor {
 - 支持有返回值的线程 - `sumbit`、`invokeAll`、`invokeAny` 方法中都支持传入`Callable` 对象。
 - 支持管理线程生命周期 - `shutdown`、`shutdownNow`、`isShutdown` 等方法。
 
-### ScheduledExecutorService
+### 2.4. ScheduledExecutorService
 
 `ScheduledExecutorService` 接口扩展了 `ExecutorService` 接口。
 
@@ -153,11 +156,11 @@ public interface ScheduledExecutorService extends ExecutorService {
 - `schedule` 方法可以在指定的延时后执行一个 `Runnable` 或者 `Callable` 任务。
 - `scheduleAtFixedRate` 方法和 `scheduleWithFixedDelay` 方法可以按照指定时间间隔，定期执行任务。
 
-## 三、ThreadPoolExecutor
+## 3. ThreadPoolExecutor
 
 `java.uitl.concurrent.ThreadPoolExecutor` 类是 `Executor` 框架中最核心的类。所以，本文将着重讲述一下这个类。
 
-### 重要字段
+### 3.1. 重要字段
 
 `ThreadPoolExecutor` 有以下重要字段：
 
@@ -195,7 +198,7 @@ private static final int TERMINATED =  3 << COUNT_BITS;
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread-pool_2.png)
 
-### 构造方法
+### 3.2. 构造方法
 
 `ThreadPoolExecutor` 有四个构造方法，前三个都是基于第四个实现。第四个构造方法定义如下：
 
@@ -247,7 +250,7 @@ public ThreadPoolExecutor(int corePoolSize,
   - `CallerRunsPolicy` - 直接调用 `run` 方法并且阻塞执行。
   - 如果以上策略都不能满足需要，也可以通过实现 `RejectedExecutionHandler` 接口来定制处理策略。如记录日志或持久化不能处理的任务。
 
-### execute 方法
+### 3.3. execute 方法
 
 默认情况下，创建线程池之后，线程池中是没有线程的，需要提交任务之后才会创建线程。
 
@@ -262,7 +265,7 @@ public ThreadPoolExecutor(int corePoolSize,
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread-pool_1.png)
 
-### 其他重要方法
+### 3.4. 其他重要方法
 
 在 `ThreadPoolExecutor` 类中还有一些重要的方法：
 
@@ -285,7 +288,7 @@ public ThreadPoolExecutor(int corePoolSize,
 - `getPoolSize` - 线程池当前的线程数量；
 - `getActiveCount` - 当前线程池中正在执行任务的线程数量。
 
-### 使用示例
+### 3.5. 使用示例
 
 ```java
 public class ThreadPoolExecutorDemo {
@@ -319,13 +322,13 @@ public class ThreadPoolExecutorDemo {
 }
 ```
 
-## 四、Executors
+## 4. Executors
 
 JDK 的 `Executors` 类中提供了几种具有代表性的线程池，这些线程池 **都是基于 `ThreadPoolExecutor` 的定制化实现**。
 
 在实际使用线程池的场景中，我们往往不是直接使用 `ThreadPoolExecutor` ，而是使用 JDK 中提供的具有代表性的线程池实例。
 
-### newSingleThreadExecutor
+### 4.1. newSingleThreadExecutor
 
 **创建一个单线程的线程池**。
 
@@ -354,7 +357,7 @@ public class SingleThreadExecutorDemo {
 }
 ```
 
-### newFixedThreadPool
+### 4.2. newFixedThreadPool
 
 **创建一个固定大小的线程池**。
 
@@ -383,7 +386,7 @@ public class FixedThreadPoolDemo {
 }
 ```
 
-### newCachedThreadPool
+### 4.3. newCachedThreadPool
 
 **创建一个可缓存的线程池**。
 
@@ -412,7 +415,7 @@ public class CachedThreadPoolDemo {
 }
 ```
 
-### newScheduleThreadPool
+### 4.4. newScheduleThreadPool
 
 创建一个大小无限的线程池。此线程池支持定时以及周期性执行任务的需求。
 
@@ -453,9 +456,15 @@ public class ScheduledThreadPoolDemo {
 }
 ```
 
-## 五、线程池最佳实践
+### 4.5. newWorkStealingPool
 
-### 计算线程数量
+Java 8 才引入。
+
+其内部会构建 `ForkJoinPool`，利用 [Work-Stealing](https://en.wikipedia.org/wiki/Work_stealing) 算法，并行地处理任务，不保证处理顺序。
+
+## 5. 线程池最佳实践
+
+### 5.1. 计算线程数量
 
 一般多线程执行的任务类型可以分为 CPU 密集型和 I/O 密集型，根据不同的任务类型，我们计算线程数的方法也不一样。
 
@@ -463,17 +472,13 @@ public class ScheduledThreadPoolDemo {
 
 **I/O 密集型任务：**这种任务应用起来，系统会用大部分的时间来处理 I/O 交互，而线程在处理 I/O 的时间段内不会占用 CPU 来处理，这时就可以将 CPU 交出给其它线程使用。因此在 I/O 密集型任务的应用中，我们可以多配置一些线程，具体的计算方法是 2N。
 
-### 线程池使用注意点
+### 5.2. 建议使用有界阻塞队列
 
-不建议使用 Executors 的最重要的原因是：Executors 提供的很多方法默认使用的都是无界的 LinkedBlockingQueue，高负载情境下，无界队列很容易导致 OOM，而 OOM 会导致所有请求都无法处理，这是致命问题。所以**强烈建议使用有界队列**。
+不建议使用 `Executors` 的最重要的原因是：`Executors` 提供的很多方法默认使用的都是无界的 `LinkedBlockingQueue`，高负载情境下，无界队列很容易导致 OOM，而 OOM 会导致所有请求都无法处理，这是致命问题。所以**强烈建议使用有界队列**。
 
-使用有界队列，当任务过多时，线程池会触发执行拒绝策略，线程池默认的拒绝策略会 throw RejectedExecutionException 这是个运行时异常，对于运行时异常编译器并不强制 catch 它，所以开发人员很容易忽略。因此**默认拒绝策略要慎重使用**。如果线程池处理的任务非常重要，建议自定义自己的拒绝策略；并且在实际工作中，自定义的拒绝策略往往和降级策略配合使用。
+《阿里巴巴 Java 开发手册》中提到，禁止使用这些方法来创建线程池，而应该手动 `new ThreadPoolExecutor` 来创建线程池。制订这条规则是因为容易导致生产事故，最典型的就是 `newFixedThreadPool` 和 `newCachedThreadPool`，可能因为资源耗尽导致 OOM 问题。
 
-## 六、线程池使用误区
-
-《阿里巴巴 Java 开发手册》中提到，禁止使用这些方法来创建线程池，而应该手动 `new ThreadPoolExecutor` 来创建线程池。制订这条规则是因为容易导致生产事故，最典型的就是 newFixedThreadPool 和 newCachedThreadPool，可能因为资源耗尽导致 OOM 问题。
-
-【示例】newFixedThreadPool OOM
+【示例】`newFixedThreadPool` OOM
 
 ```java
 ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(1);
@@ -495,9 +500,9 @@ threadPool.shutdown();
 threadPool.awaitTermination(1, TimeUnit.HOURS);
 ```
 
-newFixedThreadPool 使用的工作队列是 `LinkedBlockingQueue` ，而默认构造方法的 `LinkedBlockingQueue` 是一个 `Integer.MAX_VALUE` 长度的队列，可以认为是无界的。如果任务较多并且执行较慢的话，队列可能会快速积压，撑爆内存导致 OOM。
+`newFixedThreadPool` 使用的工作队列是 `LinkedBlockingQueue` ，而默认构造方法的 `LinkedBlockingQueue` 是一个 `Integer.MAX_VALUE` 长度的队列，可以认为是无界的。如果任务较多并且执行较慢的话，队列可能会快速积压，撑爆内存导致 OOM。
 
-【示例】newCachedThreadPool OOM
+【示例】`newCachedThreadPool` OOM
 
 ```java
 ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newCachedThreadPool();
@@ -520,7 +525,11 @@ threadPool.awaitTermination(1, TimeUnit.HOURS);
 
 如果大量的任务进来后会创建大量的线程。我们知道线程是需要分配一定的内存空间作为线程栈的，比如 1MB，因此无限制创建线程必然会导致 OOM。
 
-## 参考资料
+### 5.3. 重要任务应该自定义拒绝策略
+
+使用有界队列，当任务过多时，线程池会触发执行拒绝策略，线程池默认的拒绝策略会 throw `RejectedExecutionException` 这是个运行时异常，对于运行时异常编译器并不强制 `catch` 它，所以开发人员很容易忽略。因此**默认拒绝策略要慎重使用**。如果线程池处理的任务非常重要，建议自定义自己的拒绝策略；并且在实际工作中，自定义的拒绝策略往往和降级策略配合使用。
+
+## 6. 参考资料
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)

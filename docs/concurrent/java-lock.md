@@ -17,34 +17,34 @@
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [1. 并发锁简介](#1-并发锁简介)
-    - [1.1. 可重入锁](#11-可重入锁)
-    - [1.2. 公平锁与非公平锁](#12-公平锁与非公平锁)
-    - [1.3. 独享锁与共享锁](#13-独享锁与共享锁)
-    - [1.4. 悲观锁与乐观锁](#14-悲观锁与乐观锁)
-    - [1.5. 偏向锁、轻量级锁、重量级锁](#15-偏向锁轻量级锁重量级锁)
-    - [1.6. 分段锁](#16-分段锁)
-    - [1.7. 显示锁和内置锁](#17-显示锁和内置锁)
+  - [1.1. 可重入锁](#11-可重入锁)
+  - [1.2. 公平锁与非公平锁](#12-公平锁与非公平锁)
+  - [1.3. 独享锁与共享锁](#13-独享锁与共享锁)
+  - [1.4. 悲观锁与乐观锁](#14-悲观锁与乐观锁)
+  - [1.5. 偏向锁、轻量级锁、重量级锁](#15-偏向锁轻量级锁重量级锁)
+  - [1.6. 分段锁](#16-分段锁)
+  - [1.7. 显示锁和内置锁](#17-显示锁和内置锁)
 - [2. Lock 和 Condition](#2-lock-和-condition)
-    - [2.1. 为何引入 Lock 和 Condition](#21-为何引入-lock-和-condition)
-    - [2.2. Lock 接口](#22-lock-接口)
-    - [2.3. Condition](#23-condition)
+  - [2.1. 为何引入 Lock 和 Condition](#21-为何引入-lock-和-condition)
+  - [2.2. Lock 接口](#22-lock-接口)
+  - [2.3. Condition](#23-condition)
 - [3. ReentrantLock](#3-reentrantlock)
-    - [3.1. ReentrantLock 的特性](#31-reentrantlock-的特性)
-    - [3.2. ReentrantLock 的用法](#32-reentrantlock-的用法)
-    - [3.3. ReentrantLock 的原理](#33-reentrantlock-的原理)
+  - [3.1. ReentrantLock 的特性](#31-reentrantlock-的特性)
+  - [3.2. ReentrantLock 的用法](#32-reentrantlock-的用法)
+  - [3.3. ReentrantLock 的原理](#33-reentrantlock-的原理)
 - [4. ReentrantReadWriteLock](#4-reentrantreadwritelock)
-    - [4.1. ReentrantReadWriteLock 的特性](#41-reentrantreadwritelock-的特性)
-    - [4.2. ReentrantReadWriteLock 的用法](#42-reentrantreadwritelock-的用法)
-    - [4.3. ReentrantReadWriteLock 的原理](#43-reentrantreadwritelock-的原理)
+  - [4.1. ReentrantReadWriteLock 的特性](#41-reentrantreadwritelock-的特性)
+  - [4.2. ReentrantReadWriteLock 的用法](#42-reentrantreadwritelock-的用法)
+  - [4.3. ReentrantReadWriteLock 的原理](#43-reentrantreadwritelock-的原理)
 - [5. StampedLock](#5-stampedlock)
 - [6. AQS](#6-aqs)
-    - [6.1. AQS 的要点](#61-aqs-的要点)
-    - [6.2. AQS 的应用](#62-aqs-的应用)
-    - [6.3. AQS 的原理](#63-aqs-的原理)
+  - [6.1. AQS 的要点](#61-aqs-的要点)
+  - [6.2. AQS 的应用](#62-aqs-的应用)
+  - [6.3. AQS 的原理](#63-aqs-的原理)
 - [7. 死锁](#7-死锁)
-    - [7.1. 什么是死锁](#71-什么是死锁)
-    - [7.2. 如何定位死锁](#72-如何定位死锁)
-    - [7.3. 如何避免死锁](#73-如何避免死锁)
+  - [7.1. 什么是死锁](#71-什么是死锁)
+  - [7.2. 如何定位死锁](#72-如何定位死锁)
+  - [7.3. 如何避免死锁](#73-如何避免死锁)
 - [8. 参考资料](#8-参考资料)
 
 <!-- /TOC -->
@@ -1145,11 +1145,8 @@ public final boolean releaseShared(int arg)
 > AQS 围绕同步状态提供两种基本操作“获取”和“释放”，并提供一系列判断和处理方法，简单说几点：
 >
 > - state 是独占的，还是共享的；
->
 > - state 被获取后，其他线程需要等待；
->
 > - state 被释放后，唤醒等待线程；
->
 > - 线程等不及时，如何退出等待。
 >
 > 至于线程是否可以获得 state，如何释放 state，就不是 AQS 关心的了，要由子类具体实现。

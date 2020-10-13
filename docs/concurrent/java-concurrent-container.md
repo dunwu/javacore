@@ -4,31 +4,32 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、同步容器](#一同步容器)
-  - [同步容器简介](#同步容器简介)
-  - [同步容器的问题](#同步容器的问题)
-- [二、并发容器简介](#二并发容器简介)
-  - [并发场景下的 Map](#并发场景下的-map)
-  - [并发场景下的 List](#并发场景下的-list)
-- [三、Map](#三map)
-  - [ConcurrentHashMap](#concurrenthashmap)
-- [四、List](#四list)
-  - [CopyOnWriteArrayList](#copyonwritearraylist)
-- [五、Set](#五set)
-- [六、Queue](#六queue)
-  - [BlockingQueue](#blockingqueue)
-  - [PriorityBlockingQueue 类](#priorityblockingqueue-类)
-  - [LinkedBlockingQueue 类](#linkedblockingqueue-类)
-  - [ArrayBlockingQueue 类](#arrayblockingqueue-类)
-  - [SynchronousQueue](#synchronousqueue)
-  - [ConcurrentLinkedDeque](#concurrentlinkeddeque)
-- [参考资料](#参考资料)
+- [1. 同步容器](#1-同步容器)
+  - [1.1. 同步容器简介](#11-同步容器简介)
+  - [1.2. 同步容器的问题](#12-同步容器的问题)
+- [2. 并发容器简介](#2-并发容器简介)
+  - [2.1. 并发场景下的 Map](#21-并发场景下的-map)
+  - [2.2. 并发场景下的 List](#22-并发场景下的-list)
+- [3. Map](#3-map)
+  - [3.1. ConcurrentHashMap](#31-concurrenthashmap)
+- [4. List](#4-list)
+  - [4.1. CopyOnWriteArrayList](#41-copyonwritearraylist)
+- [5. Set](#5-set)
+- [6. Queue](#6-queue)
+  - [6.1. BlockingQueue](#61-blockingqueue)
+  - [6.2. PriorityBlockingQueue 类](#62-priorityblockingqueue-类)
+  - [6.3. ArrayBlockingQueue 类](#63-arrayblockingqueue-类)
+  - [6.4. LinkedBlockingQueue 类](#64-linkedblockingqueue-类)
+  - [6.5. SynchronousQueue 类](#65-synchronousqueue-类)
+  - [6.6. ConcurrentLinkedDeque 类](#66-concurrentlinkeddeque-类)
+  - [6.7. Queue 的并发应用](#67-queue-的并发应用)
+- [7. 参考资料](#7-参考资料)
 
 <!-- /TOC -->
 
-## 一、同步容器
+## 1. 同步容器
 
-### 同步容器简介
+### 1.1. 同步容器简介
 
 在 Java 中，同步容器主要包括 2 类：
 
@@ -38,7 +39,7 @@
   - `Hashtable`- `Hashtable` 实现了 `Map` 接口，它和 `HashMap` 很相似，但是 `Hashtable` 进行了同步处理，而 `HashMap` 没有。
 - `Collections` 类中提供的静态工厂方法创建的类（由 `Collections.synchronizedXXX` 等方法）
 
-### 同步容器的问题
+### 1.2. 同步容器的问题
 
 同步容器的同步原理就是在其 `get`、`set`、`size` 等主要方法上用 `synchronized` 修饰。 **`synchronized` 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块**。
 
@@ -188,7 +189,7 @@ public class VectorDemo2 {
 
 但是在并发容器中不会出现这个问题。
 
-## 二、并发容器简介
+## 2. 并发容器简介
 
 同步容器将所有对容器状态的访问都串行化，以保证线程安全性，这种策略会严重降低并发性。
 
@@ -217,23 +218,23 @@ J.U.C 包中提供的并发容器命名一般分为三类：
 - `CopyOnWrite*` - 一个线程写，多个线程读。读操作时不加锁，写操作时通过在副本上加锁保证并发安全，空间开销较大。
 - `Blocking*` - 内部实现一般是基于锁，提供阻塞队列的能力。
 
-### 并发场景下的 Map
+### 2.1. 并发场景下的 Map
 
 如果对数据有强一致要求，则需使用 Hashtable；在大部分场景通常都是弱一致性的情况下，使用 ConcurrentHashMap 即可；如果数据量在千万级别，且存在大量增删改操作，则可以考虑使用 ConcurrentSkipListMap。
 
-### 并发场景下的 List
+### 2.2. 并发场景下的 List
 
 读多写少用 `CopyOnWriteArrayList`。
 
 写多读少用 `ConcurrentLinkedQueue` ，但由于是无界的，要有容量限制，避免无限膨胀，导致内存溢出。
 
-## 三、Map
+## 3. Map
 
 Map 接口的两个实现是 ConcurrentHashMap 和 ConcurrentSkipListMap，它们从应用的角度来看，主要区别在于**ConcurrentHashMap 的 key 是无序的，而 ConcurrentSkipListMap 的 key 是有序的**。所以如果你需要保证 key 的顺序，就只能使用 ConcurrentSkipListMap。
 
 使用 ConcurrentHashMap 和 ConcurrentSkipListMap 需要注意的地方是，它们的 key 和 value 都不能为空，否则会抛出`NullPointerException`这个运行时异常。
 
-### ConcurrentHashMap
+### 3.1. ConcurrentHashMap
 
 `ConcurrentHashMap` 是线程安全的 `HashMap` ，用于替代 `Hashtable`。
 
@@ -485,10 +486,10 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 ConcurrentHashMap 对外提供的方法或能力的限制：
 
 - 使用了 ConcurrentHashMap，不代表对它的多个操作之间的状态是一致的，是没有其他线程在操作它的，如果需要确保需要手动加锁。
-- 诸如 size、isEmpty 和 containsValue 等聚合方法，在并发情况下可能会反映ConcurrentHashMap 的中间状态。因此在并发情况下，这些方法的返回值只能用作参考，而不能用于流程控制。显然，利用 size 方法计算差异值，是一个流程控制。
+- 诸如 size、isEmpty 和 containsValue 等聚合方法，在并发情况下可能会反映 ConcurrentHashMap 的中间状态。因此在并发情况下，这些方法的返回值只能用作参考，而不能用于流程控制。显然，利用 size 方法计算差异值，是一个流程控制。
 - 诸如 putAll 这样的聚合方法也不能确保原子性，在 putAll 的过程中去获取数据可能会获取到部分数据。
 
-##### ConcurrentHashMap 错误示例修正1.0版
+##### ConcurrentHashMap 错误示例修正 1.0 版
 
 通过 synchronized 加锁，当然可以保证数据一致性，但是牺牲了 ConcurrentHashMap 的性能，没哟真正发挥出 ConcurrentHashMap 的特性。
 
@@ -533,7 +534,7 @@ ConcurrentHashMap 对外提供的方法或能力的限制：
     }
 ```
 
-##### ConcurrentHashMap 错误示例修正2.0版
+##### ConcurrentHashMap 错误示例修正 2.0 版
 
 ```java
 
@@ -601,9 +602,9 @@ ConcurrentHashMap 对外提供的方法或能力的限制：
     }
 ```
 
-## 四、List
+## 4. List
 
-### CopyOnWriteArrayList
+### 4.1. CopyOnWriteArrayList
 
 `CopyOnWriteArrayList` 是线程安全的 `ArrayList`。`CopyOnWrite` 字面意思为**写的时候会将共享变量新复制一份**出来。复制的好处在于**读操作是无锁的**（也就是无阻塞）。
 
@@ -831,15 +832,15 @@ public class WrongCopyOnWriteList {
 
 读性能差不多是写性能的一百倍。
 
-## 五、Set
+## 5. Set
 
 Set 接口的两个实现是 CopyOnWriteArraySet 和 ConcurrentSkipListSet，使用场景可以参考前面讲述的 CopyOnWriteArrayList 和 ConcurrentSkipListMap，它们的原理都是一样的。
 
-## 六、Queue
+## 6. Queue
 
 Java 并发包里面 Queue 这类并发容器是最复杂的，你可以从以下两个维度来分类。一个维度是**阻塞与非阻塞**，所谓阻塞指的是：**当队列已满时，入队操作阻塞；当队列已空时，出队操作阻塞**。另一个维度是**单端与双端**，单端指的是只能队尾入队，队首出队；而双端指的是队首队尾皆可入队出队。Java 并发包里**阻塞队列都用 Blocking 关键字标识，单端队列使用 Queue 标识，双端队列使用 Deque 标识**。
 
-### BlockingQueue
+### 6.1. BlockingQueue
 
 `BlockingQueue` 顾名思义，是一个**阻塞队列**。**`BlockingQueue` 基本都是基于锁实现**。在 `BlockingQueue` 中，**当队列已满时，入队操作阻塞；当队列已空时，出队操作阻塞**。
 
@@ -855,13 +856,13 @@ public interface BlockingQueue<E> extends Queue<E> {}
 // 获取并移除队列头结点，如果必要，其会等待直到队列出现元素
 E take() throws InterruptedException;
 // 插入元素，如果队列已满，则等待直到队列出现空闲空间
-void put(E e) throws InterruptedException;  
+void put(E e) throws InterruptedException;
 ```
 
 `BlockingQueue` 对插入操作、移除操作、获取元素操作提供了四种不同的方法用于不同的场景中使用：
 
 - 抛出异常；
-- 返回特殊值（null 或 true/false，取决于具体的操作）；
+- 返回特殊值（`null` 或 `true`/`false`，取决于具体的操作）；
 - 阻塞等待此操作，直到这个操作成功；
 - 阻塞等待此操作，直到成功或者超时指定时间。
 
@@ -873,9 +874,9 @@ void put(E e) throws InterruptedException;
 | Remove  | remove()             | poll()            | take()             | poll(time, unit)     |
 | Examine | element()            | peek()            | **not applicable** | **not applicable**   |
 
-BlockingQueue 的各个实现类都遵循了这些规则。
+`BlockingQueue` 的各个实现类都遵循了这些规则。
 
-BlockingQueue 不接受 null 值元素。
+`BlockingQueue` 不接受 `null` 值元素。
 
 JDK 提供了以下阻塞队列：
 
@@ -886,7 +887,9 @@ JDK 提供了以下阻塞队列：
 - `DelayQueue` - 一个使用优先级队列实现的无界阻塞队列。
 - `LinkedTransferQueue` - 一个**由链表结构组成的无界阻塞队列**。
 
-### PriorityBlockingQueue 类
+`BlockingQueue` 基本都是基于锁实现。
+
+### 6.2. PriorityBlockingQueue 类
 
 `PriorityBlockingQueue` 类定义如下：
 
@@ -897,11 +900,11 @@ public class PriorityBlockingQueue<E> extends AbstractQueue<E>
 
 #### PriorityBlockingQueue 要点
 
-1.  `PriorityBlockingQueue` 实现了 `BlockingQueue`，也是一个阻塞队列。
-2.  `PriorityBlockingQueue` 实现了 `Serializable`，支持序列化。
-3.  `PriorityBlockingQueue` 可以视为 `PriorityQueue` 的线程安全版本。
-4.  `PriorityBlockingQueue` 不接受 `null` 值元素。
-5.  `PriorityBlockingQueue` 的插入操作 put 方法不会 block，因为它是无界队列（take 方法在队列为空的时候会阻塞）。
+- `PriorityBlockingQueue` 可以视为 `PriorityQueue` 的线程安全版本。
+- `PriorityBlockingQueue` 实现了 `BlockingQueue`，也是一个阻塞队列。
+- `PriorityBlockingQueue` 实现了 `Serializable`，支持序列化。
+- `PriorityBlockingQueue` 不接受 `null` 值元素。
+- `PriorityBlockingQueue` 的插入操作 `put` 方法不会 block，因为它是无界队列（take 方法在队列为空的时候会阻塞）。
 
 #### PriorityBlockingQueue 原理
 
@@ -917,9 +920,9 @@ private final ReentrantLock lock;
 
 `PriorityBlockingQueue` 的容量虽然有初始化大小，但是不限制大小，如果当前容量已满，插入新元素时会自动扩容。
 
-### ArrayBlockingQueue 类
+### 6.3. ArrayBlockingQueue 类
 
-`ArrayBlockingQueue` 是由数组结构组成的有界阻塞队列。
+`ArrayBlockingQueue` 是由数组结构组成的**有界阻塞队列**。
 
 #### ArrayBlockingQueue 要点
 
@@ -961,6 +964,8 @@ private final Condition notEmpty;
 private final Condition notFull;
 ```
 
+`ArrayBlockingQueue` 内部以 `final` 的数组保存数据，数组的大小就决定了队列的边界。
+
 `ArrayBlockingQueue` 实现并发同步的原理就是，读操作和写操作都需要获取到 AQS 独占锁才能进行操作。
 
 - 如果队列为空，这个时候读操作的线程进入到读线程队列排队，等待写线程写入新的元素，然后唤醒读线程队列的第一个等待线程。
@@ -972,7 +977,7 @@ private final Condition notFull;
 - 指定独占锁是公平锁还是非公平锁。非公平锁的吞吐量比较高，公平锁可以保证每次都是等待最久的线程获取到锁；
 - 可以指定用一个集合来初始化，将此集合中的元素在构造方法期间就先添加到队列中。
 
-### LinkedBlockingQueue 类
+### 6.4. LinkedBlockingQueue 类
 
 `LinkedBlockingQueue` 是由链表结构组成的有界阻塞队列。容易被误解为无边界，但其实其行为和内部代码都是基于有界的逻辑实现的，只不过如果我们没有在创建队列时就指定容量，那么其容量限制就自动被设置为 `Integer.MAX_VALUE`，成为了无界队列。
 
@@ -1019,7 +1024,7 @@ private final Condition notFull = putLock.newCondition();
 - `takeLock` 和 `notEmpty` 搭配：如果要获取（take）一个元素，需要获取 `takeLock` 锁，但是获取了锁还不够，如果队列此时为空，还需要队列不为空（`notEmpty`）这个条件（`Condition`）。
 - `putLock` 需要和 `notFull` 搭配：如果要插入（put）一个元素，需要获取 `putLock` 锁，但是获取了锁还不够，如果队列此时已满，还需要队列不是满的（notFull）这个条件（`Condition`）。
 
-### SynchronousQueue 类
+### 6.5. SynchronousQueue 类
 
 SynchronousQueue 是**不存储元素的阻塞队列**。每个删除操作都要等待插入操作，反之每个插入操作也都要等待删除动作。那么这个队列的容量是多少呢？是 1 吗？其实不是的，其内部容量是 0。
 
@@ -1042,26 +1047,26 @@ public class SynchronousQueue<E> extends AbstractQueue<E>
 
 当然，`SynchronousQueue` 也不允许传递 null 值的（并发包中的容器类好像都不支持插入 null 值，因为 null 值往往用作其他用途，比如用于方法的返回值代表操作失败）。
 
-### ConcurrentLinkedDeque 类
+### 6.6. ConcurrentLinkedDeque 类
 
 `Deque` 的侧重点是支持对队列头尾都进行插入和删除，所以提供了特定的方法，如:
 
 - 尾部插入时需要的 `addLast(e)`、`offerLast(e)`。
 - 尾部删除所需要的 `removeLast()`、`pollLast()`。
 
-### Queue 的并发应用
+### 6.7. Queue 的并发应用
 
-Queue 被广泛使用在生产者 - 消费者场景。而在并发场景，利用 BlockingQueue 的阻塞机制，可以减少很多并发协调工作。
+Queue 被广泛使用在生产者 - 消费者场景。而在并发场景，利用 `BlockingQueue` 的阻塞机制，可以减少很多并发协调工作。
 
 这么多并发 Queue 的实现，如何选择呢？
 
-- 考虑应用场景中对队列边界的要求。ArrayBlockingQueue 是有明确的容量限制的，而 LinkedBlockingQueue 则取决于我们是否在创建时指定，SynchronousQueue 则干脆不能缓存任何元素。
-- 从空间利用角度，数组结构的 ArrayBlockingQueue 要比 LinkedBlockingQueue 紧凑，因为其不需要创建所谓节点，但是其初始分配阶段就需要一段连续的空间，所以初始内存需求更大。
-- 通用场景中，LinkedBlockingQueue 的吞吐量一般优于 ArrayBlockingQueue，因为它实现了更加细粒度的锁操作。
-- ArrayBlockingQueue 实现比较简单，性能更好预测，属于表现稳定的“选手”。
-- 可能令人意外的是，很多时候 SynchronousQueue 的性能表现，往往大大超过其他实现，尤其是在队列元素较小的场景。
+- 考虑应用场景中对队列边界的要求。`ArrayBlockingQueue` 是有明确的容量限制的，而 `LinkedBlockingQueue` 则取决于我们是否在创建时指定，`SynchronousQueue` 则干脆不能缓存任何元素。
+- 从空间利用角度，数组结构的 `ArrayBlockingQueue` 要比 `LinkedBlockingQueue` 紧凑，因为其不需要创建所谓节点，但是其初始分配阶段就需要一段连续的空间，所以初始内存需求更大。
+- 通用场景中，`LinkedBlockingQueue` 的吞吐量一般优于 `ArrayBlockingQueue`，因为它实现了更加细粒度的锁操作。
+- `ArrayBlockingQueue` 实现比较简单，性能更好预测，属于表现稳定的“选手”。
+- 可能令人意外的是，很多时候 `SynchronousQueue` 的性能表现，往往大大超过其他实现，尤其是在队列元素较小的场景。
 
-## 参考资料
+## 7. 参考资料
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)

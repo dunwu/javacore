@@ -18,31 +18,31 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [jps](#jps)
-  - [jps 命令用法](#jps-命令用法)
-  - [jps 使用示例](#jps-使用示例)
-- [jstat](#jstat)
-  - [jstat 命令用法](#jstat-命令用法)
-  - [jstat 使用示例](#jstat-使用示例)
-- [jmap](#jmap)
-  - [jmap 命令用法](#jmap-命令用法)
-  - [jstat 使用示例](#jstat-使用示例-1)
-- [jstack](#jstack)
-  - [jstack 命令用法](#jstack-命令用法)
-  - [thread dump 文件](#thread-dump-文件)
-  - [系统线程状态](#系统线程状态)
-  - [jstack 使用示例](#jstack-使用示例)
-- [jinfo](#jinfo)
-- [jhat](#jhat)
-- [参考资料](#参考资料)
+- [1. jps](#1-jps)
+  - [1.1. jps 命令用法](#11-jps-命令用法)
+  - [1.2. jps 使用示例](#12-jps-使用示例)
+- [2. jstat](#2-jstat)
+  - [2.1. jstat 命令用法](#21-jstat-命令用法)
+  - [2.2. jstat 使用示例](#22-jstat-使用示例)
+- [3. jmap](#3-jmap)
+  - [3.1. jmap 命令用法](#31-jmap-命令用法)
+  - [3.2. jstat 使用示例](#32-jstat-使用示例)
+- [4. jstack](#4-jstack)
+  - [4.1. jstack 命令用法](#41-jstack-命令用法)
+  - [4.2. thread dump 文件](#42-thread-dump-文件)
+  - [4.3. 系统线程状态](#43-系统线程状态)
+  - [4.4. jstack 使用示例](#44-jstack-使用示例)
+- [5. jinfo](#5-jinfo)
+- [6. jhat](#6-jhat)
+- [7. 参考资料](#7-参考资料)
 
 <!-- /TOC -->
 
-## jps
+## 1. jps
 
 > **[jps(JVM Process Status Tool)](https://docs.oracle.com/en/java/javase/11/tools/jps.html#GUID-6EB65B96-F9DD-4356-B825-6146E9EEC81E) 是虚拟机进程状态工具**。它可以显示指定系统内所有的 HotSpot 虚拟机进程状态信息。jps 通过 RMI 协议查询开启了 RMI 服务的远程虚拟机进程状态。
 
-### jps 命令用法
+### 1.1. jps 命令用法
 
 ```shell
 jps [option] [hostid]
@@ -63,7 +63,7 @@ jps [-help]
 
 其中 `option`、`hostid` 参数也可以不写。
 
-### jps 使用示例
+### 1.2. jps 使用示例
 
 【示例】列出本地 Java 进程
 
@@ -91,11 +91,11 @@ $ jps -l remote.domain
 2857 sun.tools.jstatd.jstatd
 ```
 
-## jstat
+## 2. jstat
 
 > **[jstat(JVM statistics Monitoring)](https://docs.oracle.com/en/java/javase/11/tools/jstat.html)，是虚拟机统计信息监视工具**。jstat 用于监视虚拟机运行时状态信息，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT 编译等运行数据。
 
-### jstat 命令用法
+### 2.1. jstat 命令用法
 
 命令格式：
 
@@ -124,7 +124,7 @@ jstat [option] VMID [interval] [count]
 
 > 【参考】更详细说明可以参考：[jstat 命令查看 jvm 的 GC 情况](https://www.cnblogs.com/yjd_hycf_space/p/7755633.html)
 
-### jstat 使用示例
+### 2.2. jstat 使用示例
 
 #### 类加载统计
 
@@ -216,13 +216,13 @@ $ jstat -gc 25196 1s 4
 
 > 注：更详细的参数含义可以参考官方文档：http://docs.oracle.com/javase/8/docs/technotes/tools/unix/jstat.html
 
-## jmap
+## 3. jmap
 
 > **[jmap(JVM Memory Map)](https://docs.oracle.com/en/java/javase/11/tools/jmap.html) 是 Java 内存映像工具**。jmap 用于生成堆转储快照（一般称为 heapdump 或 dump 文件）。jmap 不仅能生成 dump 文件，还可以查询 `finalize` 执行队列、Java 堆和永久代的详细信息，如当前使用率、当前使用的是哪种收集器等。
 >
 > 如果不使用这个命令，还可以使用 `-XX:+HeapDumpOnOutOfMemoryError` 参数来让虚拟机出现 OOM 的时候，自动生成 dump 文件。
 
-### jmap 命令用法
+### 3.1. jmap 命令用法
 
 命令格式：
 
@@ -239,7 +239,7 @@ jmap [option] pid
 - `-permstat` - to print permanent generation statistics
 - `-F` - 当-dump 没有响应时，强制生成 dump 快照
 
-### jstat 使用示例
+### 3.2. jstat 使用示例
 
 #### 生成 heapdump 快照
 
@@ -320,7 +320,7 @@ PS Perm Generation
    97.06831451706046% used
 ```
 
-## jstack
+## 4. jstack
 
 > **[jstack(Stack Trace for java)](https://docs.oracle.com/en/java/javase/11/tools/jstack.html) 是 Java 堆栈跟踪工具**。jstack 用来打印目标 Java 进程中各个线程的栈轨迹，以及这些线程所持有的锁，并可以生成 java 虚拟机当前时刻的线程快照（一般称为 threaddump 或 javacore 文件）。
 >
@@ -330,7 +330,7 @@ PS Perm Generation
 
 线程出现停顿的时候通过 jstack 来查看各个线程的调用堆栈，就可以知道没有响应的线程到底在后台做什么事情，或者等待什么资源。 如果 java 程序崩溃生成 core 文件，jstack 工具可以用来获得 core 文件的 java stack 和 native stack 的信息，从而可以轻松地知道 java 程序是如何崩溃和在程序何处发生问题。另外，jstack 工具还可以附属到正在运行的 java 程序中，看到当时运行的 java 程序的 java stack 和 native stack 的信息, 如果现在运行的 java 程序呈现 hung 的状态，jstack 是非常有用的。
 
-### jstack 命令用法
+### 4.1. jstack 命令用法
 
 命令格式：
 
@@ -344,7 +344,7 @@ jstack [option] pid
 - `-l` - 除堆栈外，显示关于锁的附加信息
 - `-m` - 打印 java 和 jni 框架的所有栈信息
 
-### thread dump 文件
+### 4.2. thread dump 文件
 
 ![img](http://dunwu.test.upcdn.net/snap/20200730112431.png)
 
@@ -564,7 +564,7 @@ JNI global references: 830
 
 下一篇文章将要讲述一个直接找出 CPU 100% 线程的例子。
 
-### 系统线程状态
+### 4.3. 系统线程状态
 
 系统线程有如下状态：
 
@@ -701,7 +701,7 @@ synchronized(obj) {
 
 当线程获得了 Monitor，进入了临界区之后，如果发现线程继续运行的条件没有满足，它则调用对象（通常是被 synchronized 的对象）的 wait()方法，放弃 Monitor，进入 "Wait Set"队列。只有当别的线程在该对象上调用了 notify()或者 notifyAll()方法，"Wait Set"队列中的线程才得到机会去竞争，但是只有一个线程获得对象的 Monitor，恢复到运行态。"Wait Set"中的线程在 Thread Dump 中显示的状态为 in Object.wait()。通常来说，当 CPU 很忙的时候关注 Runnable 状态的线程，反之则关注 waiting for monitor entry 状态的线程。
 
-### jstack 使用示例
+### 4.4. jstack 使用示例
 
 #### 找出某 Java 进程中最耗费 CPU 的 Java 线程
 
@@ -774,7 +774,7 @@ synchronized(sigLock) {
 jstack -l 8841 > /home/threaddump.txt
 ```
 
-## jinfo
+## 5. jinfo
 
 > **[jinfo(JVM Configuration info)](https://docs.oracle.com/en/java/javase/11/tools/jinfo.html)，是 Java 配置信息工具**。jinfo 用于实时查看和调整虚拟机运行参数。如传递给 Java 虚拟机的`-X`（即输出中的 jvm_args）、`-XX`参数（即输出中的 VM Flags），以及可在 Java 层面通过`System.getProperty`获取的`-D`参数（即输出中的 System Properties）。
 
@@ -802,7 +802,7 @@ JVM version is 25.222-b10
 ...
 ```
 
-## jhat
+## 6. jhat
 
 > **jhat(JVM Heap Analysis Tool)，是虚拟机堆转储快照分析工具**。jhat 与 jmap 搭配使用，用来分析 jmap 生成的 dump 文件。jhat 内置了一个微型的 HTTP/HTML 服务器，生成 dump 的分析结果后，可以在浏览器中查看。
 >
@@ -814,7 +814,7 @@ JVM version is 25.222-b10
 jhat [dumpfile]
 ```
 
-## 参考资料
+## 7. 参考资料
 
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)

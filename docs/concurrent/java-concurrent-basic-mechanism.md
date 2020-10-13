@@ -6,30 +6,32 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、J.U.C 简介](#一juc-简介)
-- [二、synchronized](#二synchronized)
-  - [synchronized 的应用](#synchronized-的应用)
-  - [synchronized 的原理](#synchronized-的原理)
-  - [synchronized 的优化](#synchronized-的优化)
-- [三、volatile](#三volatile)
-  - [volatile 的要点](#volatile-的要点)
-  - [volatile 的应用](#volatile-的应用)
-  - [volatile 的原理](#volatile-的原理)
-  - [volatile 的问题](#volatile-的问题)
-- [四、CAS](#四cas)
-  - [CAS 的要点](#cas-的要点)
-  - [CAS 的应用](#cas-的应用)
-  - [CAS 的原理](#cas-的原理)
-  - [CAS 的问题](#cas-的问题)
-- [五、ThreadLocal](#五threadlocal)
-  - [ThreadLocal 的应用](#threadlocal-的应用)
-  - [ThreadLocal 的原理](#threadlocal-的原理)
-  - [InheritableThreadLocal](#inheritablethreadlocal)
-- [参考资料](#参考资料)
+- [1. J.U.C 简介](#1-juc-简介)
+- [2. synchronized](#2-synchronized)
+  - [2.1. synchronized 的应用](#21-synchronized-的应用)
+  - [2.2. synchronized 的原理](#22-synchronized-的原理)
+  - [2.3. synchronized 的优化](#23-synchronized-的优化)
+  - [2.4. synchronized 的误区](#24-synchronized-的误区)
+- [3. volatile](#3-volatile)
+  - [3.1. volatile 的要点](#31-volatile-的要点)
+  - [3.2. volatile 的应用](#32-volatile-的应用)
+  - [3.3. volatile 的原理](#33-volatile-的原理)
+  - [3.4. volatile 的问题](#34-volatile-的问题)
+- [4. CAS](#4-cas)
+  - [4.1. CAS 的要点](#41-cas-的要点)
+  - [4.2. CAS 的应用](#42-cas-的应用)
+  - [4.3. CAS 的原理](#43-cas-的原理)
+  - [4.4. CAS 的问题](#44-cas-的问题)
+- [5. ThreadLocal](#5-threadlocal)
+  - [5.1. ThreadLocal 的应用](#51-threadlocal-的应用)
+  - [5.2. ThreadLocal 的原理](#52-threadlocal-的原理)
+  - [5.3. ThreadLocal 的误区](#53-threadlocal-的误区)
+  - [5.4. InheritableThreadLocal](#54-inheritablethreadlocal)
+- [6. 参考资料](#6-参考资料)
 
 <!-- /TOC -->
 
-## 一、J.U.C 简介
+## 1. J.U.C 简介
 
 Java 的 `java.util.concurrent` 包（简称 J.U.C）中提供了大量并发工具类，是 Java 并发能力的主要体现（注意，不是全部，有部分并发能力的支持在其他包中）。从功能上，大致可以分为：
 
@@ -46,7 +48,7 @@ Java 的 `java.util.concurrent` 包（简称 J.U.C）中提供了大量并发工
 
 由 Java 并发框架图不难看出，J.U.C 包中的工具类是基于 `synchronized`、`volatile`、`CAS`、`ThreadLocal` 这样的并发核心机制打造的。所以，要想深入理解 J.U.C 工具类的特性、为什么具有这样那样的特性，就必须先理解这些核心机制。
 
-## 二、synchronized
+## 2. synchronized
 
 > `synchronized` 是 Java 中的关键字，是 **利用锁的机制来实现互斥同步的**。
 >
@@ -57,7 +59,7 @@ Java 的 `java.util.concurrent` 包（简称 J.U.C）中提供了大量并发工
 > - Java 1.6 以后，`synchronized` 做了大量的优化，其性能已经与 `Lock` 、`ReadWriteLock` 基本上持平。从趋势来看，Java 未来仍将继续优化 `synchronized` ，而不是 `ReentrantLock` 。
 > - `ReentrantLock` 是 Oracle JDK 的 API，在其他版本的 JDK 中不一定支持；而 `synchronized` 是 JVM 的内置特性，所有 JDK 版本都提供支持。
 
-### synchronized 的应用
+### 2.1. synchronized 的应用
 
 `synchronized` 有 3 种应用方式：
 
@@ -302,7 +304,7 @@ public class SynchronizedDemo3 implements Runnable {
 }
 ```
 
-### synchronized 的原理
+### 2.2. synchronized 的原理
 
 **`synchronized` 代码块是由一对 `monitorenter` 和 `monitorexit` 指令实现的，`Monitor` 对象是同步的基本实现单元**。在 Java 6 之前，`Monitor` 的实现完全是依靠操作系统内部的互斥锁，因为需要进行用户态到内核态的切换，所以同步操作是一个无差别的重量级操作。
 
@@ -328,7 +330,7 @@ public class SynchronizedDemo3 implements Runnable {
 
 如果线程调用 wait() 方法，就会释放当前持有的 Mutex，并且该线程会进入 WaitSet 集合中，等待下一次被唤醒。如果当前线程顺利执行完方法，也将释放 Mutex。
 
-### synchronized 的优化
+### 2.3. synchronized 的优化
 
 > **Java 1.6 以后，`synchronized` 做了大量的优化，其性能已经与 `Lock` 、`ReadWriteLock` 基本上持平**。
 
@@ -419,7 +421,7 @@ public static String concatString(String s1, String s2, String s3) {
 
 在 Java 1.6 中引入了自适应的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。
 
-### synchronized 的误区
+### 2.4. synchronized 的误区
 
 > 示例摘自：[Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
 
@@ -591,9 +593,9 @@ public class synchronized锁粒度不当 {
 }
 ```
 
-## 三、volatile
+## 3. volatile
 
-### volatile 的要点
+### 3.1. volatile 的要点
 
 `volatile` 是轻量级的 `synchronized`，它在多处理器开发中保证了共享变量的“可见性”。
 
@@ -605,7 +607,7 @@ public class synchronized锁粒度不当 {
 
 我们知道，线程安全需要具备：可见性、原子性、顺序性。`volatile` 不保证原子性，所以决定了它不能彻底地保证线程安全。
 
-### volatile 的应用
+### 3.2. volatile 的应用
 
 如果 `volatile` 变量修饰符使用恰当的话，它比 `synchronized` 的使用和执行成本更低，因为它不会引起线程上下文的切换和调度。但是，**`volatile` 无法替代 `synchronized` ，因为 `volatile` 无法保证操作的原子性**。
 
@@ -648,7 +650,7 @@ class Singleton {
 }
 ```
 
-### volatile 的原理
+### 3.3. volatile 的原理
 
 观察加入 volatile 关键字和没有加入 volatile 关键字时所生成的汇编代码发现，**加入 `volatile` 关键字时，会多出一个 `lock` 前缀指令**。**`lock` 前缀指令实际上相当于一个内存屏障**（也成内存栅栏），内存屏障会提供 3 个功能：
 
@@ -656,7 +658,7 @@ class Singleton {
 - 它会强制将对缓存的修改操作立即写入主存；
 - 如果是写操作，它会导致其他 CPU 中对应的缓存行无效。
 
-### volatile 的问题
+### 3.4. volatile 的问题
 
 `volatile` 的要点中，已经提到，**`volatile` 不保证原子性，所以 volatile 并不能保证线程安全**。
 
@@ -665,9 +667,9 @@ class Singleton {
 - `volatile` + `synchronized` - 可以参考：【示例】双重锁实现线程安全的单例模式
 - 使用原子类替代 `volatile`
 
-## 四、CAS
+## 4. CAS
 
-### CAS 的要点
+### 4.1. CAS 的要点
 
 互斥同步是最常见的并发正确性保障手段。
 
@@ -679,7 +681,7 @@ class Singleton {
 
 **_CAS（Compare and Swap），字面意思为比较并交换。CAS 有 3 个操作数，分别是：内存值 M，期望值 E，更新值 U。当且仅当内存值 M 和期望值 E 相等时，将内存值 M 修改为 U，否则什么都不做_**。
 
-### CAS 的应用
+### 4.2. CAS 的应用
 
 **CAS 只适用于线程冲突较少的情况**。
 
@@ -862,11 +864,11 @@ pool-1-thread-3 卖出了第 2 张票
 pool-1-thread-1 卖出了第 1 张票
 ```
 
-### CAS 的原理
+### 4.3. CAS 的原理
 
 Java 主要利用 `Unsafe` 这个类提供的 CAS 操作。`Unsafe` 的 CAS 依赖的是 JVM 针对不同的操作系统实现的硬件指令 **`Atomic::cmpxchg`**。`Atomic::cmpxchg` 的实现使用了汇编的 CAS 操作，并使用 CPU 提供的 `lock` 信号保证其原子性。
 
-### CAS 的问题
+### 4.4. CAS 的问题
 
 一般情况下，CAS 比锁性能更高。因为 CAS 是一种非阻塞算法，所以其避免了线程阻塞和唤醒的等待时间。
 
@@ -899,7 +901,7 @@ J.U.C 包提供了一个带有标记的**原子引用类 `AtomicStampedReference
 
 或者有一个取巧的办法，就是把多个共享变量合并成一个共享变量来操作。比如有两个共享变量 `i ＝ 2, j = a`，合并一下 `ij=2a`，然后用 CAS 来操作 `ij`。从 Java 1.5 开始 JDK 提供了 `AtomicReference` 类来保证引用对象之间的原子性，你可以把多个变量放在一个对象里来进行 CAS 操作。
 
-## 五、ThreadLocal
+## 5. ThreadLocal
 
 > **`ThreadLocal` 是一个存储线程本地副本的工具类**。
 >
@@ -910,7 +912,7 @@ J.U.C 包提供了一个带有标记的**原子引用类 `AtomicStampedReference
 > - **可重入代码** - 也叫纯代码。如果一个方法，它的 **返回结果是可以预测的**，即只要输入了相同的数据，就能返回相同的结果，那它就满足可重入性，当然也是线程安全的。
 > - **线程本地存储** - 使用 **`ThreadLocal` 为共享变量在每个线程中都创建了一个本地副本**，这个副本只能被当前线程访问，其他线程无法访问，那么自然是线程安全的。
 
-### ThreadLocal 的应用
+### 5.1. ThreadLocal 的应用
 
 `ThreadLocal` 的方法：
 
@@ -1011,7 +1013,7 @@ public class ThreadLocalDemo {
 
 全部输出 count = 10
 
-### ThreadLocal 的原理
+### 5.2. ThreadLocal 的原理
 
 #### 存储结构
 
@@ -1069,7 +1071,7 @@ try {
 }
 ```
 
-### ThreadLocal 的误区
+### 5.3. ThreadLocal 的误区
 
 > 示例摘自：[Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
 
@@ -1143,7 +1145,7 @@ server.tomcat.max-threads=1
     }
 ```
 
-### InheritableThreadLocal
+### 5.4. InheritableThreadLocal
 
 `InheritableThreadLocal` 类是 `ThreadLocal` 类的子类。
 
@@ -1151,7 +1153,7 @@ server.tomcat.max-threads=1
 
 > 原理参考：[Java 多线程：InheritableThreadLocal 实现原理](https://blog.csdn.net/ni357103403/article/details/51970748)
 
-## 参考资料
+## 6. 参考资料
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)

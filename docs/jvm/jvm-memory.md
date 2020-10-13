@@ -4,46 +4,46 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、内存简介](#一内存简介)
-  - [物理内存和虚拟内存](#物理内存和虚拟内存)
-  - [内核空间和用户空间](#内核空间和用户空间)
-  - [使用内存的 Java 组件](#使用内存的-java-组件)
-- [二、运行时数据区域](#二运行时数据区域)
-  - [程序计数器](#程序计数器)
-  - [Java 虚拟机栈](#java-虚拟机栈)
-  - [本地方法栈](#本地方法栈)
-  - [Java 堆](#java-堆)
-  - [方法区](#方法区)
-  - [运行时常量池](#运行时常量池)
-  - [直接内存](#直接内存)
-  - [Java 内存区域对比](#java-内存区域对比)
-- [三、JVM 运行原理](#三jvm-运行原理)
-- [四、OutOfMemoryError](#四outofmemoryerror)
-  - [什么是 OutOfMemoryError](#什么是-outofmemoryerror)
-  - [堆空间溢出](#堆空间溢出)
-  - [GC 开销超过限制](#gc-开销超过限制)
-  - [永久代空间不足](#永久代空间不足)
-  - [元数据区空间不足](#元数据区空间不足)
-  - [无法新建本地线程](#无法新建本地线程)
-  - [直接内存溢出](#直接内存溢出)
-- [五、StackOverflowError](#五stackoverflowerror)
-- [参考资料](#参考资料)
+- [1. 内存简介](#1-内存简介)
+  - [1.1. 物理内存和虚拟内存](#11-物理内存和虚拟内存)
+  - [1.2. 内核空间和用户空间](#12-内核空间和用户空间)
+  - [1.3. 使用内存的 Java 组件](#13-使用内存的-java-组件)
+- [2. 运行时数据区域](#2-运行时数据区域)
+  - [2.1. 程序计数器](#21-程序计数器)
+  - [2.2. Java 虚拟机栈](#22-java-虚拟机栈)
+  - [2.3. 本地方法栈](#23-本地方法栈)
+  - [2.4. Java 堆](#24-java-堆)
+  - [2.5. 方法区](#25-方法区)
+  - [2.6. 运行时常量池](#26-运行时常量池)
+  - [2.7. 直接内存](#27-直接内存)
+  - [2.8. Java 内存区域对比](#28-java-内存区域对比)
+- [3. JVM 运行原理](#3-jvm-运行原理)
+- [4. OutOfMemoryError](#4-outofmemoryerror)
+  - [4.1. 什么是 OutOfMemoryError](#41-什么是-outofmemoryerror)
+  - [4.2. 堆空间溢出](#42-堆空间溢出)
+  - [4.3. GC 开销超过限制](#43-gc-开销超过限制)
+  - [4.4. 永久代空间不足](#44-永久代空间不足)
+  - [4.5. 元数据区空间不足](#45-元数据区空间不足)
+  - [4.6. 无法新建本地线程](#46-无法新建本地线程)
+  - [4.7. 直接内存溢出](#47-直接内存溢出)
+- [5. StackOverflowError](#5-stackoverflowerror)
+- [6. 参考资料](#6-参考资料)
 
 <!-- /TOC -->
 
-## 一、内存简介
+## 1. 内存简介
 
-### 物理内存和虚拟内存
+### 1.1. 物理内存和虚拟内存
 
 所谓物理内存就是通常所说的 RAM（随机存储器）。
 
 虚拟内存使得多个进程在同时运行时可以共享物理内存，这里的共享只是空间上共享，在逻辑上彼此仍然是隔离的。
 
-### 内核空间和用户空间
+### 1.2. 内核空间和用户空间
 
 一个计算通常有固定大小的内存空间，但是程序并不能使用全部的空间。因为这些空间被划分为内核空间和用户空间，而程序只能使用用户空间的内存。
 
-### 使用内存的 Java 组件
+### 1.3. 使用内存的 Java 组件
 
 Java 启动后，作为一个进程运行在操作系统中。
 
@@ -53,13 +53,13 @@ Java 启动后，作为一个进程运行在操作系统中。
 - 栈内存：线程
 - 本地内存：NIO、JNI
 
-## 二、运行时数据区域
+## 2. 运行时数据区域
 
 JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干个不同的数据区域。这些区域都有各自的用途，以及创建和销毁的时间，有的区域随着虚拟机进程的启动而存在，有些区域则依赖用户线程的启动和结束而建立和销毁。如下图所示：
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/jvm/jvm-memory-runtime-data-area.png)
 
-### 程序计数器
+### 2.1. 程序计数器
 
 **`程序计数器（Program Counter Register）`** 是一块较小的内存空间，它可以看做是**当前线程所执行的字节码的行号指示器**。例如，分支、循环、跳转、异常、线程恢复等都依赖于计数器。
 
@@ -70,7 +70,7 @@ JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干�
 
 > 🔔 注意：此内存区域是唯一一个在 JVM 中没有规定任何 `OutOfMemoryError` 情况的区域。
 
-### Java 虚拟机栈
+### 2.2. Java 虚拟机栈
 
 **`Java 虚拟机栈（Java Virtual Machine Stacks）`** 也**是线程私有的，它的生命周期与线程相同**。
 
@@ -98,7 +98,7 @@ JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干�
 > java -Xss=512M HackTheJava
 > ```
 
-### 本地方法栈
+### 2.3. 本地方法栈
 
 **`本地方法栈（Native Method Stack）`** 与虚拟机栈的作用相似。
 
@@ -108,7 +108,7 @@ JVM 在执行 Java 程序的过程中会把它所管理的内存划分为若干�
 
 > 🔔 注意：本地方法栈也会抛出 `StackOverflowError` 异常和 `OutOfMemoryError` 异常。
 
-### Java 堆
+### 2.4. Java 堆
 
 **`Java 堆（Java Heap）` 的作用就是存放对象实例，几乎所有的对象实例都是在这里分配内存**。
 
@@ -135,7 +135,7 @@ Java 堆是垃圾收集的主要区域（因此也被叫做"GC 堆"）。现代�
 > java -Xms=1M -Xmx=2M HackTheJava
 > ```
 
-### 方法区
+### 2.5. 方法区
 
 方法区（Method Area）也被称为永久代。**方法区用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据**。
 
@@ -148,19 +148,18 @@ Java 堆是垃圾收集的主要区域（因此也被叫做"GC 堆"）。现代�
 > - JDK 1.7 之前，HotSpot 虚拟机把它当成永久代来进行垃圾回收。可通过参数 `-XX:PermSize` 和 `-XX:MaxPermSize` 设置。
 > - JDK 1.8 之后，取消了永久代，用 **`metaspace（元数据）`**区替代。可通过参数 `-XX:MaxMetaspaceSize` 设置。
 
-### 运行时常量池
+### 2.6. 运行时常量池
 
 **`运行时常量池（Runtime Constant Pool）` 是方法区的一部分**，Class 文件中除了有类的版本、字段、方法、接口等描述信息，还有一项信息是常量池（Constant Pool Table），**用于存放编译器生成的各种字面量和符号引用**，这部分内容会在类加载后被放入这个区域。
 
 - **字面量** - 文本字符串、声明为 `final` 的常量值等。
 - **符号引用** - 类和接口的完全限定名（Fully Qualified Name）、字段的名称和描述符（Descriptor）、方法的名称和描述符。
 
-
 除了在编译期生成的常量，还允许动态生成，例如 `String` 类的 `intern()`。这部分常量也会被放入运行时常量池。
 
 > 🔔 注意：当常量池无法再申请到内存时会抛出 `OutOfMemoryError` 异常。
 
-### 直接内存
+### 2.7. 直接内存
 
 直接内存（Direct Memory）并不是虚拟机运行时数据区的一部分，也不是 JVM 规范中定义的内存区域。
 
@@ -170,7 +169,7 @@ Java 堆是垃圾收集的主要区域（因此也被叫做"GC 堆"）。现代�
 >
 > 💡 提示：直接内存容量可通过 `-XX:MaxDirectMemorySize` 指定，如果不指定，则默认与 Java 堆最大值（`-Xmx` 指定）一样。
 
-### Java 内存区域对比
+### 2.8. Java 内存区域对比
 
 | 内存区域      | 内存作用范围   | 异常                                       |
 | ------------- | -------------- | ------------------------------------------ |
@@ -182,57 +181,57 @@ Java 堆是垃圾收集的主要区域（因此也被叫做"GC 堆"）。现代�
 | 运行时常量池  | 线程共享       | `OutOfMemoryError`                         |
 | 直接内存      | 非运行时数据区 | `OutOfMemoryError`                         |
 
-## 三、JVM 运行原理
+## 3. JVM 运行原理
 
 ```java
 public class JVMCase {
- 
+
 	// 常量
 	public final static String MAN_SEX_TYPE = "man";
- 
+
 	// 静态变量
 	public static String WOMAN_SEX_TYPE = "woman";
- 
+
 	public static void main(String[] args) {
-		
+
 		Student stu = new Student();
 		stu.setName("nick");
 		stu.setSexType(MAN_SEX_TYPE);
 		stu.setAge(20);
-		
+
 		JVMCase jvmcase = new JVMCase();
-		
+
 		// 调用静态方法
 		print(stu);
 		// 调用非静态方法
 		jvmcase.sayHello(stu);
 	}
- 
- 
+
+
 	// 常规静态方法
 	public static void print(Student stu) {
-		System.out.println("name: " + stu.getName() + "; sex:" + stu.getSexType() + "; age:" + stu.getAge()); 
+		System.out.println("name: " + stu.getName() + "; sex:" + stu.getSexType() + "; age:" + stu.getAge());
 	}
- 
- 
+
+
 	// 非静态方法
 	public void sayHello(Student stu) {
-		System.out.println(stu.getName() + "say: hello"); 
+		System.out.println(stu.getName() + "say: hello");
 	}
 }
- 
+
 class Student{
 	String name;
 	String sexType;
 	int age;
-	
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getSexType() {
 		return sexType;
 	}
@@ -270,9 +269,9 @@ class Student{
 
 ![img](http://dunwu.test.upcdn.net/snap/20200630094714.png)
 
-## 四、OutOfMemoryError
+## 4. OutOfMemoryError
 
-### 什么是 OutOfMemoryError
+### 4.1. 什么是 OutOfMemoryError
 
 `OutOfMemoryError` 简称为 OOM。Java 中对 OOM 的解释是，没有空闲内存，并且垃圾收集器也无法提供更多内存。通俗的解释是：JVM 内存不足了。
 
@@ -280,7 +279,7 @@ class Student{
 
 下面逐一介绍 OOM 发生场景。
 
-### 堆空间溢出
+### 4.2. 堆空间溢出
 
 `java.lang.OutOfMemoryError: Java heap space` 这个错误意味着：**堆空间溢出**。
 
@@ -378,7 +377,7 @@ public class HeapOutOfMemoryDemo {
 
 但如果在现实中，代码并没有问题，仅仅是因为堆内存不足，可以通过 `-Xms` 和 `-Xmx` 适当调整堆内存大小。
 
-### GC 开销超过限制
+### 4.3. GC 开销超过限制
 
 `java.lang.OutOfMemoryError: GC overhead limit exceeded` 这个错误，官方给出的定义是：**超过 `98%` 的时间用来做 GC 并且回收了不到 `2%` 的堆内存时会抛出此异常**。这意味着，发生在 GC 占用大量时间为释放很小空间的时候发生的，是一种保护机制。导致异常的原因：一般是因为堆太小，没有足够的内存。
 
@@ -409,7 +408,7 @@ public class GcOverheadLimitExceededDemo {
 
 与 **Java heap space** 错误处理方法类似，先判断是否存在内存泄漏。如果有，则修正代码；如果没有，则通过 `-Xms` 和 `-Xmx` 适当调整堆内存大小。
 
-### 永久代空间不足
+### 4.4. 永久代空间不足
 
 【错误】
 
@@ -526,7 +525,7 @@ jmap -dump:file=dump.hprof,format=b <process-id>
 
 然后，对于每个可疑者，就需要你手动将根本原因追溯到生成此类的应用程序代码。
 
-### 元数据区空间不足
+### 4.5. 元数据区空间不足
 
 【错误】
 
@@ -581,7 +580,7 @@ public class MethodAreaOutOfMemoryDemo {
 
 另一种解决方案甚至更简单。你可以通过删除此参数来完全解除对 Metaspace 大小的限制，JVM 默认对 Metaspace 的大小没有限制。但是请注意以下事实：这样做可能会导致大量交换或达到本机物理内存而分配失败。
 
-### 无法新建本地线程
+### 4.6. 无法新建本地线程
 
 `java.lang.OutOfMemoryError: Unable to create new native thread` 这个错误意味着：**Java 应用程序已达到其可以启动线程数的限制**。
 
@@ -649,7 +648,7 @@ max user processes              (-u) 1800
 
 解决问题的一种方法是开始进行线程转储以了解情况。
 
-### 直接内存溢出
+### 4.7. 直接内存溢出
 
 由直接内存导致的内存溢出，一个明显的特征是在 Head Dump 文件中不会看见明显的异常，如果发现 OOM 之后 Dump 文件很小，而程序中又直接或间接使用了 NIO，就可以考虑检查一下是不是这方面的原因。
 
@@ -677,7 +676,7 @@ public class DirectOutOfMemoryDemo {
 }
 ```
 
-## 五、StackOverflowError
+## 5. StackOverflowError
 
 对于 HotSpot 虚拟机来说，栈容量只由 `-Xss` 参数来决定如果线程请求的栈深度大于虚拟机所允许的最大深度，将抛出 `StackOverflowError` 异常。
 
@@ -711,7 +710,7 @@ public class StackOverflowDemo {
 }
 ```
 
-## 参考资料
+## 6. 参考资料
 
 - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
 - [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)

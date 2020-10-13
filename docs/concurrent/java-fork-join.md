@@ -2,9 +2,24 @@
 
 **对于简单的并行任务，你可以通过“线程池 +Future”的方案来解决；如果任务之间有聚合关系，无论是 AND 聚合还是 OR 聚合，都可以通过 CompletableFuture 来解决；而批量的并行任务，则可以通过 CompletionService 来解决。**
 
-## CompletableFuture
+<!-- TOC depthFrom:2 depthTo:3 -->
 
-### runAsync 和 supplyAsync方法
+- [1. CompletableFuture](#1-completablefuture)
+  - [1.1. runAsync 和 supplyAsync 方法](#11-runasync-和-supplyasync方法)
+- [2. CompletionStage](#2-completionstage)
+  - [2.1. 串行关系](#21-串行关系)
+  - [2.2. 描述 AND 汇聚关系](#22-描述-and-汇聚关系)
+  - [2.3. 描述 OR 汇聚关系](#23-描述-or-汇聚关系)
+  - [2.4. 异常处理](#24-异常处理)
+- [3. Fork/Join](#3-forkjoin)
+  - [3.1. ForkJoinPool 工作原理](#31-forkjoinpool-工作原理)
+- [4. 参考资料](#4-参考资料)
+
+<!-- /TOC -->
+
+## 1. CompletableFuture
+
+### 1.1. runAsync 和 supplyAsync 方法
 
 CompletableFuture 提供了四个静态方法来创建一个异步操作。
 
@@ -20,11 +35,11 @@ public static <U> CompletableFuture<U> supplyAsync(Supplier<U> supplier, Executo
 - runAsync 方法不支持返回值。
 - supplyAsync 可以支持返回值。
 
-## CompletionStage
+## 2. CompletionStage
 
 CompletionStage 接口可以清晰地描述任务之间的时序关系，如**串行关系、并行关系、汇聚关系**等。
 
-### 串行关系
+### 2.1. 串行关系
 
 CompletionStage 接口里面描述串行关系，主要是 thenApply、thenAccept、thenRun 和 thenCompose 这四个系列的接口。
 
@@ -36,7 +51,7 @@ thenRun 系列方法里 action 的参数是 Runnable，所以 action 既不能�
 
 这些方法里面 Async 代表的是异步执行 fn、consumer 或者 action。其中，需要你注意的是 thenCompose 系列方法，这个系列的方法会新创建出一个子流程，最终结果和 thenApply 系列是相同的。
 
-### 描述 AND 汇聚关系
+### 2.2. 描述 AND 汇聚关系
 
 CompletionStage 接口里面描述 AND 汇聚关系，主要是 thenCombine、thenAcceptBoth 和 runAfterBoth 系列的接口，这些接口的区别也是源自 fn、consumer、action 这三个核心参数不同。
 
@@ -49,7 +64,7 @@ CompletionStage<Void> runAfterBoth(other, action);
 CompletionStage<Void> runAfterBothAsync(other, action);
 ```
 
-### 描述 OR 汇聚关系
+### 2.3. 描述 OR 汇聚关系
 
 CompletionStage 接口里面描述 OR 汇聚关系，主要是 applyToEither、acceptEither 和 runAfterEither 系列的接口，这些接口的区别也是源自 fn、consumer、action 这三个核心参数不同。
 
@@ -85,7 +100,7 @@ CompletableFuture<String> f3 =
 System.out.println(f3.join());
 ```
 
-### 异常处理
+### 2.4. 异常处理
 
 虽然上面我们提到的 fn、consumer、action 它们的核心方法都**不允许抛出可检查异常，但是却无法限制它们抛出运行时异常**，例如下面的代码，执行 `7/0` 就会出现除零错误这个运行时异常。非异步编程里面，我们可以使用 try{}catch{} 来捕获并处理异常，那在异步编程里面，异常该如何处理呢？
 
@@ -118,13 +133,13 @@ CompletableFuture<Integer>
 System.out.println(f0.join());
 ```
 
-## Fork/Join
+## 3. Fork/Join
 
 Fork/Join 是一个并行计算的框架，主要就是用来支持分治任务模型的，这个计算框架里的**Fork 对应的是分治任务模型里的任务分解，Join 对应的是结果合并**。Fork/Join 计算框架主要包含两部分，一部分是**分治任务的线程池 ForkJoinPool**，另一部分是**分治任务 ForkJoinTask**。这两部分的关系类似于 ThreadPoolExecutor 和 Runnable 的关系，都可以理解为提交任务到线程池，只不过分治任务有自己独特类型 ForkJoinTask。
 
 ForkJoinTask 是一个抽象类，它的方法有很多，最核心的是 fork() 方法和 join() 方法，其中 fork() 方法会异步地执行一个子任务，而 join() 方法则会阻塞当前线程来等待子任务的执行结果。ForkJoinTask 有两个子类——RecursiveAction 和 RecursiveTask，通过名字你就应该能知道，它们都是用递归的方式来处理分治任务的。这两个子类都定义了抽象方法 compute()，不过区别是 RecursiveAction 定义的 compute() 没有返回值，而 RecursiveTask 定义的 compute() 方法是有返回值的。这两个子类也是抽象类，在使用的时候，需要你定义子类去扩展。
 
-### ForkJoinPool 工作原理
+### 3.1. ForkJoinPool 工作原理
 
 Fork/Join 并行计算的核心组件是 ForkJoinPool，所以下面我们就来简单介绍一下 ForkJoinPool 的工作原理。
 
@@ -138,7 +153,7 @@ ForkJoinPool 中的任务队列采用的是双端队列，工作线程正常获�
 
 ![img](http://dunwu.test.upcdn.net/snap/20200703141326.png)
 
-## 参考资料
+## 4. 参考资料
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)

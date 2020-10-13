@@ -6,15 +6,15 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、CountDownLatch](#一countdownlatch)
-- [二、CyclicBarrier](#二cyclicbarrier)
-- [三、Semaphore](#三semaphore)
-- [四、总结](#四总结)
-- [参考资料](#参考资料)
+- [1. CountDownLatch](#1-countdownlatch)
+- [2. CyclicBarrier](#2-cyclicbarrier)
+- [3. Semaphore](#3-semaphore)
+- [4. 总结](#4-总结)
+- [5. 参考资料](#5-参考资料)
 
 <!-- /TOC -->
 
-## 一、CountDownLatch
+## 1. CountDownLatch
 
 > 字面意思为 **递减计数锁**。用于**控制一个线程等待多个线程**。
 >
@@ -95,7 +95,7 @@ public class CountDownLatchDemo {
 }
 ```
 
-## 二、CyclicBarrier
+## 2. CyclicBarrier
 
 > 字面意思是 **循环栅栏**。**`CyclicBarrier` 可以让一组线程等待至某个状态（遵循字面意思，不妨称这个状态为栅栏）之后再全部同时执行**。之所以叫循环栅栏是因为：**当所有等待线程都被释放以后，`CyclicBarrier` 可以被重用**。
 >
@@ -184,7 +184,7 @@ public class CyclicBarrierDemo {
 }
 ```
 
-## 三、Semaphore
+## 3. Semaphore
 
 > 字面意思为 **信号量**。`Semaphore` 用来控制某段代码块的并发数。
 >
@@ -264,7 +264,7 @@ public class SemaphoreDemo {
 }
 ```
 
-## 四、总结
+## 4. 总结
 
 - `CountDownLatch` 和 `CyclicBarrier` 都能够实现线程之间的等待，只不过它们侧重点不同：
   - `CountDownLatch` 一般用于某个线程 A 等待若干个其他线程执行完任务之后，它才执行；
@@ -272,7 +272,7 @@ public class SemaphoreDemo {
   - 另外，`CountDownLatch` 是不可以重用的，而 `CyclicBarrier` 是可以重用的。
 - `Semaphore` 其实和锁有点类似，它一般用于控制对某组资源的访问权限。
 
-## 参考资料
+## 5. 参考资料
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)

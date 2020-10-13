@@ -4,21 +4,21 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、原子变量类简介](#一原子变量类简介)
-  - [为何需要原子变量类](#为何需要原子变量类)
-  - [原子变量类的作用](#原子变量类的作用)
-- [二、基本类型](#二基本类型)
-- [三、引用类型](#三引用类型)
-- [四、数组类型](#四数组类型)
-- [五、属性更新器类型](#五属性更新器类型)
-- [六、LongAddr](#六longaddr)
-- [参考资料](#参考资料)
+- [1. 原子变量类简介](#1-原子变量类简介)
+  - [1.1. 为何需要原子变量类](#11-为何需要原子变量类)
+  - [1.2. 原子变量类的作用](#12-原子变量类的作用)
+- [2. 基本类型](#2-基本类型)
+- [3. 引用类型](#3-引用类型)
+- [4. 数组类型](#4-数组类型)
+- [5. 属性更新器类型](#5-属性更新器类型)
+- [6. 原子化的累加器](#6-原子化的累加器)
+- [7. 参考资料](#7-参考资料)
 
 <!-- /TOC -->
 
-## 一、原子变量类简介
+## 1. 原子变量类简介
 
-### 为何需要原子变量类
+### 1.1. 为何需要原子变量类
 
 保证线程安全是 Java 并发编程必须要解决的重要问题。Java 从原子性、可见性、有序性这三大特性入手，确保多线程的数据一致性。
 
@@ -26,7 +26,7 @@
 - `volatile` 是轻量级的锁（自然比普通锁性能要好），它保证了共享变量在多线程中的可见性，但无法保证原子性。所以，它只能在一些特定场景下使用。
 - 为了兼顾原子性以及锁带来的性能问题，Java 引入了 CAS （主要体现在 `Unsafe` 类）来实现非阻塞同步（也叫乐观锁）。并基于 CAS ，提供了一套原子工具类。
 
-### 原子变量类的作用
+### 1.2. 原子变量类的作用
 
 原子变量类 **比锁的粒度更细，更轻量级**，并且对于在多处理器系统上实现高性能的并发代码来说是非常关键的。原子变量将发生竞争的范围缩小到单个变量上。
 
@@ -55,7 +55,7 @@
 
 > 这里不对 CAS、volatile、互斥同步做深入探讨。如果想了解更多细节，不妨参考：[Java 并发核心机制](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md)
 
-## 二、基本类型
+## 2. 基本类型
 
 这一类型的原子类是针对 Java 基本类型进行操作。
 
@@ -63,15 +63,15 @@
 - `AtomicInteger` - 整型原子类
 - `AtomicLong` - 长整型原子类
 
-以上类都支持 CAS，此外，`AtomicInteger`、`AtomicLong` 还支持算术运算。
+以上类都支持 CAS（[compare-and-swap](https://en.wikipedia.org/wiki/Compare-and-swap)）技术，此外，`AtomicInteger`、`AtomicLong` 还支持算术运算。
 
-> 提示：
+> :bulb: 提示：
 >
 > 虽然 Java 只提供了 `AtomicBoolean` 、`AtomicInteger`、`AtomicLong`，但是可以模拟其他基本类型的原子变量。要想模拟其他基本类型的原子变量，可以将 `short` 或 `byte` 等类型与 `int` 类型进行转换，以及使用 `Float.floatToIntBits` 、`Double.doubleToLongBits` 来转换浮点数。
 >
 > 由于 `AtomicBoolean`、`AtomicInteger`、`AtomicLong` 实现方式、使用方式都相近，所以本文仅针对 `AtomicInteger` 进行介绍。
 
-**`AtomicInteger` 用法**
+### **`AtomicInteger` 用法**
 
 ```java
 public final int get() // 获取当前值
@@ -105,7 +105,7 @@ public class AtomicIntegerDemo {
 }
 ```
 
-**`AtomicInteger` 实现**
+### **`AtomicInteger` 实现**
 
 阅读 `AtomicInteger` 源码，可以看到如下定义：
 
@@ -127,9 +127,9 @@ private volatile int value;
 >
 > - `value` - value 属性使用 `volatile` 修饰，使得对 value 的修改在并发环境下对所有线程可见。
 > - `valueOffset` - value 属性的偏移量，通过这个偏移量可以快速定位到 value 字段，这个是实现 AtomicInteger 的关键。
-> - `unsafe` - Unsafe 类型的属性，它为 AtomicInteger 提供了 CAS 操作。
+> - `unsafe` - Unsafe 类型的属性，它为 `AtomicInteger` 提供了 CAS 操作。
 
-## 三、引用类型
+## 3. 引用类型
 
 Java 数据类型分为 **基本数据类型** 和 **引用数据类型** 两大类（不了解 Java 数据类型划分可以参考： [Java 基本数据类型](https://github.com/dunwu/javacore/blob/master/docs/basics/java-data-type.md) ）。
 
@@ -292,7 +292,7 @@ public class AtomicStampedReferenceDemo {
 }
 ```
 
-## 四、数组类型
+## 4. 数组类型
 
 Java 提供了以下针对数组的原子类：
 
@@ -365,7 +365,7 @@ public class AtomicIntegerArrayDemo {
 }
 ```
 
-## 五、属性更新器类型
+## 5. 属性更新器类型
 
 更新器类支持基于反射机制的更新字段值的原子操作。
 
@@ -436,19 +436,18 @@ public class AtomicReferenceFieldUpdaterDemo {
 }
 ```
 
-## 六、原子化的累加器
+## 6. 原子化的累加器
 
-DoubleAccumulator、DoubleAdder、LongAccumulator 和 LongAdder，这四个类仅仅用来执行累加操作，相比原子化的基本数据类型，速度更快，但是不支持 compareAndSet() 方法。如果你仅仅需要累加操作，使用原子化的累加器性能会更好，代价就是会消耗更多的内存空间。
+`DoubleAccumulator`、`DoubleAdder`、`LongAccumulator` 和 `LongAdder`，这四个类仅仅用来执行累加操作，相比原子化的基本数据类型，速度更快，但是不支持 `compareAndSet()` 方法。如果你仅仅需要累加操作，使用原子化的累加器性能会更好，代价就是会消耗更多的内存空间。
 
-在 JDK1.8 中，Java 提供了一个新的原子类 LongAdder。LongAdder 在高并发场景下会比 AtomicInteger 和 AtomicLong 的性能更好，代价就是会消耗更多的内存空间。
+`LongAdder` 内部由一个 `base` 变量和一个 `cell[]` 数组组成。
 
-例如，LongAdder 内部由一个 base 变量和一个 cell[] 数组组成。当只有一个写线程，没有竞争的情况下，LongAdder 会直接使用 base 变量作为原子操作变量，通过 CAS 操作修改变量；当有多个写线程竞争的情况下，除了占用 base 变量的一个写线程之外，其它各个线程会将修改的变量写入到自己的槽 cell[] 数组中，最终结果可通过以下公式计算得出：
+- 当只有一个写线程，没有竞争的情况下，`LongAdder` 会直接使用 `base` 变量作为原子操作变量，通过 CAS 操作修改变量；
+- 当有多个写线程竞争的情况下，除了占用 `base` 变量的一个写线程之外，其它各个线程会将修改的变量写入到自己的槽 `cell[]` 数组中。
 
-$$value = base + \sum_{i=0}^ncell[i]$$
+我们可以发现，`LongAdder` 在操作后的返回值只是一个近似准确的数值，但是 `LongAdder` 最终返回的是一个准确的数值， 所以在一些对实时性要求比较高的场景下，`LongAdder` 并不能取代 `AtomicInteger` 或 `AtomicLong`。
 
-我们可以发现，LongAdder 在操作后的返回值只是一个近似准确的数值，但是 LongAdder 最终返回的是一个准确的数值， 所以在一些对实时性要求比较高的场景下，LongAdder 并不能取代 AtomicInteger 或 AtomicLong。
-
-## 参考资料
+## 7. 参考资料
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
