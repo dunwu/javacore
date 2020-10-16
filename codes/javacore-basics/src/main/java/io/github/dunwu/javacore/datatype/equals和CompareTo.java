@@ -57,7 +57,7 @@ public class equals和CompareTo {
 
     @Data
     @AllArgsConstructor
-    static class Student implements Comparable<Student> {
+    public static class Student implements Comparable<Student> {
 
         private int id;
         private String name;
@@ -73,7 +73,7 @@ public class equals和CompareTo {
 
     @Data
     @AllArgsConstructor
-    static class StudentRight implements Comparable<StudentRight> {
+    public static class StudentRight implements Comparable<StudentRight> {
 
         private int id;
         private String name;
