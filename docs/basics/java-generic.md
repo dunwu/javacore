@@ -4,29 +4,29 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [为什么需要泛型](#为什么需要泛型)
-- [泛型类型](#泛型类型)
-  - [泛型类](#泛型类)
-  - [泛型接口](#泛型接口)
-- [泛型方法](#泛型方法)
-- [类型擦除](#类型擦除)
-- [泛型和继承](#泛型和继承)
-- [类型边界](#类型边界)
-- [类型通配符](#类型通配符)
-  - [上界通配符](#上界通配符)
-  - [下界通配符](#下界通配符)
-  - [无界通配符](#无界通配符)
-  - [通配符和向上转型](#通配符和向上转型)
-- [泛型的约束](#泛型的约束)
-- [泛型最佳实践](#泛型最佳实践)
-  - [泛型命名](#泛型命名)
-  - [使用泛型的建议](#使用泛型的建议)
-- [小结](#小结)
-- [参考资料](#参考资料)
+- [1. 为什么需要泛型](#1-为什么需要泛型)
+- [2. 泛型类型](#2-泛型类型)
+  - [2.1. 泛型类](#21-泛型类)
+  - [2.2. 泛型接口](#22-泛型接口)
+- [3. 泛型方法](#3-泛型方法)
+- [4. 类型擦除](#4-类型擦除)
+- [5. 泛型和继承](#5-泛型和继承)
+- [6. 类型边界](#6-类型边界)
+- [7. 类型通配符](#7-类型通配符)
+  - [7.1. 上界通配符](#71-上界通配符)
+  - [7.2. 下界通配符](#72-下界通配符)
+  - [7.3. 无界通配符](#73-无界通配符)
+  - [7.4. 通配符和向上转型](#74-通配符和向上转型)
+- [8. 泛型的约束](#8-泛型的约束)
+- [9. 泛型最佳实践](#9-泛型最佳实践)
+  - [9.1. 泛型命名](#91-泛型命名)
+  - [9.2. 使用泛型的建议](#92-使用泛型的建议)
+- [10. 小结](#10-小结)
+- [11. 参考资料](#11-参考资料)
 
 <!-- /TOC -->
 
-## 为什么需要泛型
+## 1. 为什么需要泛型
 
 **JDK5 引入了泛型机制**。
 
@@ -98,11 +98,11 @@ String s = list.get(0);   // no cast
 
 通过使用泛型，程序员可以实现通用算法，这些算法可以处理不同类型的集合，可以自定义，并且类型安全且易于阅读。
 
-## 泛型类型
+## 2. 泛型类型
 
 **`泛型类型`是被参数化的类或接口。**
 
-### 泛型类
+### 2.1. 泛型类
 
 泛型类的语法形式：
 
@@ -234,7 +234,7 @@ public class GenericsClassDemo03 {
 // MyMap{key=1, value=Info{value=Hello}}
 ```
 
-### 泛型接口
+### 2.2. 泛型接口
 
 接口也可以声明泛型。
 
@@ -294,7 +294,7 @@ public class GenericsInterfaceDemo02<T> implements Content<T> {
 // ABC
 ```
 
-## 泛型方法
+## 3. 泛型方法
 
 泛型方法是引入其自己的类型参数的方法。泛型方法可以是普通方法、静态方法以及构造方法。
 
@@ -348,7 +348,7 @@ public class GenericVarargsMethodDemo {
 // [A, B, C]
 ```
 
-## 类型擦除
+## 4. 类型擦除
 
 Java 语言引入泛型是为了在编译时提供更严格的类型检查，并支持泛型编程。不同于 C++ 的模板机制，**Java 泛型是使用类型擦除来实现的，使用泛型时，任何具体的类型信息都被擦除了**。
 
@@ -382,7 +382,7 @@ public class GenericsErasureTypeDemo {
 
 Java 泛型的实现方式不太优雅，但这是因为泛型是在 JDK5 时引入的，为了兼容老代码，必须在设计上做一定的折中。
 
-## 泛型和继承
+## 5. 泛型和继承
 
 **泛型不能用于显式地引用运行时类型的操作之中，例如：转型、instanceof 操作和 new 表达式。因为所有关于参数的类型信息都丢失了**。当你在编写泛型代码时，必须时刻提醒自己，你只是看起来好像拥有有关参数的类型信息而已。
 
@@ -401,7 +401,7 @@ List<Integer> list = new ArrayList<>();
 List<Object> list2 = list; // Erorr
 ```
 
-## 类型边界
+## 6. 类型边界
 
 有时您可能希望限制可在参数化类型中用作类型参数的类型。**`类型边界`可以对泛型的类型参数设置限制条件**。例如，对数字进行操作的方法可能只想接受 `Number` 或其子类的实例。
 
@@ -471,11 +471,11 @@ public class GenericsExtendsDemo02 {
 }
 ```
 
-## 类型通配符
+## 7. 类型通配符
 
 `类型通配符`一般是使用 `?` 代替具体的类型参数。例如 `List<?>` 在逻辑上是 `List<String>` ，`List<Integer>` 等所有 `List<具体类型实参>` 的父类。
 
-### 上界通配符
+### 7.1. 上界通配符
 
 可以使用**`上界通配符`**来缩小类型参数的类型范围。
 
@@ -500,7 +500,7 @@ public class GenericsUpperBoundedWildcardDemo {
 // sum = 6.0
 ```
 
-### 下界通配符
+### 7.2. 下界通配符
 
 **`下界通配符`**将未知类型限制为该类型的特定类型或超类类型。
 
@@ -526,7 +526,7 @@ public class GenericsLowerBoundedWildcardDemo {
 // [1, 2, 3, 4, 5]
 ```
 
-### 无界通配符
+### 7.3. 无界通配符
 
 无界通配符有两种应用场景：
 
@@ -556,7 +556,7 @@ public class GenericsUnboundedWildcardDemo {
 // one two three
 ```
 
-### 通配符和向上转型
+### 7.4. 通配符和向上转型
 
 前面，我们提到：**泛型不能向上转型。但是，我们可以通过使用通配符来向上转型**。
 
@@ -574,7 +574,7 @@ public class GenericsWildcardDemo {
 
 > 扩展阅读：[Oracle 泛型文档](https://docs.oracle.com/javase/tutorial/java/generics/index.html)
 
-## 泛型的约束
+## 8. 泛型的约束
 
 - [泛型类型的类型参数不能是值类型](https://docs.oracle.com/javase/tutorial/java/generics/restrictions.html#instantiate)
 
@@ -652,9 +652,9 @@ public class Example {
 }
 ```
 
-## 泛型最佳实践
+## 9. 泛型最佳实践
 
-### 泛型命名
+### 9.1. 泛型命名
 
 泛型一些约定俗成的命名：
 
@@ -665,7 +665,7 @@ public class Example {
 - V - Value
 - S,U,V etc. - 2nd, 3rd, 4th types
 
-### 使用泛型的建议
+### 9.2. 使用泛型的建议
 
 - 消除类型检查告警
 - List 优先于数组
@@ -674,14 +674,14 @@ public class Example {
 - 利用有限制通配符来提升 API 的灵活性
 - 优先考虑类型安全的异构容器
 
-## 小结
+## 10. 小结
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java泛型.svg)
 
-## 参考资料
+## 11. 参考资料
 
-- [Java编程思想](https://book.douban.com/subject/2130190/)
-- [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [Java 编程思想](https://book.douban.com/subject/2130190/)
+- [Java 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
 - [Effective java](https://book.douban.com/subject/3360807/)
 - [Oracle 泛型文档](https://docs.oracle.com/javase/tutorial/java/generics/index.html)
-- [Java泛型详解](https://juejin.im/post/584d36f161ff4b006cccdb82)
+- [Java 泛型详解](https://juejin.im/post/584d36f161ff4b006cccdb82)

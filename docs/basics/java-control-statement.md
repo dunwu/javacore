@@ -19,29 +19,29 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [选择语句](#选择语句)
-  - [if 语句](#if-语句)
-  - [if...else 语句](#ifelse-语句)
-  - [if...else if...else 语句](#ifelse-ifelse-语句)
-  - [嵌套的 if…else 语句](#嵌套的-ifelse-语句)
-  - [switch 语句](#switch-语句)
-- [循环语句](#循环语句)
-  - [while 循环](#while-循环)
-  - [do while 循环](#do-while-循环)
-  - [for 循环](#for-循环)
-  - [foreach 循环](#foreach-循环)
-- [中断语句](#中断语句)
-  - [break 关键字](#break-关键字)
-  - [continue 关键字](#continue-关键字)
-  - [return 关键字](#return-关键字)
-- [最佳实践](#最佳实践)
-- [参考资料](#参考资料)
+- [1. 选择语句](#1-选择语句)
+  - [1.1. if 语句](#11-if-语句)
+  - [1.2. if...else 语句](#12-ifelse-语句)
+  - [1.3. if...else if...else 语句](#13-ifelse-ifelse-语句)
+  - [1.4. 嵌套的 if…else 语句](#14-嵌套的-ifelse-语句)
+  - [1.5. switch 语句](#15-switch-语句)
+- [2. 循环语句](#2-循环语句)
+  - [2.1. while 循环](#21-while-循环)
+  - [2.2. do while 循环](#22-do-while-循环)
+  - [2.3. for 循环](#23-for-循环)
+  - [2.4. foreach 循环](#24-foreach-循环)
+- [3. 中断语句](#3-中断语句)
+  - [3.1. break 关键字](#31-break-关键字)
+  - [3.2. continue 关键字](#32-continue-关键字)
+  - [3.3. return 关键字](#33-return-关键字)
+- [4. 最佳实践](#4-最佳实践)
+- [5. 参考资料](#5-参考资料)
 
 <!-- /TOC -->
 
-## 选择语句
+## 1. 选择语句
 
-### if 语句
+### 1.1. if 语句
 
 `if` 语句会判断括号中的条件是否成立，如果成立则执行 `if` 语句中的代码块，否则跳过代码块继续执行。
 
@@ -68,7 +68,7 @@ public class IfDemo {
 // 这是 if 语句
 ```
 
-### if...else 语句
+### 1.2. if...else 语句
 
 `if` 语句后面可以跟 `else` 语句，当 `if` 语句的布尔表达式值为 `false` 时，`else` 语句块会被执行。
 
@@ -99,7 +99,7 @@ public class IfElseDemo {
 // 这是 else 语句
 ```
 
-### if...else if...else 语句
+### 1.3. if...else if...else 语句
 
 - `if` 语句至多有 1 个 `else` 语句，`else` 语句在所有的 `else if` 语句之后。
 - `If` 语句可以有若干个 `else if` 语句，它们必须在 `else` 语句之前。
@@ -141,7 +141,7 @@ public class IfElseifElseDemo {
 // Value of X is 3
 ```
 
-### 嵌套的 if…else 语句
+### 1.4. 嵌套的 if…else 语句
 
 使用嵌套的 `if else` 语句是合法的。也就是说你可以在另一个 `if` 或者 `else if` 语句中使用 `if` 或者 `else if` 语句。
 
@@ -175,7 +175,7 @@ public class IfNestDemo {
 // X = 30 and Y = 10
 ```
 
-### switch 语句
+### 1.5. switch 语句
 
 `switch` 语句判断一个变量与一系列值中某个值是否相等，每个值称为一个分支。
 
@@ -237,9 +237,9 @@ public class SwitchDemo {
 // Your grade is C
 ```
 
-## 循环语句
+## 2. 循环语句
 
-### while 循环
+### 2.1. while 循环
 
 只要布尔表达式为 `true`，`while` 循环体会一直执行下去。
 
@@ -277,7 +277,7 @@ public class WhileDemo {
 // value of x : 19
 ```
 
-### do while 循环
+### 2.2. do while 循环
 
 对于 `while` 语句而言，如果不满足条件，则不能进入循环。但有时候我们需要即使不满足条件，也至少执行一次。
 
@@ -320,7 +320,7 @@ public class DoWhileDemo {
 // value of x:19
 ```
 
-### for 循环
+### 2.3. for 循环
 
 虽然所有循环结构都可以用 `while` 或者 `do while` 表示，但 Java 提供了另一种语句 —— `for` 循环，使一些循环结构变得更加简单。
 `for` 循环执行的次数是在执行前就确定的。
@@ -362,7 +362,7 @@ public class ForDemo {
 // value of x : 19
 ```
 
-### foreach 循环
+### 2.4. foreach 循环
 
 Java5 引入了一种主要用于数组的增强型 for 循环。
 
@@ -404,9 +404,9 @@ public class ForeachDemo {
 // James,Larry,Tom,Lacy,
 ```
 
-## 中断语句
+## 3. 中断语句
 
-### break 关键字
+### 3.1. break 关键字
 
 `break` 主要用在循环语句或者 `switch` 语句中，用来跳出整个语句块。
 
@@ -436,7 +436,7 @@ public class BreakDemo {
 // break 示例结束
 ```
 
-### continue 关键字
+### 3.2. continue 关键字
 
 `continue` 适用于任何循环控制结构中。作用是让程序立刻跳转到下一次循环的迭代。在 `for` 循环中，`continue` 语句使程序立即跳转到更新语句。在 `while` 或者 `do while` 循环中，程序立即跳转到布尔表达式的判断语句。
 
@@ -463,7 +463,7 @@ public class ContinueDemo {
 // 50
 ```
 
-### return 关键字
+### 3.3. return 关键字
 
 跳出整个函数体，函数体后面的部分不再执行。
 
@@ -492,7 +492,7 @@ public class ReturnDemo {
 
 > 🔔 注意：请仔细体会一下 `return` 和 `break` 的区别。
 
-## 最佳实践
+## 4. 最佳实践
 
 - 选择分支特别多的情况下，`switch` 语句优于 `if...else if...else` 语句。
 - `switch` 语句不要吝啬使用 `default`。
@@ -500,7 +500,7 @@ public class ReturnDemo {
 - `foreach` 循环优先于传统的 `for` 循环
 - 不要循环遍历容器元素，然后删除特定元素。正确姿势应该是遍历容器的迭代器（`Iterator`），删除元素。
 
-## 参考资料
+## 5. 参考资料
 
-- [Java编程思想](https://book.douban.com/subject/2130190/)
-- [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [Java 编程思想](https://book.douban.com/subject/2130190/)
+- [Java 核心技术（卷 1）](https://book.douban.com/subject/3146174/)

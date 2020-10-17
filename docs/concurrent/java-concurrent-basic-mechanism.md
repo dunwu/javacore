@@ -314,6 +314,40 @@ public class SynchronizedDemo3 implements Runnable {
 
 `synchronized` 同步块是互斥的，即已进入的线程执行完成前，会阻塞其他试图进入的线程。
 
+【示例】
+
+```java
+public void foo(Object lock) {
+    synchronized (lock) {
+      lock.hashCode();
+    }
+  }
+  // 上面的 Java 代码将编译为下面的字节码
+  public void foo(java.lang.Object);
+    Code:
+       0: aload_1
+       1: dup
+       2: astore_2
+       3: monitorenter
+       4: aload_1
+       5: invokevirtual java/lang/Object.hashCode:()I
+       8: pop
+       9: aload_2
+      10: monitorexit
+      11: goto          19
+      14: astore_3
+      15: aload_2
+      16: monitorexit
+      17: aload_3
+      18: athrow
+      19: return
+    Exception table:
+       from    to  target type
+           4    11    14   any
+          14    17    14   any
+
+```
+
 #### 同步代码块
 
 `synchronized` 在修饰同步代码块时，是由 `monitorenter` 和 `monitorexit` 指令来实现同步的。进入 `monitorenter` 指令后，线程将持有 `Monitor` 对象，退出 `monitorenter` 指令后，线程将释放该 `Monitor` 对象。

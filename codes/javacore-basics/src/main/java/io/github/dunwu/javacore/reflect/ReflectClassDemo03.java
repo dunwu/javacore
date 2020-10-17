@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Object 的 getClass 方法获取 Class 对象
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-03-26
  */

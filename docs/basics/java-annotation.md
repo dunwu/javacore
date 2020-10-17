@@ -6,37 +6,37 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [简介](#简介)
-  - [注解的形式](#注解的形式)
-  - [什么是注解](#什么是注解)
-  - [注解的作用](#注解的作用)
-  - [注解的代价](#注解的代价)
-  - [注解的应用范围](#注解的应用范围)
-- [内置注解](#内置注解)
-  - [@Override](#override)
-  - [@Deprecated](#deprecated)
-  - [@SuppressWarnnings](#suppresswarnnings)
-  - [@SafeVarargs](#safevarargs)
-  - [@FunctionalInterface](#functionalinterface)
-- [元注解](#元注解)
-  - [@Retention](#retention)
-  - [@Documented](#documented)
-  - [@Target](#target)
-  - [@Inherited](#inherited)
-  - [@Repeatable](#repeatable)
-- [自定义注解](#自定义注解)
-  - [注解的定义](#注解的定义)
-  - [注解属性](#注解属性)
-  - [注解处理器](#注解处理器)
-  - [使用注解](#使用注解)
-- [小结](#小结)
-- [参考资料](#参考资料)
+- [1. 简介](#1-简介)
+  - [1.1. 注解的形式](#11-注解的形式)
+  - [1.2. 什么是注解](#12-什么是注解)
+  - [1.3. 注解的作用](#13-注解的作用)
+  - [1.4. 注解的代价](#14-注解的代价)
+  - [1.5. 注解的应用范围](#15-注解的应用范围)
+- [2. 内置注解](#2-内置注解)
+  - [2.1. @Override](#21-override)
+  - [2.2. @Deprecated](#22-deprecated)
+  - [2.3. @SuppressWarnnings](#23-suppresswarnnings)
+  - [2.4. @SafeVarargs](#24-safevarargs)
+  - [2.5. @FunctionalInterface](#25-functionalinterface)
+- [3. 元注解](#3-元注解)
+  - [3.1. @Retention](#31-retention)
+  - [3.2. @Documented](#32-documented)
+  - [3.3. @Target](#33-target)
+  - [3.4. @Inherited](#34-inherited)
+  - [3.5. @Repeatable](#35-repeatable)
+- [4. 自定义注解](#4-自定义注解)
+  - [4.1. 注解的定义](#41-注解的定义)
+  - [4.2. 注解属性](#42-注解属性)
+  - [4.3. 注解处理器](#43-注解处理器)
+  - [4.4. 使用注解](#44-使用注解)
+- [5. 小结](#5-小结)
+- [6. 参考资料](#6-参考资料)
 
 <!-- /TOC -->
 
-## 简介
+## 1. 简介
 
-### 注解的形式
+### 1.1. 注解的形式
 
 Java 中，注解是以 `@` 字符开始的修饰符。如下：
 
@@ -64,7 +64,7 @@ void myMethod() { ... }
 
 如果注解没有属性，则称为`标记注解`。如：`@Override`。
 
-### 什么是注解
+### 1.2. 什么是注解
 
 从本质上来说，**注解是一种标签，其实质上可以视为一种特殊的注释，如果没有解析它的代码，它并不比普通注释强。**
 
@@ -73,7 +73,7 @@ void myMethod() { ... }
 - **编译期直接的扫描** - 编译器的扫描指的是编译器在对 java 代码编译字节码的过程中会检测到某个类或者方法被一些注解修饰，这时它就会对于这些注解进行某些处理。这种情况只适用于 JDK 内置的注解类。
 - **运行期的反射** - 如果要自定义注解，Java 编译器无法识别并处理这个注解，它只能根据该注解的作用范围来选择是否编译进字节码文件。如果要处理注解，必须利用反射技术，识别该注解以及它所携带的信息，然后做相应的处理。
 
-### 注解的作用
+### 1.3. 注解的作用
 
 注解有许多用途：
 
@@ -83,7 +83,7 @@ void myMethod() { ... }
 
 作为 Java 程序员，多多少少都曾经历过被各种配置文件（xml、properties）支配的恐惧。过多的配置文件会使得项目难以维护。个人认为，使用注解以减少配置文件或代码，是注解最大的用处。
 
-### 注解的代价
+### 1.4. 注解的代价
 
 凡事有得必有失，注解技术同样如此。使用注解也有一定的代价：
 
@@ -93,7 +93,7 @@ void myMethod() { ... }
 
 但是，正所谓瑕不掩瑜，注解所付出的代价，相较于它提供的功能而言，还是可以接受的。
 
-### 注解的应用范围
+### 1.5. 注解的应用范围
 
 注解可以应用于类、字段、方法和其他程序元素的声明。
 
@@ -125,7 +125,7 @@ void monitorTemperature()
     throws @Critical TemperatureException {}
 ```
 
-## 内置注解
+## 2. 内置注解
 
 JDK 中内置了以下注解：
 
@@ -135,7 +135,7 @@ JDK 中内置了以下注解：
 - `@SafeVarargs`（JDK7 引入）
 - `@FunctionalInterface`（JDK8 引入）
 
-### @Override
+### 2.1. @Override
 
 **[`@Override`](https://docs.oracle.com/javase/8/docs/api/java/lang/Override.html) 用于表明被修饰方法覆写了父类的方法。**
 
@@ -177,7 +177,7 @@ public class OverrideAnnotationDemo {
 }
 ```
 
-### @Deprecated
+### 2.2. @Deprecated
 
 **`@Deprecated` 用于标明被修饰的类或类成员、类方法已经废弃、过时，不建议使用。**
 
@@ -227,7 +227,7 @@ public class DeprecatedAnnotationDemo {
 //DeprecatedClass
 ```
 
-### @SuppressWarnnings
+### 2.3. @SuppressWarnnings
 
 **[`@SuppressWarnings`](https://docs.oracle.com/javase/8/docs/api/java/lang/SuppressWarnings.html) 用于关闭对类、方法、成员编译时产生的特定警告。**
 
@@ -311,7 +311,7 @@ public class InternalAnnotationDemo {
 }
 ```
 
-### @SafeVarargs
+### 2.4. @SafeVarargs
 
 `@SafeVarargs` 在 JDK7 中引入。
 
@@ -360,7 +360,7 @@ public class SafeVarargsAnnotationDemo {
 [WARNING] /D:/Codes/ZP/Java/javacore/codes/basics/src/main/java/io/github/dunwu/javacore/annotation/SafeVarargsAnnotationDemo.java: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
 ```
 
-### @FunctionalInterface
+### 2.5. @FunctionalInterface
 
 `@FunctionalInterface` 在 JDK8 引入。
 
@@ -406,7 +406,7 @@ public class FunctionalInterfaceAnnotationDemo {
 }
 ```
 
-## 元注解
+## 3. 元注解
 
 JDK 中虽然内置了几个注解，但这远远不能满足开发过程中遇到的千变万化的需求。所以我们需要自定义注解，而这就需要用到元注解。
 
@@ -422,7 +422,7 @@ Java 中提供了以下元注解类型：
 
 这些类型和它们所支持的类在 `java.lang.annotation` 包中可以找到。下面我们看一下每个元注解的作用和相应分参数的使用说明。
 
-### @Retention
+### 3.1. @Retention
 
 **[`@Retention`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Retention.html) 指明了注解的保留级别。**
 
@@ -456,7 +456,7 @@ public @interface Column {
 }
 ```
 
-### @Documented
+### 3.2. @Documented
 
 [`@Documented`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Documented.html) 表示无论何时使用指定的注解，都应使用 Javadoc（默认情况下，注释不包含在 Javadoc 中）。更多内容可以参考：[Javadoc tools page](https://docs.oracle.com/javase/8/docs/technotes/guides/javadoc/index.html)。
 
@@ -474,7 +474,7 @@ public @interface Column {
 }
 ```
 
-### @Target
+### 3.3. @Target
 
 **[`@Target`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Target.html) 指定注解可以修饰的元素类型。**
 
@@ -516,7 +516,7 @@ public @interface Table {
 public @interface NoDBColumn {}
 ```
 
-### @Inherited
+### 3.4. @Inherited
 
 **[`@Inherited`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Inherited.html) 表示注解类型可以被继承（默认情况下不是这样）**。
 
@@ -535,7 +535,7 @@ public @interface Greeting {
 }
 ```
 
-### @Repeatable
+### 3.5. @Repeatable
 
 **[`@Repeatable`](https://docs.oracle.com/javase/8/docs/api/java/lang/annotation/Repeatable.html) 表示注解可以重复使用。**
 
@@ -569,13 +569,13 @@ public class TaskRunner {
 }
 ```
 
-## 自定义注解
+## 4. 自定义注解
 
 使用 `@interface` 自定义注解时，自动继承了 `java.lang.annotation.Annotation` 接口，由编译程序自动完成其他细节。在定义注解时，不能继承其他的注解或接口。`@interface` 用来声明一个注解，其中的每一个方法实际上是声明了一个配置参数。方法的名称就是参数的名称，返回值类型就是参数的类型（返回值类型只能是基本类型、Class、String、enum）。可以通过 `default` 来声明参数的默认值。
 
 这里，我会通过实现一个名为 `RegexValid` 的正则校验注解工具来展示自定义注解的全步骤。
 
-### 注解的定义
+### 4.1. 注解的定义
 
 注解的语法格式如下：
 
@@ -603,7 +603,7 @@ public @interface RegexValid {}
 
 此时，我们已经定义了一个没有任何属性的注解，如果到此为止，它仅仅是一个标记注解。作为正则工具，没有属性可什么也做不了。接下来，我们将为它添加注解属性。
 
-### 注解属性
+### 4.2. 注解属性
 
 注解属性的语法形式如下：
 
@@ -680,7 +680,7 @@ public @interface RegexValid {
 
 至此，`@RegexValid` 的声明已经结束。但是，程序仍不知道如何处理 `@RegexValid` 这个注解。我们还需要定义注解处理器。
 
-### 注解处理器
+### 4.3. 注解处理器
 
 如果没有用来读取注解的方法和工作，那么注解也就不会比注释更有用处了。使用注解的过程中，很重要的一部分就是创建于使用注解处理器。JDK5 扩展了反射机制的 API，以帮助程序员快速的构造自定义注解处理器。
 
@@ -787,7 +787,7 @@ public class RegexValidUtil {
 > 3. 如果成员被注解所修饰，通过 `RegexValid valid = field.getAnnotation(RegexValid.class);` 这样的形式获取，注解实例化对象，然后，就可以使用 `valid.value()` 或 `valid.policy()` 这样的形式获取注解中设定的属性值。
 > 4. 根据属性值，进行逻辑处理。
 
-### 使用注解
+### 4.4. 使用注解
 
 完成了以上工作，我们就可以使用自定义注解了，示例如下：
 
@@ -833,7 +833,7 @@ public class RegexValidDemo {
 }
 ```
 
-## 小结
+## 5. 小结
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/注解简介.svg)
 
@@ -843,10 +843,10 @@ public class RegexValidDemo {
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/自定义注解.svg)
 
-## 参考资料
+## 6. 参考资料
 
-- [Java编程思想](https://book.douban.com/subject/2130190/)
-- [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [Java 编程思想](https://book.douban.com/subject/2130190/)
+- [Java 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
 - [Effective java](https://book.douban.com/subject/3360807/)
 - [Oracle 官方文档之注解篇](https://docs.oracle.com/javase/tutorial/java/annotations/)
 - [深入理解 Java：注解（Annotation）自定义注解入门](https://www.cnblogs.com/peida/archive/2013/04/24/3036689.html)

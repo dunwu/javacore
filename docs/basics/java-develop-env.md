@@ -4,30 +4,30 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [下载](#下载)
-- [安装](#安装)
-- [环境变量](#环境变量)
-  - [Windows](#windows)
-  - [Linux](#linux)
-- [测试安装成功](#测试安装成功)
-- [开发工具](#开发工具)
-- [第一个程序：Hello World](#第一个程序hello-world)
+- [1. 下载](#1-下载)
+- [2. 安装](#2-安装)
+- [3. 环境变量](#3-环境变量)
+  - [3.1. Windows](#31-windows)
+  - [3.2. Linux](#32-linux)
+- [4. 测试安装成功](#4-测试安装成功)
+- [5. 开发工具](#5-开发工具)
+- [6. 第一个程序：Hello World](#6-第一个程序hello-world)
 
 <!-- /TOC -->
 
-## 下载
+## 1. 下载
 
 进入 [JDK 官方下载地址](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) ，根据自己的环境选择下载所需版本。
 
-## 安装
+## 2. 安装
 
 windows 环境的 jdk 包是 exe 安装文件，启动后根据安装向导安装即可。
 
 Linux 环境的 jdk 包，解压到本地即可。
 
-## 环境变量
+## 3. 环境变量
 
-### Windows
+### 3.1. Windows
 
 计算机 > 属性 > 高级系统设置 > 环境变量
 
@@ -39,7 +39,7 @@ Linux 环境的 jdk 包，解压到本地即可。
 
 `Path`：`%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;`
 
-### Linux
+### 3.2. Linux
 
 执行 `vi /etc/profile` ，编辑环境变量文件
 
@@ -52,11 +52,11 @@ export PATH=JAVA_HOME/bin:JAVA_HOME/jre/bin:
 
 执行 `source /etc/profile` ，立即生效。
 
-## 测试安装成功
+## 4. 测试安装成功
 
 执行命令 `java -version` ，如果安装成功，会打印当前 java 的版本信息。
 
-## 开发工具
+## 5. 开发工具
 
 工欲善其事，必先利其器。编写 Java 程序，当然有必要选择一个合适的 IDE。
 
@@ -70,7 +70,7 @@ IDE（Integrated Development Environment，即集成开发环境）是用于提�
 - MyEclipse - 由 Genuitec 公司开发的一款商业化软件，是应用比较广泛的 Java 应用程序集成开发环境。
 - EditPlus - 如果正确配置 Java 的编译器“Javac”以及解释器“Java”后，可直接使用 EditPlus 编译执行 Java 程序。
 
-## 第一个程序：Hello World
+## 6. 第一个程序：Hello World
 
 添加 HelloWorld.java 文件，内容如下：
 

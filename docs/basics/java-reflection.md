@@ -4,40 +4,44 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、反射简介](#一反射简介)
-  - [什么是反射](#什么是反射)
-  - [反射的应用场景](#反射的应用场景)
-  - [反射的缺点](#反射的缺点)
-- [二、反射机制](#二反射机制)
-  - [类加载过程](#类加载过程)
-  - [Class 对象](#class-对象)
-- [三、使用反射](#三使用反射)
-  - [java.lang.reflect 包](#javalangreflect-包)
-  - [获得 Class 对象](#获得-class-对象)
-  - [判断是否为某个类的实例](#判断是否为某个类的实例)
-  - [创建实例](#创建实例)
-  - [Field](#field)
-  - [Method](#method)
-  - [Constructor](#constructor)
-  - [Array](#array)
-- [四、动态代理](#四动态代理)
-  - [静态代理](#静态代理)
-  - [JDK 动态代理](#jdk-动态代理)
-  - [CGLIB 动态代理](#cglib-动态代理)
-- [五、小结](#五小结)
-- [参考资料](#参考资料)
+- [1. 反射简介](#1-反射简介)
+  - [1.1. 什么是反射](#11-什么是反射)
+  - [1.2. 反射的应用场景](#12-反射的应用场景)
+  - [1.3. 反射的缺点](#13-反射的缺点)
+- [2. 反射机制](#2-反射机制)
+  - [2.1. 类加载过程](#21-类加载过程)
+  - [2.2. Class 对象](#22-class-对象)
+  - [2.3. 方法的反射调用](#23-方法的反射调用)
+  - [2.4. 反射调用的开销](#24-反射调用的开销)
+- [3. 使用反射](#3-使用反射)
+  - [3.1. java.lang.reflect 包](#31-javalangreflect-包)
+  - [3.2. 获取 Class 对象](#32-获取-class-对象)
+  - [3.3. 判断是否为某个类的实例](#33-判断是否为某个类的实例)
+  - [3.4. 创建实例](#34-创建实例)
+  - [3.5. 创建数组实例](#35-创建数组实例)
+  - [3.6. Field](#36-field)
+  - [3.7. Method](#37-method)
+  - [3.8. Constructor](#38-constructor)
+  - [3.9. 绕开访问限制](#39-绕开访问限制)
+- [4. 动态代理](#4-动态代理)
+  - [4.1. 静态代理](#41-静态代理)
+  - [4.2. JDK 动态代理](#42-jdk-动态代理)
+  - [4.3. CGLIB 动态代理](#43-cglib-动态代理)
+- [5. 参考资料](#5-参考资料)
 
 <!-- /TOC -->
 
-## 一、反射简介
+## 1. 反射简介
 
-### 什么是反射
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java反射.svg)
+
+### 1.1. 什么是反射
 
 反射(Reflection)是 Java 程序开发语言的特征之一，它允许运行中的 Java 程序获取自身的信息，并且可以操作类或对象的内部属性。
 
 **通过反射机制，可以在运行时访问 Java 对象的属性，方法，构造方法等。**
 
-### 反射的应用场景
+### 1.2. 反射的应用场景
 
 反射的主要应用场景有：
 
@@ -46,15 +50,15 @@
 - **注解** - 注解本身仅仅是起到标记作用，它需要利用反射机制，根据注解标记去调用注解解释器，执行行为。如果没有反射机制，注解并不比注释更有用。
 - **可扩展性功能** - 应用程序可以通过使用完全限定名称创建可扩展性对象实例来使用外部的用户定义类。
 
-### 反射的缺点
+### 1.3. 反射的缺点
 
 - **性能开销** - 由于反射涉及动态解析的类型，因此无法执行某些 Java 虚拟机优化。因此，反射操作的性能要比非反射操作的性能要差，应该在性能敏感的应用程序中频繁调用的代码段中避免。
 - **破坏封装性** - 反射调用方法时可以忽略权限检查，因此可能会破坏封装性而导致安全问题。
 - **内部曝光** - 由于反射允许代码执行在非反射代码中非法的操作，例如访问私有字段和方法，所以反射的使用可能会导致意想不到的副作用，这可能会导致代码功能失常并可能破坏可移植性。反射代码打破了抽象，因此可能会随着平台的升级而改变行为。
 
-## 二、反射机制
+## 2. 反射机制
 
-### 类加载过程
+### 2.1. 类加载过程
 
 ![img](http://dunwu.test.upcdn.net/snap/1553611895164.png)
 
@@ -64,7 +68,7 @@
 2. JVM 中的类加载器读取字节码文件，取出二进制数据，加载到内存中，解析.class 文件内的信息。类加载器会根据类的全限定名来获取此类的二进制字节流；然后，将字节流所代表的静态存储结构转化为方法区的运行时数据结构；接着，在内存中生成代表这个类的 `java.lang.Class` 对象。
 3. 加载结束后，JVM 开始进行连接阶段（包含验证、准备、初始化）。经过这一系列操作，类的变量会被初始化。
 
-### Class 对象
+### 2.2. Class 对象
 
 要想使用反射，首先需要获得待操作的类所对应的 Class 对象。**Java 中，无论生成某个类的多少个对象，这些对象都会对应于同一个 Class 对象。这个 Class 对象是由 JVM 生成的，通过它能够获悉整个类的结构**。所以，`java.lang.Class` 可以视为所有反射 API 的入口点。
 
@@ -82,29 +86,172 @@ User user = new User();
 2. JVM 会去本地磁盘查找 `User.class` 文件并加载 JVM 内存中。
 3. JVM 通过调用类加载器自动创建这个类对应的 `Class` 对象，并且存储在 JVM 的方法区。注意：**一个类有且只有一个 `Class` 对象**。
 
-## 三、使用反射
+### 2.3. 方法的反射调用
 
-### java.lang.reflect 包
+方法的反射调用，也就是 `Method.invoke` 方法。
+
+`Method.invoke` 方法源码：
+
+```java
+public final class Method extends Executable {
+  ...
+  public Object invoke(Object obj, Object... args) throws ... {
+    ... // 权限检查
+    MethodAccessor ma = methodAccessor;
+    if (ma == null) {
+      ma = acquireMethodAccessor();
+    }
+    return ma.invoke(obj, args);
+  }
+}
+```
+
+`Method.invoke` 方法实际上委派给 `MethodAccessor` 接口来处理。它有两个已有的具体实现：
+
+- `NativeMethodAccessorImpl`：本地方法来实现反射调用
+- `DelegatingMethodAccessorImpl`：委派模式来实现反射调用
+
+每个 `Method` 实例的第一次反射调用都会生成一个委派实现（`DelegatingMethodAccessorImpl`），它所委派的具体实现便是一个本地实现（`NativeMethodAccessorImpl`）。本地实现非常容易理解。当进入了 Java 虚拟机内部之后，我们便拥有了 `Method` 实例所指向方法的具体地址。这时候，反射调用无非就是将传入的参数准备好，然后调用进入目标方法。
+
+【示例】通过抛出异常方式 打印 `Method.invoke` 调用轨迹
+
+```java
+public class MethodDemo01 {
+
+    public static void target(int i) {
+        new Exception("#" + i).printStackTrace();
+    }
+
+    public static void main(String[] args) throws Exception {
+        Class<?> clazz = Class.forName("io.github.dunwu.javacore.reflect.MethodDemo01");
+        Method method = clazz.getMethod("target", int.class);
+        method.invoke(null, 0);
+    }
+
+}
+// Output:
+// java.lang.Exception: #0
+//     at io.github.dunwu.javacore.reflect.MethodDemo01.target(MethodDemo01.java:12)
+//     at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+//     at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+```
+
+先调用 `DelegatingMethodAccessorImpl`；然后调用 `NativeMethodAccessorImpl`，最后调用实际方法。
+
+为什么反射调用`DelegatingMethodAccessorImpl` 作为中间层，而不是直接交给本地实现？
+
+其实，Java 的反射调用机制还设立了另一种动态生成字节码的实现（下称动态实现），直接使用 invoke 指令来调用目标方法。之所以采用委派实现，便是为了能够在本地实现以及动态实现中切换。动态实现和本地实现相比，其运行效率要快上 20 倍。这是因为动态实现无需经过 Java 到 C++ 再到 Java 的切换，但由于生成字节码十分耗时，仅调用一次的话，反而是本地实现要快上 3 到 4 倍。
+
+考虑到许多反射调用仅会执行一次，Java 虚拟机设置了一个阈值 15（可以通过 `-Dsun.reflect.inflationThreshold` 来调整），当某个反射调用的调用次数在 15 之下时，采用本地实现；当达到 15 时，便开始动态生成字节码，并将委派实现的委派对象切换至动态实现，这个过程我们称之为 Inflation。
+
+【示例】执行 java -verbose:class MethodDemo02 启动
+
+```java
+public class MethodDemo02 {
+
+    public static void target(int i) {
+        new Exception("#" + i).printStackTrace();
+    }
+
+    public static void main(String[] args) throws Exception {
+        Class<?> klass = Class.forName("io.github.dunwu.javacore.reflect.MethodDemo02");
+        Method method = klass.getMethod("target", int.class);
+        for (int i = 0; i < 20; i++) {
+            method.invoke(null, i);
+        }
+    }
+
+}
+```
+
+输出内容：
+
+```java
+// ...省略
+java.lang.Exception: #14
+        at io.github.dunwu.javacore.reflect.MethodDemo02.target(MethodDemo02.java:13)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at io.github.dunwu.javacore.reflect.MethodDemo02.main(MethodDemo02.java:20)
+[Loaded sun.reflect.ClassFileConstants from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.AccessorGenerator from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.MethodAccessorGenerator from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.ByteVectorFactory from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.ByteVector from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.ByteVectorImpl from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.ClassFileAssembler from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.UTF8 from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.Label from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.Label$PatchInfo from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded java.util.ArrayList$Itr from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.MethodAccessorGenerator$1 from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.ClassDefiner from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.ClassDefiner$1 from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+[Loaded sun.reflect.GeneratedMethodAccessor1 from __JVM_DefineClass__]
+java.lang.Exception: #15
+        at io.github.dunwu.javacore.reflect.MethodDemo02.target(MethodDemo02.java:13)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at io.github.dunwu.javacore.reflect.MethodDemo02.main(MethodDemo02.java:20)
+[Loaded java.util.concurrent.ConcurrentHashMap$ForwardingNode from D:\Tools\Java\jdk1.8.0_192\jre\lib\rt.jar]
+java.lang.Exception: #16
+        at io.github.dunwu.javacore.reflect.MethodDemo02.target(MethodDemo02.java:13)
+        at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+        at java.lang.reflect.Method.invoke(Method.java:498)
+        at io.github.dunwu.javacore.reflect.MethodDemo02.main(MethodDemo02.java:20)
+// ...省略
+```
+
+可以看到，从第 16 次开始后，都是使用 `DelegatingMethodAccessorImpl` ，不再使用本地实现 `NativeMethodAccessorImpl`。
+
+### 2.4. 反射调用的开销
+
+方法的反射调用会带来不少性能开销，原因主要有三个：
+
+- 变长参数方法导致的 Object 数组
+- 基本类型的自动装箱、拆箱
+- 还有最重要的方法内联
+
+`Class.forName` 会调用本地方法，`Class.getMethod` 则会遍历该类的公有方法。如果没有匹配到，它还将遍历父类的公有方法。可想而知，这两个操作都非常费时。
+
+> 注意，以 `getMethod` 为代表的查找方法操作，会返回查找得到结果的一份拷贝。因此，我们应当避免在热点代码中使用返回 `Method` 数组的 `getMethods` 或者 `getDeclaredMethods` 方法，以减少不必要的堆空间消耗。在实践中，我们往往会在应用程序中缓存 `Class.forName` 和 `Class.getMethod` 的结果。
+
+下面只关注反射调用本身的性能开销。
+
+第一，由于 Method.invoke 是一个变长参数方法，在字节码层面它的最后一个参数会是 Object 数组（感兴趣的同学私下可以用 javap 查看）。Java 编译器会在方法调用处生成一个长度为传入参数数量的 Object 数组，并将传入参数一一存储进该数组中。
+
+第二，由于 Object 数组不能存储基本类型，Java 编译器会对传入的基本类型参数进行自动装箱。
+
+这两个操作除了带来性能开销外，还可能占用堆内存，使得 GC 更加频繁。（如果你感兴趣的话，可以用虚拟机参数 -XX:+PrintGC 试试。）那么，如何消除这部分开销呢？
+
+## 3. 使用反射
+
+### 3.1. java.lang.reflect 包
 
 Java 中的 `java.lang.reflect` 包提供了反射功能。`java.lang.reflect` 包中的类都没有 `public` 构造方法。
 
 `java.lang.reflect` 包的核心接口和类如下：
 
-- `Member` 接口 - 反映关于单个成员(字段或方法)或构造函数的标识信息。
-- `Field` 类 - 提供一个类的域的信息以及访问类的域的接口。
-- `Method` 类 - 提供一个类的方法的信息以及访问类的方法的接口。
-- `Constructor` 类 - 提供一个类的构造函数的信息以及访问类的构造函数的接口。
-- `Array` 类 - 该类提供动态地生成和访问 JAVA 数组的方法。
-- `Modifier` 类 - 提供了 static 方法和常量，对类和成员访问修饰符进行解码。
-- `Proxy` 类 - 提供动态地生成代理类和类实例的静态方法。
+- `Member` 接口：反映关于单个成员(字段或方法)或构造函数的标识信息。
+- `Field` 类：提供一个类的域的信息以及访问类的域的接口。
+- `Method` 类：提供一个类的方法的信息以及访问类的方法的接口。
+- `Constructor` 类：提供一个类的构造函数的信息以及访问类的构造函数的接口。
+- `Array` 类：该类提供动态地生成和访问 JAVA 数组的方法。
+- `Modifier` 类：提供了 static 方法和常量，对类和成员访问修饰符进行解码。
+- `Proxy` 类：提供动态地生成代理类和类实例的静态方法。
 
-### 获得 Class 对象
+### 3.2. 获取 Class 对象
 
-获得 Class 的三种方法：
+获取 `Class` 对象的三种方法：
 
-（1）**使用 Class 类的 `forName` 静态方法**
+（1）**`Class.forName` 静态方法**
 
-示例：
+【示例】使用 `Class.forName` 静态方法获取 `Class` 对象
 
 ```java
 package io.github.dunwu.javacore.reflect;
@@ -129,9 +276,9 @@ public class ReflectClassDemo01 {
 
 使用类的完全限定名来反射对象的类。常见的应用场景为：在 JDBC 开发中常用此方法加载数据库驱动。
 
-（2）**直接获取某一个对象的 `class`**
+（2）**类名 + `.class`**
 
-示例：
+【示例】直接用类名 + `.class` 获取 `Class` 对象
 
 ```java
 public class ReflectClassDemo02 {
@@ -154,11 +301,11 @@ public class ReflectClassDemo02 {
 //int[][][]
 ```
 
-（3）**调用 Object 的 `getClass` 方法**，示例：
+（3）**`Object` 的 `getClass` 方法**
 
-Object 类中有 getClass 方法，因为所有类都继承 Object 类。从而调用 Object 类来获取
+`Object` 类中有 `getClass` 方法，因为所有类都继承 `Object` 类。从而调用 `Object` 类来获取 `Class` 对象。
 
-示例：
+【示例】`Object` 的 `getClass` 方法获取 `Class` 对象
 
 ```java
 package io.github.dunwu.javacore.reflect;
@@ -192,14 +339,14 @@ public class ReflectClassDemo03 {
 //java.util.HashSet
 ```
 
-### 判断是否为某个类的实例
+### 3.3. 判断是否为某个类的实例
 
 判断是否为某个类的实例有两种方式：
 
 1. **用 `instanceof` 关键字**
 2. **用 `Class` 对象的 `isInstance` 方法**（它是一个 Native 方法）
 
-示例：
+【示例】
 
 ```java
 public class InstanceofDemo {
@@ -218,14 +365,14 @@ public class InstanceofDemo {
 //ArrayList is List
 ```
 
-### 创建实例
+### 3.4. 创建实例
 
 通过反射来创建实例对象主要有两种方式：
 
 - 用 `Class` 对象的 `newInstance` 方法。
 - 用 `Constructor` 对象的 `newInstance` 方法。
 
-示例：
+【示例】
 
 ```java
 public class NewInstanceDemo {
@@ -250,7 +397,41 @@ public class NewInstanceDemo {
 //bbb
 ```
 
-### Field
+### 3.5. 创建数组实例
+
+数组在 Java 里是比较特殊的一种类型，它可以赋值给一个对象引用。Java 中，**通过 `Array.newInstance` 创建数组的实例**。
+
+【示例】利用反射创建数组
+
+```java
+public class ReflectArrayDemo {
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class<?> cls = Class.forName("java.lang.String");
+        Object array = Array.newInstance(cls, 25);
+        //往数组里添加内容
+        Array.set(array, 0, "Scala");
+        Array.set(array, 1, "Java");
+        Array.set(array, 2, "Groovy");
+        Array.set(array, 3, "Scala");
+        Array.set(array, 4, "Clojure");
+        //获取某一项的内容
+        System.out.println(Array.get(array, 3));
+    }
+}
+//Output:
+//Scala
+```
+
+其中的 Array 类为 `java.lang.reflect.Array` 类。我们`Array.newInstance` 的原型是：
+
+```java
+public static Object newInstance(Class<?> componentType, int length)
+    throws NegativeArraySizeException {
+    return newArray(componentType, length);
+}
+```
+
+### 3.6. Field
 
 `Class` 对象提供以下方法获取对象的成员（`Field`）：
 
@@ -291,7 +472,7 @@ public class ReflectFieldDemo {
 //Type: class java.lang.Object
 ```
 
-### Method
+### 3.7. Method
 
 `Class` 对象提供以下方法获取对象的方法（`Method`）：
 
@@ -310,7 +491,7 @@ public Object invoke(Object obj, Object... args)
            InvocationTargetException
 ```
 
-示例：
+【示例】
 
 ```java
 public class ReflectMethodDemo {
@@ -339,7 +520,7 @@ public class ReflectMethodDemo {
 }
 ```
 
-### Constructor
+### 3.8. Constructor
 
 `Class` 对象提供以下方法获取对象的构造方法（`Constructor`）：
 
@@ -350,7 +531,7 @@ public class ReflectMethodDemo {
 
 获取一个 `Constructor` 对象后，可以用 `newInstance` 方法来创建类实例。
 
-示例：
+【示例】
 
 ```java
 public class ReflectMethodConstructorDemo {
@@ -377,45 +558,19 @@ public class ReflectMethodConstructorDemo {
 }
 ```
 
-### Array
+### 3.9. 绕开访问限制
 
-数组在 Java 里是比较特殊的一种类型，它可以赋值给一个对象引用。下面我们看一看利用反射创建数组的例子：
+有时候，我们需要通过反射访问私有成员、方法。可以使用 `Constructor/Field/Method.setAccessible(true)` 来绕开 Java 语言的访问限制。
 
-```java
-public class ReflectArrayDemo {
-    public static void main(String[] args) throws ClassNotFoundException {
-        Class<?> cls = Class.forName("java.lang.String");
-        Object array = Array.newInstance(cls, 25);
-        //往数组里添加内容
-        Array.set(array, 0, "Scala");
-        Array.set(array, 1, "Java");
-        Array.set(array, 2, "Groovy");
-        Array.set(array, 3, "Scala");
-        Array.set(array, 4, "Clojure");
-        //获取某一项的内容
-        System.out.println(Array.get(array, 3));
-    }
-}
-//Output:
-//Scala
-```
-
-其中的 Array 类为 `java.lang.reflect.Array` 类。我们通过 `Array.newInstance` 创建数组对象，它的原型是：
-
-```java
-public static Object newInstance(Class<?> componentType, int length)
-    throws NegativeArraySizeException {
-    return newArray(componentType, length);
-}
-```
-
-## 四、动态代理
+## 4. 动态代理
 
 动态代理是一种方便运行时动态构建代理、动态处理代理方法调用的机制，很多场景都是利用类似机制做到的，比如用来包装 RPC 调用、面向切面的编程（AOP）。
 
 实现动态代理的方式很多，比如 JDK 自身提供的动态代理，就是主要利用了上面提到的反射机制。还有其他的实现方式，比如利用传说中更高性能的字节码操作机制，类似 ASM、cglib（基于 ASM）、Javassist 等。
 
-### 静态代理
+![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java代理.svg)
+
+### 4.1. 静态代理
 
 > 静态代理其实就是指设计模式中的代理模式。
 >
@@ -462,7 +617,7 @@ class Proxy extends Subject {
 >
 > 静态代理模式固然在访问无法访问的资源，增强现有的接口业务功能方面有很大的优点，但是大量使用这种静态代理，会使我们系统内的类的规模增大，并且不易维护；并且由于 Proxy 和 RealSubject 的功能本质上是相同的，Proxy 只是起到了中介的作用，这种代理在系统中的存在，导致系统结构比较臃肿和松散。
 
-### JDK 动态代理
+### 4.2. JDK 动态代理
 
 为了解决静态代理的问题，就有了创建动态代理的想法：
 
@@ -681,8 +836,7 @@ JDK 动态代理特点：
 
 - 缺点：强制要求代理类实现 `InvocationHandler` 接口。
 
-
-### CGLIB 动态代理
+### 4.3. CGLIB 动态代理
 
 CGLIB 提供了与 JDK 动态代理不同的方案。很多框架，例如 Spring AOP 中，就使用了 CGLIB 动态代理。
 
@@ -702,16 +856,11 @@ CGLIB 动态代理特点：
 
 > 参考：[深入理解 CGLIB 动态代理机制](https://www.jianshu.com/p/9a61af393e41)
 
-## 五、小结
-
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java反射.svg)
-
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java代理.svg)
-
-## 参考资料
+## 5. 参考资料
 
 - [Java 编程思想](https://book.douban.com/subject/2130190/)
 - [Java 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [深入拆解 Java 虚拟机](https://time.geekbang.org/column/intro/100010301)
 - [深入解析 Java 反射（1） - 基础](https://www.sczyh30.com/posts/Java/java-reflection-1/)
 - [Java 基础之—反射（非常重要）](https://blog.csdn.net/sinat_38259539/article/details/71799078)
 - [官方 Reflection API 文档](https://docs.oracle.com/javase/tutorial/reflect/index.html)

@@ -4,30 +4,30 @@
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [简介](#简介)
-- [枚举的本质](#枚举的本质)
-- [枚举的方法](#枚举的方法)
-- [枚举的特性](#枚举的特性)
-  - [基本特性](#基本特性)
-  - [枚举可以添加方法](#枚举可以添加方法)
-  - [枚举可以实现接口](#枚举可以实现接口)
-  - [枚举不可以继承](#枚举不可以继承)
-- [枚举的应用](#枚举的应用)
-  - [组织常量](#组织常量)
-  - [switch 状态机](#switch-状态机)
-  - [错误码](#错误码)
-  - [组织枚举](#组织枚举)
-  - [策略枚举](#策略枚举)
-  - [枚举实现单例模式](#枚举实现单例模式)
-- [枚举工具类](#枚举工具类)
-  - [EnumSet](#enumset)
-  - [EnumMap](#enummap)
-- [小结](#小结)
-- [参考资料](#参考资料)
+- [1. 简介](#1-简介)
+- [2. 枚举的本质](#2-枚举的本质)
+- [3. 枚举的方法](#3-枚举的方法)
+- [4. 枚举的特性](#4-枚举的特性)
+  - [4.1. 基本特性](#41-基本特性)
+  - [4.2. 枚举可以添加方法](#42-枚举可以添加方法)
+  - [4.3. 枚举可以实现接口](#43-枚举可以实现接口)
+  - [4.4. 枚举不可以继承](#44-枚举不可以继承)
+- [5. 枚举的应用](#5-枚举的应用)
+  - [5.1. 组织常量](#51-组织常量)
+  - [5.2. switch 状态机](#52-switch-状态机)
+  - [5.3. 错误码](#53-错误码)
+  - [5.4. 组织枚举](#54-组织枚举)
+  - [5.5. 策略枚举](#55-策略枚举)
+  - [5.6. 枚举实现单例模式](#56-枚举实现单例模式)
+- [6. 枚举工具类](#6-枚举工具类)
+  - [6.1. EnumSet](#61-enumset)
+  - [6.2. EnumMap](#62-enummap)
+- [7. 小结](#7-小结)
+- [8. 参考资料](#8-参考资料)
 
 <!-- /TOC -->
 
-## 简介
+## 1. 简介
 
 `enum` 的全称为 enumeration， 是 JDK5 中引入的特性。
 
@@ -41,7 +41,7 @@ enum ColorEn { RED, GREEN, BLUE }
 
 **枚举的典型应用场景**：错误码、状态机等。
 
-## 枚举的本质
+## 2. 枚举的本质
 
 `java.lang.Enum`类声明
 
@@ -86,7 +86,7 @@ public final class io.github.dunwu.javacore.enumeration.ColorEn extends java.lan
 >
 > 定义的枚举值，会被默认修饰为 `public static final` ，从修饰关键字，即可看出枚举值本质上是静态常量。
 
-## 枚举的方法
+## 3. 枚举的方法
 
 在 enum 中，提供了一些基本方法：
 
@@ -150,7 +150,7 @@ green equals 1: false
 green == Color.BLUE: false
 ```
 
-## 枚举的特性
+## 4. 枚举的特性
 
 枚举的特性，归结起来就是一句话：
 
@@ -158,13 +158,13 @@ green == Color.BLUE: false
 
 但是这句话需要拆分去理解，让我们细细道来。
 
-### 基本特性
+### 4.1. 基本特性
 
 **如果枚举中没有定义方法，也可以在最后一个实例后面加逗号、分号或什么都不加。**
 
 如果枚举中没有定义方法，**枚举值默认为从 0 开始的有序数值**。以 Color 枚举类型举例，它的枚举常量依次为 `RED：0，GREEN：1，BLUE：2`。
 
-### 枚举可以添加方法
+### 4.2. 枚举可以添加方法
 
 在概念章节提到了，**枚举值默认为从 0 开始的有序数值** 。那么问题来了：如何为枚举显式的赋值。
 
@@ -241,7 +241,7 @@ public enum ErrorCodeEn {
 
 注：上面的例子并不可取，仅仅是为了展示枚举支持定义各种方法。正确的例子情况[错误码示例](#错误码)
 
-### 枚举可以实现接口
+### 4.3. 枚举可以实现接口
 
 **`enum` 可以像一般类一样实现接口。**
 
@@ -278,15 +278,15 @@ public enum ErrorCodeEn2 implements INumberEnum {
 }
 ```
 
-### 枚举不可以继承
+### 4.4. 枚举不可以继承
 
 **enum 不可以继承另外一个类，当然，也不能继承另一个 enum 。**
 
 因为 `enum` 实际上都继承自 `java.lang.Enum` 类，而 Java 不支持多重继承，所以 `enum` 不能再继承其他类，当然也不能继承另一个 `enum`。
 
-## 枚举的应用
+## 5. 枚举的应用
 
-### 组织常量
+### 5.1. 组织常量
 
 在 JDK5 之前，在 Java 中定义常量都是`public static final TYPE a;` 这样的形式。有了枚举，你可以将有关联关系的常量组织起来，使代码更加易读、安全，并且还可以使用枚举提供的方法。
 
@@ -298,7 +298,7 @@ enum Color { RED, GREEN, BLUE, }
 enum Color { RED, GREEN, BLUE; }
 ```
 
-### switch 状态机
+### 5.2. switch 状态机
 
 我们经常使用 switch 语句来写状态机。JDK7 以后，switch 已经支持 `int`、`char`、`String`、`enum` 类型的参数。这几种类型的参数比较起来，使用枚举的 switch 代码更具有可读性。
 
@@ -334,7 +334,7 @@ public class StateMachineDemo {
 // 红灯停
 ```
 
-### 错误码
+### 5.3. 错误码
 
 枚举常被用于定义程序错误码。下面是一个简单示例：
 
@@ -391,7 +391,7 @@ public class ErrorCodeEnumDemo {
 // ErrorCodeEn{code=200, msg='错误B'}
 ```
 
-### 组织枚举
+### 5.4. 组织枚举
 
 可以将类型相近的枚举通过接口或类组织起来，但是一般用接口方式进行组织。
 
@@ -496,7 +496,7 @@ public class EnumInClassDemo {
 // 西红柿
 ```
 
-### 策略枚举
+### 5.5. 策略枚举
 
 Effective Java 中展示了一种策略枚举。这种枚举通过枚举嵌套枚举的方式，将枚举常量分类处理。
 
@@ -552,7 +552,7 @@ System.out.println("时薪100的人在周五工作8小时的收入：" + Payroll
 System.out.println("时薪100的人在周六工作8小时的收入：" + PayrollDay.SATURDAY.pay(8.0, 100));
 ```
 
-### 枚举实现单例模式
+### 5.6. 枚举实现单例模式
 
 单例模式是最常用的设计模式。
 
@@ -594,11 +594,11 @@ public class SingleEnumDemo {
 >
 > 这篇文章对于 Java 枚举的特性讲解很仔细，其中对于枚举实现单例和传统单例实现方式说的尤为细致。
 
-## 枚举工具类
+## 6. 枚举工具类
 
 Java 中提供了两个方便操作 enum 的工具类——`EnumSet` 和 `EnumMap`。
 
-### EnumSet
+### 6.1. EnumSet
 
 `EnumSet` 是枚举类型的高性能 `Set` 实现。它要求放入它的枚举常量必须属于同一枚举类型。
 
@@ -625,7 +625,7 @@ public class EnumSetDemo {
 }
 ```
 
-### EnumMap
+### 6.2. EnumMap
 
 `EnumMap` 是专门为枚举类型量身定做的 `Map` 实现。虽然使用其它的 Map 实现（如 HashMap）也能完成枚举类型实例到值得映射，但是使用 EnumMap 会更加高效：它只能接收同一枚举类型的实例作为键值，并且由于枚举类型实例的数量相对固定并且有限，所以 EnumMap 使用数组来存放与枚举类型对应的值。这使得 EnumMap 的效率非常高。
 
@@ -668,14 +668,14 @@ public class EnumMapDemo {
 >
 > 这篇文章中对 EnumSet 和 EnumMap 原理做了较为详细的介绍。
 
-## 小结
+## 7. 小结
 
 ![img](http://dunwu.test.upcdn.net/snap/1553002212154.png)
 
-## 参考资料
+## 8. 参考资料
 
-- [Java编程思想](https://book.douban.com/subject/2130190/)
-- [Java核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [Java 编程思想](https://book.douban.com/subject/2130190/)
+- [Java 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
 - [Effective java](https://book.douban.com/subject/3360807/)
 - [深入理解 Java 枚举类型(enum)](https://blog.csdn.net/javazejian/article/details/71333103#enumset%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90)
 - https://droidyue.com/blog/2016/11/29/dive-into-enum/
