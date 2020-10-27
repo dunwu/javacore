@@ -492,7 +492,7 @@ public class ThreadStopDemo3 {
 
 - 可以使用 `isDaemon` 方法判断线程是否为守护线程。
 - 可以使用 `setDaemon` 方法设置线程为守护线程。
-  - 正在运行的用户线程无法设置为守护线程，所以 \*\* \*\*，否则会抛出 `llegalThreadStateException` 异常；
+  - 正在运行的用户线程无法设置为守护线程，所以 `setDaemon` 必须在 `thread.start` 方法之前设置，否则会抛出 `llegalThreadStateException` 异常；
   - 一个守护线程创建的子线程依然是守护线程。
   - 不要认为所有的应用都可以分配给守护线程来进行服务，比如读写操作或者计算逻辑。
 
