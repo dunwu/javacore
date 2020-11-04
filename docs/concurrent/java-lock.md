@@ -469,7 +469,9 @@ public ReentrantLock(boolean fair) {}
 - `lock()` - **无条件获取锁**。如果当前线程无法获取锁，则当前线程进入休眠状态不可用，直至当前线程获取到锁。如果该锁没有被另一个线程持有，则获取该锁并立即返回，将锁的持有计数设置为 1。
 - `unlock()` - 用于**释放锁**。
 
-> :bell: 注意：请务必牢记，获取锁操作 **`lock()` 必须在 `try catch` 块中进行，并且将释放锁操作 `unlock()` 放在 `finally` 块中进行，以保证锁一定被被释放，防止死锁的发生**。
+> :bell: 注意：
+1请务必牢记，获取锁操作 **`lock()` 必须在try-finally外调用,如果因为异常导致加锁失败，try-finally块中的代码不会执行。相反，如果在try{}代码块中调用`lock()`加锁失败，finally中的代码无论如何都会执行，但是由于当前线程加锁失败并没有持有lock对象锁,unlock()会产生IllegalMonitorStateException异常**
+2 **将释放锁操作 `unlock()` 放在 `finally` 块中进行，以保证锁一定被被释放，防止死锁的发生**。
 
 示例：`ReentrantLock` 的基本操作
 
