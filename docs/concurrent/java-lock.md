@@ -182,11 +182,11 @@ final Segment<K,V>[] segments;
 
 当有线程访问 `ConcurrentHashMap` 的数据时，`ConcurrentHashMap` 会先根据 hashCode 计算出数据在哪个桶（即哪个 Segment），然后锁住这个 `Segment`。
 
-### 1.7. 显示锁和内置锁
+### 1.7. 显式锁和内置锁
 
 Java 1.5 之前，协调对共享对象的访问时可以使用的机制只有 `synchronized` 和 `volatile`。这两个都属于内置锁，即锁的申请和释放都是由 JVM 所控制。
 
-Java 1.5 之后，增加了新的机制：`ReentrantLock`、`ReentrantReadWriteLock` ，这类锁的申请和释放都可以由程序所控制，所以常被称为显示锁。
+Java 1.5 之后，增加了新的机制：`ReentrantLock`、`ReentrantReadWriteLock` ，这类锁的申请和释放都可以由程序所控制，所以常被称为显式锁。
 
 > 💡 `synchronized` 的用法和原理可以参考：[Java 并发基础机制 - synchronized](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md#%E4%BA%8Csynchronized) 。
 >
@@ -196,7 +196,7 @@ Java 1.5 之后，增加了新的机制：`ReentrantLock`、`ReentrantReadWriteL
 > - 从趋势来看，Java 未来更可能会优化 `synchronized` ，而不是 `ReentrantLock`、`ReentrantReadWriteLock` ，因为 `synchronized` 是 JVM 内置属性，它能执行一些优化。
 > - `ReentrantLock`、`ReentrantReadWriteLock` 申请和释放锁都是由程序控制，如果使用不当，可能造成死锁，这是很危险的。
 
-以下对比一下显示锁和内置锁的差异：
+以下对比一下显式锁和内置锁的差异：
 
 - **主动获取锁和释放锁**
   - `synchronized` 不能主动获取锁和释放锁。获取锁和释放锁都是 JVM 控制的。
