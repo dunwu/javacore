@@ -4,23 +4,13 @@
 >
 > String 类型可能是 Java 中应用最频繁的引用类型，但它的性能问题却常常被忽略。高效的使用字符串，可以提升系统的整体性能。当然，要做到高效使用字符串，需要深入了解其特性。
 
-思考题：结果是什么？
-
-```
-String str1= "abc";
-String str2= new String("abc");
-String str3= str2.intern();
-assertSame(str1==str2);
-assertSame(str2==str3);
-assertSame(str1==str3)
-```
-
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [1. String 的不可变性](#1-string-的不可变性)
-- [2. String 的优化](#2-string-的优化)
-  - [2.1. 字符串拼接](#21-字符串拼接)
-  - [2.2. 如何使用 String.intern 节省内存](#22-如何使用-stringintern-节省内存)
+- [2. String 的性能考量](#2-string-的性能考量)
+    - [2.1. 字符串拼接](#21-字符串拼接)
+    - [2.2. 字符串分割](#22-字符串分割)
+    - [2.3. String.intern](#23-stringintern)
 - [3. String、StringBuffer、StringBuilder 有什么区别](#3-stringstringbufferstringbuilder-有什么区别)
 - [4. 参考资料](#4-参考资料)
 
@@ -53,29 +43,58 @@ public final class String
 
 `String str = new String("abc")` 这种方式，首先在编译类文件时，`"abc"` 常量字符串将会放入到常量结构中，在类加载时，`"abc"` 将会在常量池中创建；其次，在调用 new 时，JVM 命令将会调用 `String` 的构造函数，同时引用常量池中的 `"abc"` 字符串，在堆内存中创建一个 `String` 对象；最后，str 将引用 `String` 对象。
 
-## 2. String 的优化
+## 2. String 的性能考量
 
 ### 2.1. 字符串拼接
 
-如果需要使用**字符串拼接，应该优先考虑 `StringBuilder` 或 `StringBuffer`（线程安全） 的 `append` 方法替代使用 `+` 号**。
+**字符串常量的拼接，编译器会将其优化为一个常量字符串**。
 
-【示例】错误示例
+【示例】字符串常量拼接
 
+```java
+public static void main(String[] args) {
+    // 本行代码在 class 文件中，会被编译器直接优化为：
+    // String str = "abc";
+    String str = "a" + "b" + "c";
+    System.out.println("str = " + str);
+}
 ```
-String str= "ab" + "cd" + "ef";
+
+**字符串变量的拼接，编译器会优化成 `StringBuilder` 的方式**。
+
+【示例】字符串变量的拼接
+
+```java
+public static void main(String[] args) {
+    String str = "";
+    for(int i=0; i<1000; i++) {
+        // 本行代码会被编译器优化为：
+        // str = (new StringBuilder(String.valueOf(str))).append(i).toString();
+        str = str + i;
+    }
+}
 ```
 
-程序会先生成 ab 对象，再生成 abcd 对象，最后生成 abcdef 对象。
+但是，每次循环都会生成一个新的 `StringBuilder` 实例，同样也会降低系统的性能。
 
-即使使用 `+` 号作为字符串的拼接，也一样可以被编译器优化成 `StringBuilder` 的方式。但再细致些，你会发现在编译器优化的代码中，每次循环都会生成一个新的 `StringBuilder` 实例，同样也会降低系统的性能。
+字符串拼接的正确方案：
 
-### 2.2. 如何使用 String.intern 节省内存
+- 如果需要使用**字符串拼接，应该优先考虑 `StringBuilder` 的 `append` 方法替代使用 `+` 号**。
+- 如果在并发编程中，`String` 对象的拼接涉及到线程安全，可以使用 `StringBuffer`。但是要注意，由于 `StringBuffer` 是线程安全的，涉及到锁竞争，所以从性能上来说，要比 `StringBuilder` 差一些。
 
-在每次赋值的时候使用 `String` 的 `intern` 方法，如果常量池中有相同值，就会重复使用该对象，返回对象引用，这样一开始的对象就可以被回收掉。
+### 2.2. 字符串分割
+
+**`String` 的 `split()` 方法使用正则表达式实现其强大的分割功能**。而正则表达式的性能是非常不稳定的，使用不恰当会引起回溯问题，很可能导致 CPU 居高不下。
+
+所以，应该慎重使用 `split()` 方法，**可以考虑用 `String.indexOf()` 方法代替 `split()` 方法完成字符串的分割**。如果实在无法满足需求，你就在使用 Split() 方法时，对回溯问题加以重视就可以了。
+
+### 2.3. String.intern
+
+**在每次赋值的时候使用 `String` 的 `intern` 方法，如果常量池中有相同值，就会重复使用该对象，返回对象引用，这样一开始的对象就可以被回收掉**。
 
 在字符串常量中，默认会将对象放入常量池；在字符串变量中，对象是会创建在堆内存中，同时也会在常量池中创建一个字符串对象，复制到堆内存对象中，并返回堆内存对象引用。
 
-如果调用 intern 方法，会去查看字符串常量池中是否有等于该对象的字符串，如果没有，就在常量池中新增该对象，并返回该对象引用；如果有，就返回常量池中的字符串引用。堆内存中原有的对象由于没有引用指向它，将会通过垃圾回收器回收。
+如果调用 `intern` 方法，会去查看字符串常量池中是否有等于该对象的字符串，如果没有，就在常量池中新增该对象，并返回该对象引用；如果有，就返回常量池中的字符串引用。堆内存中原有的对象由于没有引用指向它，将会通过垃圾回收器回收。
 
 【示例】
 
@@ -92,7 +111,7 @@ sharedLocation.setCity(messageInfo.getCity().intern());		sharedLocation.setCount
 sharedLocation.setRegion(messageInfo.getCountryCode().intern());
 ```
 
-虽然使用 new 声明的字符串调用 intern 方法，也可以让字符串进行驻留，但在业务代码中滥用 intern，可能会产生性能问题。
+> 使用 `intern` 方法需要注意：一定要结合实际场景。因为常量池的实现是类似于一个 HashTable 的实现方式，HashTable 存储的数据越大，遍历的时间复杂度就会增加。如果数据过大，会增加整个字符串常量池的负担。
 
 ## 3. String、StringBuffer、StringBuilder 有什么区别
 
@@ -110,6 +129,7 @@ sharedLocation.setRegion(messageInfo.getCountryCode().intern());
 
 - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
 - [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
+- [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
 - [Java 核心技术面试精讲](https://time.geekbang.org/column/intro/82)
 - [Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
 - [深入剖析 Java 中的装箱和拆箱](https://www.cnblogs.com/dolphin0520/p/3780005.html)

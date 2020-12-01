@@ -40,10 +40,10 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ### [Java 高级](advanced)
 
-- [Java 正则](advanced/java-regex.md)
-- [Java 编码和加密](advanced/java-crypto.md)
+- [Java 正则从入门到精通](advanced/java-regex.md) - 关键词：`Pattern`、`Matcher`、`捕获与非捕获`、`反向引用`、`零宽断言`、`贪婪与懒惰`、`元字符`、`DFA`、`NFA`
+- [Java 编码和加密](advanced/java-crypto.md) - 关键词：`Base64`、`消息摘要`、`数字签名`、`对称加密`、`非对称加密`、`MD5`、`SHA`、`HMAC`、`AES`、`DES`、`DESede`、`RSA`
 - [Java 本地化](advanced/java-locale.md)
-- [JavaJDK8](advanced/jdk8.md) - 关键词：`Stream`、`lambda`、`Optional`、`@FunctionalInterface`
+- [Java JDK8](advanced/jdk8.md) - 关键词：`Stream`、`lambda`、`Optional`、`@FunctionalInterface`
 
 ### [Java 容器](container)
 
@@ -73,7 +73,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ![img](http://dunwu.test.upcdn.net/snap/20200630195043.png)
 
-- [Java BIO](io/java-bio.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
+- [Java IO 模型](io/java-io.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 - [Java NIO](io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`、`多路复用`
 - [Java 序列化](io/java-serialization.md) - 关键词：`Serializable`、`Externalizable`、`ObjectInputStream`、`ObjectOutputStream`、`transient`
 - [Java 网络编程](io/java-net.md) - 关键词：`Socket`、`ServerSocket`、`DatagramPacket`、`DatagramSocket`

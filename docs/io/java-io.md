@@ -1,8 +1,8 @@
-# Java IO
+# Java IO 模型
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 >
-> ***关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`***
+> **关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`**
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

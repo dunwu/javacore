@@ -2,7 +2,7 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 >
-> **_关键词：`Thread`、`Runnable`、`Callable`、`Future`、`wait`、`notify`、`notifyAll`、`join`、`sleep`、`yeild`、`线程状态`、`线程通信`_**
+> **关键词：`Thread`、`Runnable`、`Callable`、`Future`、`wait`、`notify`、`notifyAll`、`join`、`sleep`、`yeild`、`线程状态`、`线程通信`**
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

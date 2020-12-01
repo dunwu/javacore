@@ -3,6 +3,8 @@
 > JDK8 升级常见问题章节是我个人的经验整理。其他内容基本翻译自 [java8-tutorial](https://github.com/winterbe/java8-tutorial)
 >
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
+>
+> 关键词：`Stream`、`lambda`、`Optional`、`@FunctionalInterface`
 
 ## Default Methods for Interfaces(接口的默认方法)
 

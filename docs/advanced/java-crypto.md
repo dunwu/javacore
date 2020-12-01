@@ -1,6 +1,8 @@
 # Java 编码和加密
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
+>
+> 关键词：`Base64`、`消息摘要`、`数字签名`、`对称加密`、`非对称加密`、`MD5`、`SHA`、`HMAC`、`AES`、`DES`、`DESede`、`RSA`
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
