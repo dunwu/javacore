@@ -2,7 +2,30 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-## 一、Set 简介
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [1. Set 简介](#1-set-简介)
+  - [1.1. Set 接口](#11-set-接口)
+  - [1.2. SortedSet 接口](#12-sortedset-接口)
+  - [1.3. NavigableSet 接口](#13-navigableset-接口)
+  - [1.4. AbstractSet 抽象类](#14-abstractset-抽象类)
+- [2. HashSet 类](#2-hashset-类)
+  - [2.1. HashSet 要点](#21-hashset-要点)
+  - [2.2. HashSet 原理](#22-hashset-原理)
+- [3. TreeSet 类](#3-treeset-类)
+  - [3.1. TreeSet 要点](#31-treeset-要点)
+  - [3.2. TreeSet 源码](#32-treeset-源码)
+- [4. LinkedHashSet 类](#4-linkedhashset-类)
+  - [4.1. LinkedHashSet 要点](#41-linkedhashset-要点)
+  - [4.2. LinkedHashSet 原理](#42-linkedhashset-原理)
+- [5. EnumSet 类](#5-enumset-类)
+  - [5.1. EnumSet 要点](#51-enumset-要点)
+- [6. 要点总结](#6-要点总结)
+- [7. 参考资料](#7-参考资料)
+
+<!-- /TOC -->
+
+## 1. Set 简介
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/Set-diagrams.png" width="400" />
@@ -19,7 +42,7 @@ Set 家族成员简介：
 - `LinkedHashSet` 是按插入顺序排序的 Set。
 - `EnumSet` 是只能存放 Emum 枚举类型的 Set。
 
-### Set 接口
+### 1.1. Set 接口
 
 `Set` 继承了 `Collection` 的接口。实际上，`Set` 就是 `Collection`，二者提供的方法完全相同。
 
@@ -29,7 +52,7 @@ Set 家族成员简介：
 public interface Set<E> extends Collection<E> {}
 ```
 
-### SortedSet 接口
+### 1.2. SortedSet 接口
 
 继承了 `Set` 的接口。`SortedSet` 中的内容是排序的唯一值，排序的方法是通过比较器(Comparator)。
 
@@ -49,7 +72,7 @@ public interface SortedSet<E> extends Set<E> {}
 - `last` - 返回最后一个元素
 - spliterator
 
-### NavigableSet 接口
+### 1.3. NavigableSet 接口
 
 `NavigableSet` 继承了 `SortedSet`。它提供了丰富的查找方法。
 
@@ -73,7 +96,7 @@ public interface NavigableSet<E> extends SortedSet<E> {}
 - headSet - 返回小于指定元素的子集
 - tailSet - 返回大于指定元素的子集
 
-### AbstractSet 抽象类
+### 1.4. AbstractSet 抽象类
 
 `AbstractSet` 类提供 `Set` 接口的核心实现，以最大限度地减少实现 `Set` 接口所需的工作。
 
@@ -85,7 +108,7 @@ public abstract class AbstractSet<E> extends AbstractCollection<E> implements Se
 
 事实上，主要的实现已经在 `AbstractCollection` 中完成。
 
-## 二、HashSet 类
+## 2. HashSet 类
 
 `HashSet` 类依赖于 `HashMap`，它实际上是通过 `HashMap` 实现的。`HashSet` 中的元素是无序的、散列的。
 
@@ -97,7 +120,7 @@ public class HashSet<E>
     implements Set<E>, Cloneable, java.io.Serializable {}
 ```
 
-### HashSet 要点
+### 2.1. HashSet 要点
 
 - `HashSet` 通过继承 `AbstractSet` 实现了 `Set` 接口中的骨干方法。
 - `HashSet` 实现了 `Cloneable`，所以支持克隆。
@@ -106,7 +129,7 @@ public class HashSet<E>
 - `HashSet` 允许 null 值的元素。
 - `HashSet` 不是线程安全的。
 
-### HashSet 原理
+### 2.2. HashSet 原理
 
 **`HashSet` 是基于 `HashMap` 实现的。**
 
@@ -123,7 +146,7 @@ private static final Object PRESENT = new Object();
   - `HashSet` 类中通过定义 `writeObject()` 和 `readObject()` 方法确定了其序列化和反序列化的机制。
 - PRESENT 是用于关联 map 中当前操作元素的一个虚拟值。
 
-## 三、TreeSet 类
+## 3. TreeSet 类
 
 `TreeSet` 类依赖于 `TreeMap`，它实际上是通过 `TreeMap` 实现的。`TreeSet` 中的元素是有序的，它是按自然排序或者用户指定比较器排序的 Set。
 
@@ -134,7 +157,7 @@ public class TreeSet<E> extends AbstractSet<E>
     implements NavigableSet<E>, Cloneable, java.io.Serializable {}
 ```
 
-### TreeSet 要点
+### 3.1. TreeSet 要点
 
 - `TreeSet` 通过继承 `AbstractSet` 实现了 `NavigableSet` 接口中的骨干方法。
 - `TreeSet` 实现了 `Cloneable`，所以支持克隆。
@@ -142,7 +165,7 @@ public class TreeSet<E> extends AbstractSet<E>
 - `TreeSet` 中存储的元素是有序的。排序规则是自然顺序或比较器（`Comparator`）中提供的顺序规则。
 - `TreeSet` 不是线程安全的。
 
-### TreeSet 源码
+### 3.2. TreeSet 源码
 
 **TreeSet 是基于 TreeMap 实现的。**
 
@@ -157,7 +180,7 @@ private static final Object PRESENT = new Object();
 - `TreeSet` 中维护了一个 `NavigableMap` 对象 map（实际上是一个 TreeMap 实例），`TreeSet` 的重要方法，如 `add`、`remove`、`iterator`、`clear`、`size` 等都是围绕 map 实现的。
 - `PRESENT` 是用于关联 `map` 中当前操作元素的一个虚拟值。`TreeSet` 中的元素都被当成 `TreeMap` 的 key 存储，而 value 都填的是 `PRESENT`。
 
-## 四、LinkedHashSet 类
+## 4. LinkedHashSet 类
 
 `LinkedHashSet` 是按插入顺序排序的 Set。
 
@@ -169,7 +192,7 @@ public class LinkedHashSet<E>
     implements Set<E>, Cloneable, java.io.Serializable {}
 ```
 
-### LinkedHashSet 要点
+### 4.1. LinkedHashSet 要点
 
 - `LinkedHashSet` 通过继承 `HashSet` 实现了 `Set` 接口中的骨干方法。
 - `LinkedHashSet` 实现了 `Cloneable`，所以支持克隆。
@@ -177,7 +200,7 @@ public class LinkedHashSet<E>
 - `LinkedHashSet` 中存储的元素是按照插入顺序保存的。
 - `LinkedHashSet` 不是线程安全的。
 
-### LinkedHashSet 原理
+### 4.2. LinkedHashSet 原理
 
 `LinkedHashSet` 有三个构造方法，无一例外，都是调用父类 `HashSet` 的构造方法。
 
@@ -205,7 +228,7 @@ HashSet(int initialCapacity, float loadFactor, boolean dummy) {
 
 也就是说，实际上，`LinkedHashSet` 维护了一个双链表。由双链表的特性可以知道，它是按照元素的插入顺序保存的。所以，这就是 `LinkedHashSet` 中存储的元素是按照插入顺序保存的原理。
 
-## 五、EnumSet 类
+## 5. EnumSet 类
 
 `EnumSet` 类定义如下：
 
@@ -214,7 +237,7 @@ public abstract class EnumSet<E extends Enum<E>> extends AbstractSet<E>
     implements Cloneable, java.io.Serializable {}
 ```
 
-### EnumSet 要点
+### 5.1. EnumSet 要点
 
 - `EnumSet` 继承了 `AbstractSet`，所以有 `Set` 接口中的骨干方法。
 - `EnumSet` 实现了 `Cloneable`，所以支持克隆。
@@ -224,10 +247,10 @@ public abstract class EnumSet<E extends Enum<E>> extends AbstractSet<E>
 - `EnumSet` 是有序的。以枚举值在 `EnumSet` 类中的定义顺序来决定集合元素的顺序。
 - `EnumSet` 不是线程安全的。
 
-## 六、要点总结
+## 6. 要点总结
 
 ![img](http://dunwu.test.upcdn.net/snap/20200221190717.png)
 
-## 参考资料
+## 7. 参考资料
 
 - [Java 编程思想（Thinking in java）](https://item.jd.com/10058164.html)

@@ -2,9 +2,39 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-## 一、Map 简介
+<!-- TOC depthFrom:2 depthTo:3 -->
 
-### Map 架构
+- [1. Map 简介](#1-map-简介)
+  - [1.1. Map 架构](#11-map-架构)
+  - [1.2. Map 接口](#12-map-接口)
+  - [1.3. Map.Entry 接口](#13-mapentry-接口)
+  - [1.4. AbstractMap 抽象类](#14-abstractmap-抽象类)
+  - [1.5. SortedMap 接口](#15-sortedmap-接口)
+  - [1.6. NavigableMap 接口](#16-navigablemap-接口)
+  - [1.7. Dictionary 抽象类](#17-dictionary-抽象类)
+- [2. HashMap 类](#2-hashmap-类)
+  - [2.1. HashMap 要点](#21-hashmap-要点)
+  - [2.2. HashMap 原理](#22-hashmap-原理)
+- [3. LinkedHashMap 类](#3-linkedhashmap-类)
+  - [3.1. LinkedHashMap 要点](#31-linkedhashmap-要点)
+  - [3.2. LinkedHashMap 要点](#32-linkedhashmap-要点)
+- [4. TreeMap 类](#4-treemap-类)
+  - [4.1. TreeMap 要点](#41-treemap-要点)
+  - [4.2. TreeMap 原理](#42-treemap-原理)
+  - [4.3. remove 方法](#43-remove-方法)
+  - [4.4. TreeMap 示例](#44-treemap-示例)
+- [5. WeakHashMap](#5-weakhashmap)
+- [6. 总结](#6-总结)
+  - [6.1. Map 简介](#61-map-简介)
+  - [6.2. HashMap](#62-hashmap)
+  - [6.3. 其他 Map](#63-其他-map)
+- [7. 参考资料](#7-参考资料)
+
+<!-- /TOC -->
+
+## 1. Map 简介
+
+### 1.1. Map 架构
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/Map-diagrams.png" />
@@ -21,7 +51,7 @@ Map 家族主要成员功能如下：
 - `TreeMap` 继承了 `AbstractMap`，且实现了 `NavigableMap` 接口。`TreeMap` 的主要作用是储存有序的键值对，排序依据根据元素类型的 `Comparator` 而定。
 - `WeakHashMap` 继承了 `AbstractMap`。`WeakHashMap` 的键是**弱引用** （即 `WeakReference`），它的主要作用是当 GC 内存不足时，会自动将 `WeakHashMap` 中的 key 回收，这避免了 `WeakHashMap` 的内存空间无限膨胀。很明显，`WeakHashMap` 适用于作为缓存。
 
-### Map 接口
+### 1.2. Map 接口
 
 Map 的定义如下：
 
@@ -42,13 +72,13 @@ Map 的实现类应该提供 2 个“标准的”构造方法：
 
 实际上，后一个构造方法允许用户复制任意 Map，生成所需类的一个等价 Map。尽管无法强制执行此建议（因为接口不能包含构造方法），但是 JDK 中所有通用的 Map 实现都遵从它。
 
-### Map.Entry 接口
+### 1.3. Map.Entry 接口
 
 `Map.Entry` 一般用于通过迭代器（`Iterator`）访问问 `Map`。
 
 `Map.Entry` 是 Map 中内部的一个接口，`Map.Entry` 代表了 **键值对** 实体，Map 通过 `entrySet()` 获取 `Map.Entry` 集合，从而通过该集合实现对键值对的操作。
 
-### AbstractMap 抽象类
+### 1.4. AbstractMap 抽象类
 
 `AbstractMap` 的定义如下：
 
@@ -62,7 +92,7 @@ public abstract class AbstractMap<K,V> implements Map<K,V> {}
 
 要实现可修改的 `Map`，编程人员必须另外重写此类的 `put` 方法（否则将抛出 `UnsupportedOperationException`），`entrySet().iterator()` 返回的迭代器也必须另外实现其 `remove()` 方法。
 
-### SortedMap 接口
+### 1.5. SortedMap 接口
 
 `SortedMap` 的定义如下：
 
@@ -81,7 +111,7 @@ public interface SortedMap<K,V> extends Map<K,V> { }
 3.  带有一个 `Map` 类型参数的构造方法，它创建一个新的有序 `Map`，其键-值映射关系与参数相同，按照键的自然顺序进行排序。
 4.  带有一个 `SortedMap` 类型参数的构造方法，它创建一个新的有序 `Map`，其键-值映射关系和排序方法与输入的有序 Map 相同。无法保证强制实施此建议，因为接口不能包含构造方法。
 
-### NavigableMap 接口
+### 1.6. NavigableMap 接口
 
 `NavigableMap` 的定义如下：
 
@@ -104,7 +134,7 @@ NavigableMap 分别提供了获取“键”、“键-值对”、“键集”、
   - `navigableKeySet`、`descendingKeySet` 分别获取正序/反序的键集。
 - **获取键-值对的子集**
 
-### Dictionary 抽象类
+### 1.7. Dictionary 抽象类
 
 `Dictionary` 的定义如下：
 
@@ -114,11 +144,11 @@ public abstract class Dictionary<K,V> {}
 
 `Dictionary` 是 JDK 1.0 定义的操作键值对的抽象类，它包括了操作键值对的基本方法。
 
-## 二、HashMap 类
+## 2. HashMap 类
 
 `HashMap` 类是最常用的 `Map`。
 
-### HashMap 要点
+### 2.1. HashMap 要点
 
 从 `HashMap` 的命名，也可以看出：**`HashMap` 以散列方式存储键值对**。
 
@@ -135,7 +165,7 @@ public abstract class Dictionary<K,V> {}
 
 `HashMap` 不是线程安全的。
 
-### HashMap 原理
+### 2.2. HashMap 原理
 
 #### HashMap 数据结构
 
@@ -443,9 +473,9 @@ final Node<K,V>[] resize() {
 }
 ```
 
-## 三、LinkedHashMap 类
+## 3. LinkedHashMap 类
 
-### LinkedHashMap 要点
+### 3.1. LinkedHashMap 要点
 
 **`LinkedHashMap` 通过维护一个保存所有条目（Entry）的双向链表，保证了元素迭代的顺序（即插入顺序）**。
 
@@ -456,7 +486,7 @@ final Node<K,V>[] resize() {
 | 是否有序              | 按照元素插入顺序存储           |
 | 是否线程安全          | 非线程安全                     |
 
-### LinkedHashMap 要点
+### 3.2. LinkedHashMap 要点
 
 #### LinkedHashMap 数据结构
 
@@ -480,9 +510,9 @@ public class LinkedHashMap<K,V>
 
 `LinkedHashMap` 继承了 `HashMap` 的 `put` 方法，本身没有实现 `put` 方法。
 
-## 四、TreeMap 类
+## 4. TreeMap 类
 
-### TreeMap 要点
+### 4.1. TreeMap 要点
 
 `TreeMap` 基于红黑树实现。
 
@@ -490,7 +520,7 @@ public class LinkedHashMap<K,V>
 
 TreeMap 不是线程安全的。
 
-### TreeMap 原理
+### 4.2. TreeMap 原理
 
 #### put 方法
 
@@ -586,7 +616,7 @@ final Entry<K,V> getEntry(Object key) {
 }
 ```
 
-### remove 方法
+### 4.3. remove 方法
 
 ```java
 public V remove(Object key) {
@@ -648,7 +678,7 @@ private void deleteEntry(Entry<K,V> p) {
 }
 ```
 
-### TreeMap 示例
+### 4.4. TreeMap 示例
 
 ```java
 public class TreeMapDemo {
@@ -679,7 +709,7 @@ public class TreeMapDemo {
 }
 ```
 
-## 五、WeakHashMap
+## 5. WeakHashMap
 
 WeakHashMap 的定义如下：
 
@@ -707,21 +737,21 @@ WeakHashMap 的 key 是**弱键**，即是 WeakReference 类型的；ReferenceQu
 
 和 HashMap 一样，WeakHashMap 是不同步的。可以使用 Collections.synchronizedMap 方法来构造同步的 WeakHashMap。
 
-## 六、总结
+## 6. 总结
 
-### Map 简介
+### 6.1. Map 简介
 
 ![img](http://dunwu.test.upcdn.net/snap/20200221162002.png)
 
-### HashMap
+### 6.2. HashMap
 
 ![img](http://dunwu.test.upcdn.net/snap/20200221162111.png)
 
-### 其他 Map
+### 6.3. 其他 Map
 
 ![img](http://dunwu.test.upcdn.net/snap/20200221161913.png)
 
-## 参考资料
+## 7. 参考资料
 
 - [Java-HashMap 工作原理及实现](https://yikun.github.io/2015/04/01/Java-HashMap工作原理及实现)
 - [Map 综述（二）：彻头彻尾理解 LinkedHashMap](https://blog.csdn.net/justloveyou_/article/details/71713781)

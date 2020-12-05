@@ -2,13 +2,26 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-## 一、Queue 简介
+<!-- TOC depthFrom:2 depthTo:3 -->
+
+- [1. Queue 简介](#1-queue-简介)
+  - [1.1. Queue 接口](#11-queue-接口)
+  - [1.2. AbstractQueue 抽象类](#12-abstractqueue-抽象类)
+  - [1.3. Deque 接口](#13-deque-接口)
+- [2. ArrayDeque](#2-arraydeque)
+- [3. LinkedList](#3-linkedlist)
+- [4. PriorityQueue](#4-priorityqueue)
+- [5. 参考资料](#5-参考资料)
+
+<!-- /TOC -->
+
+## 1. Queue 简介
 
 <div align="center">
 <img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/Queue-diagrams.png" />
 </div>
 
-### Queue 接口
+### 1.1. Queue 接口
 
 `Queue` 接口定义如下：
 
@@ -16,7 +29,7 @@
 public interface Queue<E> extends Collection<E> {}
 ```
 
-### AbstractQueue 抽象类
+### 1.2. AbstractQueue 抽象类
 
 **`AbstractQueue` 类提供 `Queue` 接口的核心实现**，以最大限度地减少实现 `Queue` 接口所需的工作。
 
@@ -28,7 +41,7 @@ public abstract class AbstractQueue<E>
     implements Queue<E> {}
 ```
 
-### Deque 接口
+### 1.3. Deque 接口
 
 Deque 接口是 double ended queue 的缩写，即**双端队列**。Deque 继承 Queue 接口，并扩展支持**在队列的两端插入和删除元素**。
 
@@ -39,13 +52,13 @@ Deque 接口是 double ended queue 的缩写，即**双端队列**。Deque 继�
 
 大多数的实现对元素的数量没有限制，但这个接口既支持有容量限制的 deque，也支持没有固定大小限制的。
 
-## 二、ArrayDeque
+## 2. ArrayDeque
 
 `ArrayDeque` 是 `Deque` 的顺序表实现。
 
-`ArrayDeque` 用一个动态数组实现了栈和队列所需的所有操作。 
+`ArrayDeque` 用一个动态数组实现了栈和队列所需的所有操作。
 
-## 三、LinkedList
+## 3. LinkedList
 
 `LinkedList` 是 `Deque` 的链表实现。
 
@@ -84,7 +97,7 @@ public class LinkedListQueueDemo {
 }
 ```
 
-## 四、PriorityQueue
+## 4. PriorityQueue
 
 `PriorityQueue` 类定义如下：
 
@@ -101,6 +114,6 @@ public class PriorityQueue<E> extends AbstractQueue<E>
 - `PriorityQueue` 不接受 null 值元素。
 - `PriorityQueue` 不是线程安全的。
 
-## 参考资料
+## 5. 参考资料
 
 - [解读 Java 并发队列 BlockingQueue](http://www.importnew.com/28053.html)

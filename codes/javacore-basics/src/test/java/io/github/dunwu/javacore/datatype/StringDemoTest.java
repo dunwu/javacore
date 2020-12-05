@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.string;
+package io.github.dunwu.javacore.datatype;
 
 import org.junit.Assert;
 import org.junit.Test;

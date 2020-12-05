@@ -4,9 +4,25 @@
 
 ![img](http://dunwu.test.upcdn.net/snap/20200221175550.png)
 
-## 一、容器简介
+<!-- TOC depthFrom:2 depthTo:3 -->
 
-### 数组与容器
+- [1. 容器简介](#1-容器简介)
+  - [1.1. 数组与容器](#11-数组与容器)
+  - [1.2. 容器框架](#12-容器框架)
+- [2. 容器的基本机制](#2-容器的基本机制)
+  - [2.1. 泛型](#21-泛型)
+  - [2.2. Iterable 和 Iterator](#22-iterable-和-iterator)
+  - [2.3. Comparable 和 Comparator](#23-comparable-和-comparator)
+  - [2.4. Cloneable](#24-cloneable)
+  - [2.5. fail-fast](#25-fail-fast)
+- [3. 容器和线程安全](#3-容器和线程安全)
+- [4. 参考资料](#4-参考资料)
+
+<!-- /TOC -->
+
+## 1. 容器简介
+
+### 1.1. 数组与容器
 
 Java 中常用的存储容器就是数组和容器，二者有以下区别：
 
@@ -19,7 +35,7 @@ Java 中常用的存储容器就是数组和容器，二者有以下区别：
 
 > :bulb: 不了解什么是基本数据类型、引用数据类型、包装类这些概念，可以参考：[Java 基本数据类型](https://github.com/dunwu/javacore/blob/master/docs/basics/java-data-type.md)
 
-### 容器框架
+### 1.2. 容器框架
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/container/java-container-structure.png)
 
@@ -31,11 +47,11 @@ Java 容器框架主要分为 `Collection` 和 `Map` 两种。其中，`Collecti
   - `Queue` - 按照排队规则来确定对象产生的顺序（通常与它们被插入的顺序相同）。
 - `Map` - 一组成对的“键值对”对象，允许你使用键来查找值。
 
-## 二、容器的基本机制
+## 2. 容器的基本机制
 
 > Java 的容器具有一定的共性，它们或全部或部分依赖以下技术。所以，学习以下技术点，对于理解 Java 容器的特性和原理有很大的帮助。
 
-### 泛型
+### 2.1. 泛型
 
 Java 1.5 引入了泛型技术。
 
@@ -59,7 +75,7 @@ list.add(123);
 
 > :bulb: 想深入了解 Java 泛型技术的用法和原理可以参考：[深入理解 Java 泛型](https://github.com/dunwu/javacore/blob/master/docs/basics/java-generic.md)
 
-### Iterable 和 Iterator
+### 2.2. Iterable 和 Iterator
 
 > Iterable 和 Iterator 目的在于遍历访问容器中的元素。
 
@@ -133,7 +149,7 @@ public class IteratorDemo {
 }
 ```
 
-### Comparable 和 Comparator
+### 2.3. Comparable 和 Comparator
 
 `Comparable` 是排序接口。若一个类实现了 `Comparable` 接口，表示该类的实例可以比较，也就意味着支持排序。实现了 `Comparable` 接口的类的对象的列表或数组可以通过 `Collections.sort` 或 `Arrays.sort` 进行自动排序。
 
@@ -178,7 +194,7 @@ public interface Comparator<T> {
 
 在 Java 容器中，一些可以排序的容器，如 `TreeMap`、`TreeSet`，都可以通过传入 `Comparator`，来定义内部元素的排序规则。
 
-### Cloneable
+### 2.4. Cloneable
 
 Java 中 一个类要实现 `clone` 功能 必须实现 `Cloneable` 接口，否则在调用 `clone()` 时会报 `CloneNotSupportedException` 异常。
 
@@ -186,7 +202,7 @@ Java 中所有类都默认继承 `java.lang.Object` 类，在 `java.lang.Object`
 
 如果 Java 类需要深拷贝，需要覆写 `clone()` 方法。
 
-### fail-fast
+### 2.5. fail-fast
 
 #### fail-fast 的要点
 
@@ -267,13 +283,13 @@ fail-fast 有两种解决方案：
 - 在遍历过程中所有涉及到改变容器个数的地方全部加上 `synchronized` 或者直接使用 `Collections.synchronizedXXX` 容器，这样就可以解决。但是不推荐，因为增删造成的同步锁可能会阻塞遍历操作，影响吞吐。
 - 使用并发容器，如：`CopyOnWriterArrayList`。
 
-## 三、容器和线程安全
+## 3. 容器和线程安全
 
 为了在并发环境下安全地使用容器，Java 提供了同步容器和并发容器。
 
 > 同步容器和并发容器详情请参考：[同步容器和并发容器](https://github.com/dunwu/javacore/blob/master/docs/concurrent/5-同步容器和并发容器.md)
 
-## 参考资料
+## 4. 参考资料
 
 - [Java 编程思想（第 4 版）](https://item.jd.com/10058164.html)
 - [由浅入深理解 java 集合(一)——集合框架 Collection、Map](https://www.jianshu.com/p/589d58033841)

@@ -1,4 +1,4 @@
-package io.github.dunwu.javacore.string;
+package io.github.dunwu.javacore.datatype;
 
 /**
  * 字符串常量拼接
@@ -8,7 +8,7 @@ package io.github.dunwu.javacore.string;
  * @author peng.zhang
  * @date 2020/12/1
  */
-public class StringAppendDemo01 {
+public class String拼接 {
 
     public static void main(String[] args) {
         // 本行代码在 class 文件中，会被编译器直接优化为：
