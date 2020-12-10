@@ -102,6 +102,8 @@ File 或者 Socket，通常被认为是比较高层次的抽象，而 Channel �
 
 ## 三、Buffer(缓冲区)
 
+NIO 与传统 I/O 不同，它是基于块（Block）的，它以块为基本单位处理数据。`Buffer` 是一块连续的内存块，是 NIO 读写数据的缓冲。`Buffer` 可以将文件一次性读入内存再做后续处理，而传统的方式是边读文件边处理数据。
+
 **向 `Channel` 读写的数据都必须先置于缓冲区中**。也就是说，不会直接对通道进行读写数据，而是要先经过缓冲区。缓冲区实质上是一个数组，但它不仅仅是一个数组。缓冲区提供了对数据的结构化访问，而且还可以跟踪系统的读/写进程。
 
 BIO 和 NIO 已经很好地集成了，`java.io.*` 已经以 NIO 为基础重新实现了，所以现在它可以利用 NIO 的一些特性。例如，`java.io.*` 包中的一些类包含以块的形式读写数据的方法，这使得即使在面向流的系统中，处理速度也会更快。
@@ -176,18 +178,30 @@ public static void fastCopy(String src, String dist) throws IOException {
 }
 ```
 
+### DirectBuffer
+
+NIO 还提供了一个可以直接访问物理内存的类 `DirectBuffer`。普通的 `Buffer` 分配的是 JVM 堆内存，而 `DirectBuffer` 是直接分配物理内存。
+
+数据要输出到外部设备，必须先从用户空间复制到内核空间，再复制到输出设备，而 `DirectBuffer` 则是直接将步骤简化为从内核空间复制到外部设备，减少了数据拷贝。
+
+这里拓展一点，由于 `DirectBuffer` 申请的是非 JVM 的物理内存，所以创建和销毁的代价很高。`DirectBuffer` 申请的内存并不是直接由 JVM 负责垃圾回收，但在 `DirectBuffer` 包装类被回收时，会通过 Java 引用机制来释放该内存块。
+
 ## 四、Selector(选择器)
 
 NIO 常常被叫做非阻塞 IO，主要是因为 NIO 在网络通信中的非阻塞特性被广泛使用。
 
+`Selector` 是 Java NIO 编程的基础。用于检查一个或多个 NIO `Channel` 的状态是否处于可读、可写。
+
 **NIO 实现了 IO 多路复用中的 Reactor 模型**：
 
-- 一个线程（`Thread`）使用一个**选择器 `Selector` 通过轮询的方式去监听多个通道 `Channel` 上的事件**，从而让一个线程就可以处理多个事件。
+- 一个线程（`Thread`）使用一个**选择器 `Selector` 通过轮询的方式去监听多个通道 `Channel` 上的事件（`accpet`、`read`）**，如果某个 `Channel` 上面发生监听事件，这个 `Channel` 就处于就绪状态，然后进行 I/O 操作。
 - 通过**配置监听的通道 `Channel` 为非阻塞**，那么当 `Channel` 上的 IO 事件还未到达时，就不会进入阻塞状态一直等待，而是继续轮询其它 `Channel`，找到 IO 事件已经到达的 `Channel` 执行。
 
 - 因为创建和切换线程的开销很大，因此使用**一个线程来处理多个事件**而不是一个线程处理一个事件具有更好的性能。
 
 需要注意的是，只有 `SocketChannel` 才能配置为非阻塞，而 `FileChannel` 不能，因为 `FileChannel` 配置非阻塞也没有意义。
+
+> 目前操作系统的 I/O 多路复用机制都使用了 epoll，相比传统的 select 机制，epoll 没有最大连接句柄 1024 的限制。所以 Selector 在理论上可以轮询成千上万的客户端。
 
 ### 创建选择器
 

@@ -2,28 +2,29 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 >
-> ***关键词：`Serializable`、`serialVersionUID`、`transient`、`Externalizable`、`writeObject`、`readObject`***
+> **_关键词：`Serializable`、`serialVersionUID`、`transient`、`Externalizable`、`writeObject`、`readObject`_**
 
 ![img](http://dunwu.test.upcdn.net/snap/20200630204142.png)
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
-- [一、序列化简介](#一序列化简介)
-- [二、序列化和反序列化](#二序列化和反序列化)
-- [三、Serializable 接口](#三serializable-接口)
-  - [serialVersionUID](#serialversionuid)
-  - [默认序列化机制](#默认序列化机制)
-  - [transient](#transient)
-- [四、Externalizable 接口](#四externalizable-接口)
-  - [Externalizable 接口的替代方法](#externalizable-接口的替代方法)
-  - [readResolve() 方法](#readresolve-方法)
-- [五、序列化问题](#五序列化问题)
-- [六、序列化技术选型](#六序列化技术选型)
-- [参考资料](#参考资料)
+- [1. Java 序列化简介](#1-java-序列化简介)
+- [2. Java 序列化和反序列化](#2-java-序列化和反序列化)
+- [3. Serializable 接口](#3-serializable-接口)
+    - [3.1. serialVersionUID](#31-serialversionuid)
+    - [3.2. 默认序列化机制](#32-默认序列化机制)
+    - [3.3. transient](#33-transient)
+- [4. Externalizable 接口](#4-externalizable-接口)
+    - [4.1. Externalizable 接口的替代方法](#41-externalizable-接口的替代方法)
+    - [4.2. readResolve() 方法](#42-readresolve-方法)
+- [5. Java 序列化问题](#5-java-序列化问题)
+- [6. Java 序列化的缺陷](#6-java-序列化的缺陷)
+- [7. 序列化技术选型](#7-序列化技术选型)
+- [8. 参考资料](#8-参考资料)
 
 <!-- /TOC -->
 
-## 一、序列化简介
+## 1. Java 序列化简介
 
 ![img](http://dunwu.test.upcdn.net/snap/1553224129484.png)
 
@@ -36,7 +37,7 @@
 
 > 🔔 注意：使用 Java 对象序列化，在保存对象时，会把其状态保存为一组字节，在未来，再将这些字节组装成对象。必须注意地是，对象序列化保存的是对象的”状态”，即它的成员变量。由此可知，**对象序列化不会关注类中的静态变量**。
 
-## 二、序列化和反序列化
+## 2. Java 序列化和反序列化
 
 Java 通过对象输入输出流来实现序列化和反序列化：
 
@@ -108,7 +109,7 @@ public class SerializeDemo01 {
 // Person{name='Jack', age=30, sex=MALE}
 ```
 
-## 三、Serializable 接口
+## 3. Serializable 接口
 
 **被序列化的类必须属于 Enum、Array 和 Serializable 类型其中的任何一种，否则将抛出 `NotSerializableException` 异常**。这是因为：在序列化操作过程中会对类型进行检查，如果不满足序列化类型要求，就会抛出异常。
 
@@ -128,7 +129,7 @@ Exception in thread "main" java.io.NotSerializableException:
 ...
 ```
 
-### serialVersionUID
+### 3.1. serialVersionUID
 
 请注意 `serialVersionUID` 字段，你可以在 Java 世界的无数类中看到这个字段。
 
@@ -177,7 +178,7 @@ private static final long serialVersionUID = 2L;
 
 综上所述，我们大概可以清楚：**`serialVersionUID` 用于控制序列化版本是否兼容**。若我们认为修改的可序列化类是向后兼容的，则不修改 `serialVersionUID`。
 
-### 默认序列化机制
+### 3.2. 默认序列化机制
 
 如果仅仅只是让某个类实现 `Serializable` 接口，而没有其它任何处理的话，那么就会使用默认序列化机制。
 
@@ -185,7 +186,7 @@ private static final long serialVersionUID = 2L;
 
 > 🔔 注意：这里的父类和引用对象既然要进行序列化，那么它们当然也要满足序列化要求：**被序列化的类必须属于 Enum、Array 和 Serializable 类型其中的任何一种**。
 
-### transient
+### 3.3. transient
 
 在现实应用中，有些时候不能使用默认序列化机制。比如，希望在序列化过程中忽略掉敏感数据，或者简化序列化过程。下面将介绍若干影响序列化的方法。
 
@@ -207,7 +208,7 @@ public class SerializeDemo02 {
 
 从输出结果可以看出，age 字段没有被序列化。
 
-## 四、Externalizable 接口
+## 4. Externalizable 接口
 
 无论是使用 `transient` 关键字，还是使用 `writeObject()` 和 `readObject()` 方法，其实都是基于 `Serializable` 接口的序列化。
 
@@ -288,7 +289,7 @@ public class ExternalizeDemo02 {
 // name: Jack, age: 30, sex: null
 ```
 
-### Externalizable 接口的替代方法
+### 4.1. Externalizable 接口的替代方法
 
 实现 `Externalizable` 接口可以控制序列化和反序列化的细节。它有一个替代方法：实现 `Serializable` 接口，并添加 `writeObject(ObjectOutputStream out)` 与 `readObject(ObjectInputStream in)` 方法。序列化和反序列化过程中会自动回调这两个方法。
 
@@ -321,7 +322,7 @@ public class SerializeDemo03 {
 
 > 🔔 注意：`writeObject()` 与 `readObject()` 都是 `private` 方法，那么它们是如何被调用的呢？毫无疑问，是使用反射。详情可见 `ObjectOutputStream` 中的 `writeSerialData` 方法，以及 `ObjectInputStream` 中的 `readSerialData` 方法。
 
-### readResolve() 方法
+### 4.2. readResolve() 方法
 
 当我们使用 Singleton 模式时，应该是期望某个类的实例应该是唯一的，但如果该类是可序列化的，那么情况可能会略有不同。此时对第 2 节使用的 Person 类进行修改，使其实现 Singleton 模式，如下所示：
 
@@ -417,7 +418,7 @@ public class SerializeDemo05 {
         //     in.defaultReadObject();
         //     age = in.readInt();
         // }
-        
+
         // 添加此方法
         private Object readResolve() {
             return instatnce;
@@ -432,7 +433,7 @@ public class SerializeDemo05 {
 // true
 ```
 
-## 五、序列化问题
+## 5. Java 序列化问题
 
 Java 的序列化能保证对象状态的持久保存，但是遇到一些对象结构复杂的情况还是难以处理，这里归纳一下：
 
@@ -442,16 +443,19 @@ Java 的序列化能保证对象状态的持久保存，但是遇到一些对象
 - 反序列化时，如果对象的属性有修改或删减，则修改的部分属性会丢失，但不会报错。
 - 反序列化时，如果 `serialVersionUID` 被修改，则反序列化会失败。
 
-## 六、序列化技术选型
+## 6. Java 序列化的缺陷
 
-Java 官方的序列化存在许多问题，因此，建议使用第三方序列化工具来替代。
+- **无法跨语言**：Java 序列化目前只适用基于 Java 语言实现的框架，其它语言大部分都没有使用 Java 的序列化框架，也没有实现 Java 序列化这套协议。因此，如果是两个基于不同语言编写的应用程序相互通信，则无法实现两个应用服务之间传输对象的序列化与反序列化。
+- **容易被攻击**：对象是通过在 `ObjectInputStream` 上调用 `readObject()` 方法进行反序列化的，它可以将类路径上几乎所有实现了 `Serializable` 接口的对象都实例化。这意味着，在反序列化字节流的过程中，该方法可以执行任意类型的代码，这是非常危险的。对于需要长时间进行反序列化的对象，不需要执行任何代码，也可以发起一次攻击。攻击者可以创建循环对象链，然后将序列化后的对象传输到程序中反序列化，这种情况会导致 `hashCode` 方法被调用次数呈次方爆发式增长, 从而引发栈溢出异常。例如下面这个案例就可以很好地说明。
+- **序列化后的流太大**：Java 序列化中使用了 `ObjectOutputStream` 来实现对象转二进制编码，编码后的数组很大，非常影响存储和传输效率。
+- **序列化性能太差**：Java 的序列化耗时比较大。序列化的速度也是体现序列化性能的重要指标，如果序列化的速度慢，就会影响网络通信的效率，从而增加系统的响应时间。
+- **序列化编程限制**：
+  - Java 官方的序列化一定**需要实现 `Serializable` 接口**。
+  - Java 官方的序列化**需要关注 `serialVersionUID`**。
 
-Java 官方的序列化主要体现在以下方面：
+## 7. 序列化技术选型
 
-- Java 官方的序列**无法跨语言**使用。
-- Java 官方的序列化**性能不高**，序列化后的数据相对于一些优秀的序列化的工具，还是要大不少，这大大影响存储和传输的效率。
-- Java 官方的序列化一定**需要实现 `Serializable` 接口**。
-- Java 官方的序列化**需要关注 `serialVersionUID`**。
+通过上一章节——Java 序列化的缺陷，我们了解到，Java 序列化方式存在许多缺陷。因此，建议使用第三方序列化工具来替代。
 
 当然我们还有更加优秀的一些序列化和反序列化的工具，根据不同的使用场景可以自行选择！
 
@@ -459,12 +463,13 @@ Java 官方的序列化主要体现在以下方面：
 - [hessian](http://hessian.caucho.com/doc/hessian-overview.xtp) - 适用于**对开发体验敏感，性能有要求**。
 - [jackson](https://github.com/FasterXML/jackson)、[gson](https://github.com/google/gson)、[fastjson](https://github.com/alibaba/fastjson) - 适用于对序列化后的数据要求有**良好的可读性**（转为 json 、xml 形式）。
 
-## 参考资料
+## 8. 参考资料
 
 - [Java 编程思想](https://book.douban.com/subject/2130190/)
 - [Java 核心技术（卷 1）](https://book.douban.com/subject/3146174/)
+- [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
+- [Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
 - http://www.hollischuang.com/archives/1140
 - http://www.codenuclear.com/serialization-deserialization-java/
 - http://www.blogjava.net/jiangshachina/archive/2012/02/13/369898.html
-- [Java 序列化的高级认识](https://www.ibm.com/developerworks/cn/java/j-lo-serial/index.html)
 - https://agapple.iteye.com/blog/859052

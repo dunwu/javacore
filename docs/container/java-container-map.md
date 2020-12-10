@@ -207,7 +207,7 @@ public HashMap(Map<? extends K, ? extends V> m) // 默认加载因子0.75
 
 put 方法大致的思路为：
 
-- 对 key 的 hashCode() 做 hash 计算，然后根据 hash 值再计算桶的 index;
+- 对 key 的 `hashCode()` 做 hash 计算，然后根据 hash 值再计算 Node 的存储位置;
 - 如果没有哈希碰撞，直接放到桶里；如果有哈希碰撞，以链表的形式存在桶后。
 - 如果哈希碰撞导致链表过长(大于等于 `TREEIFY_THRESHOLD`，数值为 8)，就把链表转换成红黑树；
 - 如果节点已经存在就替换旧值
@@ -218,6 +218,12 @@ put 方法大致的思路为：
 ```java
 public V put(K key, V value) {
     return putVal(hash(key), key, value, false, true);
+}
+
+// hashcode 无符号位移 16 位
+static final int hash(Object key) {
+    int h;
+    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
 }
 
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
@@ -269,6 +275,12 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
     return null;
 }
 ```
+
+为什么计算 hash 使用 hashcode 无符号位移 16 位。
+
+假设要添加两个对象 a 和 b，如果数组长度是 16，这时对象 a 和 b 通过公式 (n - 1) & hash 运算，也就是 (16-1)＆a.hashCode 和 (16-1)＆b.hashCode，15 的二进制为 0000000000000000000000000001111，假设对象 A 的 hashCode 为 1000010001110001000001111000000，对象 B 的 hashCode 为 0111011100111000101000010100000，你会发现上述与运算结果都是 0。这样的哈希结果就太让人失望了，很明显不是一个好的哈希算法。
+
+但如果我们将 hashCode 值右移 16 位（h >>> 16 代表无符号右移 16 位），也就是取 int 类型的一半，刚好可以将该二进制数对半切开，并且使用位异或运算（如果两个数对应的位置相反，则结果为 1，反之为 0），这样的话，就能避免上面的情况发生。这就是 hash() 方法的具体实现方式。**简而言之，就是尽量打乱 hashCode 真正参与运算的低 16 位。**
 
 #### get 方法的实现
 
