@@ -7,30 +7,30 @@
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [1. 线程简介](#1-线程简介)
-  - [1.1. 什么是进程](#11-什么是进程)
-  - [1.2. 什么是线程](#12-什么是线程)
-  - [1.3. 进程和线程的区别](#13-进程和线程的区别)
+    - [1.1. 什么是进程](#11-什么是进程)
+    - [1.2. 什么是线程](#12-什么是线程)
+    - [1.3. 进程和线程的区别](#13-进程和线程的区别)
 - [2. 创建线程](#2-创建线程)
-  - [2.1. Thread](#21-thread)
-  - [2.2. Runnable](#22-runnable)
-  - [2.3. Callable、Future、FutureTask](#23-callablefuturefuturetask)
+    - [2.1. Thread](#21-thread)
+    - [2.2. Runnable](#22-runnable)
+    - [2.3. Callable、Future、FutureTask](#23-callablefuturefuturetask)
 - [3. 线程基本用法](#3-线程基本用法)
-  - [3.1. 线程休眠](#31-线程休眠)
-  - [3.2. 线程礼让](#32-线程礼让)
-  - [3.3. 终止线程](#33-终止线程)
-  - [3.4. 守护线程](#34-守护线程)
+    - [3.1. 线程休眠](#31-线程休眠)
+    - [3.2. 线程礼让](#32-线程礼让)
+    - [3.3. 终止线程](#33-终止线程)
+    - [3.4. 守护线程](#34-守护线程)
 - [4. 线程通信](#4-线程通信)
-  - [4.1. wait/notify/notifyAll](#41-waitnotifynotifyall)
-  - [4.2. join](#42-join)
-  - [4.3. 管道](#43-管道)
-- [5. 线程状态](#5-线程状态)
+    - [4.1. wait/notify/notifyAll](#41-waitnotifynotifyall)
+    - [4.2. join](#42-join)
+    - [4.3. 管道](#43-管道)
+- [5. 线程生命周期](#5-线程生命周期)
 - [6. 线程常见问题](#6-线程常见问题)
-  - [6.1. sleep、yield、join 方法有什么区别](#61-sleepyieldjoin-方法有什么区别)
-  - [6.2. 为什么 sleep 和 yield 方法是静态的](#62-为什么-sleep-和-yield-方法是静态的)
-  - [6.3. Java 线程是否按照线程优先级严格执行](#63-java-线程是否按照线程优先级严格执行)
-  - [6.4. 一个线程两次调用 start()方法会怎样](#64-一个线程两次调用-start方法会怎样)
-  - [6.5. `start` 和 `run` 方法有什么区别](#65-start-和-run-方法有什么区别)
-  - [6.6. 可以直接调用 `Thread` 类的 `run` 方法么](#66-可以直接调用-thread-类的-run-方法么)
+    - [6.1. sleep、yield、join 方法有什么区别](#61-sleepyieldjoin-方法有什么区别)
+    - [6.2. 为什么 sleep 和 yield 方法是静态的](#62-为什么-sleep-和-yield-方法是静态的)
+    - [6.3. Java 线程是否按照线程优先级严格执行](#63-java-线程是否按照线程优先级严格执行)
+    - [6.4. 一个线程两次调用 start()方法会怎样](#64-一个线程两次调用-start方法会怎样)
+    - [6.5. `start` 和 `run` 方法有什么区别](#65-start-和-run-方法有什么区别)
+    - [6.6. 可以直接调用 `Thread` 类的 `run` 方法么](#66-可以直接调用-thread-类的-run-方法么)
 - [7. 参考资料](#7-参考资料)
 
 <!-- /TOC -->
@@ -715,7 +715,7 @@ public class Piped {
 }
 ```
 
-## 5. 线程状态
+## 5. 线程生命周期
 
 ![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread_1.png)
 

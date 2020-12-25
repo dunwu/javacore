@@ -43,7 +43,7 @@
 
 同步容器的同步原理就是在其 `get`、`set`、`size` 等主要方法上用 `synchronized` 修饰。 **`synchronized` 可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块**。
 
-> 想详细了解 `synchronized` 用法和原理可以参考：[Java 并发核心机制](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md)
+> 想详细了解 `synchronized` 用法和原理可以参考：[Java 并发核心机制](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java并发核心机制.md)
 
 #### 性能问题
 
@@ -435,7 +435,7 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 
 #### ConcurrentHashMap 的实战
 
-> 示例摘自：[Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
+> 示例摘自：[《Java 业务开发常见错误 100 例》](https://time.geekbang.org/column/intro/100047701)
 
 ##### ConcurrentHashMap 错误示例
 

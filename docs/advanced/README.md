@@ -25,16 +25,15 @@
   - [Runoob Java 教程](https://www.runoob.com/java/java-tutorial.html)
   - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)
   - [Java](https://github.com/TheAlgorithms/Java)
-  - [Java 核心技术面试精讲](https://time.geekbang.org/column/intro/82)
-  - [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
-  - [Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
+  - [《Java 核心技术面试精讲》](https://time.geekbang.org/column/intro/82)
+  - [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
+  - [《Java 业务开发常见错误 100 例》](https://time.geekbang.org/column/intro/100047701)
   - [深入拆解 Java 虚拟机](https://time.geekbang.org/column/intro/100010301)
-  - [Java 并发编程实战](https://time.geekbang.org/column/intro/100023901)
+  - [《Java 并发编程实战》](https://time.geekbang.org/column/intro/100023901)
 - **面试**
   - [CS-Notes](https://github.com/CyC2018/CS-Notes)
   - [JavaGuide](https://github.com/Snailclimb/JavaGuide)
   - [advanced-java](https://github.com/doocs/advanced-java)
-
 
 ## 🚪 传送
 

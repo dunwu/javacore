@@ -707,6 +707,6 @@ try {
 
 - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
 - [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
-- [Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
+- [《Java 业务开发常见错误 100 例》](https://time.geekbang.org/column/intro/100047701)
 - [Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
 - [深入剖析 Java 中的装箱和拆箱](https://www.cnblogs.com/dolphin0520/p/3780005.html)

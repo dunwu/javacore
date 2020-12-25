@@ -366,7 +366,7 @@ Java 的每个对象中都有一个锁(monitor，也可以成为监视器) 并�
 
 ### 并发机制的底层实现
 
-> 👉 参考阅读：[Java 并发核心机制](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md)
+> 👉 参考阅读：[Java 并发核心机制](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java并发核心机制.md)
 
 #### ⭐⭐⭐ `synchronized`
 
@@ -529,7 +529,7 @@ ThreadLocalMap 的 `Entry` 继承了 `WeakReference`，所以它的 key （`Thre
 
 ### 同步容器和并发容器
 
-> 👉 参考阅读：[Java 并发容器](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-container.md)
+> 👉 参考阅读：[Java 并发容器](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java并发和容器.md)
 
 #### ⭐ 同步容器
 
@@ -610,7 +610,7 @@ CopyOnWrite 字面意思为写入时复制。CopyOnWriteArrayList 是线程安�
 
 ### 并发锁
 
-> 👉 参考阅读：[Java 并发锁](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-lock.md)
+> 👉 参考阅读：[Java 并发锁](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java锁.md)
 
 #### ⭐⭐ 锁类型
 
@@ -784,7 +784,7 @@ AQS 中使用 `releaseShared(int arg)` 方法释放共享锁。
 
 ### 原子变量类
 
-> 👉 参考阅读：[Java 原子类](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-atomic-class.md)
+> 👉 参考阅读：[Java 原子类](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java原子类.md)
 
 #### ⭐ 原子类简介
 
@@ -828,7 +828,7 @@ AQS 中使用 `releaseShared(int arg)` 方法释放共享锁。
 
 ### 并发工具类
 
-> 👉 参考阅读：[Java 并发工具类](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-tools.md)
+> 👉 参考阅读：[Java 并发工具类](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java并发工具类.md)
 
 #### ⭐ CountDownLatch
 
@@ -889,7 +889,7 @@ AQS 中使用 `releaseShared(int arg)` 方法释放共享锁。
 
 ### 线程池
 
-> 👉 参考阅读：[Java 线程池](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-thread-pool.md)
+> 👉 参考阅读：[Java 线程池](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java线程池.md)
 
 #### ⭐⭐ ThreadPoolExecutor
 

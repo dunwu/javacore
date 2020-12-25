@@ -8,9 +8,9 @@
 
 - [1. String 的不可变性](#1-string-的不可变性)
 - [2. String 的性能考量](#2-string-的性能考量)
-    - [2.1. 字符串拼接](#21-字符串拼接)
-    - [2.2. 字符串分割](#22-字符串分割)
-    - [2.3. String.intern](#23-stringintern)
+  - [2.1. 字符串拼接](#21-字符串拼接)
+  - [2.2. 字符串分割](#22-字符串分割)
+  - [2.3. String.intern](#23-stringintern)
 - [3. String、StringBuffer、StringBuilder 有什么区别](#3-stringstringbufferstringbuilder-有什么区别)
 - [4. 参考资料](#4-参考资料)
 
@@ -129,7 +129,7 @@ sharedLocation.setRegion(messageInfo.getCountryCode().intern());
 
 - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
 - [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
-- [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
-- [Java 核心技术面试精讲](https://time.geekbang.org/column/intro/82)
+- [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
+- [《Java 核心技术面试精讲》](https://time.geekbang.org/column/intro/82)
 - [Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)
 - [深入剖析 Java 中的装箱和拆箱](https://www.cnblogs.com/dolphin0520/p/3780005.html)

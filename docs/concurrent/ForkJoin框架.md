@@ -5,7 +5,7 @@
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [1. CompletableFuture](#1-completablefuture)
-  - [1.1. runAsync 和 supplyAsync 方法](#11-runasync-和-supplyasync方法)
+  - [1.1. runAsync 和 supplyAsync 方法](#11-runasync-和-supplyasync-方法)
 - [2. CompletionStage](#2-completionstage)
   - [2.1. 串行关系](#21-串行关系)
   - [2.2. 描述 AND 汇聚关系](#22-描述-and-汇聚关系)
@@ -157,5 +157,5 @@ ForkJoinPool 中的任务队列采用的是双端队列，工作线程正常获�
 
 - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
 - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
-- [Java 并发编程实战](https://time.geekbang.org/column/intro/100023901)
+- [《Java 并发编程实战》](https://time.geekbang.org/column/intro/100023901)
 - [CompletableFuture 使用详解](https://www.jianshu.com/p/6bac52527ca4)

@@ -404,6 +404,6 @@ vmstat 是一款指定采样周期和次数的功能性监测工具，我们可�
 
 ## 参考资料
 
-- [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
+- [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
 - [JAVA 线上故障诊断全套路](https://fredal.xin/java-error-check)
 - [从实际案例聊聊 Java 应用的 GC 优化](https://tech.meituan.com/2017/12/29/jvm-optimize.html)

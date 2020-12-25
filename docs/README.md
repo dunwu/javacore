@@ -59,15 +59,15 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ![img](http://dunwu.test.upcdn.net/snap/20200221175827.png)
 
-- [Java 并发简介](concurrent/java-concurrent-introduction.md) - 关键词：`进程`、`线程`
-- [Java 线程基础](concurrent/java-thread.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`
-- [Java 并发核心机制](concurrent/java-concurrent-basic-mechanism.md) - 关键词：`synchronized`、`volatile`、`CAS`、`ThreadLocal`
-- [Java 并发锁](concurrent/java-lock.md) - 关键词：`AQS`、`ReentrantLock`、`ReentrantReadWriteLock`、`Condition`
-- [Java 原子类](concurrent/java-atomic-class.md) - 关键词：`CAS`、`Atomic`
-- [Java 并发容器](concurrent/java-concurrent-container.md) - 关键词：`ConcurrentHashMap`、`CopyOnWriteArrayList`
-- [Java 线程池](concurrent/java-thread-pool.md) - 关键词：`Executor`、`ExecutorService`、`ThreadPoolExecutor`、`Executors`
-- [Java 并发工具类](concurrent/java-concurrent-tools.md) - 关键词：`CountDownLatch`、`CyclicBarrier`、`Semaphore`
-- [Java 内存模型](concurrent/java-memory-model.md) - 关键词：`JMM`、`原子性`、`可见性`、`有序性`、`Happens-Before`
+- [Java 并发简介](concurrent/Java并发简介.md) - 关键词：`进程`、`线程`
+- [Java 线程基础](concurrent/Java线程基础.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`
+- [Java 并发核心机制](concurrent/Java并发核心机制.md) - 关键词：`synchronized`、`volatile`、`CAS`、`ThreadLocal`
+- [Java 并发锁](concurrent/Java锁.md) - 关键词：`AQS`、`ReentrantLock`、`ReentrantReadWriteLock`、`Condition`
+- [Java 原子类](concurrent/Java原子类.md) - 关键词：`CAS`、`Atomic`
+- [Java 并发容器](concurrent/Java并发和容器.md) - 关键词：`ConcurrentHashMap`、`CopyOnWriteArrayList`
+- [Java 线程池](concurrent/Java线程池.md) - 关键词：`Executor`、`ExecutorService`、`ThreadPoolExecutor`、`Executors`
+- [Java 并发工具类](concurrent/Java并发工具类.md) - 关键词：`CountDownLatch`、`CyclicBarrier`、`Semaphore`
+- [Java 内存模型](concurrent/Java内存模型.md) - 关键词：`JMM`、`原子性`、`可见性`、`有序性`、`Happens-Before`
 
 ### [Java IO](io)
 
@@ -119,11 +119,11 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
   - [Runoob Java 教程](https://www.runoob.com/java/java-tutorial.html)
   - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)
   - [Java](https://github.com/TheAlgorithms/Java)
-  - [Java 核心技术面试精讲](https://time.geekbang.org/column/intro/82)
-  - [Java 性能调优实战](https://time.geekbang.org/column/intro/100028001)
-  - [Java 业务开发常见错误 100 例](https://time.geekbang.org/column/intro/100047701)
+  - [《Java 核心技术面试精讲》](https://time.geekbang.org/column/intro/82)
+  - [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
+  - [《Java 业务开发常见错误 100 例》](https://time.geekbang.org/column/intro/100047701)
   - [深入拆解 Java 虚拟机](https://time.geekbang.org/column/intro/100010301)
-  - [Java 并发编程实战](https://time.geekbang.org/column/intro/100023901)
+  - [《Java 并发编程实战》](https://time.geekbang.org/column/intro/100023901)
 - **面试**
   - [CS-Notes](https://github.com/CyC2018/CS-Notes)
   - [JavaGuide](https://github.com/Snailclimb/JavaGuide)

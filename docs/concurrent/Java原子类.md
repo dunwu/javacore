@@ -8,6 +8,8 @@
   - [1.1. 为何需要原子变量类](#11-为何需要原子变量类)
   - [1.2. 原子变量类的作用](#12-原子变量类的作用)
 - [2. 基本类型](#2-基本类型)
+  - [2.1. **`AtomicInteger` 用法**](#21-atomicinteger-用法)
+  - [2.2. **`AtomicInteger` 实现**](#22-atomicinteger-实现)
 - [3. 引用类型](#3-引用类型)
 - [4. 数组类型](#4-数组类型)
 - [5. 属性更新器类型](#5-属性更新器类型)
@@ -53,7 +55,7 @@
   - `AtomicLongFieldUpdater` - 长整型字段的原子更新器。
   - `AtomicReferenceFieldUpdater` - 原子更新引用类型里的字段。
 
-> 这里不对 CAS、volatile、互斥同步做深入探讨。如果想了解更多细节，不妨参考：[Java 并发核心机制](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md)
+> 这里不对 CAS、volatile、互斥同步做深入探讨。如果想了解更多细节，不妨参考：[Java 并发核心机制](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java并发核心机制.md)
 
 ## 2. 基本类型
 
@@ -71,7 +73,7 @@
 >
 > 由于 `AtomicBoolean`、`AtomicInteger`、`AtomicLong` 实现方式、使用方式都相近，所以本文仅针对 `AtomicInteger` 进行介绍。
 
-### **`AtomicInteger` 用法**
+### 2.1. **`AtomicInteger` 用法**
 
 ```java
 public final int get() // 获取当前值
@@ -105,7 +107,7 @@ public class AtomicIntegerDemo {
 }
 ```
 
-### **`AtomicInteger` 实现**
+### 2.2. **`AtomicInteger` 实现**
 
 阅读 `AtomicInteger` 源码，可以看到如下定义：
 
@@ -208,7 +210,7 @@ public class AtomicReferenceDemo2 {
 }
 ```
 
-原子类的实现基于 CAS 机制，而 CAS 存在 ABA 问题（不了解 ABA 问题，可以参考：[Java 并发基础机制 - CAS 的问题](https://github.com/dunwu/javacore/blob/master/docs/concurrent/java-concurrent-basic-mechanism.md#cas-%E7%9A%84%E9%97%AE%E9%A2%98)）。正是为了解决 ABA 问题，才有了 `AtomicMarkableReference` 和 `AtomicStampedReference`。
+原子类的实现基于 CAS 机制，而 CAS 存在 ABA 问题（不了解 ABA 问题，可以参考：[Java 并发基础机制 - CAS 的问题](https://github.com/dunwu/javacore/blob/master/docs/concurrent/Java并发核心机制.md#cas-%E7%9A%84%E9%97%AE%E9%A2%98)）。正是为了解决 ABA 问题，才有了 `AtomicMarkableReference` 和 `AtomicStampedReference`。
 
 `AtomicMarkableReference` 使用一个布尔值作为标记，修改时在 true / false 之间切换。这种策略不能根本上解决 ABA 问题，但是可以降低 ABA 发生的几率。常用于缓存或者状态描述这样的场景。
 
