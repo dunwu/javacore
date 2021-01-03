@@ -361,7 +361,9 @@ public class ThreadYieldDemo {
 
 > **`Thread` 中的 `stop` 方法有缺陷，已废弃**。
 >
-> 使用 `Thread.stop` 停止线程会导致它解锁所有已锁定的监视器（由于未经检查的 `ThreadDeath` 异常会在堆栈中传播，这是自然的结果）。 如果先前由这些监视器保护的任何对象处于不一致状态，则损坏的对象将对其他线程可见，从而可能导致任意行为。`Thread.stop` 的许多用法应由仅修改某些变量以指示目标线程应停止运行的代码代替。 目标线程应定期检查此变量，如果该变量指示要停止运行，则应按有序方式从其运行方法返回。如果目标线程等待很长时间（例如，在条件变量上），则应使用中断方法来中断等待。
+> 使用 `Thread.stop` 停止线程会导致它解锁所有已锁定的监视器（由于未经检查的 `ThreadDeath` 异常会在堆栈中传播，这是自然的结果）。 如果先前由这些监视器保护的任何对象处于不一致状态，则损坏的对象将对其他线程可见，从而可能导致任意行为。
+>
+> stop() 方法会真的杀死线程，不给线程喘息的机会，如果线程持有 ReentrantLock 锁，被 stop() 的线程并不会自动调用 ReentrantLock 的 unlock() 去释放锁，那其他线程就再也没机会获得 ReentrantLock 锁，这实在是太危险了。所以该方法就不建议使用了，类似的方法还有 suspend() 和 resume() 方法，这两个方法同样也都不建议使用了，所以这里也就不多介绍了。`Thread.stop` 的许多用法应由仅修改某些变量以指示目标线程应停止运行的代码代替。 目标线程应定期检查此变量，如果该变量指示要停止运行，则应按有序方式从其运行方法返回。如果目标线程等待很长时间（例如，在条件变量上），则应使用中断方法来中断等待。
 
 当一个线程运行时，另一个线程可以直接通过 `interrupt` 方法中断其运行状态。
 
@@ -407,7 +409,7 @@ public class ThreadInterruptDemo {
 - 定义 `volatile` 标志位，在 `run` 方法中使用标志位控制线程终止
 - 使用 `interrupt` 方法和 `Thread.interrupted` 方法配合使用来控制线程终止
 
-示例：使用 `volatile` 标志位控制线程终止
+【示例】使用 `volatile` 标志位控制线程终止
 
 ```java
 public class ThreadStopDemo2 {
@@ -447,7 +449,7 @@ public class ThreadStopDemo2 {
 }
 ```
 
-示例：使用 `interrupt` 方法和 `Thread.interrupted` 方法配合使用来控制线程终止
+【示例】使用 `interrupt` 方法和 `Thread.interrupted` 方法配合使用来控制线程终止
 
 ```java
 public class ThreadStopDemo3 {
@@ -717,7 +719,7 @@ public class Piped {
 
 ## 5. 线程生命周期
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/java-thread_1.png)
+![](https://raw.githubusercontent.com/dunwu/images/dev/snap/20210102103928.png)
 
 `java.lang.Thread.State` 中定义了 **6** 种不同的线程状态，在给定的一个时刻，线程只能处于其中的一个状态。
 
@@ -727,27 +729,27 @@ public class Piped {
 
 - **就绪（Runnable）** - 已经调用了 `start` 方法的线程处于此状态。此状态意味着：**线程已经在 JVM 中运行**。但是在操作系统层面，它可能处于运行状态，也可能等待资源调度（例如处理器资源），资源调度完成就进入运行状态。所以该状态的可运行是指可以被运行，具体有没有运行要看底层操作系统的资源调度。
 
-- **阻塞（Blocked）** - 表示线程在等待 Monitor lock，从而进入 `synchronized` 函数或者代码块，但是其它线程已经占用了该 Monitor lock，所以处于阻塞状态。要结束该状态进入 `Runnable`，从而需要其他线程释放 Monitor lock。此状态意味着：**线程处于被阻塞状态**。
+- **阻塞（Blocked）** - 此状态意味着：**线程处于被阻塞状态**。表示线程在等待 `synchronized` 的隐式锁（Monitor lock）。`synchronized` 修饰的方法、代码块同一时刻只允许一个线程执行，其他线程只能等待，即处于阻塞状态。当占用 `synchronized` 隐式锁的线程释放锁，并且等待的线程获得 `synchronized` 隐式锁时，就又会从 `BLOCKED` 转换到 `RUNNABLE` 状态。
 
-- **等待（Waiting）** - 此状态意味着：**线程等待被其他线程显式地唤醒**。 阻塞和等待的区别在于，阻塞是被动的，它是在等待获取 Monitor lock。而等待是主动的，通过调用 `Object.wait` 等方法进入。
+- **等待（Waiting）** - 此状态意味着：**线程无限期等待，直到被其他线程显式地唤醒**。 阻塞和等待的区别在于，阻塞是被动的，它是在等待获取 `synchronized` 的隐式锁。而等待是主动的，通过调用 `Object.wait` 等方法进入。
 
-  | 进入方法                                   | 退出方法                             |
-  | ------------------------------------------ | ------------------------------------ |
-  | 没有设置 Timeout 参数的 `Object.wait` 方法 | `Object.notify` / `Object.notifyAll` |
-  | 没有设置 Timeout 参数的 `Thread.join` 方法 | 被调用的线程执行完毕                 |
-  | `LockSupport.park` 方法                    | `LockSupport.unpark`                 |
+  | 进入方法                                                     | 退出方法                             |
+  | ------------------------------------------------------------ | ------------------------------------ |
+  | 没有设置 Timeout 参数的 `Object.wait` 方法                   | `Object.notify` / `Object.notifyAll` |
+  | 没有设置 Timeout 参数的 `Thread.join` 方法                   | 被调用的线程执行完毕                 |
+  | `LockSupport.park` 方法（Java 并发包中的锁，都是基于它实现的） | `LockSupport.unpark`                 |
 
 - **定时等待（Timed waiting）** - 此状态意味着：**无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒**。
 
-  | 进入方法                                 | 退出方法                                        |
-  | ---------------------------------------- | ----------------------------------------------- |
-  | `Thread.sleep` 方法                      | 时间结束                                        |
-  | 设置了 Timeout 参数的 `Object.wait` 方法 | 时间结束 / `Object.notify` / `Object.notifyAll` |
-  | 设置了 Timeout 参数的 `Thread.join` 方法 | 时间结束 / 被调用的线程执行完毕                 |
-  | `LockSupport.parkNanos` 方法             | `LockSupport.unpark`                            |
-  | `LockSupport.parkUntil` 方法             | `LockSupport.unpark`                            |
+  | 进入方法                                                     | 退出方法                                        |
+  | ------------------------------------------------------------ | ----------------------------------------------- |
+  | `Thread.sleep` 方法                                          | 时间结束                                        |
+  | 获得 `synchronized` 隐式锁的线程，调用设置了 Timeout 参数的 `Object.wait` 方法 | 时间结束 / `Object.notify` / `Object.notifyAll` |
+  | 设置了 Timeout 参数的 `Thread.join` 方法                     | 时间结束 / 被调用的线程执行完毕                 |
+  | `LockSupport.parkNanos` 方法                                 | `LockSupport.unpark`                            |
+  | `LockSupport.parkUntil` 方法                                 | `LockSupport.unpark`                            |
 
-- **终止(Terminated)** - 线程 `run` 方法执行结束，或者因异常退出了 `run` 方法。此状态意味着：线程结束了生命周期。
+- **终止(Terminated)** - 线程执行完 `run` 方法，或者因异常退出了 `run` 方法。此状态意味着：线程结束了生命周期。
 
 ## 6. 线程常见问题
 

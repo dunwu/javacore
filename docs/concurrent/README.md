@@ -6,7 +6,7 @@
 
 ## 📖 内容
 
-### [Java 并发简介](concurrent/Java并发简介.md)
+### [Java 并发简介](Java并发简介.md)
 
 > **关键词：`进程`、`线程`、`安全性`、`活跃性`、`性能`、`死锁`、`饥饿`、`上下文切换`**
 
@@ -36,7 +36,7 @@
 
 > **关键词：`ConcurrentHashMap`、`CopyOnWriteArrayList`**
 
-### [Java 线程池](concurrent/Java线程池.md)
+### [Java 线程池](Java线程池.md)
 
 > **关键词：`Executor`、`ExecutorService`、`ThreadPoolExecutor`、`Executors`**
 
