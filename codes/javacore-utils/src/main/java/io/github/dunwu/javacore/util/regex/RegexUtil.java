@@ -87,15 +87,12 @@ public class RegexUtil {
      * 判断content是否匹配pattern的正则表达式
      */
     public static boolean checkMatches(String regex, String content) {
-        Pattern p = Pattern.compile(regex);
+        return checkMatches(Pattern.compile(regex), content);
+    }
+
+    public static boolean checkMatches(Pattern p, String content) {
         Matcher m = p.matcher(content);
-        boolean flag = m.matches();
-        if (flag) {
-            System.out.println(content + "\t匹配正则表达式： " + regex);
-        } else {
-            System.out.println(content + "\t不匹配正则表达式： " + regex);
-        }
-        return flag;
+        return m.matches();
     }
 
     /**

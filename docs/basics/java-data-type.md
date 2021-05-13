@@ -2,7 +2,7 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-![img](http://dunwu.test.upcdn.net/snap/1553754196283.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1553754196283.png)
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 

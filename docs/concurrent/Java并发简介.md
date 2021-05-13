@@ -6,7 +6,7 @@
 >
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-![img](http://dunwu.test.upcdn.net/snap/20200701113445.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200701113445.png)
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -89,7 +89,7 @@
 - 进程是一个实体，拥有独立的资源；而同一个进程中的多个线程共享进程的资源。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/processes-vs-threads.jpg">
+  <img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/concurrent/processes-vs-threads.jpg">
 </p>
 
 JVM 在单个进程中运行，JVM 中的线程共享属于该进程的堆。这就是为什么几个线程可以访问同一个对象。线程共享堆并拥有自己的堆栈空间。这是一个线程如何调用一个方法以及它的局部变量是如何保持线程安全的。但是堆不是线程安全的并且为了线程安全必须进行同步。
@@ -112,7 +112,7 @@ Java 采用的是管程技术，synchronized 关键字及 wait()、notify()、no
 
 木桶短板理论告诉我们：一只木桶能装多少水，取决于最短的那块木板。同理，程序整体性能取决于最慢的操作（即 I/O 操作），所以单方面提高 CPU、内存的性能是无效的。
 
-![](http://dunwu.test.upcdn.net/snap/20201225170052.jpg)
+![](https://raw.githubusercontent.com/dunwu/images/dev/snap/20201225170052.jpg)
 
 为了合理利用 CPU 的高性能，平衡这三者的速度差异，计算机体系机构、操作系统、编译程序都做出了贡献，主要体现为：
 
@@ -210,11 +210,11 @@ while(server is active) {
 
 在单核时代，所有的线程都是在一颗 CPU 上执行，CPU 缓存与内存的数据一致性容易解决。因为所有线程都是操作同一个 CPU 的缓存，一个线程对缓存的写，对另外一个线程来说一定是可见的。例如在下面的图中，线程 A 和线程 B 都是操作同一个 CPU 里面的缓存，所以线程 A 更新了变量 V 的值，那么线程 B 之后再访问变量 V，得到的一定是 V 的最新值（线程 A 写过的值）。
 
-![img](http://dunwu.test.upcdn.net/snap/20200701110313.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200701110313.png)
 
 多核时代，每颗 CPU 都有自己的缓存，这时 CPU 缓存与内存的数据一致性就没那么容易解决了，当多个线程在不同的 CPU 上执行时，这些线程操作的是不同的 CPU 缓存。比如下图中，线程 A 操作的是 CPU-1 上的缓存，而线程 B 操作的是 CPU-2 上的缓存，很明显，这个时候线程 A 对变量 V 的操作对于线程 B 而言就不具备可见性了。
 
-![img](http://dunwu.test.upcdn.net/snap/20200701110431.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200701110431.png)
 
 【示例】线程不安全的示例
 
@@ -255,7 +255,7 @@ public class Test {
 
 循环 10000 次 count+=1 操作如果改为循环 1 亿次，你会发现效果更明显，最终 count 的值接近 1 亿，而不是 2 亿。如果循环 10000 次，count 的值接近 20000，原因是两个线程不是同时启动的，有一个时差。
 
-![img](http://dunwu.test.upcdn.net/snap/20200701110615.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200701110615.png)
 
 ### 3.2. 线程切换带来的原子性问题
 
@@ -275,7 +275,7 @@ Java 并发程序都是基于多线程的，自然也会涉及到任务切换，
 
 操作系统做任务切换，可以发生在任何一条**CPU 指令**执行完，是的，是 CPU 指令，而不是高级语言里的一条语句。对于上面的三条指令来说，我们假设 count=0，如果线程 A 在指令 1 执行完后做线程切换，线程 A 和线程 B 按照下图的序列执行，那么我们会发现两个线程都执行了 count+=1 的操作，但是得到的结果不是我们期望的 2，而是 1。
 
-![img](http://dunwu.test.upcdn.net/snap/20200701110946.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200701110946.png)
 
 我们潜意识里面觉得 count+=1 这个操作是一个不可分割的整体，就像一个原子一样，线程的切换可以发生在 count+=1 之前，也可以发生在 count+=1 之后，但就是不会发生在中间。**我们把一个或者多个操作在 CPU 执行的过程中不被中断的特性称为原子性**。CPU 能保证的原子操作是 CPU 指令级别的，而不是高级语言的操作符，这是违背我们直觉的地方。因此，很多时候我们需要在高级语言层面保证操作的原子性。
 
@@ -316,7 +316,7 @@ public class Singleton {
 
 优化后会导致什么问题呢？我们假设线程 A 先执行 getInstance() 方法，当执行完指令 2 时恰好发生了线程切换，切换到了线程 B 上；如果此时线程 B 也执行 getInstance() 方法，那么线程 B 在执行第一个判断时会发现 `instance != null` ，所以直接返回 instance，而此时的 instance 是没有初始化过的，如果我们这个时候访问 instance 的成员变量就可能触发空指针异常。
 
-![img](http://dunwu.test.upcdn.net/snap/20200701111050.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200701111050.png)
 
 ### 3.4. 保证并发安全的思路
 
@@ -368,7 +368,7 @@ Java 中的 **无同步方案** 有：
 死锁是当线程进入无限期等待状态时发生的情况，因为所请求的锁被另一个线程持有，而另一个线程又等待第一个线程持有的另一个锁。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/deadlock.png">
+  <img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/concurrent/deadlock.png">
 </p>
 #### 避免死锁
 
@@ -406,7 +406,7 @@ Java 中的 **无同步方案** 有：
 想象这样一个例子：两个人在狭窄的走廊里相遇，二者都很礼貌，试图移到旁边让对方先通过。但是他们最终在没有取得任何进展的情况下左右摇摆，因为他们都在同一时间向相同的方向移动。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/livelock.png">
+  <img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/concurrent/livelock.png">
 </p>
 
 如图所示：两个线程想要通过一个 Worker 对象访问共享公共资源的情况，但是当他们看到另一个 Worker（在另一个线程上调用）也是“活动的”时，它们会尝试将该资源交给其他工作者并等待为它完成。如果最初我们让两名工作人员都活跃起来，他们将会面临活锁问题。
@@ -424,7 +424,7 @@ Java 中的 **无同步方案** 有：
 - 线程在等待一个本身(在其上调用 wait())也处于永久等待完成的对象，因为其他线程总是被持续地获得唤醒。
 
 <p align="center">
-  <img src="http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/starvation-and-fairness.png">
+  <img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/concurrent/starvation-and-fairness.png">
 </p>
 
 饥饿问题最经典的例子就是哲学家问题。如图所示：有五个哲学家用餐，每个人要活得两把叉子才可以就餐。当 2、4 就餐时，1、3、5 永远无法就餐，只能看着盘中的美食饥饿的等待着。

@@ -22,7 +22,7 @@
 
 ## Stream 源码实现
 
-![](http://dunwu.test.upcdn.net/snap/20201205174140.jpg)
+![](https://raw.githubusercontent.com/dunwu/images/dev/snap/20201205174140.jpg)
 
 `BaseStream` 和 `Stream` 是最顶层的接口类。`BaseStream` 主要定义了流的基本接口方法，例如，spliterator、isParallel 等；`Stream` 则定义了一些流的常用操作方法，例如，map、filter 等。
 

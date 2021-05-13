@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://dunwu.github.io/javacore/" target="_blank" rel="noopener noreferrer">
-        <img src="http://dunwu.test.upcdn.net/common/logo/dunwu-logo.png" alt="logo" width="150px"/>
+        <img src="https://raw.githubusercontent.com/dunwu/images/dev/common/dunwu-logo-200.png" alt="logo" width="150px"/>
     </a>
 </p>
 
@@ -49,7 +49,7 @@
 
 ### [Java 容器](docs/container)
 
-![img](http://dunwu.test.upcdn.net/snap/20200221175550.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200221175550.png)
 
 - [Java 容器简介](docs/container/java-container.md) - 关键词：`Collection`、`泛型`、`Iterable`、`Iterator`、`Comparable`、`Comparator`、`Cloneable`、`fail-fast`
 - [Java 容器之 List](docs/container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
@@ -59,7 +59,7 @@
 
 ### [Java 并发](docs/concurrent)
 
-![img](http://dunwu.test.upcdn.net/snap/20200221175827.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200221175827.png)
 
 - [Java 并发简介](docs/concurrent/Java并发简介.md) - 关键词：`进程`、`线程`、`安全性`、`活跃性`、`性能`、`死锁`、`饥饿`、`上下文切换`
 - [Java 线程基础](docs/concurrent/Java线程基础.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`、`wait`、`notify`、`notifyAll`、`join`、`sleep`、`yeild`、`线程状态`、`线程通信`
@@ -74,7 +74,7 @@
 
 ### [Java IO](docs/io)
 
-![img](http://dunwu.test.upcdn.net/snap/20200630205329.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200630205329.png)
 
 - [Java IO 模型](docs/io/java-io.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`、`阻塞`
 - [Java NIO](docs/io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`、`非阻塞`、`多路复用`
@@ -84,7 +84,7 @@
 
 ### [Java 虚拟机](docs/jvm)
 
-![img](http://dunwu.test.upcdn.net/snap/20200628154803.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200628154803.png)
 
 - [JVM 体系结构](docs/jvm/jvm-architecture.md)
 - [JVM 内存区域](docs/jvm/jvm-memory.md) - 关键词：`程序计数器`、`虚拟机栈`、`本地方法栈`、`堆`、`方法区`、`运行时常量池`、`直接内存`、`OutOfMemoryError`、`StackOverflowError`

@@ -37,11 +37,11 @@ Java 应用出现线上故障，如何进行诊断？
 
 一般来说，服务器故障诊断的整体思路如下：
 
-![img](http://dunwu.test.upcdn.net/snap/20200309181645.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200309181645.png)
 
 应用故障诊断思路：
 
-![img](http://dunwu.test.upcdn.net/snap/20200309181831.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200309181831.png)
 
 ## 二、CPU 问题
 

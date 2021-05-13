@@ -1,13 +1,14 @@
 ---
 home: true
-heroImage: http://dunwu.test.upcdn.net/common/logo/dunwu-logo.png
+heroImage: https://raw.githubusercontent.com/dunwu/images/dev/common/dunwu-logo-200.png
 heroText: JAVACORE
 tagline: ☕ JavaCore 是一个 Java 核心技术教程。
 actionLink: /
 footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 ---
 
-# JavaCore
+![license](https://badgen.net/github/license/dunwu/javacore)
+![build](https://travis-ci.com/dunwu/javacore.svg?branch=master)
 
 > ☕ **JavaCore** 是一个 Java 核心技术教程。
 >
@@ -47,7 +48,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ### [Java 容器](container)
 
-![img](http://dunwu.test.upcdn.net/snap/20200221175550.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200221175550.png)
 
 - [Java 容器简介](container/java-container.md) - 关键词：`Collection`、`泛型`、`Iterable`、`Iterator`、`Comparable`、`Comparator`、`Cloneable`、`fail-fast`
 - [Java 容器之 List](container/java-container-list.md) - 关键词：`List`、`ArrayList`、`LinkedList`
@@ -57,7 +58,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ### [Java 并发](concurrent)
 
-![img](http://dunwu.test.upcdn.net/snap/20200221175827.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200221175827.png)
 
 - [Java 并发简介](concurrent/Java并发简介.md) - 关键词：`进程`、`线程`
 - [Java 线程基础](concurrent/Java线程基础.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`
@@ -71,7 +72,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ### [Java IO](io)
 
-![img](http://dunwu.test.upcdn.net/snap/20200630195043.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200630195043.png)
 
 - [Java IO 模型](io/java-io.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 - [Java NIO](io/java-nio.md) - 关键词：`Channel`、`Buffer`、`Selector`、`多路复用`
@@ -81,7 +82,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ### [Java 虚拟机](jvm)
 
-![img](http://dunwu.test.upcdn.net/snap/20200628154803.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200628154803.png)
 
 - [JVM 体系结构](jvm/jvm-architecture.md)
 - [JVM 内存区域](jvm/jvm-memory.md) - 关键词：`程序计数器`、`虚拟机栈`、`本地方法栈`、`堆`、`方法区`、`运行时常量池`、`直接内存`、`OutOfMemoryError`、`StackOverflowError`

@@ -28,7 +28,7 @@
 ## 1. Set 简介
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/Set-diagrams.png" width="400" />
+<img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/container/Set-diagrams.png" width="400" />
 </div>
 
 Set 家族成员简介：
@@ -249,7 +249,7 @@ public abstract class EnumSet<E extends Enum<E>> extends AbstractSet<E>
 
 ## 6. 要点总结
 
-![img](http://dunwu.test.upcdn.net/snap/20200221190717.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200221190717.png)
 
 ## 7. 参考资料
 

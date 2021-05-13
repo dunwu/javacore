@@ -2,7 +2,7 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-![img](http://dunwu.test.upcdn.net/snap/20200221175550.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200221175550.png)
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -37,7 +37,7 @@ Java 中常用的存储容器就是数组和容器，二者有以下区别：
 
 ### 1.2. 容器框架
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/container/java-container-structure.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/container/java-container-structure.png)
 
 Java 容器框架主要分为 `Collection` 和 `Map` 两种。其中，`Collection` 又分为 `List`、`Set` 以及 `Queue`。
 
@@ -127,7 +127,7 @@ public interface Iterable<T> {
 **迭代器模式** - **提供一种方法顺序访问一个聚合对象中各个元素，而又无须暴露该对象的内部表示**。
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/oop/design-patterns/iterator-pattern.png" width="500"/>
+<img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/oop/design-patterns/iterator-pattern.png" width="500"/>
 </div>
 
 示例：迭代器遍历

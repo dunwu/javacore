@@ -72,7 +72,7 @@ Java 应用开启 JMX 后，可以使用 `jconsole` 或 `jvisualvm` 进行监控
 - `VM 摘要` - 显示有关 Java VM 的信息。
 - `MBean` - 显示有关 MBean 的信息。
 
-![img](http://dunwu.test.upcdn.net/snap/20200730151422.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200730151422.png)
 
 ## 2. jvisualvm
 
@@ -84,23 +84,23 @@ Java 应用开启 JMX 后，可以使用 `jconsole` 或 `jvisualvm` 进行监控
 
 jvisualvm 概述页面可以查看当前 Java 进程的基本信息，如：JDK 版本、Java 进程、JVM 参数等。
 
-![img](http://dunwu.test.upcdn.net/snap/20200730150147.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200730150147.png)
 
 ### 2.2. jvisualvm 监控页面
 
 在 jvisualvm 监控页面，可以看到 Java 进程的 CPU、内存、类加载、线程的实时变化。
 
-![img](http://dunwu.test.upcdn.net/snap/20200730150254.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200730150254.png)
 
 ### 2.3. jvisualvm 线程页面
 
 jvisualvm 线程页面展示了当前的线程状态。
 
-![img](http://dunwu.test.upcdn.net/snap/20200730150416.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200730150416.png)
 
 jvisualvm 还可以生成线程 Dump 文件，帮助进一步分析线程栈信息。
 
-![img](http://dunwu.test.upcdn.net/snap/20200730150830.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200730150830.png)
 
 ### 2.4. jvisualvm 抽样器页面
 
@@ -136,13 +136,13 @@ Failed to create the Java Virtual Machine
 
 ### 3.2. MAT 分析
 
-![img](http://dunwu.test.upcdn.net/snap/20200308092746.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200308092746.png)
 
 点击 Leak Suspects 可以进入内存泄漏页面。
 
 （1）首先，可以查看饼图了解内存的整体消耗情况
 
-![img](http://dunwu.test.upcdn.net/snap/20200308150556.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200308150556.png)
 
 （2）缩小范围，寻找问题疑似点
 
@@ -169,7 +169,7 @@ MAT 同时打开两个堆转储文件，分别打开 Histogram，如下图。在
 
 Arthas 支持 JDK 6+，支持 Linux/Mac/Windows，采用命令行交互模式，同时提供丰富的 `Tab` 自动补全功能，进一步方便进行问题的定位和诊断。
 
-![img](http://dunwu.test.upcdn.net/snap/20200730145030.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200730145030.png)
 
 ### 5.1. Arthas 基础命令
 

@@ -20,7 +20,7 @@
 >
 > `CountDownLatch` 维护一个计数器 count，表示需要等待的事件数量。`countDown` 方法递减计数器，表示有一个事件已经发生。调用 `await` 方法的线程会一直阻塞直到计数器为零，或者等待中的线程中断，或者等待超时。
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/CountDownLatch.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/concurrent/CountDownLatch.png)
 
 `CountDownLatch` 是基于 AQS(`AbstractQueuedSynchronizer`) 实现的。
 
@@ -105,7 +105,7 @@ public class CountDownLatchDemo {
 
 `CyclicBarrier` 应用场景：`CyclicBarrier` 在并行迭代算法中非常有用。
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/CyclicBarrier.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/concurrent/CyclicBarrier.png)
 
 `CyclicBarrier` 提供了 2 个构造方法
 
@@ -195,7 +195,7 @@ public class CyclicBarrierDemo {
 - `Semaphore` 可以用于实现资源池，如数据库连接池。
 - `Semaphore` 可以用于将任何一种容器变成有界阻塞容器。
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/concurrent/Semaphore.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/concurrent/Semaphore.png)
 
 `Semaphore` 提供了 2 个构造方法：
 

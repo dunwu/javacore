@@ -2,7 +2,7 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 
-![img](http://dunwu.test.upcdn.net/snap/1553752019030.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1553752019030.png)
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -132,7 +132,7 @@ Exception in thread "main" java.lang.ArithmeticException: / by zero
 
 ## 2. 自定义异常
 
-![img](http://dunwu.test.upcdn.net/snap/1553752795010.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1553752795010.png)
 
 **自定义一个异常类，只需要继承 `Exception` 或 `RuntimeException` 即可。**
 

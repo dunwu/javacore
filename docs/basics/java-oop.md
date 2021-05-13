@@ -81,7 +81,7 @@ String s = new String("abc");
 
 狗和鸟都是动物。如果将狗、鸟作为类，它们可以继承动物类。
 
-![img](http://dunwu.test.upcdn.net/snap/1552641712126.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1552641712126.png)
 
 类的继承形式：
 
@@ -140,7 +140,7 @@ Java 中提供的基本数据类型，只能表示单一的数值，这用于数
 
 类的形式如下：
 
-![img](http://dunwu.test.upcdn.net/snap/1552640231731.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1552640231731.png)
 
 ## 3. 方法
 

@@ -6,19 +6,19 @@
 
 > 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 
-![img](http://dunwu.test.upcdn.net/snap/20200630202823.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200630202823.png)
 
 ### [Java NIO](java-nio.md)
 
 > 关键词：`Channel`、`Buffer`、`Selector`、`非阻塞`、`多路复用`
 
-![img](http://dunwu.test.upcdn.net/snap/20200630203739.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200630203739.png)
 
 ### [Java 序列化](java-serialization.md)
 
 > 关键词：`Serializable`、`serialVersionUID`、`transient`、`Externalizable`、`writeObject`、`readObject`
 
-![img](http://dunwu.test.upcdn.net/snap/20200630204142.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200630204142.png)
 
 ### [Java 网络编程](java-net.md)
 

@@ -670,7 +670,7 @@ public class EnumMapDemo {
 
 ## 7. 小结
 
-![img](http://dunwu.test.upcdn.net/snap/1553002212154.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1553002212154.png)
 
 ## 8. 参考资料
 

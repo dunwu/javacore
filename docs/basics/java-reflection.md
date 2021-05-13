@@ -33,7 +33,7 @@
 
 ## 1. 反射简介
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java反射.svg)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java反射.svg)
 
 ### 1.1. 什么是反射
 
@@ -60,7 +60,7 @@
 
 ### 2.1. 类加载过程
 
-![img](http://dunwu.test.upcdn.net/snap/1553611895164.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1553611895164.png)
 
 类加载的完整过程如下：
 
@@ -568,7 +568,7 @@ public class ReflectMethodConstructorDemo {
 
 实现动态代理的方式很多，比如 JDK 自身提供的动态代理，就是主要利用了上面提到的反射机制。还有其他的实现方式，比如利用传说中更高性能的字节码操作机制，类似 ASM、cglib（基于 ASM）、Javassist 等。
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/Java代理.svg)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java代理.svg)
 
 ### 4.1. 静态代理
 
@@ -623,7 +623,7 @@ class Proxy extends Subject {
 
 在运行状态中，需要代理的地方，根据 Subject 和 RealSubject，动态地创建一个 Proxy，用完之后，就会销毁，这样就可以避免了 Proxy 角色的 class 在系统中冗杂的问题了。
 
-![img](http://dunwu.test.upcdn.net/snap/1553614585028.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1553614585028.png)
 
 Java 动态代理基于经典代理模式，引入了一个 `InvocationHandler`，`InvocationHandler` 负责统一管理所有的方法调用。
 

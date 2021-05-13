@@ -346,7 +346,7 @@ jstack [option] pid
 
 ### 4.2. thread dump 文件
 
-![img](http://dunwu.test.upcdn.net/snap/20200730112431.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200730112431.png)
 
 一个 Thread Dump 文件大致可以分为五个部分。
 

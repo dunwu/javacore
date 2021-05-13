@@ -18,7 +18,7 @@
 ## 1. Queue 简介
 
 <div align="center">
-<img src="http://dunwu.test.upcdn.net/cs/java/javacore/container/Queue-diagrams.png" />
+<img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/container/Queue-diagrams.png" />
 </div>
 
 ### 1.1. Queue 接口

@@ -486,7 +486,7 @@ public class MethodOverloadDemo {
 
 ## 6. 小结
 
-![img](http://dunwu.test.upcdn.net/snap/1553767582595.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1553767582595.png)
 
 ## 7. 参考资料
 

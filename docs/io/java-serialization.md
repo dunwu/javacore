@@ -4,7 +4,7 @@
 >
 > **_关键词：`Serializable`、`serialVersionUID`、`transient`、`Externalizable`、`writeObject`、`readObject`_**
 
-![img](http://dunwu.test.upcdn.net/snap/20200630204142.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200630204142.png)
 
 <!-- TOC depthFrom:2 depthTo:3 -->
 
@@ -26,7 +26,7 @@
 
 ## 1. Java 序列化简介
 
-![img](http://dunwu.test.upcdn.net/snap/1553224129484.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1553224129484.png)
 
 - **序列化（serialize）** - 序列化是将对象转换为字节流。
 - **反序列化（deserialize）** - 反序列化是将字节流转换为对象。

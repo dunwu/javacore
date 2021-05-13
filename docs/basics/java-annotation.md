@@ -835,13 +835,13 @@ public class RegexValidDemo {
 
 ## 5. 小结
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/注解简介.svg)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/注解简介.svg)
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/元注解.svg)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/元注解.svg)
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/内置注解.svg)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/内置注解.svg)
 
-![img](http://dunwu.test.upcdn.net/cs/java/javacore/xmind/自定义注解.svg)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/自定义注解.svg)
 
 ## 6. 参考资料
 

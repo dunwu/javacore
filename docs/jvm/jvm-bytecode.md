@@ -89,7 +89,7 @@ Java 之所以可以“一次编译，到处运行”，一是因为 JVM 针对�
 
 JVM 规范规定了如下图 9 的访问标志（Access_Flag）。需要注意的是，JVM 并没有穷举所有的访问标志，而是使用按位或操作来进行描述的，比如某个类的修饰符为 Public Final，则对应的访问修饰符的值为 ACC_PUBLIC | ACC_FINAL，即 0x0001 | 0x0010=0x0011。
 
-![img](http://dunwu.test.upcdn.net/snap/1561473228816.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/1561473228816.png)
 **（5）当前类名**
 
 访问标志后的 2 个字节，描述的是当前类的全限定名。这两个字节保存的值为常量池中的索引值，根据索引值就能在常量池中找到这个类的全限定名。
