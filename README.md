@@ -16,15 +16,15 @@
 > - 🔁 项目同步维护：[Github](https://github.com/dunwu/javacore/) | [Gitee](https://gitee.com/turnon/javacore/)
 > - 📖 电子书阅读：[Github Pages](https://dunwu.github.io/javacore/) | [Gitee Pages](http://turnon.gitee.io/javacore/)
 
-|           1️⃣            |           2️⃣            |           3️⃣            |           4️⃣            |         5️⃣         |             6️⃣              |
-| :---------------------: | :---------------------: | :---------------------: | :---------------------: | :----------------: | :-------------------------: |
-| [Java 基础](#java-基础) | [Java 高级](#java-高级) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [JavaIO](#java-io) | [Java 虚拟机](#java-虚拟机) |
+|               1️⃣                |               2️⃣                |           3️⃣            |           4️⃣            |         5️⃣         |             6️⃣              |
+| :-----------------------------: | :-----------------------------: | :---------------------: | :---------------------: | :----------------: | :-------------------------: |
+| [Java 基础特性](#java-基础特性) | [Java 高级特性](#java-高级特性) | [Java 容器](#java-容器) | [Java 并发](#java-并发) | [JavaIO](#java-io) | [Java 虚拟机](#java-虚拟机) |
 
 ## 📖 内容
 
 > [Java 面试题集 💯](docs/java-interview.md)
 
-### [Java 基础](docs/basics)
+### [Java 基础特性](docs/basics)
 
 - [Java 开发环境](docs/basics/java-develop-env.md)
 - [Java 基础语法特性](docs/basics/java-basic-grammar.md)
@@ -40,7 +40,7 @@
 - [Java 反射](docs/basics/java-reflection.md)
 - [Java 注解](docs/basics/java-annotation.md)
 
-### [Java 高级](docs/advanced)
+### [Java 高级特性](docs/advanced)
 
 - [Java 正则从入门到精通](docs/advanced/java-regex.md) - 关键词：`Pattern`、`Matcher`、`捕获与非捕获`、`反向引用`、`零宽断言`、`贪婪与懒惰`、`元字符`、`DFA`、`NFA`
 - [Java 编码和加密](docs/advanced/java-crypto.md) - 关键词：`Base64`、`消息摘要`、`数字签名`、`对称加密`、`非对称加密`、`MD5`、`SHA`、`HMAC`、`AES`、`DES`、`DESede`、`RSA`
@@ -100,24 +100,23 @@
 
 - **书籍**
   - Java 四大名著
-    - [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
-    - [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
-    - [《Java 核心技术 卷 II 高级特性》](https://item.jd.com/12791368.html)
-    - [《Effective Java》](https://item.jd.com/12507084.html)
+    - [《Java 编程思想（Thinking in java）》](https://book.douban.com/subject/2130190/)
+    - [《Java 核心技术 卷 I 基础知识》](https://book.douban.com/subject/26880667/)
+    - [《Java 核心技术 卷 II 高级特性》](https://book.douban.com/subject/27165931/)
+    - [《Effective Java》](https://book.douban.com/subject/30412517/)
   - Java 并发
-    - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-    - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
+    - [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+    - [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
   - Java 虚拟机
-    - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+    - [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
   - Java 入门
-    - [《O'Reilly：Head First Java》](https://item.jd.com/10100190.html)
-    - [《Java 从入门到精通》](https://item.jd.com/12555860.html)
-    - [《疯狂 Java 讲义》](https://item.jd.com/12518025.html)
+    - [《O'Reilly：Head First Java》](https://book.douban.com/subject/2000732/)
+    - [《疯狂 Java 讲义》](https://book.douban.com/subject/3246499/)
   - 其他
-    - [《Head First 设计模式》](https://item.jd.com/10100236.html)
-    - [《Java 网络编程》](https://item.jd.com/11544991.html)
-    - [《Java 加密与解密的艺术》](https://item.jd.com/26122568270.html)
-    - [《Java 程序员面试宝典》](https://item.jd.com/11772823.html)
+    - [《Head First 设计模式》](https://book.douban.com/subject/2243615/)
+    - [《Java 网络编程》](https://book.douban.com/subject/1438754/)
+    - [《Java 加密与解密的艺术》](https://book.douban.com/subject/25861566/)
+    - [《阿里巴巴 Java 开发手册》](https://book.douban.com/subject/27605355/)
 - **教程、社区**
   - [Runoob Java 教程](https://www.runoob.com/java/java-tutorial.html)
   - [java-design-patterns](https://github.com/iluwatar/java-design-patterns)

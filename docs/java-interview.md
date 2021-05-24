@@ -1000,9 +1000,9 @@ Executors 为 Executor，ExecutorService，ScheduledExecutorService，ThreadFact
 ## 参考资料
 
 - **书籍**
-  - [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-  - [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
-  - [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+  - [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+  - [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
+  - [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - **文章**
   - [Java 线程面试题 Top 50](http://www.importnew.com/12773.html)
   - [Java 多线程和并发基础面试问答](http://ifeve.com/java-multi-threading-concurrency-interview-questions-with-answers/)

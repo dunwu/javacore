@@ -594,9 +594,9 @@ public class synchronized锁粒度不当 {
 
 ## 6. 参考资料
 
-- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+- [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - [《Java 业务开发常见错误 100 例》](https://time.geekbang.org/column/intro/100047701)
 - [Java 并发编程：volatile 关键字解析](http://www.cnblogs.com/dolphin0520/p/3920373.html)
 - [Java 并发编程：synchronized](http://www.cnblogs.com/dolphin0520/p/3923737.html)

@@ -712,7 +712,7 @@ public class StackOverflowDemo {
 
 ## 6. 参考资料
 
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [作为测试你应该知道的 JAVA OOM 及定位分析](https://www.jianshu.com/p/28935cbfbae0)

@@ -7,30 +7,30 @@
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [1. 线程简介](#1-线程简介)
-    - [1.1. 什么是进程](#11-什么是进程)
-    - [1.2. 什么是线程](#12-什么是线程)
-    - [1.3. 进程和线程的区别](#13-进程和线程的区别)
+  - [1.1. 什么是进程](#11-什么是进程)
+  - [1.2. 什么是线程](#12-什么是线程)
+  - [1.3. 进程和线程的区别](#13-进程和线程的区别)
 - [2. 创建线程](#2-创建线程)
-    - [2.1. Thread](#21-thread)
-    - [2.2. Runnable](#22-runnable)
-    - [2.3. Callable、Future、FutureTask](#23-callablefuturefuturetask)
+  - [2.1. Thread](#21-thread)
+  - [2.2. Runnable](#22-runnable)
+  - [2.3. Callable、Future、FutureTask](#23-callablefuturefuturetask)
 - [3. 线程基本用法](#3-线程基本用法)
-    - [3.1. 线程休眠](#31-线程休眠)
-    - [3.2. 线程礼让](#32-线程礼让)
-    - [3.3. 终止线程](#33-终止线程)
-    - [3.4. 守护线程](#34-守护线程)
+  - [3.1. 线程休眠](#31-线程休眠)
+  - [3.2. 线程礼让](#32-线程礼让)
+  - [3.3. 终止线程](#33-终止线程)
+  - [3.4. 守护线程](#34-守护线程)
 - [4. 线程通信](#4-线程通信)
-    - [4.1. wait/notify/notifyAll](#41-waitnotifynotifyall)
-    - [4.2. join](#42-join)
-    - [4.3. 管道](#43-管道)
+  - [4.1. wait/notify/notifyAll](#41-waitnotifynotifyall)
+  - [4.2. join](#42-join)
+  - [4.3. 管道](#43-管道)
 - [5. 线程生命周期](#5-线程生命周期)
 - [6. 线程常见问题](#6-线程常见问题)
-    - [6.1. sleep、yield、join 方法有什么区别](#61-sleepyieldjoin-方法有什么区别)
-    - [6.2. 为什么 sleep 和 yield 方法是静态的](#62-为什么-sleep-和-yield-方法是静态的)
-    - [6.3. Java 线程是否按照线程优先级严格执行](#63-java-线程是否按照线程优先级严格执行)
-    - [6.4. 一个线程两次调用 start()方法会怎样](#64-一个线程两次调用-start方法会怎样)
-    - [6.5. `start` 和 `run` 方法有什么区别](#65-start-和-run-方法有什么区别)
-    - [6.6. 可以直接调用 `Thread` 类的 `run` 方法么](#66-可以直接调用-thread-类的-run-方法么)
+  - [6.1. sleep、yield、join 方法有什么区别](#61-sleepyieldjoin-方法有什么区别)
+  - [6.2. 为什么 sleep 和 yield 方法是静态的](#62-为什么-sleep-和-yield-方法是静态的)
+  - [6.3. Java 线程是否按照线程优先级严格执行](#63-java-线程是否按照线程优先级严格执行)
+  - [6.4. 一个线程两次调用 start()方法会怎样](#64-一个线程两次调用-start方法会怎样)
+  - [6.5. `start` 和 `run` 方法有什么区别](#65-start-和-run-方法有什么区别)
+  - [6.6. 可以直接调用 `Thread` 类的 `run` 方法么](#66-可以直接调用-thread-类的-run-方法么)
 - [7. 参考资料](#7-参考资料)
 
 <!-- /TOC -->
@@ -733,21 +733,21 @@ public class Piped {
 
 - **等待（Waiting）** - 此状态意味着：**线程无限期等待，直到被其他线程显式地唤醒**。 阻塞和等待的区别在于，阻塞是被动的，它是在等待获取 `synchronized` 的隐式锁。而等待是主动的，通过调用 `Object.wait` 等方法进入。
 
-  | 进入方法                                                     | 退出方法                             |
-  | ------------------------------------------------------------ | ------------------------------------ |
-  | 没有设置 Timeout 参数的 `Object.wait` 方法                   | `Object.notify` / `Object.notifyAll` |
-  | 没有设置 Timeout 参数的 `Thread.join` 方法                   | 被调用的线程执行完毕                 |
+  | 进入方法                                                       | 退出方法                             |
+  | -------------------------------------------------------------- | ------------------------------------ |
+  | 没有设置 Timeout 参数的 `Object.wait` 方法                     | `Object.notify` / `Object.notifyAll` |
+  | 没有设置 Timeout 参数的 `Thread.join` 方法                     | 被调用的线程执行完毕                 |
   | `LockSupport.park` 方法（Java 并发包中的锁，都是基于它实现的） | `LockSupport.unpark`                 |
 
 - **定时等待（Timed waiting）** - 此状态意味着：**无需等待其它线程显式地唤醒，在一定时间之后会被系统自动唤醒**。
 
-  | 进入方法                                                     | 退出方法                                        |
-  | ------------------------------------------------------------ | ----------------------------------------------- |
-  | `Thread.sleep` 方法                                          | 时间结束                                        |
+  | 进入方法                                                                       | 退出方法                                        |
+  | ------------------------------------------------------------------------------ | ----------------------------------------------- |
+  | `Thread.sleep` 方法                                                            | 时间结束                                        |
   | 获得 `synchronized` 隐式锁的线程，调用设置了 Timeout 参数的 `Object.wait` 方法 | 时间结束 / `Object.notify` / `Object.notifyAll` |
-  | 设置了 Timeout 参数的 `Thread.join` 方法                     | 时间结束 / 被调用的线程执行完毕                 |
-  | `LockSupport.parkNanos` 方法                                 | `LockSupport.unpark`                            |
-  | `LockSupport.parkUntil` 方法                                 | `LockSupport.unpark`                            |
+  | 设置了 Timeout 参数的 `Thread.join` 方法                                       | 时间结束 / 被调用的线程执行完毕                 |
+  | `LockSupport.parkNanos` 方法                                                   | `LockSupport.unpark`                            |
+  | `LockSupport.parkUntil` 方法                                                   | `LockSupport.unpark`                            |
 
 - **终止(Terminated)** - 线程执行完 `run` 方法，或者因异常退出了 `run` 方法。此状态意味着：线程结束了生命周期。
 
@@ -795,8 +795,8 @@ Java 的线程是不允许启动两次的，第二次调用必然会抛出 Illeg
 
 ## 7. 参考资料
 
-- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
+- [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+- [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
 - [进程和线程关系及区别](https://blog.csdn.net/yaosiming2011/article/details/44280797)
 - [Java 线程中 yield 与 join 方法的区别](http://www.importnew.com/14958.html)
 - [sleep()，wait()，yield()和 join()方法的区别](https://blog.csdn.net/xiangwanpeng/article/details/54972952)

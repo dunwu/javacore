@@ -531,7 +531,7 @@ threadPool.awaitTermination(1, TimeUnit.HOURS);
 
 ## 6. 参考资料
 
-- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
+- [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+- [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
 - [深入理解 Java 线程池：ThreadPoolExecutor](https://www.jianshu.com/p/d2729853c4da)
 - [java 并发编程--Executor 框架](https://www.cnblogs.com/MOBIN/p/5436482.html)

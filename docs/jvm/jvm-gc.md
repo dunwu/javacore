@@ -682,7 +682,7 @@ JVM 规范中运行时数据区域中的**方法区**，在 HotSpot 虚拟机中
 
 ## 5. 参考资料
 
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [详解 JVM Garbage First(G1) 垃圾收集器](https://blog.csdn.net/coderlius/article/details/79272773)
 - [G1 垃圾收集器入门](https://blog.csdn.net/zhanggang807/article/details/45956325)

@@ -71,4 +71,4 @@ Java 虚拟机的性能指标主要有两点：
 
 ## 3. 参考资料
 
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)

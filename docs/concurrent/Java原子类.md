@@ -451,8 +451,8 @@ public class AtomicReferenceFieldUpdaterDemo {
 
 ## 7. 参考资料
 
-- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
+- [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+- [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
 - [JUC 中的原子类](http://www.itsoku.com/article/182)
 - http://tutorials.jenkov.com/java-util-concurrent/atomicinteger.html
 - http://tutorials.jenkov.com/java-util-concurrent/atomicintegerarray.html

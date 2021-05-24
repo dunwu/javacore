@@ -816,7 +816,7 @@ jhat [dumpfile]
 
 ## 7. 参考资料
 
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
 - [JVM 性能调优监控工具 jps、jstack、jmap、jhat、jstat、hprof 使用详解](https://my.oschina.net/feichexia/blog/196575)
 - [jconsole 官方文档](https://docs.oracle.com/javase/8/docs/technotes/guides/management/jconsole.html)

@@ -2,7 +2,7 @@
 
 > **📦 本文以及示例源码已归档在 [javacore](https://github.com/dunwu/javacore/)**
 >
-> ***关键词：`File`、`RandomAccessFile`、`System`、`Scanner`***
+> **_关键词：`File`、`RandomAccessFile`、`System`、`Scanner`_**
 >
 > 本文介绍 Java IO 的一些常见工具类的用法和特性。
 
@@ -304,6 +304,6 @@ null
 
 ## 参考资料
 
-- [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
-- [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
+- [《Java 编程思想（Thinking in java）》](https://book.douban.com/subject/2130190/)
+- [《Java 核心技术 卷 I 基础知识》](https://book.douban.com/subject/26880667/)
 - [System 官方 API 手册](https://docs.oracle.com/javase/7/docs/api/java/lang/System.html)

@@ -127,8 +127,8 @@ sharedLocation.setRegion(messageInfo.getCountryCode().intern());
 
 ## 4. 参考资料
 
-- [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
-- [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
+- [《Java 编程思想（Thinking in java）》](https://book.douban.com/subject/2130190/)
+- [《Java 核心技术 卷 I 基础知识》](https://book.douban.com/subject/26880667/)
 - [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
 - [《Java 核心技术面试精讲》](https://time.geekbang.org/column/intro/82)
 - [Java 基本数据类型和引用类型](https://juejin.im/post/59cd71835188255d3448faf6)

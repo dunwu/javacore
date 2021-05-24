@@ -9,20 +9,20 @@
 <!-- TOC depthFrom:2 depthTo:3 -->
 
 - [1. 物理内存模型](#1-物理内存模型)
-    - [1.1. 硬件处理效率](#11-硬件处理效率)
-    - [1.2. 缓存一致性](#12-缓存一致性)
-    - [1.3. 代码乱序执行优化](#13-代码乱序执行优化)
+  - [1.1. 硬件处理效率](#11-硬件处理效率)
+  - [1.2. 缓存一致性](#12-缓存一致性)
+  - [1.3. 代码乱序执行优化](#13-代码乱序执行优化)
 - [2. Java 内存模型](#2-java-内存模型)
-    - [2.1. 主内存和工作内存](#21-主内存和工作内存)
-    - [2.2. JMM 内存操作的问题](#22-jmm-内存操作的问题)
-    - [2.3. 内存间交互操作](#23-内存间交互操作)
-    - [2.4. 并发安全特性](#24-并发安全特性)
+  - [2.1. 主内存和工作内存](#21-主内存和工作内存)
+  - [2.2. JMM 内存操作的问题](#22-jmm-内存操作的问题)
+  - [2.3. 内存间交互操作](#23-内存间交互操作)
+  - [2.4. 并发安全特性](#24-并发安全特性)
 - [3. Happens-Before](#3-happens-before)
 - [4. 内存屏障](#4-内存屏障)
 - [5. volatile](#5-volatile)
 - [6. synchronized](#6-synchronized)
-    - [6.1. long 和 double 变量的特殊规则](#61-long-和-double-变量的特殊规则)
-    - [6.2. final 型量的特殊规则](#62-final-型量的特殊规则)
+  - [6.1. long 和 double 变量的特殊规则](#61-long-和-double-变量的特殊规则)
+  - [6.2. final 型量的特殊规则](#62-final-型量的特殊规则)
 - [7. 参考资料](#7-参考资料)
 
 <!-- /TOC -->
@@ -312,8 +312,8 @@ JMM 要求 lock、unlock、read、load、assign、use、store、write 这 8 种�
 
 ## 7. 参考资料
 
-- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+- [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - [理解 Java 内存模型](https://juejin.im/post/5bf2977751882505d840321d)
 - [《Java 并发编程实战》](https://time.geekbang.org/column/intro/100023901)

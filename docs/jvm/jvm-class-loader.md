@@ -567,7 +567,7 @@ Exception in thread "main" java.lang.ClassCastException: java.lang.Object cannot
 
 ## 5. 参考资料
 
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - [深入拆解 Java 虚拟机](https://time.geekbang.org/column/intro/100010301)
 - [一篇图文彻底弄懂类加载器与双亲委派机制](https://juejin.im/post/5e479c2cf265da575f4e65e4)
 - [Jvm 系列(一):Java 类的加载机制](http://www.ityouknow.com/jvm/2017/08/19/class-loading-principle.html)

@@ -30,8 +30,8 @@
 
 ## 📚 资料
 
-- [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
-- [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
+- [《Java 编程思想（Thinking in java）》](https://book.douban.com/subject/2130190/)
+- [《Java 核心技术 卷 I 基础知识》](https://book.douban.com/subject/26880667/)
 
 ## 🚪 传送
 

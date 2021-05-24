@@ -225,7 +225,7 @@ Arthas 支持 JDK 6+，支持 Linux/Mac/Windows，采用命令行交互模式，
 
 ## 6. 参考资料
 
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
 - [jconsole 官方文档](https://docs.oracle.com/javase/8/docs/technotes/guides/management/jconsole.html)
 - [jconsole 工具使用](https://www.cnblogs.com/kongzhongqijing/articles/3621441.html)

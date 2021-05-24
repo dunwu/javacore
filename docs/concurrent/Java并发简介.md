@@ -489,9 +489,9 @@ Java 不可能实现 100% 的公平性，我们依然可以通过同步结构在
 
 ## 7. 参考资料
 
-- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+- [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - [《Java 并发编程实战》](https://time.geekbang.org/column/intro/100023901)
 - http://tutorials.jenkov.com/java-concurrency/benefits.html
 - https://www.logicbig.com/tutorials/core-java-tutorial/java-multi-threading/thread-deadlock.html

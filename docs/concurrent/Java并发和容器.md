@@ -1068,8 +1068,8 @@ Queue 被广泛使用在生产者 - 消费者场景。而在并发场景，利�
 
 ## 7. 参考资料
 
-- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
+- [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+- [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
 - https://blog.csdn.net/u010425776/article/details/54890215
 - https://blog.csdn.net/wangxiaotongfan/article/details/52074160
 - https://my.oschina.net/hosee/blog/675884

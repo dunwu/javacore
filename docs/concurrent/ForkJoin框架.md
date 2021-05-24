@@ -155,7 +155,7 @@ ForkJoinPool 中的任务队列采用的是双端队列，工作线程正常获�
 
 ## 4. 参考资料
 
-- [《Java 并发编程实战》](https://item.jd.com/10922250.html)
-- [《Java 并发编程的艺术》](https://item.jd.com/11740734.html)
+- [《Java 并发编程实战》](https://book.douban.com/subject/10484692/)
+- [《Java 并发编程的艺术》](https://book.douban.com/subject/26591326/)
 - [《Java 并发编程实战》](https://time.geekbang.org/column/intro/100023901)
 - [CompletableFuture 使用详解](https://www.jianshu.com/p/6bac52527ca4)

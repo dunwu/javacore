@@ -432,7 +432,7 @@ address 即为远程 debug 的监听端口。
 
 ## 4. 参考资料
 
-- [《深入理解 Java 虚拟机》](https://item.jd.com/11252778.html)
+- [《深入理解 Java 虚拟机》](https://book.douban.com/subject/34907497/)
 - [《Java 性能调优实战》](https://time.geekbang.org/column/intro/100028001)
 - [从表到里学习 JVM 实现](https://www.douban.com/doulist/2545443/)
 - [JVM（4）：Jvm 调优-命令篇](http://www.importnew.com/23761.html)

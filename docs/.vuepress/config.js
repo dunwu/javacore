@@ -30,11 +30,11 @@ module.exports = {
         lastUpdated: '上次更新',
         nav: [
           {
-            text: '基础',
+            text: '基础特性',
             link: '/basics/',
           },
           {
-            text: '高级',
+            text: '高级特性',
             link: '/advanced/',
           },
           {

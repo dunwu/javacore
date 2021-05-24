@@ -95,7 +95,7 @@ BIO 的优点是代码比较简单、直观；缺点则是 IO 效率和扩展性
 
 **BIO 会阻塞进程，不适合高并发场景**。
 
-采用 BIO 的服务端，通常由一个独立的 Acceptor 线程负责监听客户端连接。服务端一般在`while(true)` 循环中调用 `accept()` 方法等待客户端的连接请求，一旦接收到一个连接请求，就可以建立Socket，并基于这个Socket进行读写操作。此时，不能再接收其他客户端连接请求，只能等待当前连接的操作执行完成。
+采用 BIO 的服务端，通常由一个独立的 Acceptor 线程负责监听客户端连接。服务端一般在`while(true)` 循环中调用 `accept()` 方法等待客户端的连接请求，一旦接收到一个连接请求，就可以建立 Socket，并基于这个 Socket 进行读写操作。此时，不能再接收其他客户端连接请求，只能等待当前连接的操作执行完成。
 
 如果要让 **BIO 通信模型** 能够同时处理多个客户端请求，就必须使用多线程（主要原因是`socket.accept()`、`socket.read()`、`socket.write()` 涉及的三个主要函数都是同步阻塞的），但会造成不必要的线程开销。不过可以通过 **线程池机制** 改善，线程池还可以让线程的创建和回收成本相对较低。
 
@@ -125,7 +125,7 @@ NIO 还提供了一个可以直接访问物理内存的类 `DirectBuffer`。普�
 
 这里拓展一点，由于 `DirectBuffer` 申请的是非 JVM 的物理内存，所以创建和销毁的代价很高。`DirectBuffer` 申请的内存并不是直接由 JVM 负责垃圾回收，但在 `DirectBuffer` 包装类被回收时，会通过 Java 引用机制来释放该内存块。
 
-#### 优化I/O，避免阻塞
+#### 优化 I/O，避免阻塞
 
 传统 I/O 的数据读写是在用户空间和内核空间来回复制，而内核空间的数据是通过操作系统层面的 I/O 接口从磁盘读取或写入。
 
@@ -595,8 +595,8 @@ public class InputStreamReaderDemo {
 
 ## 参考资料
 
-- [《Java 编程思想（Thinking in java）》](https://item.jd.com/10058164.html)
-- [《Java 核心技术 卷 I 基础知识》](https://item.jd.com/12759308.html)
+- [《Java 编程思想（Thinking in java）》](https://book.douban.com/subject/2130190/)
+- [《Java 核心技术 卷 I 基础知识》](https://book.douban.com/subject/26880667/)
 - [《Java 从入门到精通》](https://item.jd.com/12555860.html)
 - [《Java 核心技术面试精讲》](https://time.geekbang.org/column/intro/100006701)
 - [BIO,NIO,AIO 总结](https://github.com/Snailclimb/JavaGuide/blob/master/docs/java/BIO-NIO-AIO.md)
