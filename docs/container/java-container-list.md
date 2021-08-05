@@ -66,7 +66,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 - `ArrayList` 实现了 `List` 接口，并继承了 `AbstractList`，它支持所有 `List` 的操作。
 - `ArrayList` 实现了 `RandomAccess` 接口，**支持随机访问**。`RandomAccess` 是一个标志接口，它意味着“只要实现该接口的 `List` 类，都支持快速随机访问”。在 `ArrayList` 中，我们即可以**通过元素的序号快速获取元素对象**；这就是快速随机访问。
-- `ArrayList` 实现了 `Cloneable` 接口，**支持深拷贝**。
+- `ArrayList` 实现了 `Cloneable` 接口，默认为**浅拷贝**。
 - `ArrayList` 实现了 `Serializable` 接口，**支持序列化**，能通过序列化方式传输。
 - `ArrayList` 是**非线程安全**的。
 
@@ -284,7 +284,7 @@ public class LinkedList<E>
 
 - `LinkedList` 实现了 `List` 接口，并继承了 `AbstractSequentialList` ，它支持所有 `List` 的操作。
 - `LinkedList` 实现了 `Deque` 接口，也可以被当作队列（`Queue`）或双端队列（`Deque`）进行操作，此外，也可以用来实现栈。
-- `LinkedList` 实现了 `Cloneable` 接口，**支持深拷贝**。
+- `LinkedList` 实现了 `Cloneable` 接口，默认为**浅拷贝**。
 - `LinkedList` 实现了 `Serializable` 接口，**支持序列化**。
 - `LinkedList` 是**非线程安全**的。
 
