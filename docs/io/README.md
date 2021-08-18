@@ -2,7 +2,7 @@
 
 ## 📖 内容
 
-### [Java IO 模型](io/java-io.md)
+### [Java IO 模型](java-io.md)
 
 > 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`
 
