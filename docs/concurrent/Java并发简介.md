@@ -370,6 +370,7 @@ Java 中的 **无同步方案** 有：
 <p align="center">
   <img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/concurrent/deadlock.png">
 </p>
+
 #### 避免死锁
 
 （1）按序加锁
@@ -427,7 +428,7 @@ Java 中的 **无同步方案** 有：
   <img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/concurrent/starvation-and-fairness.png">
 </p>
 
-饥饿问题最经典的例子就是哲学家问题。如图所示：有五个哲学家用餐，每个人要活得两把叉子才可以就餐。当 2、4 就餐时，1、3、5 永远无法就餐，只能看着盘中的美食饥饿的等待着。
+饥饿问题最经典的例子就是哲学家问题。如图所示：有五个哲学家用餐，每个人要获得两把叉子才可以就餐。当 2、4 就餐时，1、3、5 永远无法就餐，只能看着盘中的美食饥饿的等待着。
 
 #### 解决饥饿
 
