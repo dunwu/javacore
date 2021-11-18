@@ -212,11 +212,30 @@ J.U.C 包中提供了几个非常有用的并发容器作为线程安全的容�
 
 J.U.C 包中提供的并发容器命名一般分为三类：
 
-- `Concurrent*`
-  - 这类型的锁竞争相对于 `CopyOnWrite*` 要高一些，但写操作代价要小一些。
-  - 此外，`Concurrent*` 往往提供了较低的遍历一致性，即：当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历。代价就是，在获取容器大小 `size()` ，容器是否为空等方法，不一定完全精确，但这是为了获取并发吞吐量的设计取舍，可以理解。与之相比，如果是使用同步容器，就会出现 `fail-fast` 问题，即：检测到容器在遍历过程中发生了修改，则抛出 `ConcurrentModificationException`，不再继续遍历。
-- `CopyOnWrite*` - 一个线程写，多个线程读。读操作时不加锁，写操作时通过在副本上加锁保证并发安全，空间开销较大。
-- `Blocking*` - 内部实现一般是基于锁，提供阻塞队列的能力。
+- `Concurrent`
+  - 这类型的锁竞争相对于 `CopyOnWrite` 要高一些，但写操作代价要小一些。
+  - 此外，`Concurrent` 往往提供了较低的遍历一致性，即：当利用迭代器遍历时，如果容器发生修改，迭代器仍然可以继续进行遍历。代价就是，在获取容器大小 `size()` ，容器是否为空等方法，不一定完全精确，但这是为了获取并发吞吐量的设计取舍，可以理解。与之相比，如果是使用同步容器，就会出现 `fail-fast` 问题，即：检测到容器在遍历过程中发生了修改，则抛出 `ConcurrentModificationException`，不再继续遍历。
+- `CopyOnWrite` - 一个线程写，多个线程读。读操作时不加锁，写操作时通过在副本上加锁保证并发安全，空间开销较大。
+- `Blocking` - 内部实现一般是基于锁，提供阻塞队列的能力。
+
+:x: 错误示例，产生 `ConcurrentModificationException` 异常：
+
+```java
+public void removeKeys(Map<String, Object> map, final String... keys) {
+    map.keySet().removeIf(key -> ArrayUtil.contains(keys, key));
+}
+```
+
+:x: 错误示例，产生 `ConcurrentModificationException` 异常：
+
+```java
+public static <K, V> Map<K, V> removeKeys(Map<String, Object> map, final String... keys) {
+	for (K key : keys) {
+		map.remove(key);
+	}
+	return map;
+}
+```
 
 ### 2.1. 并发场景下的 Map
 

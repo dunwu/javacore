@@ -121,7 +121,7 @@ public class AESCoder {
         String encodedBase64 = Base64.getUrlEncoder().encodeToString(encoded);
         System.out.println("encoded: " + encodedBase64);
 
-        byte[] decodedBase64 = Base64.getDecoder().decode(encodedBase64);
+        byte[] decodedBase64 = Base64.getUrlDecoder().decode(encodedBase64);
         byte[] decoded = aes.decrypt(decodedBase64);
         System.out.println("decoded: " + new String(decoded));
     }
