@@ -534,7 +534,7 @@ Assert.assertFalse(checkMatches("^app[a-z]{0,}", "aplause"));
 // aplause	not matches： ^app[a-z]{0,}
 ```
 
-如果希望匹配的字符串必须以特定字符串开头，可以使用 `$` 。
+如果希望匹配的字符串必须以特定字符串结尾，可以使用 `$` 。
 
 【示例】限制字符串尾部
 
