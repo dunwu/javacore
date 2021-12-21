@@ -376,7 +376,7 @@ Mark Word 记录了对象和锁有关的信息。Mark Word 在 64 位 JVM 中的
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200629191250.png)
 
-锁升级功能主要依赖于 Mark Word 中的锁标志位和释放偏向锁标志位，`synchronized` 同步锁就是从偏向锁开始的，随着竞争越来越激烈，偏向锁升级到轻量级锁，最终升级到重量级锁。
+锁升级功能主要依赖于 Mark Word 中的锁标志位和是否偏向锁标志位，`synchronized` 同步锁就是从偏向锁开始的，随着竞争越来越激烈，偏向锁升级到轻量级锁，最终升级到重量级锁。
 
 Java 1.6 引入了偏向锁和轻量级锁，从而让 `synchronized` 拥有了四个状态：
 
