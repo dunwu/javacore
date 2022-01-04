@@ -340,7 +340,7 @@ public class Singleton {
 
 这类乐观锁指令常见的有：
 
-- 测试并设置（Test-amd-Set）
+- 测试并设置（Test-and-Set）
 - 获取并增加（Fetch-and-Increment）
 - 交换（Swap）
 - 比较并交换（CAS）
