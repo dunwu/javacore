@@ -211,9 +211,13 @@ Full GC 回收日志:
 
 通过两张图非常明显看出 gc 日志构成：
 
-![img](http://ityouknow.com/assets/images/2017/jvm/Young%20GC.png)
+YOUNG GC
 
-![img](http://ityouknow.com/assets/images/2017/jvm/Full%20GC.png)
+![](https://raw.githubusercontent.com/dunwu/images/dev/snap/20220107093538.jfif)
+
+FULL GC
+
+![](https://raw.githubusercontent.com/dunwu/images/dev/snap/20220107093543.jfif)
 
 #### CPU 过高
 

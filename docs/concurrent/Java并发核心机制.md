@@ -263,9 +263,47 @@ public class SynchronizedDemo2 implements Runnable {
 
 有时你不需要同步整个方法，而是同步方法中的一部分。Java 可以对方法的一部分进行同步。
 
-注意 Java 同步块构造器用括号将对象括起来。在上例中，使用了 `this`，即为调用 add 方法的实例本身。在同步构造器中用括号括起来的对象叫做监视器对象。上述代码使用监视器对象同步，同步实例方法使用调用方法本身的实例作为监视器对象。
+```java
+@ThreadSafe
+public class SynchronizedDemo05 implements Runnable {
 
-一次只有一个线程能够在同步于同一个监视器对象的 Java 方法内执行。
+    private static final int MAX = 100000;
+
+    private static int count = 0;
+
+    public static void main(String[] args) throws InterruptedException {
+        SynchronizedDemo05 instance = new SynchronizedDemo05();
+        Thread t1 = new Thread(instance);
+        Thread t2 = new Thread(instance);
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
+        System.out.println(count);
+    }
+
+    @Override
+    public void run() {
+        for (int i = 0; i < MAX; i++) {
+            increase();
+        }
+    }
+
+    /**
+     * synchronized 修饰代码块
+     */
+    public void increase() {
+        synchronized (this) {
+            count++;
+        }
+    }
+
+}
+```
+
+注意 Java 同步块构造器用括号将对象括起来。在上例中，使用了 `this`，即为调用 `increase` 方法的实例本身。用括号括起来的对象叫做监视器对象。一次只有一个线程能够在同步于同一个监视器对象的 Java 方法内执行。
+
+如果是静态方法，就不能用 this 对象作为监视器对象了，而是使用  `Class` 对象，如下：
 
 ```java
 public class SynchronizedDemo3 implements Runnable {

@@ -62,6 +62,7 @@ public class ReferenceCountingGC {
 <img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/jvm/jvm-gc-root.png" />
 <p>可达性分析算法</p>
 </div>
+
 **可作为 GC Roots 的对象**包括下面几种：
 
 - 虚拟机栈中引用的对象
@@ -215,6 +216,7 @@ obj = null;
 <div align="center">
 <img src="https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/jvm/jvm-gc-mark-compact.jpg" />
 </div>
+
 让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存。
 
 这种做法能够解决内存碎片化的问题，但代价是压缩算法的性能开销。
