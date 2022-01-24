@@ -17,7 +17,6 @@
 - [11. 反射](#11-反射)
 - [12. 注解](#12-注解)
 - [13. 序列化](#13-序列化)
-- [14. 参考资料](#14-参考资料)
 
 <!-- /TOC -->
 
@@ -47,7 +46,7 @@ public class HelloWorld {
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java基本数据类型.svg)
 
-> 👉 扩展阅读：[深入理解 Java 基本数据类型](https://github.com/dunwu/javacore/blob/master/docs/basics/深入理解Java基本数据类型.md)
+> 👉 扩展阅读：[深入理解 Java 基本数据类型](https://github.com/dunwu/javacore/blob/master/docs/basics/java-data-type.md)
 
 ## 3. 变量
 
@@ -84,13 +83,13 @@ Java 支持的变量类型有：
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java数组.svg)
 
-> 👉 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/Java数组.md)
+> 👉 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/java-array.md)
 
 ## 5. 枚举
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java枚举.svg)
 
-> 👉 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/Java枚举.md)
+> 👉 扩展阅读：[深入理解 Java 数组](https://github.com/dunwu/javacore/blob/master/docs/basics/java-enum.md)
 
 ## 6. 操作符
 
@@ -102,15 +101,15 @@ Java 中支持的操作符类型如下：
 
 ## 7. 方法
 
-![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java方法.svg)
+![](https://raw.githubusercontent.com/dunwu/images/dev/snap/20220125072221.png)
 
-> 👉 扩展阅读：[深入理解 Java 方法](https://github.com/dunwu/javacore/blob/master/docs/basics/Java方法.md)
+> 👉 扩展阅读：[深入理解 Java 方法](https://github.com/dunwu/javacore/blob/master/docs/basics/java-method.md)
 
 ## 8. 控制语句
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java控制语句.svg)
 
-> 👉 扩展阅读：[Java 控制语句](https://github.com/dunwu/javacore/blob/master/docs/basics/Java控制语句.md)
+> 👉 扩展阅读：[Java 控制语句](https://github.com/dunwu/javacore/blob/master/docs/basics/java-control-statement.md)
 
 ## 9. 异常
 
@@ -118,13 +117,13 @@ Java 中支持的操作符类型如下：
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java异常.svg)
 
-> 👉 扩展阅读：[深入理解 Java 异常](https://github.com/dunwu/javacore/blob/master/docs/basics/Java异常.md)
+> 👉 扩展阅读：[深入理解 Java 异常](https://github.com/dunwu/javacore/blob/master/docs/basics/java-exception.md)
 
 ## 10. 泛型
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java泛型.svg)
 
-> 👉 扩展阅读：[深入理解 Java 泛型](https://github.com/dunwu/javacore/blob/master/docs/basics/Java泛型.md)
+> 👉 扩展阅读：[深入理解 Java 泛型](https://github.com/dunwu/javacore/blob/master/docs/basics/java-generic.md)
 
 ## 11. 反射
 
@@ -132,7 +131,7 @@ Java 中支持的操作符类型如下：
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java代理.svg)
 
-> 👉 扩展阅读：[深入理解 Java 反射和动态代理](https://github.com/dunwu/javacore/blob/master/docs/basics/Java反射.md)
+> 👉 扩展阅读：[深入理解 Java 反射和动态代理](https://github.com/dunwu/javacore/blob/master/docs/basics/java-reflection.md)
 
 ## 12. 注解
 
@@ -144,12 +143,10 @@ Java 中支持的操作符类型如下：
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/自定义注解.svg)
 
-> 👉 扩展阅读：[深入理解 Java 注解](https://github.com/dunwu/javacore/blob/master/docs/basics/Java注解.md)
+> 👉 扩展阅读：[深入理解 Java 注解](https://github.com/dunwu/javacore/blob/master/docs/basics/java-annotation.md)
 
 ## 13. 序列化
 
 ![img](https://raw.githubusercontent.com/dunwu/images/dev/cs/java/javacore/xmind/Java序列化.svg)
 
-> 👉 扩展阅读：[深入理解 Java 序列化](https://github.com/dunwu/javacore/blob/master/docs/io/Java序列化.md)
-
-## 14. 参考资料
+> 👉 扩展阅读：[深入理解 Java 序列化](https://github.com/dunwu/javacore/blob/master/docs/io/java-serialization.md)
