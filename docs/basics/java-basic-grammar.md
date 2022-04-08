@@ -101,7 +101,7 @@ Java 中支持的操作符类型如下：
 
 ## 7. 方法
 
-![](https://raw.githubusercontent.com/dunwu/images/dev/snap/20220125072221.png)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20220125072221.png)
 
 > 👉 扩展阅读：[深入理解 Java 方法](https://github.com/dunwu/javacore/blob/master/docs/basics/java-method.md)
 

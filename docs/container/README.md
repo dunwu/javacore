@@ -11,7 +11,7 @@
 - [Java 容器之 Queue](java-container-queue.md) - 关键词：`Queue`、`Deque`、`ArrayDeque`、`LinkedList`、`PriorityQueue`
 - [Java 容器之 Stream](java-container-queue.md)
 
-## 📚 资料
+## 📖 资料
 
 - **书籍**
   - Java 四大名著

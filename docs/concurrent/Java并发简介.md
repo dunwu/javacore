@@ -112,7 +112,7 @@ Java 采用的是管程技术，synchronized 关键字及 wait()、notify()、no
 
 木桶短板理论告诉我们：一只木桶能装多少水，取决于最短的那块木板。同理，程序整体性能取决于最慢的操作（即 I/O 操作），所以单方面提高 CPU、内存的性能是无效的。
 
-![](https://raw.githubusercontent.com/dunwu/images/dev/snap/20201225170052.jpg)
+![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20201225170052.jpg)
 
 为了合理利用 CPU 的高性能，平衡这三者的速度差异，计算机体系机构、操作系统、编译程序都做出了贡献，主要体现为：
 
