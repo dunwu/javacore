@@ -1,18 +1,17 @@
 ---
 title: Java 并发
-categories: 
-  - 编程
-  - Java
-  - JavaSE
-  - 并发
-tags: 
-  - Java
-  - JavaSE
-  - 并发
-abbrlink: c67d7820
 date: 2020-06-04 13:51:01
+categories:
+  - Java
+  - JavaSE
+  - 并发
+tags:
+  - Java
+  - JavaSE
+  - 并发
+permalink: /pages/6e5393/
+abbrlink: c67d7820
 hidden: true
-permalink: /pages/a5fb25/
 ---
 
 # Java 并发
@@ -80,4 +79,4 @@ permalink: /pages/a5fb25/
 
 ## 🚪 传送
 
-◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://dunwu.github.io/blog/) ◾

@@ -1,18 +1,17 @@
 ---
 title: Java 容器
-categories: 
-  - 编程
-  - Java
-  - JavaSE
-  - 容器
-tags: 
-  - Java
-  - JavaSE
-  - 容器
-abbrlink: f431e3b
 date: 2020-06-04 13:51:01
+categories:
+  - Java
+  - JavaSE
+  - 容器
+tags:
+  - Java
+  - JavaSE
+  - 容器
+permalink: /pages/9eb49b/
+abbrlink: f431e3b
 hidden: true
-permalink: /pages/e1abdb/
 ---
 
 # Java 容器
@@ -28,7 +27,7 @@ permalink: /pages/e1abdb/
 - [Java 容器之 Queue](05.Java容器之Queue.md) - 关键词：`Queue`、`Deque`、`ArrayDeque`、`LinkedList`、`PriorityQueue`
 - [Java 容器之 Stream](06.Java容器之Stream.md)
 
-## 📖 资料
+## 📚 资料
 
 - **书籍**
   - Java 四大名著
@@ -56,4 +55,4 @@ permalink: /pages/e1abdb/
 
 ## 🚪 传送
 
-◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://dunwu.github.io/blog/) ◾

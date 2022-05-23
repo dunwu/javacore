@@ -57,6 +57,8 @@
 - [Java 编码和加密](docs/02.高级特性/02.Java编码和加密.md) - 关键词：`Base64`、`消息摘要`、`数字签名`、`对称加密`、`非对称加密`、`MD5`、`SHA`、`HMAC`、`AES`、`DES`、`DESede`、`RSA`
 - [Java 本地化](docs/02.高级特性/03.Java本地化.md)
 - [Java JDK8](docs/02.高级特性/04.JDK8.md) - 关键词：`Stream`、`lambda`、`Optional`、`@FunctionalInterface`
+- [Java SPI](docs/02.高级特性/05.JavaSPI.md) - 关键词：`SPI`、`ClassLoader`
+-
 
 ### [Java 容器](docs/03.容器)
 

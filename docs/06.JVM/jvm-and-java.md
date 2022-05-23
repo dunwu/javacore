@@ -1,17 +1,16 @@
 ---
 title: jvm-and-java
-categories: 
-  - 编程
-  - Java
-  - JavaSE
-  - JVM
-tags: 
-  - Java
-  - JavaSE
-  - JVM
-abbrlink: cb223828
 date: 2020-10-16 20:29:24
-permalink: /pages/b98932/
+categories:
+  - Java
+  - JavaSE
+  - JVM
+tags:
+  - Java
+  - JavaSE
+  - JVM
+permalink: /pages/ebf8d4/
+abbrlink: cb223828
 ---
 
 # JVM 和 Java 特性

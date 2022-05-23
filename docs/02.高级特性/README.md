@@ -1,16 +1,16 @@
 ---
 title: Java 高级特性
-categories: 
-  - 编程
-  - Java
-  - JavaSE
-tags: 
-  - Java
-  - JavaSE
-abbrlink: f04481ec
 date: 2020-06-04 13:51:01
+categories:
+  - Java
+  - JavaSE
+  - 高级特性
+tags:
+  - Java
+  - JavaSE
+permalink: /pages/016137/
+abbrlink: f04481ec
 hidden: true
-permalink: /pages/dfadaa/
 ---
 
 # Java 高级特性
@@ -23,6 +23,7 @@ permalink: /pages/dfadaa/
 - [Java 编码和加密](02.Java编码和加密.md) - 关键词：`Base64`、`消息摘要`、`数字签名`、`对称加密`、`非对称加密`、`MD5`、`SHA`、`HMAC`、`AES`、`DES`、`DESede`、`RSA`
 - [Java 本地化](03.Java本地化.md)
 - [Java JDK8](04.JDK8.md) - 关键词：`Stream`、`lambda`、`Optional`、`@FunctionalInterface`
+- [Java SPI](05.JavaSPI.md) - 关键词：`SPI`、`ClassLoader`
 
 ## 📚 资料
 
@@ -61,4 +62,4 @@ permalink: /pages/dfadaa/
 
 ## 🚪 传送
 
-◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://dunwu.github.io/blog/) ◾

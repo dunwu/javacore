@@ -1,18 +1,17 @@
 ---
 title: Java IO
-categories: 
-  - 编程
-  - Java
-  - JavaSE
-  - IO
-tags: 
-  - Java
-  - JavaSE
-  - IO
-abbrlink: b4224212
 date: 2020-06-04 13:51:01
+categories:
+  - Java
+  - JavaSE
+  - IO
+tags:
+  - Java
+  - JavaSE
+  - IO
+permalink: /pages/e285c8/
+abbrlink: b4224212
 hidden: true
-permalink: /pages/8826bb/
 ---
 
 # Java IO
@@ -52,4 +51,4 @@ permalink: /pages/8826bb/
 
 ## 🚪 传送
 
-◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://dunwu.github.io/blog/) ◾

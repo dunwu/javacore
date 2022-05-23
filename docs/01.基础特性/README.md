@@ -1,16 +1,16 @@
 ---
 title: Java 基础特性
-categories: 
-  - 编程
-  - Java
-  - JavaSE
-tags: 
-  - Java
-  - JavaSE
-abbrlink: d9e0d71
 date: 2020-06-04 13:51:01
+categories:
+  - Java
+  - JavaSE
+  - 基础特性
+tags:
+  - Java
+  - JavaSE
+permalink: /pages/8ea213/
+abbrlink: d9e0d71
 hidden: true
-permalink: /pages/80c858/
 ---
 
 # Java 基础特性
@@ -70,4 +70,4 @@ permalink: /pages/80c858/
 
 ## 🚪 传送
 
-◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://dunwu.github.io/blog/) ◾

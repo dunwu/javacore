@@ -1,18 +1,17 @@
 ---
 title: JVM 教程
-categories: 
-  - 编程
-  - Java
-  - JavaSE
-  - JVM
-tags: 
-  - Java
-  - JavaSE
-  - JVM
-abbrlink: bfd57dfe
 date: 2020-06-04 13:51:01
+categories:
+  - Java
+  - JavaSE
+  - JVM
+tags:
+  - Java
+  - JavaSE
+  - JVM
+permalink: /pages/51172b/
+abbrlink: bfd57dfe
 hidden: true
-permalink: /pages/272f03/
 ---
 
 # JVM 教程
@@ -42,4 +41,4 @@ permalink: /pages/272f03/
 
 ## 🚪 传送
 
-◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://github.com/dunwu/blog) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://dunwu.github.io/blog/) ◾
