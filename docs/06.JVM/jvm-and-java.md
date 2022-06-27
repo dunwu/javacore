@@ -10,7 +10,6 @@ tags:
   - JavaSE
   - JVM
 permalink: /pages/ebf8d4/
-abbrlink: cb223828
 ---
 
 # JVM 和 Java 特性

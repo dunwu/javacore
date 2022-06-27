@@ -10,7 +10,6 @@ tags:
   - JavaSE
   - 并发
 permalink: /pages/6e5393/
-abbrlink: c67d7820
 hidden: true
 ---
 
@@ -79,4 +78,4 @@ hidden: true
 
 ## 🚪 传送
 
-◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://dunwu.github.io/blog/) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [钝悟的博客](https://dunwu.github.io/blog/) ◾

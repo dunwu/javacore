@@ -10,7 +10,6 @@ tags:
   - JavaSE
   - 容器
 permalink: /pages/9eb49b/
-abbrlink: f431e3b
 hidden: true
 ---
 
@@ -55,4 +54,4 @@ hidden: true
 
 ## 🚪 传送
 
-◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://dunwu.github.io/blog/) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [钝悟的博客](https://dunwu.github.io/blog/) ◾

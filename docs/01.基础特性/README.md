@@ -9,7 +9,6 @@ tags:
   - Java
   - JavaSE
 permalink: /pages/8ea213/
-abbrlink: d9e0d71
 hidden: true
 ---
 
@@ -29,7 +28,7 @@ hidden: true
 - [Java 控制语句](07.Java控制语句.md)
 - [Java 异常](08.Java异常.md)
 - [Java 泛型](09.Java泛型.md)
-- [Java 反射](10.Java反射.md)
+- [Java 反射](01.Java反射.md)
 - [Java 注解](11.Java注解.md)
 - [Java String 类型](42.JavaString类型.md)
 
@@ -70,4 +69,4 @@ hidden: true
 
 ## 🚪 传送
 
-◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [我的博客](https://dunwu.github.io/blog/) ◾
+◾ 🏠 [JAVACORE 首页](https://github.com/dunwu/javacore) ◾ 🎯 [钝悟的博客](https://dunwu.github.io/blog/) ◾
