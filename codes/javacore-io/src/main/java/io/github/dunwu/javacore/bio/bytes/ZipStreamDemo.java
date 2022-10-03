@@ -140,7 +140,10 @@ public class ZipStreamDemo {
         while ((entry = zis.getNextEntry()) != null) { // 得到一个压缩实体
             System.out.println("解压缩" + entry.getName() + "文件。");
             // 定义输出的文件路径
-            File outFile = new File(dirpath + File.separator + entry.getName());
+            File outFile = new File(dirpath, entry.getName());
+            if (!outFile.toPath().normalize().startsWith(dirpath)) {
+                throw new IOException("Bad zip entry");
+            }
             if (!outFile.getParentFile().exists()) { // 如果输出文件夹不存在
                 outFile.getParentFile().mkdirs(); // 创建文件夹
             }
