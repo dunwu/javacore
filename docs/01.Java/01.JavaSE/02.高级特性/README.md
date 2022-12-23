@@ -20,7 +20,7 @@ hidden: true
 
 - [Java 正则从入门到精通](01.Java正则.md) - 关键词：`Pattern`、`Matcher`、`捕获与非捕获`、`反向引用`、`零宽断言`、`贪婪与懒惰`、`元字符`、`DFA`、`NFA`
 - [Java 编码和加密](02.Java编码和加密.md) - 关键词：`Base64`、`消息摘要`、`数字签名`、`对称加密`、`非对称加密`、`MD5`、`SHA`、`HMAC`、`AES`、`DES`、`DESede`、`RSA`
-- [Java 本地化](03.Java本地化.md)
+- [Java 国际化](03.Java国际化.md) - 关键词：`Locale`、`ResourceBundle`、`NumberFormat`、`DateFormat`、`MessageFormat`
 - [Java JDK8](04.JDK8.md) - 关键词：`Stream`、`lambda`、`Optional`、`@FunctionalInterface`
 - [Java SPI](05.JavaSPI.md) - 关键词：`SPI`、`ClassLoader`
 

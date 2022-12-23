@@ -27,27 +27,27 @@ module.exports = {
     nav: [
       {
         text: '基础特性',
-        link: '/01.基础特性/',
+        link: '/01.Java/01.JavaSE/01.基础特性/',
       },
       {
         text: '高级特性',
-        link: '/02.高级特性/',
+        link: '/01.Java/01.JavaSE/02.高级特性/',
       },
       {
         text: '容器',
-        link: '/03.容器/',
+        link: '/01.Java/01.JavaSE/03.容器/',
       },
       {
         text: 'IO',
-        link: '/04.IO/',
+        link: '/01.Java/01.JavaSE/04.IO/',
       },
       {
         text: '并发',
-        link: '/05.并发/',
+        link: '/01.Java/01.JavaSE/05.并发/',
       },
       {
         text: 'JVM',
-        link: '/06.JVM/',
+        link: '/01.Java/01.JavaSE/06.JVM/',
       },
       {
         text: '✨ Java系列',
