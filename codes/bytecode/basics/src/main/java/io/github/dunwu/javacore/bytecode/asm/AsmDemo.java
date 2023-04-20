@@ -1,5 +1,6 @@
-package io.github.dunwu.javacore.jvm.bytecode;
+package io.github.dunwu.javacore.bytecode.asm;
 
+import io.github.dunwu.javacore.bytecode.Base;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
@@ -19,16 +20,16 @@ import java.io.FileOutputStream;
 public class AsmDemo {
 
     public static void main(String[] args) throws Exception {
-        //读取
-        ClassReader classReader = new ClassReader("io/github/dunwu/javacore/jvm/bytecode/Base");
+        // 读取
+        ClassReader classReader = new ClassReader("io/github/dunwu/javacore/bytecode/Base");
         ClassWriter classWriter = new ClassWriter(ClassWriter.COMPUTE_MAXS);
-        //处理
+        // 处理
         ClassVisitor classVisitor = new MyClassVisitor(classWriter);
         classReader.accept(classVisitor, ClassReader.SKIP_DEBUG);
         byte[] data = classWriter.toByteArray();
-        //输出
+        // 输出
         String classPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-        File f = new File(classPath + "io/github/dunwu/javacore/jvm/bytecode/Base.class");
+        File f = new File(classPath + "io/github/dunwu/javacore/bytecode/Base.class");
         FileOutputStream fout = new FileOutputStream(f);
         fout.write(data);
         fout.close();
@@ -37,3 +38,8 @@ public class AsmDemo {
     }
 
 }
+
+// 输出：
+// start
+// process
+// end

@@ -24,5 +24,6 @@
     <module>codes/javacore-utils</module>
     <module>codes/javacore-oop</module>
     <module>codes/javacore-in-web</module>
+    <module>codes/bytecode</module>
   </modules>
 </project>

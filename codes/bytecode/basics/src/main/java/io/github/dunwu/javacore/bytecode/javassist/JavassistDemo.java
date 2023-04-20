@@ -1,6 +1,11 @@
-package io.github.dunwu.javacore.jvm.bytecode;
+package io.github.dunwu.javacore.bytecode.javassist;
 
-import javassist.*;
+import io.github.dunwu.javacore.bytecode.Base;
+import javassist.CannotCompileException;
+import javassist.ClassPool;
+import javassist.CtClass;
+import javassist.CtMethod;
+import javassist.NotFoundException;
 
 import java.io.IOException;
 
@@ -17,15 +22,21 @@ public class JavassistDemo {
     public static void main(String[] args)
         throws CannotCompileException, IOException, NotFoundException, IllegalAccessException, InstantiationException {
         ClassPool cp = ClassPool.getDefault();
-        CtClass cc = cp.get("io.github.dunwu.javacore.jvm.bytecode.Base");
+        CtClass cc = cp.get("io.github.dunwu.javacore.bytecode.Base");
         CtMethod m = cc.getDeclaredMethod("process");
         m.insertBefore("{ System.out.println(\"start\"); }");
         m.insertAfter("{ System.out.println(\"end\"); }");
-        Class c = cc.toClass();
+        Class<?> clazz = cc.toClass();
         String classPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
-        cc.writeFile(classPath + "io/github/dunwu/javacore/jvm/bytecode/");
-        Base base = (Base) c.newInstance();
+        cc.writeFile(classPath + "io/github/dunwu/javacore/bytecode/");
+        Base base = (Base) clazz.newInstance();
         base.process();
     }
 
 }
+// 输出：
+// start
+// start
+// process
+// end
+// end
