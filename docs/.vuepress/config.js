@@ -12,7 +12,10 @@ module.exports = {
     // 注入到页面<head> 中的标签，格式[tagName, { attrName: attrValue }, innerHTML?]
     ['link', { rel: 'icon', href: '/img/favicon.ico' }], //favicons，资源放在public文件夹
     ['meta', { name: 'keywords', content: 'vuepress,theme,blog,vdoing' }],
-    ['meta', { name: 'theme-color', content: '#11a8cd' }] // 移动浏览器主题颜色
+    ['meta', { name: 'theme-color', content: '#11a8cd' }], // 移动浏览器主题颜色
+
+    ['meta', { name: 'wwads-cn-verify', content: 'mxqWx62nfQQ9ocT4e5DzISHzOWyF4s' }], // 广告相关，你可以去掉
+    ['script', { src: 'https://cdn.wwads.cn/js/makemoney.js', type: 'text/javascript' }], // 广告相关，你可以去掉
   ],
   markdown: {
     // lineNumbers: true,
@@ -27,27 +30,27 @@ module.exports = {
     nav: [
       {
         text: '基础特性',
-        link: '/01.Java/01.JavaSE/01.基础特性/'
+        link: '/01.基础特性/',
       },
       {
         text: '高级特性',
-        link: '/01.Java/01.JavaSE/02.高级特性/'
+        link: '/02.高级特性/',
       },
       {
         text: '容器',
-        link: '/01.Java/01.JavaSE/03.容器/'
+        link: '/03.容器/',
       },
       {
         text: 'IO',
-        link: '/01.Java/01.JavaSE/04.IO/'
+        link: '/04.IO/',
       },
       {
         text: '并发',
-        link: '/01.Java/01.JavaSE/05.并发/'
+        link: '/05.并发/',
       },
       {
         text: 'JVM',
-        link: '/01.Java/01.JavaSE/06.JVM/'
+        link: '/06.JVM/',
       },
       {
         text: '✨ Java系列',
@@ -57,34 +60,34 @@ module.exports = {
             text: 'Java 教程 📚',
             link: 'https://dunwu.github.io/java-tutorial/',
             target: '_blank',
-            rel: ''
+            rel: '',
           },
           {
             text: 'JavaCore 教程 📚',
             link: 'https://dunwu.github.io/javacore/',
             target: '_blank',
-            rel: ''
+            rel: '',
           },
           {
             text: 'Spring 教程 📚',
             link: 'https://dunwu.github.io/spring-tutorial/',
             target: '_blank',
-            rel: ''
+            rel: '',
           },
           {
             text: 'Spring Boot 教程 📚',
             link: 'https://dunwu.github.io/spring-boot-tutorial/',
             target: '_blank',
-            rel: ''
-          }
-        ]
+            rel: '',
+          },
+        ],
       },
       {
         text: '🎯 博客',
         link: 'https://github.com/dunwu/blog',
         target: '_blank',
-        rel: ''
-      }
+        rel: '',
+      },
     ],
     sidebarDepth: 2, // 侧边栏显示深度，默认1，最大2（显示到h3标题）
     logo: 'https://raw.githubusercontent.com/dunwu/images/dev/common/dunwu-logo.png', // 导航栏logo
@@ -97,9 +100,10 @@ module.exports = {
     editLinkText: '📝 帮助改善此页面！',
 
     // 以下配置是Vdoing主题改动的和新增的配置
-    sidebar: { mode: 'structuring', collapsable: false }, // 侧边栏  'structuring' | { mode: 'structuring', collapsable: Boolean} | 'auto' | 自定义    温馨提示：目录页数据依赖于结构化的侧边栏数据，如果你不设置为'structuring',将无法使用目录页
+    sidebar: { mode: 'structuring', collapsable: true }, // 侧边栏  'structuring' | { mode: 'structuring', collapsable:
+    // Boolean} | 'auto' | 自定义    温馨提示：目录页数据依赖于结构化的侧边栏数据，如果你不设置为'structuring',将无法使用目录页
 
-    // sidebarOpen: false, // 初始状态是否打开侧边栏，默认true
+    sidebarOpen: true, // 初始状态是否打开侧边栏，默认true
     updateBar: {
       // 最近更新栏
       showToArticle: true // 显示到文章页底部，默认true
@@ -223,6 +227,25 @@ module.exports = {
         transformer: (timestamp, lang) => {
           const dayjs = require('dayjs') // https://day.js.org/
           return dayjs(timestamp).format('YYYY/MM/DD, HH:mm:ss')
+        }
+      }
+    ],
+    [
+      'vuepress-plugin-comment', // 评论
+      {
+        choosen: 'gitalk',
+        options: {
+          clientID: '7dd8c87a20cff437d2ed',
+          clientSecret: '4e28d81a9a0280796b2b45ce2944424c6f2c1531',
+          repo: 'db-tutorial', // GitHub 仓库
+          owner: 'dunwu', // GitHub仓库所有者
+          admin: ['dunwu'], // 对仓库有写权限的人
+          // distractionFreeMode: true,
+          pagerDirection: 'last', // 'first'正序 | 'last'倒序
+          id: '<%- (frontmatter.permalink || frontmatter.to.path).slice(-16) %>', //  页面的唯一标识,长度不能超过50
+          title: '「评论」<%- frontmatter.title %>', // GitHub issue 的标题
+          labels: ['Gitalk', 'Comment'], // GitHub issue 的标签
+          body: '页面：<%- window.location.origin + (frontmatter.to.path || window.location.pathname) %>' // GitHub issue 的内容
         }
       }
     ]
