@@ -63,7 +63,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ### [Java 容器](01.Java/01.JavaSE/03.容器)
 
-![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200221175550.png)
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175550.png)
 
 - [Java 容器简介](01.Java/01.JavaSE/03.容器/01.Java容器简介.md) - 关键词：`Collection`、`泛型`、`Iterable`、`Iterator`、`Comparable`、`Comparator`、`Cloneable`、`fail-fast`
 - [Java 容器之 List](01.Java/01.JavaSE/03.容器/02.Java容器之List.md) - 关键词：`List`、`ArrayList`、`LinkedList`
@@ -74,7 +74,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ### [Java IO](01.Java/01.JavaSE/04.IO)
 
-![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200630205329.png)
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200630205329.png)
 
 - [Java IO 模型](01.Java/01.JavaSE/04.IO/01.JavaIO模型.md) - 关键词：`InputStream`、`OutputStream`、`Reader`、`Writer`、`阻塞`
 - [Java NIO](01.Java/01.JavaSE/04.IO/02.JavaNIO.md) - 关键词：`Channel`、`Buffer`、`Selector`、`非阻塞`、`多路复用`
@@ -84,7 +84,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ### [Java 并发](01.Java/01.JavaSE/05.并发)
 
-![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200221175827.png)
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200221175827.png)
 
 - [Java 并发简介](01.Java/01.JavaSE/05.并发/01.Java并发简介.md) - 关键词：`进程`、`线程`、`安全性`、`活跃性`、`性能`、`死锁`、`饥饿`、`上下文切换`
 - [Java 线程基础](01.Java/01.JavaSE/05.并发/02.Java线程基础.md) - 关键词：`Thread`、`Runnable`、`Callable`、`Future`、`wait`、`notify`、`notifyAll`、`join`、`sleep`、`yeild`、`线程状态`、`线程通信`
@@ -99,7 +99,7 @@ footer: CC-BY-SA-4.0 Licensed | Copyright © 2018-Now Dunwu
 
 ### [Java 虚拟机](01.Java/01.JavaSE/06.JVM)
 
-![img](https://raw.githubusercontent.com/dunwu/images/dev/snap/20200628154803.png)
+![img](https://raw.githubusercontent.com/dunwu/images/master/snap/20200628154803.png)
 
 - [JVM 体系结构](01.Java/01.JavaSE/06.JVM/01.JVM体系结构.md)
 - [JVM 内存区域](01.Java/01.JavaSE/06.JVM/02.JVM内存区域.md) - 关键词：`程序计数器`、`虚拟机栈`、`本地方法栈`、`堆`、`方法区`、`运行时常量池`、`直接内存`、`OutOfMemoryError`、`StackOverflowError`
