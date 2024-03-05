@@ -4,7 +4,7 @@ import io.github.dunwu.javacore.util.tuple.FiveTuple;
 import io.github.dunwu.javacore.util.tuple.FourTuple;
 import io.github.dunwu.javacore.util.tuple.ThreeTuple;
 import io.github.dunwu.javacore.util.tuple.TwoTuple;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
