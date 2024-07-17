@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2020-08-11
  */
-public class SubList示例 {
+public class ListSubListDemo {
 
     public static void main(String[] args) throws InterruptedException {
         // oom();
@@ -19,14 +19,14 @@ public class SubList示例 {
         // right2();
     }
 
-    private static List<List<Integer>> data = new ArrayList<>();
+private static List<List<Integer>> data = new ArrayList<>();
 
-    private static void oom() {
-        for (int i = 0; i < 1000; i++) {
-            List<Integer> rawList = IntStream.rangeClosed(1, 100000).boxed().collect(Collectors.toList());
-            data.add(rawList.subList(0, 1));
-        }
+private static void oom() {
+    for (int i = 0; i < 1000; i++) {
+        List<Integer> rawList = IntStream.rangeClosed(1, 100000).boxed().collect(Collectors.toList());
+        data.add(rawList.subList(0, 1));
     }
+}
 
     private static void oomfix() {
         for (int i = 0; i < 1000; i++) {

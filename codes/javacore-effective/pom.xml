@@ -3,9 +3,14 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>io.github.dunwu.javacore</groupId>
+  <parent>
+    <groupId>io.github.dunwu.javacore</groupId>
+    <artifactId>javacore</artifactId>
+    <version>1.0.1</version>
+    <relativePath>../../pom.xml</relativePath>
+  </parent>
+
   <artifactId>javacore-effective</artifactId>
-  <version>1.0.1</version>
   <name>JavaCore :: Effective</name>
 
   <properties>
@@ -35,16 +40,4 @@
       <artifactId>logback-classic</artifactId>
     </dependency>
   </dependencies>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.github.dunwu</groupId>
-        <artifactId>dunwu-dependencies</artifactId>
-        <version>1.0.6</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 </project>

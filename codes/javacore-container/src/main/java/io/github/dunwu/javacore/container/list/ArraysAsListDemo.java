@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * @since 2020-08-11
  */
 @Slf4j
-public class AsList示例 {
+public class ArraysAsListDemo {
 
     public static void main(String[] args) {
         System.out.println("====================== wrong1 ======================");
