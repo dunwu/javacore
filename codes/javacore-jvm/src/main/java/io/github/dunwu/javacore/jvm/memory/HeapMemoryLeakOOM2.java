@@ -12,10 +12,10 @@ import java.util.Random;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2020-03-09
  */
-public class HeapMemoryLeakMemoryErrorDemo2 {
+public class HeapMemoryLeakOOM2 {
 
     public static void main(String[] args) {
-        HeapMemoryLeakMemoryErrorDemo2 demo = new HeapMemoryLeakMemoryErrorDemo2();
+        HeapMemoryLeakOOM2 demo = new HeapMemoryLeakOOM2();
         System.out.println("往ArrayList中加入30w内容");
         demo.javaHeapSpace(300000);
         demo.memoryTotal();

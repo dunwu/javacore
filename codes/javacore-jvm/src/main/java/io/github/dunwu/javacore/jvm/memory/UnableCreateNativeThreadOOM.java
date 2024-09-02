@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2020-03-08
  */
-public class UnableCreateNativeThreadErrorDemo {
+public class UnableCreateNativeThreadOOM {
 
     public static void main(String[] args) {
         while (true) {

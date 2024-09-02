@@ -11,33 +11,28 @@ package io.github.dunwu.javacore.jvm.memory;
  * <p>
  * 如果没有一个新的栈帧所需空间，Java 就会抛出 StackOverflowError。
  * <p>
- * VM 参数：
- * <ul>
- * <li>-Xss228k - 设置栈大小为 228k</li>
- * </ul>
- * <p>
- * Linux Test Cli: nohup java -verbose:gc -Xss228k -cp target/javacore-jvm-1.0.1.jar io.github.dunwu.javacore.jvm.memory.StackOverflowDemo >> output.log 2>&1 &
+ * VM 参数：-Xss228k - 设置栈大小为 228k
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25
  */
-public class StackOverflowDemo {
+public class StackOverflowErrorDemo {
 
     private int stackLength = 1;
 
-    public static void main(String[] args) {
-        StackOverflowDemo obj = new StackOverflowDemo();
-        try {
-            obj.recursion();
-        } catch (Throwable e) {
-            System.out.println("栈深度：" + obj.stackLength);
-            e.printStackTrace();
-        }
+    public void stackLeak() {
+        stackLength++;
+        stackLeak();
     }
 
-    public void recursion() {
-        stackLength++;
-        recursion();
+    public static void main(String[] args) {
+        StackOverflowErrorDemo demo = new StackOverflowErrorDemo();
+        try {
+            demo.stackLeak();
+        } catch (Throwable e) {
+            System.out.println("栈深度：" + demo.stackLength);
+            e.printStackTrace();
+        }
     }
 
 }

@@ -13,12 +13,11 @@ import javassist.ClassPool;
  * <li>-Xmx100M -XX:MaxPermSize=16M (JDK8 以前版本)</li>
  * <li>-Xmx100M -XX:MaxMetaspaceSize=16M (JDK8 及以后版本)</li>
  * </ul>
- * Linux Test Cli: nohup java -verbose:gc -Xmx100M -XX:MaxMetaspaceSize=16M -XX:+HeapDumpOnOutOfMemoryError -classpath "target/javacore-jvm-1.0.1.jar:target/lib/*" io.github.dunwu.javacore.jvm.memory.PermOutOfMemoryErrorDemo >> output.log 2>&1 &
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2020-03-08
  */
-public class PermOutOfMemoryErrorDemo {
+public class PermGenSpaceOOM {
 
     public static void main(String[] args) throws Exception {
         for (int i = 0; i < 100_000_000; i++) {
