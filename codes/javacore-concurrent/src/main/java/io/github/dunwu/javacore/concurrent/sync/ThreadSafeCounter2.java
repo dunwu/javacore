@@ -15,35 +15,36 @@ import io.github.dunwu.javacore.concurrent.annotation.ThreadSafe;
  * @since 2018/8/1
  */
 @ThreadSafe
-public class SynchronizedDemo implements Runnable {
-
-    private static final int MAX = 100000;
+public class ThreadSafeCounter2 {
 
     private static int count = 0;
 
+    public synchronized long get() {
+        return count;
+    }
+
+    public synchronized static void add() {
+        count++;
+    }
+
     public static void main(String[] args) throws InterruptedException {
-        SynchronizedDemo instance = new SynchronizedDemo();
-        Thread t1 = new Thread(instance);
-        Thread t2 = new Thread(instance);
+        final int MAX = 100000;
+        ThreadSafeCounter2 instance = new ThreadSafeCounter2();
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < MAX; i++) {
+                instance.add();
+            }
+        });
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < MAX; i++) {
+                instance.add();
+            }
+        });
         t1.start();
         t2.start();
         t1.join();
         t2.join();
-        System.out.println(count);
-    }
-
-    @Override
-    public void run() {
-        for (int i = 0; i < MAX; i++) {
-            increase();
-        }
-    }
-
-    /**
-     * synchronized 修饰普通方法
-     */
-    public synchronized void increase() {
-        count++;
+        System.out.println("count = " + instance.get());
     }
 
 }

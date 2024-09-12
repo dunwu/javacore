@@ -1,5 +1,6 @@
 package io.github.dunwu.javacore.concurrent;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -14,7 +15,7 @@ public class FutureDemo {
 
     public static void main(String[] args) {
         ExecutorService executor = Executors.newCachedThreadPool();
-        CallableDemo task = new CallableDemo();
+        Task task = new Task();
         Future<Integer> result = executor.submit(task);
         executor.shutdown();
 
@@ -33,6 +34,21 @@ public class FutureDemo {
         }
 
         System.out.println("所有任务执行完毕");
+    }
+
+    static class Task implements Callable<Integer> {
+
+        @Override
+        public Integer call() throws Exception {
+            System.out.println("子线程在进行计算");
+            Thread.sleep(3000);
+            int sum = 0;
+            for (int i = 0; i < 100; i++) {
+                sum += i;
+            }
+            return sum;
+        }
+
     }
 
 }
