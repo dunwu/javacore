@@ -34,10 +34,17 @@ public enum ErrorCodeEn {
         this.code = number;
     }
 
-    public static void main(String[] args) { // 静态方法
+    /**
+     * 遍历全部错误码枚举，打印各自的 code 与 description。
+     */
+    public static void demo() { // 静态方法
         for (ErrorCodeEn s : ErrorCodeEn.values()) {
             System.out.println("code: " + s.getCode() + ", description: " + s.getDescription());
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public int getCode() { // 普通方法

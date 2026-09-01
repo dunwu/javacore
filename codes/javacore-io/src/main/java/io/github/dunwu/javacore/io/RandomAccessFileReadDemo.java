@@ -15,10 +15,19 @@ import java.io.RandomAccessFile;
  */
 public class RandomAccessFileReadDemo {
 
-    public static void main(String[] args) throws IOException {
+    /**
+     * 演示 {@link RandomAccessFile} 随机读取：通过 skipBytes / seek 在定长记录间任意跳转。
+     * <p>
+     * 为了使示例自包含，数据文件不存在时会先调用 {@link RandomAccessFileWriteDemo#demo()} 生成。
+     */
+    public static void demo() throws IOException {
 
-        // 指定要操作的文件
-        File f = new File("temp.log");
+        // 指定要操作的文件（与 RandomAccessFileWriteDemo 共用）
+        File f = new File(RandomAccessFileWriteDemo.FILE_PATH);
+        if (!f.exists()) {
+            // 文件不存在时先写入数据，保证示例可独立运行
+            RandomAccessFileWriteDemo.demo();
+        }
 
         // 声明RandomAccessFile类的对象，以只读的方式打开文件
         RandomAccessFile rdf = null;
@@ -56,6 +65,10 @@ public class RandomAccessFileReadDemo {
 
         // 关闭
         rdf.close();
+    }
+
+    public static void main(String[] args) throws IOException {
+        demo();
     }
 
 }

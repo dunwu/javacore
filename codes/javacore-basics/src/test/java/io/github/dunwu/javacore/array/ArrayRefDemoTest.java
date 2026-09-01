@@ -1,13 +1,15 @@
 package io.github.dunwu.javacore.array;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class ArrayRefDemoTest {
 
     @Test
+    @DisplayName("数组作为方法参数：引用传递，方法内修改影响原数组")
     public void demo01() {
         int[] temp = { 1, 3, 5 }; // 利用静态初始化方式定义数组
         acceptArray01(temp); // 传递数组
@@ -21,6 +23,7 @@ public class ArrayRefDemoTest {
     }
 
     @Test
+    @DisplayName("方法返回数组：通过方法实例化并返回数组")
     public void demo02() {
         int[] temp = acceptArray02(); // 通过方法实例化数组
         print(temp); // 打印数组内容
@@ -38,6 +41,7 @@ public class ArrayRefDemoTest {
     }
 
     @Test
+    @DisplayName("自定义冒泡排序方法对数组排序")
     public void demo03() {
         int[] score = { 67, 89, 87, 69, 90, 100, 75, 90 }; // 定义整型数组
         int[] age = { 31, 30, 18, 17, 8, 9, 1, 39 }; // 定义整型数组
@@ -61,6 +65,7 @@ public class ArrayRefDemoTest {
     }
 
     @Test
+    @DisplayName("使用 Arrays.sort 对数组排序")
     public void demo04() {
         int[] score = { 67, 89, 87, 69, 90, 100, 75, 90 }; // 定义整型数组
         int[] age = { 31, 30, 18, 17, 8, 9, 1, 39 }; // 定义整型数组
@@ -72,6 +77,7 @@ public class ArrayRefDemoTest {
     }
 
     @Test
+    @DisplayName("自定义方法实现数组拷贝")
     public void demo05() {
         int[] i1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }; // 源数组
         int[] i2 = { 11, 22, 33, 44, 55, 66, 77, 88, 99 };// 目标数组
@@ -89,6 +95,7 @@ public class ArrayRefDemoTest {
     }
 
     @Test
+    @DisplayName("使用 System.arraycopy 实现数组拷贝")
     public void demo06() {
         int[] i1 = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }; // 源数组
         int[] i2 = { 11, 22, 33, 44, 55, 66, 77, 88, 99 };// 目标数组

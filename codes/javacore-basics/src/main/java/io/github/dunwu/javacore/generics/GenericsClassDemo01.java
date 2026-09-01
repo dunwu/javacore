@@ -8,7 +8,10 @@ import io.github.dunwu.javacore.generics.entity.Info;
  */
 public class GenericsClassDemo01 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示泛型类：同一个 Info 类分别指定 Integer 和 String 类型。
+     */
+    public static void demo() {
         Info<Integer> info = new Info<>();
         info.setValue(10);
         System.out.println(info.getValue());
@@ -16,6 +19,10 @@ public class GenericsClassDemo01 {
         Info<String> info2 = new Info<>();
         info2.setValue("xyz");
         System.out.println(info2.getValue());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

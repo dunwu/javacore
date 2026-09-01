@@ -9,11 +9,18 @@ package io.github.dunwu.javacore.generics;
  */
 public class NoGenericsDemo02 {
 
-    public static void main(String[] args) {
+    /**
+     * 对比示例：不使用泛型时用 Object 存取 + 强转，需要程序员自己保证类型安全。
+     */
+    public static void demo() {
         Info info = new Info();
         info.setValue("abc");
         String str = (String) info.getValue();
         System.out.println("str = [" + str + "]");
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class Info {

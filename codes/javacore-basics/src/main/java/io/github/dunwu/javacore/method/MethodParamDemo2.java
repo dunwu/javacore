@@ -6,13 +6,20 @@ package io.github.dunwu.javacore.method;
  */
 public class MethodParamDemo2 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示引用类型参数传值：方法内重新赋值形参不影响实参指向的对象。
+     */
+    public static void demo() {
         StringBuilder sb = new StringBuilder("A");
         System.out.println("sb = [" + sb.toString() + "]");
         method(sb);
         System.out.println("sb = [" + sb.toString() + "]");
         sb = new StringBuilder("C");
         System.out.println("sb = [" + sb.toString() + "]");
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void method(StringBuilder sb) {

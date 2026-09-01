@@ -12,7 +12,10 @@ package io.github.dunwu.javacore.control;
  */
 public class ForeachDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示增强 for（foreach）：依次遍历 int 数组与 String 数组，无需下标。
+     */
+    public static void demo() {
         int[] numbers = { 10, 20, 30, 40, 50 };
 
         for (int x : numbers) {
@@ -27,6 +30,11 @@ public class ForeachDemo {
             System.out.print(name);
             System.out.print(",");
         }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

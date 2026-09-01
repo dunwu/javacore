@@ -1,25 +1,67 @@
 package io.github.dunwu.javacore.bio.bytes;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 /**
+ * 压缩流示例：用 ZipOutputStream/ZipInputStream/ZipFile 完成文件与目录的压缩、解压。
+ * <p>demo 会在系统临时目录下自包含地准备素材并演示：压缩单文件、读取压缩实体、压缩目录、解压目录。
+ *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class ZipStreamDemo {
 
-    public static final String ZIP_FILE_PATH = "d:\\zipdemo.zip";
+    /** 演示单文件与目录的压缩、解压全流程（素材在临时目录中自动准备）。 */
+    public static void demo() throws Exception {
+        // 在系统临时目录中准备演示素材，避免污染其他目录
+        File workDir = Files.createTempDirectory("zipdemo").toFile();
+        String filepath = new File(workDir, "demo.txt").getPath();
+        String zipfilepath = new File(workDir, "demo.zip").getPath();
+        String dirpath = new File(workDir, "demo2").getPath();
+        String dirpath2 = new File(workDir, "new").getPath();
+        String zipfilepath2 = new File(workDir, "demo2.zip").getPath();
 
+        // 准备一个待压缩的文件
+        try (OutputStream out = new FileOutputStream(filepath)) {
+            out.write("MLDN：www.mldn.cn".getBytes(StandardCharsets.UTF_8));
+        }
+        // 准备一个待压缩的目录（内含两个文件）
+        File dir = new File(dirpath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        for (String name : new String[] { "a.txt", "b.txt" }) {
+            try (OutputStream out = new FileOutputStream(new File(dir, name))) {
+                out.write(("内容：" + name).getBytes(StandardCharsets.UTF_8));
+            }
+        }
+
+        output1(filepath, zipfilepath);
+        input1(zipfilepath, filepath);
+
+        output2(dirpath, zipfilepath2);
+        input2(zipfilepath2, dirpath2);
+    }
+
+    public static void main(String[] args) throws Exception {
+        demo();
+    }
+
+    /**
+     * 解压压缩包中的指定实体到文件
+     */
     public static void demo01(String zipfilepath) throws IOException {
         File file = new File(zipfilepath);
         ZipFile zipFile = new ZipFile(file);
         ZipEntry entry = zipFile.getEntry("mldn.txt");
         System.out.println("压缩文件的名称：" + zipFile.getName());
 
-        File outputFile = new File("d:" + File.separator + "mldn_unzip.txt");
+        File outputFile = new File("mldn_unzip.txt");
         OutputStream out = new FileOutputStream(outputFile); // 实例化输出流
         InputStream input = zipFile.getInputStream(entry); // 得到一个压缩实体的输入流
         int temp = 0;
@@ -28,22 +70,7 @@ public class ZipStreamDemo {
         }
         input.close(); // 关闭输入流
         out.close(); // 关闭输出流
-    }
-
-    public static void main(String[] args) throws Exception {
-        final String filepath = "d:\\demo.txt";
-        final String zipfilepath = "d:\\demo.zip";
-
-        final String dirpath = "d:\\demo2";
-        final String dirpath2 = "d:\\new";
-        final String zipfilepath2 = "d:\\demo2.zip";
-
-        // demo01(ZIP_FILE_PATH);
-        output1(filepath, zipfilepath);
-        input1(zipfilepath, filepath);
-
-        output2(dirpath, zipfilepath2);
-        input2(zipfilepath2, dirpath2);
+        zipFile.close();
     }
 
     /**

@@ -3,9 +3,13 @@ package io.github.dunwu.javacore.container.list;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 示例：ArrayList 查询操作 —— isEmpty、contains、subList、indexOf。
+ */
 public class ArrayListDemo05 {
 
-    public static void main(String[] args) {
+    /** 演示 ArrayList 的判空、包含、截取、定位操作。 */
+    public static void demo() {
         List<String> allList = null;
         allList = new ArrayList<String>();    // 指定操作的泛型为String
         System.out.println("集合操作前是否为空？" + allList.isEmpty());
@@ -21,6 +25,10 @@ public class ArrayListDemo05 {
         }
         System.out.println("MLDN字符串的位置：" + allList.indexOf("MLDN"));
         System.out.println("集合操作后是否为空？" + allList.isEmpty());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

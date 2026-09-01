@@ -1,12 +1,19 @@
 package io.github.dunwu.javacore.method;
 
+/**
+ * 演示带参数、有返回值的方法：分别实现整数和浮点数的加法。
+ */
 public class MethodDemo02 {
 
-    public static void main(String[] args) {
+    public static void demo() {
         int one = addInt(10, 20); // 调用整型的加法操作
         float two = addFloat(10.3f, 13.3f); // 调用浮点数的加法操作
         System.out.println("addOne的计算结果：" + one);
         System.out.println("addTwo的计算结果：" + two);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     private static int addInt(int x, int y) {

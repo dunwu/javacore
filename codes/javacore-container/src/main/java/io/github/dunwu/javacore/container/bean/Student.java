@@ -14,6 +14,7 @@ public class Student {
     private List<Course> allCourses;
 
     public Student(String name, int age) {
+        this();
         this.name = name;
         this.age = age;
     }

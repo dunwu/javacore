@@ -12,7 +12,10 @@ package io.github.dunwu.javacore.control;
  */
 public class ForNestedDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示嵌套 for 循环：打印九九乘法表。
+     */
+    public static void demo() {
         // 控制行
         for (int i = 1; i <= 9; i++) {
             // 控制列
@@ -21,6 +24,10 @@ public class ForNestedDemo {
             }
             System.out.println();
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -3,10 +3,17 @@ package io.github.dunwu.javacore.exception;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+/**
+ * 演示 throws：方法声明抛出受检异常后，调用方必须捕获或继续声明。
+ */
 public class ThrowsDemo {
 
-    public static void main(String[] args) {
+    public static void demo() {
         f2();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void f2() {

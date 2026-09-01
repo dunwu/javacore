@@ -6,7 +6,10 @@ package io.github.dunwu.javacore.enumeration;
  */
 public class EnumInClassDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示在普通类内部定义枚举：遍历蔬菜枚举并打印描述。
+     */
+    public static void demo() {
         for (Plant2.Vegetable v : Plant2.Vegetable.values()) {
             System.out.println(v.getDescription());
         }
@@ -73,6 +76,10 @@ public class EnumInClassDemo {
             }
         }
 
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

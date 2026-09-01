@@ -8,7 +8,10 @@ package io.github.dunwu.javacore.array;
 @SuppressWarnings("all")
 public class ArrayDemo3 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示数组维度的合法取值：维度必须是可转为 int 的类型（如 char），不能是浮点数或字符串。
+     */
+    public static void demo() {
         int length = 3;
         // 放开被注掉的代码，编译器会报错
         // int[] array = new int[4.0];
@@ -22,6 +25,10 @@ public class ArrayDemo3 {
         System.out.println("array4.length = [" + array4.length + "]");
         System.out.println("array5.length = [" + array5.length + "]");
         System.out.println("array6.length = [" + array6.length + "]");
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

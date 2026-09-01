@@ -8,13 +8,20 @@ import java.math.BigInteger;
  */
 public class 数值溢出 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示数值溢出：long 最大值 +1 溢出为最小值，以及 Math.addExact、BigInteger 的应对方案
+     */
+    public static void demo() {
         System.out.println("====================== wrong1 ======================");
         wrong();
         System.out.println("====================== right1 ======================");
         right1();
         System.out.println("====================== right2 ======================");
         right2();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     private static void wrong() {

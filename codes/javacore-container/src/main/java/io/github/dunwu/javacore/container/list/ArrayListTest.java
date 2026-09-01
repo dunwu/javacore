@@ -5,9 +5,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/**
+ * 示例：在 ArrayList 中存放自定义对象（Employee），并逐个修改对象属性后输出。
+ */
 public class ArrayListTest {
 
-    public static void main(String[] args) {
+    /** 演示 ArrayList 存储自定义对象并批量修改对象属性。 */
+    public static void demo() {
         // fill the staff array list with three Employee objects
         List<Employee> staff = new ArrayList<>();
 
@@ -25,6 +29,10 @@ public class ArrayListTest {
             System.out.println("name=" + e.getName() + ",salary=" + e.getSalary() + ",hireDay="
                 + e.getHireDay());
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class Employee {

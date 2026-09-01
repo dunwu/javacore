@@ -1,22 +1,25 @@
 package io.github.dunwu.javacore.datatype;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 /**
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class DataDemoTest {
 
     @Test
+    @DisplayName("整型字面量超出范围会编译报错")
     public void demo01() {
         // compile error
         // int num = 9999999999999999999999999999999;
     }
 
     @Test
+    @DisplayName("整型最大值溢出演示")
     public void demo02() {
         int max = Integer.MAX_VALUE;
         System.out.println("整型的最大值：" + max);
@@ -26,6 +29,7 @@ public class DataDemoTest {
     }
 
     @Test
+    @DisplayName("char 字符类型：字符与数字赋值")
     public void demo03() {
         // 字符是使用”'“括起来的数据
         char ch1 = 'a';
@@ -36,6 +40,7 @@ public class DataDemoTest {
     }
 
     @Test
+    @DisplayName("char 转义字符的表示")
     public void demo04() {
         // 表示的是一个"
         char ch1 = '\"';
@@ -47,6 +52,7 @@ public class DataDemoTest {
     }
 
     @Test
+    @DisplayName("float 浮点型乘法运算")
     public void demo05() {
         // 定义一个浮点型变量
         float num = 3.0f;
@@ -54,6 +60,7 @@ public class DataDemoTest {
     }
 
     @Test
+    @DisplayName("boolean 布尔型变量")
     public void demo06() {
         // 定义布尔型变量
         boolean flag = true;
@@ -62,6 +69,7 @@ public class DataDemoTest {
     }
 
     @Test
+    @DisplayName("整型与浮点型混合除法运算")
     public void demo07() {
         // 定义整型变量
         int x = 30;
@@ -73,6 +81,7 @@ public class DataDemoTest {
     }
 
     @Test
+    @DisplayName("字符串与数值拼接")
     public void demo08() {
         // 定义字符串变量
         String str = "Zhang Peng";
@@ -83,6 +92,7 @@ public class DataDemoTest {
     }
 
     @Test
+    @DisplayName("字符串拼接中 + 运算的优先级")
     public void demo09() {
         // 定义整型变量
         int i = 1;
@@ -93,6 +103,7 @@ public class DataDemoTest {
     }
 
     @Test
+    @DisplayName("浮点型强制转换为整型")
     public void demo10() {
         // 浮点型
         float f = 30.3f;

@@ -3,9 +3,13 @@ package io.github.dunwu.javacore.container.list;
 import java.util.List;
 import java.util.Vector;
 
+/**
+ * 示例：Vector 是 JDK 1.0 就有的线程安全列表（每个方法都加锁），现已被 ArrayList 取代，仅作历史回顾。
+ */
 public class VectorDemo {
 
-    public static void main(String[] args) {
+    /** 演示 Vector 的基本用法及独有的 addElement 方法。 */
+    public static void demo() {
         List<String> list = new Vector<String>();
         list.add("B");
         list.add("C");
@@ -21,6 +25,10 @@ public class VectorDemo {
         for (String s : vector) {
             System.out.println(s);
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

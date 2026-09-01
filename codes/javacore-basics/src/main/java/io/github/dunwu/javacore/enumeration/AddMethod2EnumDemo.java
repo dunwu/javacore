@@ -38,10 +38,17 @@ public enum AddMethod2EnumDemo {
         this.code = number;
     }
 
-    public static void main(String[] args) { // 静态方法
+    /**
+     * 遍历全部枚举常量，打印各自的 code 与 description。
+     */
+    public static void demo() { // 静态方法
         for (AddMethod2EnumDemo item : AddMethod2EnumDemo.values()) {
             System.out.println("code: " + item.getCode() + ", description: " + item.getDescription());
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public int getCode() { // 普通方法

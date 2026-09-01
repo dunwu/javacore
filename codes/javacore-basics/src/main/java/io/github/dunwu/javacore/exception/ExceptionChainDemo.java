@@ -6,8 +6,15 @@ package io.github.dunwu.javacore.exception;
  */
 public class ExceptionChainDemo {
 
-    public static void main(String[] args) throws MyException2 {
+    /**
+     * 演示异常链：f1 抛出的 MyException1 在 f2 中被包装为 MyException2 继续上抛。
+     */
+    public static void demo() throws MyException2 {
         f2();
+    }
+
+    public static void main(String[] args) throws MyException2 {
+        demo();
     }
 
     public static void f2() throws MyException2 {

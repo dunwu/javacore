@@ -4,9 +4,13 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * 示例：SortedMap（TreeMap 实现）—— 按键自然序排序，支持 firstKey、lastKey、headMap、tailMap、subMap 范围操作。
+ */
 public class SortedMapDemo {
 
-    public static void main(String[] args) {
+    /** 演示 SortedMap 的排序与范围查询操作。 */
+    public static void demo() {
         SortedMap<String, String> map = null;
         map = new TreeMap<String, String>();    // 通过子类实例化接口对象
         map.put("D、jiangker", "http://www.jiangker.com/");
@@ -29,6 +33,10 @@ public class SortedMapDemo {
         for (Map.Entry<String, String> me : map.subMap("A、mldn", "C、zhinangtuan").entrySet()) {
             System.out.println("\t|- " + me.getKey() + " --> " + me.getValue());
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

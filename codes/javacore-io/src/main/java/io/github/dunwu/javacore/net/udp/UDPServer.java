@@ -4,6 +4,12 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
+/**
+ * UDP 发送端：通过 {@link java.net.DatagramSocket} 向 9000 端口发送一条消息。
+ * <p>
+ * 配套示例：先运行 {@link UDPClient}（在 9000 端口等待接收），再运行本类。
+ * 注：本示例需要配合接收端运行，不纳入自动化测试。
+ */
 public class UDPServer {
 
     public static void main(String[] args) throws Exception { // 所有异常抛出

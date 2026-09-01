@@ -1,8 +1,14 @@
 package io.github.dunwu.javacore.util.regex;
 
+/**
+ * 示例：不用正则判断字符串是否全为数字——逐字符判断，代码繁琐（对比 RegexDemo02 的正则写法）。
+ */
 public class RegexDemo01 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示逐字符判断字符串是否全由数字组成。
+     */
+    public static void demo() {
         String str = "1234567890"; // 此字符串由数字组成
         boolean flag = true; // 定义一个标记变量
         // 要先将字符串拆分成字符数组，之后依次判断
@@ -18,6 +24,10 @@ public class RegexDemo01 {
         } else {
             System.out.println("不是由数字组成！");
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

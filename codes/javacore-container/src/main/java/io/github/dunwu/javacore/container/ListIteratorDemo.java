@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+/**
+ * 示例：ListIterator 双向迭代器——可前向遍历、后向遍历，还可在遍历中修改元素。
+ */
 public class ListIteratorDemo {
 
-    public static void main(String[] args) {
+    /** 演示 ListIterator 前向遍历时把元素改小写，再后向遍历输出。 */
+    public static void demo() {
         List<Character> list = new ArrayList<Character>();
         list.add('A');
         list.add('B');
@@ -25,6 +29,10 @@ public class ListIteratorDemo {
             System.out.print(listIterator.previous() + " ");
         }
         System.out.println();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

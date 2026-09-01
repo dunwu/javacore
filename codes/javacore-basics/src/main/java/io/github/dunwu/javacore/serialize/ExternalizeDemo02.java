@@ -14,10 +14,17 @@ import java.io.*;
 @SuppressWarnings("all")
 public class ExternalizeDemo02 {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        final String filename = "d:/text.dat";
+    /**
+     * 演示 Externalizable：writeExternal 只写入 name 和 age，sex 字段不会被序列化
+     */
+    public static void demo() throws IOException, ClassNotFoundException {
+        final String filename = "temp_externalize02.dat";
         serialize(filename);
         deserialize(filename);
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        demo();
     }
 
     /**

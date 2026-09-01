@@ -4,6 +4,9 @@ package io.github.dunwu.javacore.container.bean;
 
 import java.util.*;
 
+/**
+ * 示例：享元（Flyweight）模式实现的国家-首都数据源，提供按数量截取的 Map / List 视图，供容器示例作为样本数据。
+ */
 public class Countries {
 
     public static final String[][] DATA = {
@@ -81,7 +84,8 @@ public class Countries {
 
     static List<String> names = new ArrayList<String>(map.keySet());
 
-    public static void main(String[] args) {
+    /** 演示各国数据集合在不同容器中的展示效果。 */
+    public static void demo() {
         System.out.println(capitals(10));
         System.out.println(names(10));
         System.out.println(new HashMap<String, String>(capitals(3)));
@@ -94,6 +98,10 @@ public class Countries {
         System.out.println(new ArrayList<String>(names(6)));
         System.out.println(new LinkedList<String>(names(6)));
         System.out.println(capitals().get("BRAZIL"));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static Map<String, String> capitals(int size) {

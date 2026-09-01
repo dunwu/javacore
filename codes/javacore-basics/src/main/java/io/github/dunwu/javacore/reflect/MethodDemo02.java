@@ -13,12 +13,19 @@ public class MethodDemo02 {
         new Exception("#" + i).printStackTrace();
     }
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * 反复反射调用同一方法，观察膨胀（inflation）机制生成 MethodAccessor。
+     */
+    public static void demo() throws Exception {
         Class<?> klass = Class.forName("io.github.dunwu.javacore.reflect.MethodDemo02");
         Method method = klass.getMethod("target", int.class);
         for (int i = 0; i < 20; i++) {
             method.invoke(null, i);
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        demo();
     }
 
 }

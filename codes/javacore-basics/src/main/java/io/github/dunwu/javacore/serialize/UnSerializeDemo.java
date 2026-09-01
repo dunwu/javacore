@@ -12,10 +12,17 @@ import java.io.*;
  */
 public class UnSerializeDemo {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        final String filename = "d:/text.dat";
+    /**
+     * 反例：Person 未实现 Serializable 接口，序列化时抛出 NotSerializableException
+     */
+    public static void demo() throws IOException, ClassNotFoundException {
+        final String filename = "temp_unserialize.dat";
         serialize(filename);
         deserialize(filename);
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        demo();
     }
 
     /**

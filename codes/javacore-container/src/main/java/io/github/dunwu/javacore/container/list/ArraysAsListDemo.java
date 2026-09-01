@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * 示例：Arrays.asList 的两个经典坑：
+ * ① 基本类型数组会被整个包装成单个元素（应用 Arrays.stream().boxed()）；
+ * ② 返回的 List 是数组的视图，不能 add，且修改数组会影响列表（应用 new ArrayList 包装）。
+ * wrong1/wrong2 演示错误用法，right1/right2 为修复方案。
+ *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2020-08-11
  */

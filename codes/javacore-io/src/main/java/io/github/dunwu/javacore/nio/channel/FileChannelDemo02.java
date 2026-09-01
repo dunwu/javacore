@@ -7,13 +7,27 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
 /**
- * 使用通道进行读写操作
+ * 示例：使用 {@link FileChannel} 通道同时读写文件 —— 从输入通道读，向输出通道写，实现文件复制。
  */
 public class FileChannelDemo02 {
 
-    public static void main(String[] args) throws Exception {
-        File file1 = new File("d:" + File.separator + "out.txt");
-        File file2 = new File("d:" + File.separator + "outnote.txt");
+    /**
+     * 复制生成的目标文件路径（相对路径）
+     */
+    public static final String COPY_FILE_PATH = "temp_channel_outnote.txt";
+
+    /**
+     * 演示通道读写复制文件。
+     * <p>
+     * 为了使示例自包含，源文件不存在时会先调用 {@link FileChannelDemo01#demo()} 生成。
+     */
+    public static void demo() throws Exception {
+        File file1 = new File(FileChannelDemo01.FILE_PATH);
+        if (!file1.exists()) {
+            // 源文件不存在时先写入，保证示例可独立运行
+            FileChannelDemo01.demo();
+        }
+        File file2 = new File(COPY_FILE_PATH);
         FileInputStream input = new FileInputStream(file1);
         FileOutputStream output = new FileOutputStream(file2);
         FileChannel fout = output.getChannel(); // 得到输出的通道
@@ -30,6 +44,11 @@ public class FileChannelDemo02 {
         fout.close();
         input.close();
         output.close();
+        System.out.println("文件已复制为：" + file2.getPath());
+    }
+
+    public static void main(String[] args) throws Exception {
+        demo();
     }
 
 }

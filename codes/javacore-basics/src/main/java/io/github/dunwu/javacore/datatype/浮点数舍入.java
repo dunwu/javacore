@@ -10,13 +10,20 @@ import java.text.DecimalFormat;
  */
 public class 浮点数舍入 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示浮点数舍入：double/float 舍入结果不一致的坑，以及 BigDecimal 的正确舍入方式
+     */
+    public static void demo() {
         System.out.println("====================== wrong1 ======================");
         wrong1();
         System.out.println("====================== wrong2 ======================");
         wrong2();
         System.out.println("====================== right ======================");
         right();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     private static void wrong1() {

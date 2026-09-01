@@ -7,7 +7,10 @@ package io.github.dunwu.javacore.reflect;
  */
 public class ReflectClassDemo02 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 类名.class 获取 Class 对象（包括基本类型和多维数组）。
+     */
+    public static void demo() {
         boolean b;
         // Class c = b.getClass(); // 编译错误
         Class c1 = boolean.class;
@@ -18,6 +21,10 @@ public class ReflectClassDemo02 {
 
         Class c3 = int[][][].class;
         System.out.println(c3.getCanonicalName());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

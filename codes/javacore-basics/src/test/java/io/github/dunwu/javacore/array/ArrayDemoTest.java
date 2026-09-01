@@ -1,18 +1,20 @@
 package io.github.dunwu.javacore.array;
 
-import org.junit.FixMethodOrder;
-import org.junit.Test;
-import org.junit.runners.MethodSorters;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 /**
  * 数组示例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.MethodName.class)
 public class ArrayDemoTest {
 
     @Test
+    @DisplayName("声明数组并实例化：未赋值元素的默认值为 0")
     public void demo01() {
         // 声明数组
         int[] score = null;
@@ -29,6 +31,7 @@ public class ArrayDemoTest {
     }
 
     @Test
+    @DisplayName("为数组元素赋值并遍历输出")
     public void demo02() {
         // 声明数组
         int[] score = null;
@@ -45,6 +48,7 @@ public class ArrayDemoTest {
     }
 
     @Test
+    @DisplayName("获取数组长度 length")
     public void demo03() {
         // 声明数组
         int[] score = null;
@@ -54,6 +58,7 @@ public class ArrayDemoTest {
     }
 
     @Test
+    @DisplayName("静态初始化声明数组并遍历输出")
     public void demo04() {
         // 使用静态初始化声明数组
         int[] score = { 91, 92, 93, 94, 95, 96 };
@@ -64,6 +69,7 @@ public class ArrayDemoTest {
     }
 
     @Test
+    @DisplayName("求数组中的最大值和最小值")
     public void demo05() {
         int[] score = { 67, 89, 87, 69, 90, 100, 75, 90 }; // 使用静态初始化声明数组
         int max = 0; // 保存数组中的最大值
@@ -82,6 +88,7 @@ public class ArrayDemoTest {
     }
 
     @Test
+    @DisplayName("数组冒泡排序并输出结果")
     public void demo06() {
         int[] score = { 67, 89, 87, 69, 90, 100, 75, 90 }; // 使用静态初始化声明数组
         for (int i = 1; i < score.length; i++) {
@@ -99,6 +106,7 @@ public class ArrayDemoTest {
     }
 
     @Test
+    @DisplayName("数组排序：输出每一轮排序的中间结果")
     public void demo07() {
         int[] score = { 67, 89, 87, 69, 90, 100, 75, 90 }; // 使用静态初始化声明数组
         for (int i = 1; i < score.length; i++) {
@@ -121,6 +129,7 @@ public class ArrayDemoTest {
     }
 
     @Test
+    @DisplayName("二维数组的声明、赋值与遍历")
     public void demo08() {
         int[][] score = new int[4][3]; // 声明并实例化二维数组
         score[0][1] = 30; // 为数组中的内容赋值
@@ -137,6 +146,7 @@ public class ArrayDemoTest {
     }
 
     @Test
+    @DisplayName("静态初始化二维数组：每行元素个数可以不同")
     public void demo09() {
         int[][] score = { { 67, 61 }, { 78, 89, 83 }, { 99, 100, 98, 66, 95 } }; // 静态初始化完成，每行的数组元素个数不一样1
         for (int i = 0; i < score.length; i++) {
@@ -148,6 +158,7 @@ public class ArrayDemoTest {
     }
 
     @Test
+    @DisplayName("三维数组的静态初始化与遍历")
     public void demo10() {
         // 静态初始化完成，每行的数组元素个数不一样
         int[][][] score = { { { 5, 1 }, { 6, 7 } }, { { 9, 4 }, { 8, 3 } } };

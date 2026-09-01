@@ -11,10 +11,17 @@ import java.io.*;
 @SuppressWarnings("all")
 public class SerializeDemo01 {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        final String filename = "d:/text.dat";
+    /**
+     * 演示普通序列化：Person 实现 Serializable 接口，所有字段都被完整序列化
+     */
+    public static void demo() throws IOException, ClassNotFoundException {
+        final String filename = "temp_serialize01.dat";
         serialize(filename);
         deserialize(filename);
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        demo();
     }
 
     /**

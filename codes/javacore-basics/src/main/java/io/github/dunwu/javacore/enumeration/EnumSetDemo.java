@@ -8,12 +8,19 @@ import java.util.EnumSet;
  */
 public class EnumSetDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 EnumSet：一次性取出全部枚举常量并按定义顺序遍历。
+     */
+    public static void demo() {
         System.out.println("EnumSet展示");
         EnumSet<ErrorCodeEn> errSet = EnumSet.allOf(ErrorCodeEn.class);
         for (ErrorCodeEn e : errSet) {
             System.out.println(e.name() + " : " + e.ordinal());
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -3,14 +3,15 @@ package io.github.dunwu.javacore.bio.bytes;
 import java.io.*;
 
 /**
- * 对象输入输出流，一般用于对象序列化
+ * 对象输入输出流，一般用于对象序列化：把实现 Serializable 的对象写入文件，再读回还原为对象。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class ObjectStreamDemo {
 
-    public static void main(String[] args) throws Exception {
-        final String filepath = "d:\\object.txt";
+    /** 演示对象数组的序列化写入与反序列化读回。 */
+    public static void demo() throws Exception {
+        final String filepath = "temp_object.txt";
         Person[] per = { new Person("张三", 30), new Person("李四", 31), new Person("王五", 32) };
         writeObject(filepath, per);
         Object[] o = readObject(filepath);
@@ -18,6 +19,10 @@ public class ObjectStreamDemo {
             Person p = (Person) o[i];
             System.out.println(p);
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        demo();
     }
 
     public static void writeObject(String filepath, Object[] obj) throws Exception {

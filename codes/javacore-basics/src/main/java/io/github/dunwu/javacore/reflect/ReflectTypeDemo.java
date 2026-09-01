@@ -6,12 +6,19 @@ package io.github.dunwu.javacore.reflect;
  */
 public class ReflectTypeDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示包装类的 TYPE 属性：获取基本类型对应的 Class。
+     */
+    public static void demo() {
         Class c1 = Double.TYPE;
         System.out.println(c1.getCanonicalName());
 
         Class c2 = Void.TYPE;
         System.out.println(c2.getCanonicalName());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

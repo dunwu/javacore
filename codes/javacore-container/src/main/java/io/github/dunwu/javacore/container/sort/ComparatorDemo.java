@@ -7,14 +7,16 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * {@link java.util.Comparator} 示例
+ * {@link java.util.Comparator} 示例：比较规则由外部提供（外部比较器），
+ * 适合不能修改类本身或需要多种排序规则的场景；与 {@link ComparableDemo}（内部比较器）对比。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @date 2024-09-19
  */
 public class ComparatorDemo {
 
-    public static void main(String[] args) {
+    /** 演示传入 Comparator 匿名类按年龄升序排序。 */
+    public static void demo() {
         User a = new User("A", 18);
         User b = new User("B", 17);
         User c = new User("C", 20);
@@ -26,6 +28,10 @@ public class ComparatorDemo {
             }
         });
         list.forEach(System.out::println);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
     // 输出：
     // User{age=17, name='B'}

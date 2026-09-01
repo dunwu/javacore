@@ -16,19 +16,31 @@ class Person {
         return "姓名：" + this.name + "，年龄：" + this.age;
     }
 
+    @Deprecated
     @Override
-    public void finalize() throws Throwable { // 对象释放空间时默认调用此方法
+    protected void finalize() throws Throwable { // 对象被回收前调用（finalize 已废弃，此处仅作教学演示）
         System.out.println("对象被释放 --> " + this);
     }
 
 }
 
+/**
+ * 示例：断开引用后调用 System.gc() 建议 JVM 回收对象（被回收前会触发 finalize，输出时机不保证）。
+ */
 public class SystemDemo04 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示断开引用并请求垃圾回收。
+     */
+    public static void demo() {
         Person per = new Person("张三", 30);
-        per = null; // 断开引用
-        System.gc(); // 强制性释放空间
+        System.out.println("对象信息：" + per); // 覆写的 toString() 生效
+        per = null; // 断开引用，对象变为可回收状态
+        System.gc(); // 建议 JVM 进行垃圾回收（不保证立即执行）
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

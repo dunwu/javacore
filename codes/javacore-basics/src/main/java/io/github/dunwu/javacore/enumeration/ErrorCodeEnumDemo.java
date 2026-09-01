@@ -6,7 +6,10 @@ package io.github.dunwu.javacore.enumeration;
  */
 public class ErrorCodeEnumDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示带 code/msg 属性的错误码枚举：输出全部 code，并逐个打印 toString()。
+     */
+    public static void demo() {
         System.out.println(ErrorCodeEn.toStringAll());
         for (ErrorCodeEn s : ErrorCodeEn.values()) {
             System.out.println(s);
@@ -50,6 +53,10 @@ public class ErrorCodeEnumDemo {
         public String getMsg() {
             return msg;
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

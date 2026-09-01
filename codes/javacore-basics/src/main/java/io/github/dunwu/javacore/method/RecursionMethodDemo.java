@@ -14,10 +14,17 @@ public class RecursionMethodDemo {
         }
     }
 
-    public static void main(String[] args) {
+    /**
+     * 演示递归：输出斐波那契数列前 9 项。
+     */
+    public static void demo() {
         for (int i = 1; i < 10; i++) {
             System.out.print(fib(i) + "\t");
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

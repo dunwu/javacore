@@ -9,7 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class String判等 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 String 的 == 与 equals 判等差异，以及字符串常量池、intern() 的作用
+     */
+    public static void demo() {
         String a = "1";
         String b = "1";
         log.info("\nString a = \"1\";\nString b = \"1\";\na == b ? {}", a == b); //true
@@ -25,6 +28,10 @@ public class String判等 {
         String g = new String("4");
         String h = new String("4");
         log.info("\nString g = new String(\"4\");\nString h = new String(\"4\");\ng == h ? {}", g.equals(h)); //true
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -8,7 +8,10 @@ package io.github.dunwu.javacore.enumeration;
  */
 public class EnumMethodDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示枚举常用方法：values()、name()、valueOf()、getDeclaringClass()、hashCode()、compareTo()、equals()。
+     */
+    public static void demo() {
         System.out.println("=========== Print all Color ===========");
         for (Color c : Color.values()) {
             System.out.println(c + " ordinal: " + c.ordinal());
@@ -45,6 +48,10 @@ public class EnumMethodDemo {
         BIG,
         MIDDLE,
         SMALL
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

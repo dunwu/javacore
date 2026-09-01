@@ -7,13 +7,20 @@ package io.github.dunwu.javacore.operator;
  */
 public class LogicalOperatorDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示逻辑操作符：&&（短路与）、||（短路或）、!（非）。
+     */
+    public static void demo() {
         boolean a = true;
         boolean b = false;
 
         System.out.println("a && b = " + (a && b));
         System.out.println("a || b = " + (a || b));
         System.out.println("!(a && b) = " + !(a && b));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

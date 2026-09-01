@@ -7,7 +7,10 @@ package io.github.dunwu.javacore.operator;
  */
 public class BitsOperatorDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示位操作符：&、|、^、~、<<、>>、>>>，注释中标出了二进制推导过程。
+     */
+    public static void demo() {
         int a = 60; /* 60 = 0011 1100 */
         int b = 13; /* 13 = 0000 1101 */
         int c = 0;
@@ -32,6 +35,10 @@ public class BitsOperatorDemo {
 
         c = a >>> 2; /* 15 = 0000 1111 */
         System.out.println("a >>> 2 = " + c);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -1,8 +1,14 @@
 package io.github.dunwu.javacore.object;
 
+/**
+ * 示例：对象关联图——人持有书和孩子，孩子也持有书，可以沿引用链逐层查找。
+ */
 public class ObjectRefDemo06 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示沿对象引用链逐层查找关联对象。
+     */
+    public static void demo() {
         Person2 per = new Person2("张三", 30);
         Person2 cld = new Person2("张草", 10); // 定义一个孩子
         Book bk = new Book("JAVA SE核心开发", 90.0f);
@@ -19,6 +25,10 @@ public class ObjectRefDemo06 {
         // 通过人找到孩子，并找到孩子所拥有的书
         System.out.println(per.getName() + "的孩子 --> 姓名：" + per.getChild().getName() + "；年龄：" + per.getChild().getAge()
             + "；书名：" + per.getChild().getBook().getTitle() + "；价格：" + per.getChild().getBook().getPrice());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

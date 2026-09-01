@@ -8,7 +8,10 @@ package io.github.dunwu.javacore.array;
 @SuppressWarnings("all")
 public class ArrayDemo2 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示对象数组：只指定维度时元素为 null，初始化列表方式才会创建对象。
+     */
+    public static void demo() {
         User[] array1 = new User[2]; // 指定数组维度
         User[] array2 = new User[] { new User(), new User() }; // 不指定数组维度
 
@@ -21,6 +24,10 @@ public class ArrayDemo2 {
         for (User item : array2) {
             System.out.println(item);
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class User {

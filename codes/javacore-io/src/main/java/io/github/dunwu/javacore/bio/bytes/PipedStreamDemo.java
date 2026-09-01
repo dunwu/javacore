@@ -5,14 +5,15 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
 /**
- * 管道流
+ * 管道流：两个线程通过 PipedOutputStream/PipedInputStream 连接，实现线程间直接通信。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/4/26
  */
 public class PipedStreamDemo {
 
-    public static void main(String[] args) {
+    /** 演示发送线程通过管道向接收线程传输数据。 */
+    public static void demo() throws InterruptedException {
         Send s = new Send();
         Receive r = new Receive();
         try {
@@ -20,8 +21,17 @@ public class PipedStreamDemo {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        new Thread(s).start(); // 启动线程
-        new Thread(r).start(); // 启动线程
+        Thread t1 = new Thread(s);
+        Thread t2 = new Thread(r);
+        t1.start(); // 启动线程
+        t2.start(); // 启动线程
+        // 等待两个线程执行完毕，保证输出完整（直接运行 main 时可省略）
+        t1.join();
+        t2.join();
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        demo();
     }
 
     static class Send implements Runnable {

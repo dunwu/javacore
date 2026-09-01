@@ -11,6 +11,13 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
+/**
+ * {@link Selector} 多路复用示例：单线程同时监听多个端口，
+ * 任何客户端连入时都会收到当前的服务器时间。
+ * <p>
+ * 可用命令验证：在另一终端执行 telnet localhost 8000。
+ * 注：本示例为长驻服务，不纳入自动化测试。
+ */
 public class DateServer {
 
     public static void main(String[] args) throws Exception {

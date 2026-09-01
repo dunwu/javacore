@@ -9,7 +9,10 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class ReflectMethodConstructorDemo {
 
-    public static void main(String[] args)
+    /**
+     * 演示反射获取构造方法：全部构造器、public 构造器，并通过构造器创建实例。
+     */
+    public static void demo()
         throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<?>[] constructors1 = String.class.getDeclaredConstructors();
         System.out.println("String getDeclaredConstructors 清单（数量 = " + constructors1.length + "）：");
@@ -28,6 +31,11 @@ public class ReflectMethodConstructorDemo {
         System.out.println(constructor);
         String str = (String) constructor.newInstance("bbb");
         System.out.println(str);
+    }
+
+    public static void main(String[] args)
+        throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        demo();
     }
 
 }

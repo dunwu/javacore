@@ -14,15 +14,23 @@ package io.github.dunwu.javacore.control;
  */
 public class IfNestedDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示嵌套 if：外层条件成立后才判断内层条件。
+     */
+    public static void demo() {
         int x = 30;
         int y = 10;
 
         if (x == 30) {
             if (y == 10) {
                 System.out.print("X = 30 and Y = 10");
+                System.out.println();
             }
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

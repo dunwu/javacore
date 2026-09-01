@@ -6,10 +6,17 @@ package io.github.dunwu.javacore.method;
  */
 public class VarargsDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示可变参数：参数个数不限，本质是数组。
+     */
+    public static void demo() {
         method("red");
         method("red", "yellow");
         method("red", "yellow", "blue");
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void method(String... params) {

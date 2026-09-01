@@ -12,7 +12,8 @@ import java.util.List;
  */
 public class IteratorDemo {
 
-    public static void main(String[] args) {
+    /** 演示用迭代器遍历 List。 */
+    public static void demo() {
         List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
@@ -22,6 +23,10 @@ public class IteratorDemo {
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -3,9 +3,15 @@ package io.github.dunwu.javacore.util.date;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 示例：SimpleDateFormat 先按模板 parse() 提取日期，再按新模板 format() 转换格式。
+ */
 public class DateDemo05 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示字符串日期的提取与格式转换。
+     */
+    public static void demo() {
         String strDate = "2008-10-19 10:11:30.345";
         // 准备第一个模板，从字符串中提取出日期数字
         String pat1 = "yyyy-MM-dd HH:mm:ss.SSS";
@@ -20,6 +26,10 @@ public class DateDemo05 {
             e.printStackTrace(); // 打印异常信息
         }
         System.out.println(sdf2.format(d)); // 将日期变为新的格式
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -10,9 +10,12 @@ import java.io.*;
  */
 public class SerializeDemo {
 
-    private final static String FILE_PATH = "d:\\test.dat";
+    private final static String FILE_PATH = "temp_serial.dat";
 
-    public static void main(String[] args) {
+    /**
+     * 演示序列化和反序列化：SSN 字段被 transient 修饰，反序列化后值为默认值 0
+     */
+    public static void demo() {
         Employee in = new Employee();
         in.name = "Reyan Ali";
         in.address = "Phokka Kuan, Ambehta Peer";
@@ -28,6 +31,10 @@ public class SerializeDemo {
         System.out.println("Address: " + out.address);
         System.out.println("SSN: " + out.SSN);
         System.out.println("Number: " + out.number);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void serializeObject(Object obj) {

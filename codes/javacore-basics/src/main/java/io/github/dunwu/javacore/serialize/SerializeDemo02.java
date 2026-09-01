@@ -14,10 +14,17 @@ import java.io.*;
 @SuppressWarnings("all")
 public class SerializeDemo02 {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        final String filename = "d:/text.dat";
+    /**
+     * 演示 transient 关键字：age 字段被 transient 修饰，反序列化后为 null
+     */
+    public static void demo() throws IOException, ClassNotFoundException {
+        final String filename = "temp_serialize02.dat";
         serialize(filename);
         deserialize(filename);
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        demo();
     }
 
     /**

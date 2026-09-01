@@ -8,7 +8,10 @@ import java.lang.reflect.Field;
  */
 public class ReflectClassDemo04 {
 
-    public static void main(String[] args) throws NoSuchFieldException {
+    /**
+     * 演示通过其它类成员关系获取 Class：父类、内部类、声明类、外围类。
+     */
+    public static void demo() throws NoSuchFieldException {
         Class c1 = java.util.ArrayList.class.getSuperclass();
         System.out.println(c1.getCanonicalName());
 
@@ -28,6 +31,10 @@ public class ReflectClassDemo04 {
 
         Class c3 = Thread.State.class.getEnclosingClass();
         System.out.println(c3.getCanonicalName());
+    }
+
+    public static void main(String[] args) throws NoSuchFieldException {
+        demo();
     }
 
 }

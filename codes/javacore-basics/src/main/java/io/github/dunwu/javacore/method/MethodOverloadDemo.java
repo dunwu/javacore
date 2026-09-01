@@ -6,9 +6,16 @@ package io.github.dunwu.javacore.method;
  */
 public class MethodOverloadDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示方法重载：根据实参类型选择不同的 add 方法。
+     */
+    public static void demo() {
         add(10, 20);
         add(1.0, 2.0);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void add(int x, int y) {

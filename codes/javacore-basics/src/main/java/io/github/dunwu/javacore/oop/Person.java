@@ -13,9 +13,16 @@ public class Person {
 
     private String sex; // 属性，用来描述事物的属性、状态
 
-    public static void main(String[] args) {
+    /**
+     * 演示类的实例化：通过 new 创建对象。
+     */
+    public static void demo() {
         Person zhangsan = new Person(); // 对象
         Person lisi = new Person(); // 对象
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void think() {

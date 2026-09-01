@@ -15,7 +15,10 @@ import java.util.Map;
  */
 public class App {
 
-    public static void main(String[] args) {
+    /**
+     * 演示策略枚举 {@link PayrollDay} 的薪资计算，以及 EnumSet、EnumMap 的基本用法。
+     */
+    public static void demo() {
         // 测试 PayrollDay （策略枚举）
         System.out.println("时薪100的人在周五工作8小时的收入：" + PayrollDay.FRIDAY.pay(8.0, 100));
         System.out.println("时薪100的人在周六工作8小时的收入：" + PayrollDay.SATURDAY.pay(8.0, 100));
@@ -38,6 +41,10 @@ public class App {
             Map.Entry<StateMachineDemo.Signal, String> entry = iter.next();
             System.out.println(entry.getKey().name() + " : " + entry.getValue());
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

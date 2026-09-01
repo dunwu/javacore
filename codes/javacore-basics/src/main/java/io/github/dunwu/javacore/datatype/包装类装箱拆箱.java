@@ -8,7 +8,10 @@ package io.github.dunwu.javacore.datatype;
  */
 public class 包装类装箱拆箱 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示自动装箱、拆箱与非自动装箱、拆箱的写法
+     */
+    public static void demo() {
         Integer i1 = 10; // 自动装箱
         Integer i2 = new Integer(10); // 非自动装箱
         Integer i3 = Integer.valueOf(10); // 非自动装箱
@@ -22,12 +25,16 @@ public class 包装类装箱拆箱 {
         System.out.println("i1 == i2 is [" + (i1.equals(i2)) + "]");
         System.out.println("i1 == i4 is [" + (i1 == i4) + "]");
     }
+
+    public static void main(String[] args) {
+        demo();
+    }
     // Output:
     // i1 = [10]
     // i2 = [10]
     // i3 = [10]
     // i4 = [10]
     // i5 = [10]
-    // i1 == i2 is [false]
+    // i1 == i2 is [true]
     // i1 == i4 is [true]
 }

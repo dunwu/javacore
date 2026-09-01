@@ -6,10 +6,17 @@ package io.github.dunwu.javacore.method;
  */
 public class MainMethodDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 main 方法的命令行参数：逐个打印 args 数组元素。
+     */
+    public static void demo(String[] args) {
         for (String arg : args) {
             System.out.println("arg = [" + arg + "]");
         }
+    }
+
+    public static void main(String[] args) {
+        demo(args);
     }
 
 }

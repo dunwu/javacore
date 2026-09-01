@@ -92,12 +92,19 @@ public class 值类型使用示例 {
         System.out.println("1 + 2 = " + (1 + 2));
     }
 
-    public static void main(String[] args)
-        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    /**
+     * 通过反射依次执行 demo1~demo10，演示各种值类型的用法
+     */
+    public static void demo() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         for (int i = 1; i <= 10; i++) {
             Method method = 值类型使用示例.class.getMethod("demo" + i);
             method.invoke(null);
         }
+    }
+
+    public static void main(String[] args)
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        demo();
     }
 
 }

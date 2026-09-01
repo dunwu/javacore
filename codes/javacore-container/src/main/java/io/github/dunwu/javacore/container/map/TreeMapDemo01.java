@@ -5,9 +5,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+/**
+ * 示例：TreeMap 按 key 自然序遍历 —— 即使乱序 put，输出仍按 key 排序。
+ */
 public class TreeMapDemo01 {
 
-    public static void main(String[] args) {
+    /** 演示 TreeMap 按 key 排序遍历。 */
+    public static void demo() {
         Map<String, String> map = null; // 声明Map对象，其中key和value的类型为String
         map = new TreeMap<String, String>();
         map.put("A、mldn", "www.mldn.cn");    // 增加内容
@@ -19,6 +23,10 @@ public class TreeMapDemo01 {
             String str = iter.next();
             System.out.println(str + " --> " + map.get(str)); // 取出内容
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -3,9 +3,13 @@ package io.github.dunwu.javacore.container.list;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 示例：LinkedList 作为 List 的基本操作 —— 增删元素与三种遍历方式（下标、增强 for、Lambda）。
+ */
 public class LinkedListDemo01 {
 
-    public static void main(String[] args) {
+    /** 演示 LinkedList 的添加、删除与三种遍历方式。 */
+    public static void demo() {
         List<String> list = new LinkedList<String>();
         // 增加元素
         list.add("A");
@@ -34,6 +38,10 @@ public class LinkedListDemo01 {
 
         list.remove("C");
         System.out.println("链表：" + list);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -10,7 +10,10 @@ package io.github.dunwu.javacore.control;
  */
 public class ReturnDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 return：当 i == 3 时直接结束整个方法，"示例结束"不会被打印。
+     */
+    public static void demo() {
         for (int i = 0; i < 10; i++) {
             if (i == 3) {
                 return;
@@ -18,6 +21,10 @@ public class ReturnDemo {
             System.out.println(i);
         }
         System.out.println("示例结束");
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -3,7 +3,9 @@ package io.github.dunwu.javacore.container.queue;
 import java.util.Stack;
 
 /**
- * {@link Stack} 使用示例
+ * {@link Stack} 使用示例。
+ * <p>注意：本例故意演示错误用法 —— 栈只有 3 个元素却 pop 4 次，
+ * 第 4 次会抛出 {@link java.util.EmptyStackException}；实际使用前应先判 {@code empty()}。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2020-02-21

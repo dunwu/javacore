@@ -14,10 +14,17 @@ import java.util.Locale;
  */
 public class NumberFormatDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示按地区格式化货币。
+     */
+    public static void demo() {
         double num = 123456.78;
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.SIMPLIFIED_CHINESE);
         System.out.format("%f 的本地化（%s）结果: %s", num, Locale.SIMPLIFIED_CHINESE, format.format(num));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

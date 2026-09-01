@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * 示例：在迭代中安全删除元素——必须用 iterator.remove()，直接调 list.remove() 会触发 fail-fast。
+ */
 public class IteratorDemo2 {
 
-    public static void main(String[] args) {
+    /** 演示迭代时用 iterator.remove() 删除指定元素。 */
+    public static void demo() {
         List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
@@ -25,6 +29,10 @@ public class IteratorDemo2 {
             }
         }
         System.out.println("执行后：" + list);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

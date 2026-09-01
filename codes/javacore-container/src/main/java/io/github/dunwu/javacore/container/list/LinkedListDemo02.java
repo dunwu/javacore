@@ -3,9 +3,13 @@ package io.github.dunwu.javacore.container.list;
 import java.util.Deque;
 import java.util.LinkedList;
 
+/**
+ * 示例：LinkedList 实现 Deque 接口，可作双端队列使用 —— addFirst、addLast、element、peek、poll。
+ */
 public class LinkedListDemo02 {
 
-    public static void main(String[] args) {
+    /** 演示 LinkedList 的队列操作：查看头部与弹出头部元素。 */
+    public static void demo() {
         Deque<String> list = new LinkedList<String>();
         list.add("A"); // 添加元素
         list.add("B"); // 添加元素
@@ -24,6 +28,10 @@ public class LinkedListDemo02 {
         for (int i = 0; i <= list.size() + 1; i++) {
             System.out.print(list.poll() + "、");
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

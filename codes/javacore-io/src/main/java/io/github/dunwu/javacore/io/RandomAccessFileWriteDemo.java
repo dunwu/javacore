@@ -15,10 +15,19 @@ import java.io.RandomAccessFile;
  */
 public class RandomAccessFileWriteDemo {
 
-    public static void main(String[] args) throws IOException {
+    /**
+     * 示例使用的数据文件路径（相对路径）
+     */
+    public static final String FILE_PATH = "temp.log";
 
-        // 指定要操作的文件
-        File f = new File("temp.log");
+    /**
+     * 演示 {@link RandomAccessFile} 写入：按固定长度（8 字节姓名 + 4 字节年龄）写入三组记录，
+     * 这种定长格式便于后续随机定位读取。
+     */
+    public static void demo() throws IOException {
+
+        // 指定要操作的文件，读写模式下文件不存在会自动创建
+        File f = new File(FILE_PATH);
 
         // 声明RandomAccessFile类的对象，读写模式，如果文件不存在，会自动创建
         RandomAccessFile rdf = new RandomAccessFile(f, "rw");
@@ -43,6 +52,11 @@ public class RandomAccessFileWriteDemo {
 
         // 关闭
         rdf.close();
+        System.out.println("已写入三组记录到文件：" + f.getPath());
+    }
+
+    public static void main(String[] args) throws IOException {
+        demo();
     }
 
 }

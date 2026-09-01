@@ -10,7 +10,10 @@ import java.util.Set;
  */
 public class ReflectClassDemo03 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示对象的 getClass 方法获取 Class 对象。
+     */
+    public static void demo() {
         Class c = "foo".getClass();
         System.out.println(c.getCanonicalName());
 
@@ -24,6 +27,10 @@ public class ReflectClassDemo03 {
         Set<String> set = new HashSet<>();
         Class c4 = set.getClass();
         System.out.println(c4.getCanonicalName());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     enum E {

@@ -9,7 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Integer判等 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 Integer 缓存池（-128~127）对 == 判等的影响
+     */
+    public static void demo() {
         Integer a = 127; //Integer.valueOf(127)
         Integer b = 127; //Integer.valueOf(127)
         log.info("\nInteger a = 127;\nInteger b = 127;\na == b ? {}", a == b);    // true
@@ -30,6 +33,10 @@ public class Integer判等 {
         Integer i = 128; //unbox
         int j = 128;
         log.info("\nInteger i = 128;\nint j = 128;\ni == j ? {}", i == j); //true
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

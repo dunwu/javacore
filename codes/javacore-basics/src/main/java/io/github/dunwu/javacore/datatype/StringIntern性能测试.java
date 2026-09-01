@@ -13,7 +13,10 @@ import java.util.stream.IntStream;
  */
 public class StringIntern性能测试 {
 
-    public static void main(String[] args) {
+    /**
+     * 性能基准测试：1000 万次 String.intern() 耗时，不适合在单元测试中运行
+     */
+    public static void demo() {
         //-XX:+PrintStringTableStatistics，可以打印出字符串常量表的统计信息
         //设置 -XX:StringTableSize=10000000 后，执行速度会快很多
         List<String> list = new ArrayList<>();
@@ -23,6 +26,10 @@ public class StringIntern性能测试 {
             .collect(Collectors.toList());
         System.out.println("size:" + list.size());
         System.out.println("time:" + (System.currentTimeMillis() - begin));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

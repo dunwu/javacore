@@ -8,7 +8,10 @@ import java.lang.reflect.Array;
  */
 public class ReflectArrayDemo {
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    /**
+     * 演示反射操作数组：动态创建数组、读写元素。
+     */
+    public static void demo() throws ClassNotFoundException {
         Class<?> cls = Class.forName("java.lang.String");
         Object array = Array.newInstance(cls, 25);
         // 往数组里添加内容
@@ -19,6 +22,10 @@ public class ReflectArrayDemo {
         Array.set(array, 4, "Clojure");
         // 获取某一项的内容
         System.out.println(Array.get(array, 3));
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        demo();
     }
 
 }

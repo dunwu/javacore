@@ -8,9 +8,16 @@ package io.github.dunwu.javacore.enumeration;
  */
 public class SingleEnumDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示枚举单例：INSTANCE 即全局唯一实例，可持有状态。
+     */
+    public static void demo() {
         SingleEn.INSTANCE.setName("zp");
         System.out.println(SingleEn.INSTANCE.getName());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public enum SingleEn {

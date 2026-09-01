@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.bio.bytes;
 import java.io.*;
 
 /**
- * 数据输入流示例
+ * 数据输入输出流示例：用 DataOutputStream 将基本类型按二进制格式写入文件，再用 DataInputStream 按同样顺序读回。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
@@ -11,9 +11,14 @@ public class DataStreamDemo {
 
     public static final String FILEPATH = "temp.log";
 
-    public static void main(String[] args) throws IOException {
+    /** 演示先写入商品数据再逐条读回。 */
+    public static void demo() throws IOException {
         write(FILEPATH);
         read(FILEPATH);
+    }
+
+    public static void main(String[] args) throws IOException {
+        demo();
     }
 
     private static void write(String filepath) throws IOException {

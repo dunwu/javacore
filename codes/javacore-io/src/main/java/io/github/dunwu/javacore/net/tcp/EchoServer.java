@@ -6,6 +6,13 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * TCP Echo 服务端（单客户端版）：在 8888 端口监听，将客户端发来的消息加 "ECHO : " 前缀回应，
+ * 收到 "bye" 或空消息时结束。
+ * <p>
+ * 配套示例：先运行本类，再运行 {@link EchoClient}（需在两个终端分别启动）。
+ * 注：本示例为长驻服务、需要配合客户端运行，不纳入自动化测试。
+ */
 public class EchoServer {
 
     public static void main(String[] args) throws Exception { // 所有异常抛出

@@ -5,6 +5,13 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+/**
+ * TCP Echo 客户端（单客户端版）：连接 {@link EchoServer}，将键盘输入发送给服务端并打印回应，
+ * 输入 "bye" 时退出。
+ * <p>
+ * 配套示例：先运行 {@link EchoServer}，再运行本类。
+ * 注：本示例需要交互式键盘输入与服务端配合运行，不纳入自动化测试。
+ */
 public class EchoClient {
 
     public static void main(String[] args) throws Exception { // 所有异常抛出

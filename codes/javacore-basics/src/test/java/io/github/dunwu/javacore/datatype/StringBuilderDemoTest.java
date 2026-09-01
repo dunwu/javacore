@@ -1,6 +1,7 @@
 package io.github.dunwu.javacore.datatype;
 
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
@@ -8,6 +9,7 @@ import org.junit.Test;
 public class StringBuilderDemoTest {
 
     @Test
+    @DisplayName("使用 StringBuilder 高效拼接字符串")
     public void test() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 10000; i++) {
@@ -17,6 +19,7 @@ public class StringBuilderDemoTest {
     }
 
     @Test
+    @DisplayName("使用 String += 拼接字符串（低效写法）")
     public void test2() {
         String str = "";
         for (int i = 0; i < 10000; i++) {

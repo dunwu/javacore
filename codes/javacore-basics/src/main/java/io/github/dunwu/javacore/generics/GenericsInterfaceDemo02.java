@@ -14,9 +14,16 @@ public class GenericsInterfaceDemo02<T> implements Content<T> {
         this.text = text;
     }
 
-    public static void main(String[] args) {
+    /**
+     * 演示实现泛型接口时保留类型参数：实现类也是泛型类。
+     */
+    public static void demo() {
         GenericsInterfaceDemo02<String> gen = new GenericsInterfaceDemo02<>("ABC");
         System.out.print(gen.text());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     @Override

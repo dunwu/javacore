@@ -10,7 +10,10 @@ package io.github.dunwu.javacore.control;
  */
 public class BreakDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 break：当 i == 3 时立即跳出循环，后续循环不再执行。
+     */
+    public static void demo() {
         for (int i = 0; i < 10; i++) {
             if (i == 3) {
                 break;
@@ -18,6 +21,10 @@ public class BreakDemo {
             System.out.println(i);
         }
         System.out.println("示例结束");
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -7,9 +7,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * 示例：Collection 接口常用方法综合演示 —— addAll、toArray、max/min、remove、contains、retainAll、clear。
+ */
 public class CollectionDemo {
 
-    public static void main(String[] args) {
+    /** 演示 Collection 接口的常用操作方法。 */
+    public static void demo() {
         Collection<String> c = new ArrayList<String>();
         c.addAll(Countries.names(6));
         c.add("ten");
@@ -58,6 +62,10 @@ public class CollectionDemo {
         System.out.println(c);
         c.clear(); // Remove all elements
         System.out.println("after c.clear():" + c);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

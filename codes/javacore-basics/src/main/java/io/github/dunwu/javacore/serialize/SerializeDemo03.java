@@ -14,10 +14,17 @@ import java.io.*;
 @SuppressWarnings("all")
 public class SerializeDemo03 {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        final String filename = "d:/text.dat";
+    /**
+     * 演示自定义 writeObject/readObject：虽然 age 被 transient 修饰，但通过自定义序列化逻辑仍能保存和恢复 age
+     */
+    public static void demo() throws IOException, ClassNotFoundException {
+        final String filename = "temp_serialize03.dat";
         serialize(filename);
         deserialize(filename);
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        demo();
     }
 
     /**

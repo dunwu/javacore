@@ -12,10 +12,17 @@ import java.util.Objects;
 @Slf4j
 public class 自定义equals {
 
-    public static void main(String[] args) {
+    /**
+     * 演示自定义 equals 的错误写法与正确写法（判空、判类型、重写 hashCode）
+     */
+    public static void demo() {
         wrong();
         wrong2();
         right();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void wrong() {

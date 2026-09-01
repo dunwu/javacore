@@ -1,14 +1,21 @@
 package io.github.dunwu.javacore.method;
 
+/**
+ * 演示方法重载：同名方法参数列表不同（个数、类型）。
+ */
 public class MethodDemo03 {
 
-    public static void main(String[] args) {
+    public static void demo() {
         int one = add(10, 20); // 调用整型的加法操作
         float two = add(10.3f, 13.3f); // 调用浮点数的加法操作
         int three = add(10, 20, 30); // 调用有三个参数的加法操作
         System.out.println("add(int x,int y)的计算结果：" + one);
         System.out.println("add(float x,float y)的计算结果：" + two);
         System.out.println("(int x,int y,int z)的计算结果：" + three);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     private static int add(int x, int y) {

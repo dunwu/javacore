@@ -13,7 +13,10 @@ import java.math.BigDecimal;
 @Slf4j
 public class 数值计算示例 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示浮点数精度丢失问题，以及 BigDecimal 的正确初始化方式（字符串构造方法）
+     */
+    public static void demo() {
         System.out.println("====================== wrong1 ======================");
         wrong1();
         System.out.println("====================== wrong2 ======================");
@@ -22,6 +25,10 @@ public class 数值计算示例 {
         right();
         System.out.println("====================== testScale ======================");
         testScale();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     /**

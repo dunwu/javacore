@@ -10,7 +10,10 @@ import java.util.Map;
  */
 public class EnumMapDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 EnumMap：以枚举为 key 的专用 Map，按枚举定义顺序遍历。
+     */
+    public static void demo() {
         System.out.println("EnumMap展示");
         EnumMap<Signal, String> errMap = new EnumMap(Signal.class);
         errMap.put(Signal.RED, "红灯");
@@ -27,6 +30,10 @@ public class EnumMapDemo {
         GREEN,
         YELLOW,
         RED
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

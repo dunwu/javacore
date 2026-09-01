@@ -269,10 +269,18 @@ public class RegexUtil {
         return checkMatches(RegexUtil.REGEX_USERNAME, content);
     }
 
+    /** 演示常用校验方法：IPv4、邮箱、手机号。 */
+    public static void demo() {
+        System.out.println("127.0.0.1 是合法 IPv4：" + checkMatches(REGEX_IPV4, "127.0.0.1"));
+        System.out.println("0.0.0.0 是合法 IPv4：" + checkMatches(REGEX_IPV4, "0.0.0.0"));
+        System.out.println("255.255.255.255 是合法 IPv4：" + checkMatches(REGEX_IPV4, "255.255.255.255"));
+        System.out.println("10.10.10.256 是合法 IPv4：" + isValidateIpv4("10.10.10.256"));
+        System.out.println("forbreak@163.com 是合法邮箱：" + isValidateEmail("forbreak@163.com"));
+        System.out.println("15812345678 是合法手机号：" + isValidateMobile("15812345678"));
+    }
+
     public static void main(String[] args) {
-        checkMatches(REGEX_IPV4, "127.0.0.1");
-        checkMatches(REGEX_IPV4, "0.0.0.0");
-        checkMatches(REGEX_IPV4, "255.255.255.255");
+        demo();
     }
 
 }

@@ -15,10 +15,17 @@ public class MethodDemo01 {
         new Exception("#" + i).printStackTrace();
     }
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * 通过反射调用 target 方法，观察 Method.invoke 的调用轨迹。
+     */
+    public static void demo() throws Exception {
         Class<?> clazz = Class.forName("io.github.dunwu.javacore.reflect.MethodDemo01");
         Method method = clazz.getMethod("target", int.class);
         method.invoke(null, 0);
+    }
+
+    public static void main(String[] args) throws Exception {
+        demo();
     }
 
 }

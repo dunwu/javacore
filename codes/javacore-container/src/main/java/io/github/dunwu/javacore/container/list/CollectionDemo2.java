@@ -11,13 +11,18 @@ import java.util.Collection;
  */
 public class CollectionDemo2 {
 
-    public static void main(String[] args) {
+    /** 演示向 Collection 中添加元素。 */
+    public static void demo() {
         // 指定一个集合
         Collection<String> collection = new ArrayList<String>();
         // 添加元素
         collection.add("12345");
         collection.add("abced");
         System.out.println(collection);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

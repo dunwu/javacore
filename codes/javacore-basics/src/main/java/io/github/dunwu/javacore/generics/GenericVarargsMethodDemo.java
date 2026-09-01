@@ -12,11 +12,18 @@ import java.util.List;
  */
 public class GenericVarargsMethodDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示泛型方法与可变参数：根据传入的参数个数自动构造 List。
+     */
+    public static void demo() {
         List<String> ls = makeList("A");
         System.out.println(ls);
         ls = makeList("A", "B", "C");
         System.out.println(ls);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static <T> List<T> makeList(T... args) {

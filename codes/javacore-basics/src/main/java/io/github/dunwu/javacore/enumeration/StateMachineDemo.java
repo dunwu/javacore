@@ -8,7 +8,10 @@ package io.github.dunwu.javacore.enumeration;
  */
 public class StateMachineDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示枚举状态机：根据信号灯状态输出对应指令。
+     */
+    public static void demo() {
         System.out.println(getTrafficInstruct(Signal.RED));
     }
 
@@ -35,6 +38,10 @@ public class StateMachineDemo {
         GREEN,
         YELLOW,
         RED
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

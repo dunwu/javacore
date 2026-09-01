@@ -14,7 +14,10 @@ package io.github.dunwu.javacore.control;
  */
 public class IfElseifElseDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 if-else if-else 多分支：依次匹配 x 是否为 1、2、3。
+     */
+    public static void demo() {
         int x = 5; // 定义整型变量x
         if (x == 1) {
             System.out.println("x的值是1！");
@@ -25,6 +28,10 @@ public class IfElseifElseDemo {
         } else {
             System.out.println("x的值不是1、2、3中的一个！");
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

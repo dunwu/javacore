@@ -7,7 +7,10 @@ package io.github.dunwu.javacore.operator;
  */
 public class RelationOperatorDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示关系操作符：==、!=、>、<、>=、<=。
+     */
+    public static void demo() {
         int x = 20;
         int y = 10;
         System.out.println("x == y = " + (x == y));
@@ -16,6 +19,10 @@ public class RelationOperatorDemo {
         System.out.println("x < y = " + (x < y));
         System.out.println("x >= y = " + (x >= y));
         System.out.println("x <= y = " + (x <= y));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

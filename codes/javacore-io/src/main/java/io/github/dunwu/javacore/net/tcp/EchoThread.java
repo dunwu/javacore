@@ -5,6 +5,9 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
 
+/**
+ * TCP Echo 服务端的工作线程：为 {@link EchoThreadServer} 接收的每个客户端连接提供回显服务。
+ */
 public class EchoThread implements Runnable {
 
     private Socket client = null;

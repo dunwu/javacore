@@ -9,9 +9,16 @@ import java.util.Arrays;
  */
 public class ArrayRefDemo2 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示数组作为方法返回值：方法可以直接返回一个数组引用。
+     */
+    public static void demo() {
         int[] array = fun();
         System.out.println(Arrays.toString(array));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     /**

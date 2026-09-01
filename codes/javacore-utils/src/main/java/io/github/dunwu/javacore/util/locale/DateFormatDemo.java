@@ -15,12 +15,19 @@ import java.util.Locale;
  */
 public class DateFormatDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示同一日期在不同地区下的格式化差异。
+     */
+    public static void demo() {
         Date date = new Date();
         DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.ENGLISH);
         DateFormat df2 = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.SIMPLIFIED_CHINESE);
-        System.out.format("%s 的本地化（%s）结果: %s\n", date, Locale.SIMPLIFIED_CHINESE, df.format(date));
+        System.out.format("%s 的本地化（%s）结果: %s\n", date, Locale.ENGLISH, df.format(date));
         System.out.format("%s 的本地化（%s）结果: %s\n", date, Locale.SIMPLIFIED_CHINESE, df2.format(date));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

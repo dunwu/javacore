@@ -14,7 +14,10 @@ import java.util.ResourceBundle;
  */
 public class LoaleDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示用不同 Locale 加载资源包，读取对应语言的文本。
+     */
+    public static void demo() {
         // 根据语言+地区编码初始化
         ResourceBundle rbUS = ResourceBundle.getBundle("locales.content", new Locale("en", "US"));
         // 根据Locale常量初始化
@@ -30,6 +33,10 @@ public class LoaleDemo {
         System.out.println("zh-CN：" + String.format(rbZhCN.getString("time"), "08:00"));
         System.out.println("default：" + rbDefault.getString("helloWorld"));
         System.out.println("default：" + String.format(rbDefault.getString("time"), "08:00"));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     private void init() {

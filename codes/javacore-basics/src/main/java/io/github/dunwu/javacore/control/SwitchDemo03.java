@@ -14,7 +14,10 @@ package io.github.dunwu.javacore.control;
  */
 public class SwitchDemo03 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 switch 的 default 分支：选项不在 case 列表中时走 default。
+     */
+    public static void demo() {
         int option = 4;
         switch (option) {
             case 1: {
@@ -34,6 +37,10 @@ public class SwitchDemo03 {
                 break;
             }
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

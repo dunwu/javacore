@@ -18,12 +18,19 @@ public class Programmer {
         name = "unknown";
     }
 
-    public static void main(String[] args) {
+    /**
+     * 演示静态常量与静态代码块、实例属性的使用。
+     */
+    public static void demo() {
         Programmer programmer = new Programmer();
         programmer.setName("zp");
         System.out.println("I am a programmer");
         System.out.println("My name is " + programmer.getName());
         System.out.println("My core skill is " + Programmer.CORE_SKILL);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public String getName() {

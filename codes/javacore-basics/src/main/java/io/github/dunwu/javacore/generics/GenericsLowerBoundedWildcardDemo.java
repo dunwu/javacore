@@ -15,10 +15,17 @@ import java.util.List;
  */
 public class GenericsLowerBoundedWildcardDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示下限通配符 ? super Integer：可以向集合写入 Integer。
+     */
+    public static void demo() {
         List<Integer> list = new ArrayList<>();
         addNumbers(list);
         System.out.println(Arrays.deepToString(list.toArray()));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void addNumbers(List<? super Integer> list) {

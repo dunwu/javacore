@@ -5,6 +5,10 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
+ * {@link Scanner} 示例：从键盘接收数据并按类型解析。
+ * <p>
+ * 注：本示例需要交互式键盘输入，请直接在 IDE 中运行 {@link #main}，不纳入自动化测试。
+ *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class ScannerDemo {

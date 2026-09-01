@@ -9,7 +9,10 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class NewInstanceDemo {
 
-    public static void main(String[] args)
+    /**
+     * 演示反射创建实例：无参构造与指定构造器两种方式。
+     */
+    public static void demo()
         throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
         Class<?> c1 = StringBuilder.class;
         StringBuilder sb = (StringBuilder) c1.newInstance();
@@ -23,6 +26,11 @@ public class NewInstanceDemo {
         // 根据构造器创建实例
         String str2 = (String) constructor.newInstance("bbb");
         System.out.println(str2);
+    }
+
+    public static void main(String[] args)
+        throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException {
+        demo();
     }
 
 }

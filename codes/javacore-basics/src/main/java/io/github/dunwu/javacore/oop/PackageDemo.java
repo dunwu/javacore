@@ -8,8 +8,15 @@ package io.github.dunwu.javacore.oop;
  */
 public class PackageDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 通过完全限定名创建 java.util.Date 对象。
+     */
+    public static void demo() {
         System.out.println(new java.util.Date());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

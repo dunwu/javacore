@@ -8,10 +8,17 @@ import lombok.Data;
  */
 public class 枚举判等 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示枚举字段判等：枚举常量的字段是同一实例，== 判等结果为 true
+     */
+    public static void demo() {
         StatusEnum statusEnum = StatusEnum.DELIVERED;
         OrderQuery orderQuery = new OrderQuery(StatusEnum.DELIVERED.status, StatusEnum.DELIVERED.desc);
         System.out.println(statusEnum.status == orderQuery.getStatus());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     @Data

@@ -8,7 +8,10 @@ package io.github.dunwu.javacore.array;
 @SuppressWarnings("all")
 public class ArrayDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示一维数组的两种声明方式：指定维度（元素为默认值 0）与初始化列表。
+     */
+    public static void demo() {
         int[] array1 = new int[2]; // 指定数组维度
         int[] array2 = new int[] { 1, 2 }; // 不指定数组维度
 
@@ -21,6 +24,10 @@ public class ArrayDemo {
         for (int item : array2) {
             System.out.println(item);
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

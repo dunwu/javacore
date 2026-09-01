@@ -14,11 +14,18 @@ import java.util.List;
  */
 public class GenericsUnboundedWildcardDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示无边界通配符 ?：同一方法可以打印任意类型的 List。
+     */
+    public static void demo() {
         List<Integer> li = Arrays.asList(1, 2, 3);
         List<String> ls = Arrays.asList("one", "two", "three");
         printList(li);
         printList(ls);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void printList(List<?> list) {

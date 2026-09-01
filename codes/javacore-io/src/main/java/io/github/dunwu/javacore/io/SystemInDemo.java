@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * System.in 示例
+ * System.in 示例：从键盘逐字节读取输入。
+ * <p>
+ * 注：本示例需要交互式键盘输入，请直接在 IDE 中运行 {@link #main}，不纳入自动化测试。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */

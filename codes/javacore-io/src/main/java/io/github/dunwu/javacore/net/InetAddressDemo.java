@@ -2,6 +2,11 @@ package io.github.dunwu.javacore.net;
 
 import java.net.InetAddress;
 
+/**
+ * {@link InetAddress} 示例：获取本机地址、解析域名、测试可达性。
+ * <p>
+ * 注：本示例依赖网络与 DNS 解析，不纳入自动化测试。
+ */
 public class InetAddressDemo {
 
     public static void main(String[] args) throws Exception {// 所有异常抛出

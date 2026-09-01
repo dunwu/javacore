@@ -8,7 +8,10 @@ package io.github.dunwu.javacore.generics;
  */
 public class GenericArrayDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示泛型方法打印不同类型的数组（泛型不支持基本数据类型，需用包装类）。
+     */
+    public static void demo() {
         // 放开注释会报错，泛型不支持值类型
         // int[] iArray = {1, 2, 3};
         // print(iArray);
@@ -18,6 +21,10 @@ public class GenericArrayDemo {
 
         Character[] cArray = { 'H', 'E', 'L', 'L', 'O' };
         print(cArray);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static <T> void print(T[] array) {

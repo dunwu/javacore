@@ -10,11 +10,18 @@ package io.github.dunwu.javacore.datatype;
  */
 public class String拼接 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示字符串常量拼接的编译期优化
+     */
+    public static void demo() {
         // 本行代码在 class 文件中，会被编译器直接优化为：
         // String str = "abc";
         String str = "a" + "b" + "c";
         System.out.println("str = " + str);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

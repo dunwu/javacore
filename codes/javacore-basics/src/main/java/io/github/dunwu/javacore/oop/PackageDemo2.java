@@ -10,8 +10,15 @@ import java.util.Date;
  */
 public class PackageDemo2 {
 
-    public static void main(String[] args) {
+    /**
+     * 通过 import 导入后，直接使用短类名创建 Date 对象。
+     */
+    public static void demo() {
         System.out.println(new Date());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

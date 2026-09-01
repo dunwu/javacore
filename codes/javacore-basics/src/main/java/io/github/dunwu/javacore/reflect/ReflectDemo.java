@@ -6,10 +6,17 @@ import java.lang.reflect.*;
 @SuppressWarnings("deprecation")
 public class ReflectDemo {
 
-    public static void main(String[] args) throws Exception {
+    /**
+     * 综合演示反射：获取 Class 对象、反射实例化、打印类声明信息。
+     */
+    public static void demo() throws Exception {
         testGetClassObject();
         testGetObjectByClass();
         testPrintClassInfo();
+    }
+
+    public static void main(String[] args) throws Exception {
+        demo();
     }
 
     /**

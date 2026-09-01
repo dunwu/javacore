@@ -8,9 +8,16 @@ package io.github.dunwu.javacore.method;
  */
 public class AbstractMethodDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示抽象方法：抽象类不能实例化，由子类实现抽象方法。
+     */
+    public static void demo() {
         AbstractClass demo = new ConcreteClass();
         demo.print();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static abstract class AbstractClass {

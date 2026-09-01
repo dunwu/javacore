@@ -2,14 +2,24 @@ package io.github.dunwu.javacore.array;
 
 import java.util.Arrays;
 
+/**
+ * 示例：泛型数组 —— 因为不能直接创建 T[]，通常用 (T[]) new Object[num] 变通。
+ */
 public class GenericArrayDemo<T> {
 
-    public static void main(String[] args) {
+    /**
+     * 演示泛型数组的创建与读写。
+     */
+    public static void demo() {
         GenericArray<Integer> genericArray = new GenericArray<Integer>(4);
         genericArray.put(0, 0);
         genericArray.put(1, 1);
         Object[] array = genericArray.array();
         System.out.println(Arrays.deepToString(array));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class GenericArray<T> {

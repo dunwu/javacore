@@ -5,9 +5,13 @@ import io.github.dunwu.javacore.container.bean.Student;
 
 import java.util.Iterator;
 
+/**
+ * 示例：多对多关联——课程与学生互相持有对方集合，可从课程找学生、从学生找课程。
+ */
 public class TestMore {
 
-    public static void main(String[] args) {
+    /** 演示多对多关系的双向查找。 */
+    public static void demo() {
         Course c1 = new Course("英语", 3);    // 第一门课程
         Course c2 = new Course("计算机", 5);    // 第二门课程
         Student s1 = new Student("张三", 20);
@@ -50,6 +54,10 @@ public class TestMore {
             Course c = iter2.next();
             System.out.println("\t|- " + c);
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

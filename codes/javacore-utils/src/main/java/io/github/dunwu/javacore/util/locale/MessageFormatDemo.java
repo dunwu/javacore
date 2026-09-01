@@ -15,7 +15,10 @@ import java.util.Locale;
  */
 public class MessageFormatDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示用占位符模板拼接消息，支持日期、货币等本地化格式。
+     */
+    public static void demo() {
         String pattern1 = "{0}，你好！你于  {1} 消费  {2} 元。";
         String pattern2 = "At {1,time,short} On {1,date,long}，{0} paid {2,number, currency}.";
         Object[] params = { "Jack", new GregorianCalendar().getTime(), 8888 };
@@ -24,6 +27,10 @@ public class MessageFormatDemo {
         String msg2 = mf.format(params);
         System.out.println(msg1);
         System.out.println(msg2);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -14,7 +14,10 @@ package io.github.dunwu.javacore.control;
  */
 public class SwitchDemo02 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 switch（String 类型）：根据成绩等级输出对应的分数范围。
+     */
+    public static void demo() {
         String level = "及格";
         switch (level) {
             case "优秀": {
@@ -38,6 +41,10 @@ public class SwitchDemo02 {
                 break;
             }
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

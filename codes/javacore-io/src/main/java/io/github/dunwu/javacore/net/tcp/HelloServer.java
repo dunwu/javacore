@@ -4,6 +4,12 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * TCP 最简服务端：在 8888 端口监听，接受一个客户端连接并发送 "hello world"。
+ * <p>
+ * 配套示例：先运行本类，再运行 {@link HelloClient}。
+ * 注：本示例为阻塞式服务、需要配合客户端运行，不纳入自动化测试。
+ */
 public class HelloServer {
 
     public static void main(String[] args) throws Exception {

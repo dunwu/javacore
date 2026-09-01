@@ -1,11 +1,21 @@
 package io.github.dunwu.javacore.generics;
 
+/**
+ * 演示泛型上界：类型参数限定为 Comparable 的子类型。
+ */
 public class GenericsExtendsDemo01 {
 
-    public static void main(String[] args) {
+    /**
+     * 分别求整数、小数、字符串的最大值。
+     */
+    public static void demo() {
         System.out.println(max(3, 4, 5));
         System.out.println(max(6.6, 8.8, 7.7));
         System.out.println(max("pear", "apple", "orange"));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static <T extends Comparable<T>> T max(T x, T y, T z) {

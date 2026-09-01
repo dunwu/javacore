@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.bio.chars;
 import java.io.*;
 
 /**
- * Reader 和 Writer 示例
+ * Reader 和 Writer 示例：字符流读写文件，注意字符流带缓冲区，必须 close/flush 才能把内容写入磁盘。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
@@ -11,9 +11,14 @@ public class FileReadWriteDemo {
 
     private static final String FILEPATH = "temp.log";
 
-    public static void main(String[] args) throws IOException {
+    /** 演示用 FileWriter 写入、FileReader 逐字符读回。 */
+    public static void demo() throws IOException {
         write(FILEPATH);
         System.out.println("内容为：" + new String(read(FILEPATH)));
+    }
+
+    public static void main(String[] args) throws IOException {
+        demo();
     }
 
     public static void write(String filepath) throws IOException {

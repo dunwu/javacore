@@ -1,16 +1,23 @@
 package io.github.dunwu.javacore.operator;
 
 /**
- * 算术操作符示例
+ * instanceof 操作符示例：判断对象是否是某个类（或其子类）的实例。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class InstanceofOperatorDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 instanceof：animal 实际指向 Cat 对象，因此判断为 true。
+     */
+    public static void demo() {
         Animal animal = new Cat();
         boolean result = animal instanceof Cat;
         System.out.println(result);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class Animal {

@@ -19,7 +19,10 @@ public class InvocationHandlerDemo implements InvocationHandler {
         this.subject = subject;
     }
 
-    public static void main(String[] args) {
+    /**
+     * 演示动态代理：通过 Proxy.newProxyInstance 创建代理，在 invoke 中增强调用。
+     */
+    public static void demo() {
         // 我们要代理的真实对象
         Subject realSubject = new RealSubject();
 
@@ -40,6 +43,10 @@ public class InvocationHandlerDemo implements InvocationHandler {
         subject.hello("World");
         String result = subject.bye();
         System.out.println("Result is: " + result);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     @Override

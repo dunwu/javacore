@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.bio.bytes;
 import java.io.*;
 
 /**
- * 文件输入输出流
+ * 文件输入输出流：用 FileOutputStream 写字节、FileInputStream 读字节，是最基础的文件 IO 操作。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
@@ -11,9 +11,14 @@ public class FileStreamDemo {
 
     private static final String FILEPATH = "temp.log";
 
-    public static void main(String[] args) throws Exception {
+    /** 演示先向文件写入字节，再一次性读回全部内容。 */
+    public static void demo() throws Exception {
         write(FILEPATH);
         read(FILEPATH);
+    }
+
+    public static void main(String[] args) throws Exception {
+        demo();
     }
 
     public static void write(String filepath) throws IOException {

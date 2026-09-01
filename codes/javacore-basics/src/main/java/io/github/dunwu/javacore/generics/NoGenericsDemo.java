@@ -11,7 +11,10 @@ import java.util.List;
  */
 public class NoGenericsDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 反例：不使用泛型时，取出元素需强转，类型不匹配会抛 ClassCastException。
+     */
+    public static void demo() {
         List list = new ArrayList<>();
         list.add("abc");
         list.add(18);
@@ -29,6 +32,10 @@ public class NoGenericsDemo {
         System.out.println("num1 = [" + num1 + "]");
         System.out.println("num2 = [" + num2 + "]");
         System.out.println("num3 = [" + num3 + "]");
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -10,6 +10,7 @@ public class School {
     private List<Student> allStudents;
 
     public School(String name) {
+        this();
         this.name = name;
     }
 

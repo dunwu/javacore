@@ -3,6 +3,12 @@ package io.github.dunwu.javacore.net.udp;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
+/**
+ * UDP 接收端：在 9000 端口上等待接收一条消息并打印发送方信息。
+ * <p>
+ * 配套示例：先运行本类，再运行 {@link UDPServer}。
+ * 注：本示例为阻塞等待、需要配合发送端运行，不纳入自动化测试。
+ */
 public class UDPClient {
 
     public static void main(String[] args) throws Exception { // 所有异常抛出

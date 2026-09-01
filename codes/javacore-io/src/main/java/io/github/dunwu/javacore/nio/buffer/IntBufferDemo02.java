@@ -3,11 +3,16 @@ package io.github.dunwu.javacore.nio.buffer;
 import java.nio.IntBuffer;
 
 /**
- * 创建子缓冲区
+ * 示例：通过 {@link IntBuffer#slice} 创建子缓冲区。
+ * 子缓冲区与主缓冲区共享数据，修改子缓冲区的内容会同步反映到主缓冲区。
  */
 public class IntBufferDemo02 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 slice 子缓冲区：先写入 10 个奇数，然后对 [2,6) 范围的子缓冲区每个元素减 1，
+     * 最后输出主缓冲区，可看到子缓冲区对应的元素已被修改。
+     */
+    public static void demo() {
         IntBuffer buf = IntBuffer.allocate(10); // 准备出10个大小的缓冲区
         IntBuffer sub = null; // 定义子缓冲区
         for (int i = 0; i < 10; i++) {
@@ -30,6 +35,11 @@ public class IntBufferDemo02 {
             int x = buf.get();
             System.out.print(x + "、");
         }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -7,7 +7,10 @@ package io.github.dunwu.javacore.reflect;
  */
 public class ReflectClassDemo01 {
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    /**
+     * 演示 Class.forName 获取 Class 对象（包括数组类型）。
+     */
+    public static void demo() throws ClassNotFoundException {
         Class c1 = Class.forName("io.github.dunwu.javacore.reflect.ReflectClassDemo01");
         System.out.println(c1.getCanonicalName());
 
@@ -16,6 +19,10 @@ public class ReflectClassDemo01 {
 
         Class c3 = Class.forName("[[Ljava.lang.String;");
         System.out.println(c3.getCanonicalName());
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        demo();
     }
 
 }

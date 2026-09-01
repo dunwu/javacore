@@ -11,7 +11,10 @@ import java.lang.reflect.Proxy;
  */
 public class App {
 
-    public static void main(String[] args) {
+    /**
+     * 演示动态代理：通过代理对象调用真实对象的购买方法。
+     */
+    public static void demo() {
         // 初始化真实对象
         Purchaser zhangsan = new Consumer("张三");
 
@@ -24,6 +27,10 @@ public class App {
 
         // 通过调用代理对象的方法去调用真实对象的方法
         proxy.purchase("进口奶粉");
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

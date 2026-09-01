@@ -6,9 +6,16 @@ package io.github.dunwu.javacore.method;
  */
 public class MethodOverrideDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示方法重写：子类重写父类方法，可用 super 调用父类版本。
+     */
+    public static void demo() {
         Animal dog = new Dog();
         dog.move();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class Animal {

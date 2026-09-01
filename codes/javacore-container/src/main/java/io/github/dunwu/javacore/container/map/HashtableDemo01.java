@@ -2,9 +2,14 @@ package io.github.dunwu.javacore.container.map;
 
 import java.util.*;
 
+/**
+ * 示例：遍历 Map 的 keySet 与 values。
+ * <p>注：Hashtable 是线程安全的旧实现（不允许 null key/value），现多用 ConcurrentHashMap 替代；本例实际用的是 HashMap。
+ */
 public class HashtableDemo01 {
 
-    public static void main(String[] args) {
+    /** 演示遍历 Map 的全部 key 与 value。 */
+    public static void demo() {
         Map<String, String> map = null; // 声明Map对象，其中key和value的类型为String
         map = new HashMap<String, String>();
         map.put("mldn", "www.mldn.cn");    // 增加内容
@@ -24,6 +29,10 @@ public class HashtableDemo01 {
             String str = iter2.next();
             System.out.print(str + "、");
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

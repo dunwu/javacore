@@ -10,13 +10,20 @@ package io.github.dunwu.javacore.control;
  */
 public class ContinueDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 continue：当 i == 3 时跳过本次循环体剩余部分，继续下一次循环。
+     */
+    public static void demo() {
         for (int i = 0; i < 10; i++) {
             if (i == 3) {
                 continue;
             }
             System.out.println("i = " + i);
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

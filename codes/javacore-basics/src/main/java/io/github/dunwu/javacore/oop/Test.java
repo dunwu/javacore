@@ -1,14 +1,21 @@
 package io.github.dunwu.javacore.oop;
 
+/**
+ * 演示多态：向上转型、向下转型、instanceof 类型判断。
+ */
 public class Test {
 
-    public static void main(String[] args) {
+    public static void demo() {
         show(new Cat()); // 以 Cat 对象调用 show 方法
         show(new Dog()); // 以 Dog 对象调用 show 方法
         Animal a = new Cat(); // 向上转型
         a.eat(); // 调用的是 Cat 的 eat
         Cat c = (Cat) a; // 向下转型
         c.work(); // 调用的是 Cat 的 work
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void show(Animal a) {

@@ -9,7 +9,10 @@ import java.util.List;
  */
 public class ReflectFieldDemo {
 
-    public static void main(String[] args) throws NoSuchFieldException {
+    /**
+     * 演示反射获取属性及其类型（含多维数组、泛型属性）。
+     */
+    public static void demo() throws NoSuchFieldException {
         Field f1 = FieldSpy.class.getField("b");
         System.out.format("Type: %s%n", f1.getType());
 
@@ -21,6 +24,10 @@ public class ReflectFieldDemo {
 
         Field f4 = FieldSpy.class.getField("val");
         System.out.format("Type: %s%n", f4.getType());
+    }
+
+    public static void main(String[] args) throws NoSuchFieldException {
+        demo();
     }
 
     class FieldSpy<T> {

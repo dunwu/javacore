@@ -9,7 +9,10 @@ import java.lang.reflect.Method;
  */
 public class ReflectMethodDemo {
 
-    public static void main(String[] args)
+    /**
+     * 演示反射获取方法：全部方法、public 方法，并通过 invoke 调用静态方法。
+     */
+    public static void demo()
         throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         // 返回所有方法
@@ -30,6 +33,11 @@ public class ReflectMethodDemo {
         Method method = System.class.getMethod("currentTimeMillis");
         System.out.println(method);
         System.out.println(method.invoke(null));
+    }
+
+    public static void main(String[] args)
+        throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        demo();
     }
 
 }

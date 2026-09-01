@@ -5,9 +5,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * 示例：values 获取 HashMap 全部 value 并遍历。
+ */
 public class HashMapDemo04 {
 
-    public static void main(String[] args) {
+    /** 演示通过 values 遍历全部 value。 */
+    public static void demo() {
         Map<String, String> map = null; // 声明Map对象，其中key和value的类型为String
         map = new HashMap<String, String>();
         map.put("mldn", "www.mldn.cn");    // 增加内容
@@ -19,6 +23,10 @@ public class HashMapDemo04 {
             String str = iter.next();
             System.out.print(str + "、");
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

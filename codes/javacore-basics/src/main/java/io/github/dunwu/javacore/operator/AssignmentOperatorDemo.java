@@ -7,7 +7,10 @@ package io.github.dunwu.javacore.operator;
  */
 public class AssignmentOperatorDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示赋值及复合赋值操作符：=、+=、-=、*=、/=、%= 以及移位、位运算复合赋值。
+     */
+    public static void demo() {
         int a = 10;
         int b = 20;
         int c = 0;
@@ -39,6 +42,10 @@ public class AssignmentOperatorDemo {
         System.out.println("c ^= a  = " + c);
         c |= a;
         System.out.println("c |= a  = " + c);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

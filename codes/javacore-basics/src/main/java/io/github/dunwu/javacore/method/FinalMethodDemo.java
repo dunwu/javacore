@@ -6,9 +6,16 @@ package io.github.dunwu.javacore.method;
  */
 public class FinalMethodDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 final 方法：子类不能重写（放开注释即编译报错）。
+     */
+    public static void demo() {
         Father demo = new Son();
         demo.print();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class Father {

@@ -6,7 +6,10 @@ package io.github.dunwu.javacore.datatype;
  */
 public class 包装类型使用示例 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示各基本类型对应包装类的位数、最小值、最大值
+     */
+    public static void demo() {
         printByte();
         printCharacter();
         printShort();
@@ -14,6 +17,10 @@ public class 包装类型使用示例 {
         printLong();
         printFloat();
         printDouble();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void printByte() {

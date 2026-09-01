@@ -7,12 +7,19 @@ package io.github.dunwu.javacore.array;
  */
 public class ArrayDemo4 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示遍历数组并修改元素：每个元素自增 1。
+     */
+    public static void demo() {
         int[] array = { 1, 2, 3 };
         for (int i = 0; i < array.length; i++) {
             array[i]++;
             System.out.println(String.format("array[%d] = %d", i, array[i]));
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

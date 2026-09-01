@@ -16,9 +16,16 @@ import java.util.List;
 @Slf4j
 public class equals和CompareTo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 equals 与 compareTo 不一致的问题：indexOf 用 equals，binarySearch 用 compareTo
+     */
+    public static void demo() {
         wrong();
         right();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void wrong() {

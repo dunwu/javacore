@@ -25,13 +25,23 @@ class DateTime2 {
 
 }
 
+/**
+ * 示例：基于 SimpleDateFormat 格式化日期（比手工拼接更简洁，是 DateDemo06 的改进版）。
+ */
 public class DateDemo07 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 SimpleDateFormat 格式化三种格式的日期字符串。
+     */
+    public static void demo() {
         DateTime2 dt = new DateTime2();
         System.out.println("系统日期：" + dt.getDate());
         System.out.println("中文日期：" + dt.getDateComplete());
         System.out.println("时间戳：" + dt.getTimeStamp());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -6,7 +6,10 @@ package io.github.dunwu.javacore.enumeration;
  */
 public class EnumInInterfaceDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示在接口内部定义枚举：遍历水果枚举并打印描述。
+     */
+    public static void demo() {
         for (Plant.Fruit f : Plant.Fruit.values()) {
             System.out.println(f.getDescription());
         }
@@ -73,6 +76,10 @@ public class EnumInInterfaceDemo {
             }
         }
 
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

@@ -10,7 +10,10 @@ import java.io.IOException;
  */
 public class ExceptionOverrideDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示重写方法时异常声明的约束：子类不能抛出比父类更宽的受检异常。
+     */
+    public static void demo() {
         Father obj1 = new Father();
         Father obj2 = new Son();
         try {
@@ -19,6 +22,10 @@ public class ExceptionOverrideDemo {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class Father {

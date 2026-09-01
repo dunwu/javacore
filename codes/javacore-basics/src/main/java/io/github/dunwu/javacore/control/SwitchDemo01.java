@@ -14,7 +14,10 @@ package io.github.dunwu.javacore.control;
  */
 public class SwitchDemo01 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 switch（char 类型）：根据运算符执行对应的四则运算。
+     */
+    public static void demo() {
         int x = 3;
         int y = 6;
         char oper = '+';
@@ -40,6 +43,10 @@ public class SwitchDemo01 {
                 break;
             }
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

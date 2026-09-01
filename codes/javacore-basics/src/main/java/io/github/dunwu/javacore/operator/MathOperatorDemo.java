@@ -7,7 +7,10 @@ package io.github.dunwu.javacore.operator;
  */
 public class MathOperatorDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示算术操作符：+、-、*、/、% 以及自增的两种形式（x++ 先用后加，++x 先加后用）。
+     */
+    public static void demo() {
         int x = 20;
         int y = 10;
         System.out.println("x + y = " + (x + y));
@@ -18,6 +21,10 @@ public class MathOperatorDemo {
         System.out.println("x++ = " + x++);
         x = 20;
         System.out.println("++x = " + ++x);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

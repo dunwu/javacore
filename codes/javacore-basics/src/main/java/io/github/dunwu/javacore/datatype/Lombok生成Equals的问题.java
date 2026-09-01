@@ -11,9 +11,16 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class Lombok生成Equals的问题 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 Lombok @Data 生成 equals 的陷阱：字段排除与继承 callSuper 配置
+     */
+    public static void demo() {
         test1();
         test2();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static void test1() {

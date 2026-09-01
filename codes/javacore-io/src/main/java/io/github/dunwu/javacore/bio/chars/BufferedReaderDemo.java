@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
+ * BufferedReader 示例：从键盘（System.in）按行读取内容，输入 exit 退出。
+ * <p>本例需要交互式输入，仅供手工运行，不在测试中执行。
+ *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class BufferedReaderDemo {

@@ -14,10 +14,17 @@ import java.io.*;
 @SuppressWarnings("all")
 public class SerializeDemo05 {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        final String filename = "d:/text.dat";
+    /**
+     * 演示 readResolve 保护单例：反序列化时返回原单例实例（输出 true）
+     */
+    public static void demo() throws IOException, ClassNotFoundException {
+        final String filename = "temp_serialize05.dat";
         serialize(filename);
         deserialize(filename);
+    }
+
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        demo();
     }
 
     /**

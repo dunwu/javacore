@@ -6,9 +6,16 @@ package io.github.dunwu.javacore.generics;
  */
 public class GenericsMethodDemo01 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示泛型方法：类型参数由传入的实参自动推断。
+     */
+    public static void demo() {
         printClass("abc");
         printClass(10);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static <T> void printClass(T obj) {

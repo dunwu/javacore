@@ -12,7 +12,10 @@ package io.github.dunwu.javacore.control;
  */
 public class DoWhileDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 do-while：先执行一次循环体，再判断条件，至少会执行一次。
+     */
+    public static void demo() {
         int x = 1;
         int sum = 0; // 保存累加的结果
         do {
@@ -21,6 +24,10 @@ public class DoWhileDemo {
         }
         while (x <= 10);
         System.out.println("1 --> 10 累加的结果为：" + sum);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

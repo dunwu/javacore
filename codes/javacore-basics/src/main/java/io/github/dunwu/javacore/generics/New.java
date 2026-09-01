@@ -2,10 +2,13 @@ package io.github.dunwu.javacore.generics;
 
 import java.util.*;
 
+/**
+ * 演示泛型方法的类型推断：调用处赋值时自动推断泛型参数。
+ */
 public class New {
 
     // Examples:
-    public static void main(String[] args) {
+    public static void demo() {
         Map<String, List<String>> sls = New.map();
         List<String> ls = New.list();
         LinkedList<String> lls = New.lList();
@@ -14,6 +17,10 @@ public class New {
 
         Integer i = new Integer(10);
         Object obj = i;
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     public static <K, V> Map<K, V> map() {

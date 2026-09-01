@@ -63,13 +63,23 @@ class DateTime {
 
 }
 
+/**
+ * 示例：基于 Calendar + StringBuffer 手工拼接日期字符串（演示补零逻辑）。
+ */
 public class DateDemo06 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示手工拼接三种格式的日期字符串。
+     */
+    public static void demo() {
         DateTime dt = new DateTime();
         System.out.println("系统日期：" + dt.getDate());
         System.out.println("中文日期：" + dt.getDateComplete());
         System.out.println("时间戳：" + dt.getTimeStamp());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

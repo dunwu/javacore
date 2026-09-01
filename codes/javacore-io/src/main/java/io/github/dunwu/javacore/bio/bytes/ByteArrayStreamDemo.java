@@ -5,14 +5,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * 内存操作流
+ * 内存操作流：用 ByteArrayInputStream/ByteArrayOutputStream 在内存中读写数据，
+ * 本例把大写字母逐个读出转为小写后再取出，无需任何文件。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2018/4/26
  */
 public class ByteArrayStreamDemo {
 
-    public static void main(String[] args) {
+    /** 演示内存流的读入、转换与取出。 */
+    public static void demo() {
         String str = "HELLOWORLD"; // 定义一个字符串，全部由大写字母组成
         ByteArrayInputStream bis = new ByteArrayInputStream(str.getBytes());
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -31,6 +33,10 @@ public class ByteArrayStreamDemo {
             e.printStackTrace();
         }
         System.out.println(newStr);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

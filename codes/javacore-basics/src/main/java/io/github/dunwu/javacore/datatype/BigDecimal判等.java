@@ -11,13 +11,20 @@ import java.util.TreeSet;
  */
 public class BigDecimal判等 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 BigDecimal 判等：equals 比较值和精度，compareTo 只比较数值大小
+     */
+    public static void demo() {
         System.out.println("====================== wrong ======================");
         wrong();
         System.out.println("====================== right ======================");
         right();
         System.out.println("====================== set ======================");
         set();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     private static void wrong() {

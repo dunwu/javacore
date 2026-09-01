@@ -9,7 +9,10 @@ import java.util.List;
  */
 public class InstanceofDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 instanceof：判断对象是否属于某个类型。
+     */
+    public static void demo() {
         ArrayList arrayList = new ArrayList();
         if (arrayList instanceof List) {
             System.out.println("ArrayList is List");
@@ -17,6 +20,10 @@ public class InstanceofDemo {
         if (arrayList instanceof List) {
             System.out.println("ArrayList is List");
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

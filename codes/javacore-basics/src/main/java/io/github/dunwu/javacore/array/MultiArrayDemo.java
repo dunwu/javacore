@@ -9,7 +9,10 @@ import java.util.Arrays;
  */
 public class MultiArrayDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示多维数组：二维、三维与不规则（各行长度不同）数组的声明与打印。
+     */
+    public static void demo() {
         Integer[][] a1 = { // 自动装箱
             { 1, 2, 3, }, { 4, 5, 6, }, };
         Double[][][] a2 = { // 自动装箱
@@ -19,6 +22,10 @@ public class MultiArrayDemo {
         System.out.println("a1: " + Arrays.deepToString(a1));
         System.out.println("a2: " + Arrays.deepToString(a2));
         System.out.println("a3: " + Arrays.deepToString(a3));
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

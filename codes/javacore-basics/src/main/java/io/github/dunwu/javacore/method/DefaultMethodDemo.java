@@ -6,9 +6,16 @@ package io.github.dunwu.javacore.method;
  */
 public class DefaultMethodDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示接口方法的实现：实现类必须实现接口中的抽象方法。
+     */
+    public static void demo() {
         MyInterface obj = new MyClass();
         obj.print();
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     interface MyInterface {

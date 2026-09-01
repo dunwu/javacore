@@ -9,10 +9,17 @@ import io.github.dunwu.javacore.generics.entity.MyMap;
  */
 public class GenericsClassDemo03 {
 
-    public static void main(String[] args) {
+    /**
+     * 演示泛型嵌套：泛型类的类型参数可以是另一个泛型类。
+     */
+    public static void demo() {
         Info<String> info = new Info("Hello");
         MyMap<Integer, Info<String>> map = new MyMap<>(1, info);
         System.out.println(map);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
 }

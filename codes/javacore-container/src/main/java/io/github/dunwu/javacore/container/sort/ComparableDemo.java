@@ -6,20 +6,25 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * {@link Comparable} 示例
+ * {@link Comparable} 示例：对象自身实现比较规则（内部比较器），与 {@link ComparatorDemo}（外部比较器）对比。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @date 2024-09-19
  */
 public class ComparableDemo {
 
-    public static void main(String[] args) {
+    /** 演示实现 Comparable 接口的对象用 Collections.sort 按自然序排序（本例按年龄升序）。 */
+    public static void demo() {
         User a = new User("A", 18);
         User b = new User("B", 17);
         User c = new User("C", 20);
         List<User> list = new ArrayList<>(Arrays.asList(a, b, c));
         Collections.sort(list);
         list.forEach(System.out::println);
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
     // 输出：
     // User{age=17, name='B'}
