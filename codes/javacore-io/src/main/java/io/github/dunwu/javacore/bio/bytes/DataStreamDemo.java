@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.bio.bytes;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 
 /**
@@ -9,7 +11,12 @@ import java.io.*;
  */
 public class DataStreamDemo {
 
-    public static final String FILEPATH = "temp.log";
+    /**
+     * 示例使用的数据文件路径。统一写到 {@code target/} 目录下，避免污染仓库工作目录，详见 {@link DemoFiles}。
+     * <p>
+     * 文件名带上示例名作为前缀，避开本模块其他示例（旧代码中多个示例共用 {@code temp.log}，会互相覆盖）。
+     */
+    public static final String FILEPATH = DemoFiles.tempPath("temp_datastream.log");
 
     /** 演示先写入商品数据再逐条读回。 */
     public static void demo() throws IOException {

@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.nio.channel;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
@@ -11,10 +13,10 @@ import java.nio.channels.FileChannel;
 public class FileChannelDemo01 {
 
     /**
-     * 示例写入的文件路径（相对路径，避免硬编码磁盘盘符），
-     * 供 {@link FileChannelDemo02}、{@link FileChannelDemo03} 读取。
+     * 示例写入的文件路径，供 {@link FileChannelDemo02}、{@link FileChannelDemo03} 读取。
+     * 统一写到 {@code target/} 目录下，避免污染仓库工作目录，详见 {@link DemoFiles}
      */
-    public static final String FILE_PATH = "temp_channel_out.txt";
+    public static final String FILE_PATH = DemoFiles.tempPath("temp_channel_out.txt");
 
     /**
      * 演示通过输出通道写文件：字符串 → 字节 → ByteBuffer → FileChannel.write。

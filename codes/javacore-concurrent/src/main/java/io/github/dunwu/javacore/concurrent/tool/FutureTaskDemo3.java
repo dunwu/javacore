@@ -8,7 +8,7 @@ import java.util.concurrent.FutureTask;
 
 public class FutureTaskDemo3 {
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException {
+    public static void demo() throws InterruptedException, ExecutionException {
 
         // 创建一个线程池来执行任务
         ExecutorService executor = Executors.newFixedThreadPool(2);
@@ -40,10 +40,20 @@ public class FutureTaskDemo3 {
         // 获取任务的结果
         Integer value1 = f1.get();
         Integer value2 = f2.get();
-        System.out.println("total = " + value1 + value2);
+        // 注意：必须给 value1 + value2 加括号。若写成 "total = " + value1 + value2，
+        // + 会按从左到右结合，先与字符串拼接，结果是 "505015050" 而不是算术和 20100
+        System.out.println("value1 = " + value1 + ", value2 = " + value2);
+        System.out.println("total = " + (value1 + value2));
 
         // 关闭线程池
         executor.shutdown();
     }
 
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+        demo();
+    }
+
 }
+// Output:
+// value1 = 5050, value2 = 15050
+// total = 20100

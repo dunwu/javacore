@@ -15,10 +15,11 @@
 - `variable/VariableDemo` — 各类局部变量的声明与初始化。
 - `datatype/值类型使用示例` — 通过反射依次演示整型溢出、字符、浮点、布尔等值类型用法。
 - `datatype/包装类型使用示例` — 打印各包装类的位数、最小值、最大值。
-- `datatype/包装类装箱拆箱` — 自动装箱/拆箱与手动装箱/拆箱的写法对比。
+- `datatype/包装类装箱拆箱` — 自动/手动装箱拆箱的写法，以及 `==` 与 `equals` 在 Integer 缓存池（-128~127）内外的差异。
 - `datatype/Integer判等` — Integer 缓存池（-128~127）对 `==` 判等结果的影响。
 - `datatype/String判等` — 字符串常量池、`intern()` 与 `==`/`equals` 的差异。
 - `datatype/String拼接` — 字符串常量拼接的编译期优化。
+- `datatype/StringBuilderDemo` — StringBuilder 常用 API（append/insert/delete/replace/reverse/setLength/capacity），以及与 `String +=` 循环拼接的性能对照（后者为 O(n^2)）。
 - `datatype/StringIntern性能测试` — 1000 万次 `intern()` 的性能基准（不纳入单测）。
 - `datatype/枚举判等` — 枚举常量字段为同一实例，`==` 判等为 true。
 - `datatype/BigDecimal判等` — `equals` 比较精度、`compareTo` 只比较数值大小的区别。
@@ -81,10 +82,13 @@
 
 ## 面向对象基础（oop）
 
-展示类、对象、继承、封装等面向对象基础概念。
+展示类与对象、接口、抽象类、继承、多态等面向对象基础概念。
 
 - `oop/Person`、`oop/Programmer` — 类的定义、字段与方法。
-- `oop/Test` — 继承与方法重写（动物/猫/狗叫声示例）。
+- `oop/Test` — 多态：向上转型、向下转型与 `instanceof` 类型判断；同文件内还定义了抽象类 `Animal` 及子类 `Cat`/`Dog`（重写 `eat()`）。
+- `oop/Action` — 接口定义写法示例（声明动物行为 `action()`）。注：当前仓库内无实现类引用它。
+- `oop/Employee`、`oop/Salary` — 抽象类与继承：`Employee` 声明抽象方法 `computePay2()` 并提供 `toString()`/`mailCheck()`，`Salary` 通过 `super(...)` 调用父类构造器并重写方法。二者无 `main`，由单元测试 `ObjectOrientedTest` 驱动，演示 `Employee e = new Salary(...)` 的向上转型。
+- `oop/MultiClassDemo` — 一个 `.java` 文件中定义多个包级私有类（`MultiClass1`~`MultiClass3`），演示「一个文件只能有一个 public 类，且文件名须与 public 类同名」的规则。
 - `oop/PackageDemo`、`PackageDemo2` — 包的定义与使用。
 
 ## 枚举（enumeration）

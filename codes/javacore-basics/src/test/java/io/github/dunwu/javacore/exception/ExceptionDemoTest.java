@@ -88,4 +88,52 @@ public class ExceptionDemoTest {
         assertThat(output).isEqualTo("出现异常了：java.lang.ArithmeticException: / by zero\n不管是否出现异常，都执行此代码\n");
     }
 
+    @Test
+    @DisplayName("TryWithResourcesDemo：正常与异常两条路径都会自动关闭资源")
+    public void testTryWithResourcesAutoClose() {
+        String output = captureOutput(TryWithResourcesDemo::autoClose);
+        assertThat(output).isEqualTo("创建资源 A\n"
+            + "使用资源 A\n"
+            + "关闭资源 A\n"
+            + "创建资源 B\n"
+            + "使用资源 B\n"
+            + "关闭资源 B\n"
+            + "捕获到: B 使用中途出错\n");
+    }
+
+    @Test
+    @DisplayName("TryWithResourcesDemo：声明多个资源时，关闭顺序与声明顺序相反")
+    public void testTryWithResourcesCloseOrder() {
+        String output = captureOutput(TryWithResourcesDemo::closeOrder);
+        assertThat(output).isEqualTo("创建资源 R1\n"
+            + "创建资源 R2\n"
+            + "使用资源 R1\n"
+            + "使用资源 R2\n"
+            + "关闭资源 R2\n"
+            + "关闭资源 R1\n");
+    }
+
+    @Test
+    @DisplayName("TryWithResourcesDemo：close() 的异常被抑制，主异常得以保留")
+    public void testTryWithResourcesSuppressed() {
+        String output = captureOutput(TryWithResourcesDemo::suppressedException);
+        assertThat(output).isEqualTo("创建资源 S\n"
+            + "使用资源 S\n"
+            + "关闭资源 S\n"
+            + "主异常: 业务异常\n"
+            + "被抑制的异常: S 关闭失败\n");
+    }
+
+    @Test
+    @DisplayName("TryWithResourcesDemo：对照手写 finally，业务异常被 close() 异常彻底覆盖")
+    public void testTryWithResourcesCompareWithFinally() {
+        String output = captureOutput(TryWithResourcesDemo::compareWithFinally);
+        // 与 testTryWithResourcesSuppressed 对照：同样是两个异常，这里业务异常毫无痕迹，suppressed 个数为 0
+        assertThat(output).isEqualTo("创建资源 F\n"
+            + "使用资源 F\n"
+            + "关闭资源 F\n"
+            + "最终抛出的异常: F 关闭失败\n"
+            + "被抑制的异常个数: 0\n");
+    }
+
 }

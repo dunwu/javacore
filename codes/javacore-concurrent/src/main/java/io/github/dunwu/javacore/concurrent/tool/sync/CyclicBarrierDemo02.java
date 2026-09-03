@@ -4,25 +4,44 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 /**
- * CyclicBarrier 示例 字面意思回环栅栏，通过它可以实现让一组线程等待至某个状态之后再全部同时执行。 叫做回环是因为当所有等待线程都被释放以后，CyclicBarrier可以被重用。
+ * CyclicBarrier 示例：两个线程分阶段同步，并演示栅栏动作的执行时机
+ * <p>
+ * 与 {@link CyclicBarrierDemo} 的区别在于这里用了<b>两道栅栏</b>，两个线程必须两轮都互相对齐：
+ * 先一起到达 barrier1，再一起到达 barrier2，最后各自结束。
+ * 这展示了 CyclicBarrier 适合「分阶段并行计算」的场景：每一阶段全部算完后才能进入下一阶段。
+ * <p>
+ * 两个 {@code barrierAction} 分别在<b>最后到达的那一个线程</b>上执行，且在所有线程被释放之前，
+ * 因此输出里「BarrierAction 1 executed」必然夹在两组 waiting 行之间，位置是确定的。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see CyclicBarrier
+ * @see CyclicBarrierDemo
  * @since 2018/5/10
  */
 public class CyclicBarrierDemo02 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
+        demo();
+    }
+
+    /**
+     * 输出共 8 行，行位置是确定的（仅线程名不固定）：
+     * 第 1、2 行是两线程的「waiting at barrier 1」，第 3 行是「BarrierAction 1 executed」，
+     * 第 4、5 行是「waiting at barrier 2」，第 6 行是「BarrierAction 2 executed」，
+     * 第 7、8 行是两线程的「done!」。
+     * 末尾的 {@code join} 保证方法返回前所有输出已打印完毕
+     */
+    public static void demo() throws InterruptedException {
         Runnable barrier1Action = new Runnable() {
             @Override
             public void run() {
-                System.out.println("BarrierAction 1 executed ");
+                System.out.println("BarrierAction 1 executed");
             }
         };
         Runnable barrier2Action = new Runnable() {
             @Override
             public void run() {
-                System.out.println("BarrierAction 2 executed ");
+                System.out.println("BarrierAction 2 executed");
             }
         };
 
@@ -33,8 +52,12 @@ public class CyclicBarrierDemo02 {
 
         CyclicBarrierRunnable barrierRunnable2 = new CyclicBarrierRunnable(barrier1, barrier2);
 
-        new Thread(barrierRunnable1).start();
-        new Thread(barrierRunnable2).start();
+        Thread t1 = new Thread(barrierRunnable1);
+        Thread t2 = new Thread(barrierRunnable2);
+        t1.start();
+        t2.start();
+        t1.join();
+        t2.join();
     }
 
     static class CyclicBarrierRunnable implements Runnable {

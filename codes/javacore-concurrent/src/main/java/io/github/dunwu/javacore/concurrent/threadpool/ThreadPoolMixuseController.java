@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.util.Collections;
@@ -19,6 +20,17 @@ import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 @Slf4j
 public class ThreadPoolMixuseController {
+
+    /**
+     * 演示用的输出文件。统一写到 {@code target/} 目录下，避免污染仓库工作目录
+     * （{@code target} 已被 {@code .gitignore} 忽略，且 {@code mvn clean} 会一并清理）。
+     * <p>
+     * 注：本类并没有 {@code @Component} 之类的注解，{@link #init()} 不会被 Spring 容器调用，
+     * 因此那段「无限循环提交写文件任务」的逻辑默认不会执行；统一路径只是防止有人手动注册该 bean
+     * 时把 {@code demo.txt} 写到工作目录。若 {@code target} 目录不存在，{@code Files.write} 会抛
+     * IOException 并被下方的 catch 打印，不会导致线程崩溃。
+     */
+    private static final Path DEMO_FILE = Paths.get("target", "demo.txt");
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         wrong();
@@ -75,7 +87,7 @@ public class ThreadPoolMixuseController {
             while (true) {
                 threadPool.execute(() -> {
                     try {
-                        Files.write(Paths.get("demo.txt"),
+                        Files.write(DEMO_FILE,
                             Collections.singletonList(LocalTime.now().toString() + ":" + payload), UTF_8, CREATE,
                             TRUNCATE_EXISTING);
                     } catch (IOException e) {

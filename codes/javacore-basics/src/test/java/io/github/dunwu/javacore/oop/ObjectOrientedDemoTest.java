@@ -55,4 +55,29 @@ public class ObjectOrientedDemoTest {
         assertThatCode(Person::demo).doesNotThrowAnyException();
     }
 
+    @Test
+    @DisplayName("Employee/Salary：抽象类继承与动态绑定，父类引用同样调用子类重写方法")
+    public void testEmployeeSalary() {
+        String output = captureOutput(() -> {
+            Salary s = new Salary("Mohd Mohtashim", "Ambehta, UP", 3, 3600.00);
+            // 向上转型：父类抽象类引用指向子类对象
+            Employee e = new Salary("John Adams", "Boston, MA", 2, 2400.00);
+            System.out.println("Call mailCheck using Salary reference --");
+            s.mailCheck();
+            System.out.println("Call mailCheck using Employee reference--");
+            e.mailCheck();
+        });
+        assertThat(output).isEqualTo(
+            // 构造 Salary 时通过 super(...) 先执行父类构造器
+            "Constructing an Employee\n"
+                + "Constructing an Employee\n"
+                + "Call mailCheck using Salary reference --\n"
+                // 关键：不论用子类引用还是父类引用，调用的都是 Salary 重写的 mailCheck
+                + "Within mailCheck of Salary class \n"
+                + "Mailing check to Mohd Mohtashim with salary 3600.0\n"
+                + "Call mailCheck using Employee reference--\n"
+                + "Within mailCheck of Salary class \n"
+                + "Mailing check to John Adams with salary 2400.0\n");
+    }
+
 }

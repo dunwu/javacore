@@ -108,8 +108,9 @@ public class IODemoTest {
     @DisplayName("System.out：标准输出重定向到文件")
     void testSystemOutDemo() {
         String output = captureOutput(() -> SystemOutDemo.demo());
-        assertThat(output).contains("输出已重定向到文件：temp_stdout.txt");
-        assertThat(new File("temp_stdout.txt")).exists();
+        // 路径必须取自示例自身的常量：示例已统一把临时文件写到 target/ 下
+        assertThat(output).contains("输出已重定向到文件：" + SystemOutDemo.FILE_PATH);
+        assertThat(new File(SystemOutDemo.FILE_PATH)).exists();
     }
 
 }

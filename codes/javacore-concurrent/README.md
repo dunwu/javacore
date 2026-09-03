@@ -1,8 +1,8 @@
 # JavaCore :: Concurrent — Java 并发编程示例
 
-> 本模块展示 Java 并发编程的核心特性：线程基础、同步机制、锁、原子类、并发容器、线程池、JMM 与并发工具类。示例均可直接运行 `main` 方法观察行为。
+> 本模块展示 Java 并发编程的核心特性：线程基础、同步机制、锁、原子类、ThreadLocal、并发容器、线程池、JMM 与并发工具类。示例均可直接运行 `main` 方法观察行为。
 >
-> 说明：模块中相当一部分示例是**故意演示错误并发用法的反例**（类名以 `Wrong` / `Error` / `NotThreadSafe` / `死锁` / `活锁` / `饥饿` 标识，或文件名直接标注问题），用于对比正确写法，请勿修改其行为。
+> 说明：模块中相当一部分示例是**故意演示错误并发用法的反例**（类名以 `Wrong` / `Error` / `NotThreadSafe` / `死锁` / `活锁` / `饥饿` 标识，或文件名直接标注问题），用于对比正确写法，请勿把它们「修正」成正确写法，否则示例就失去了对比价值。
 
 示例源码路径：`src/main/java/io/github/dunwu/javacore/concurrent/<特性包>/`
 
@@ -55,6 +55,17 @@
 - `atomic/AtomicStampedReferenceDemo`、`atomic/AtomicMarkableReferenceDemo` — 带版本号/标记的原子引用，解决 ABA 问题。
 - `atomic/AtomicReferenceFieldUpdaterDemo` — 原子更新对象的某个字段。
 - `atomic/RateLimiter` — 基于原子类实现的简单限流器。
+
+## 线程本地变量（threadlocal）
+
+展示 `ThreadLocal` 的线程隔离语义、默认值设置与典型误用。
+
+- `threadlocal/ThreadLocalDemo`（正确） — 重写 `initialValue()` 提供默认值，10 个线程各自累加自己的副本，输出稳定为 10 行 `count = 10`。
+- `threadlocal/ThreadLocalErrorDemo`（反例） — 本该做线程隔离却用了共享静态变量，10 个线程互相干扰，打印值远大于 10 且各不相同。
+- `threadlocal/ThreadLocalDemo02` — 不带初始值的 `ThreadLocal`：子线程的 `set` 对主线程不可见，主线程未 `set` 就 `get` 得到 `null`（若接收方是基本类型，拆箱会抛 NPE）。
+- `threadlocal/ThreadLocalDemo03` — 用 `ThreadLocal.withInitial(...)` 提供默认值规避上述 NPE，并验证子线程的写入不会影响主线程。
+
+> Web 场景下 ThreadLocal 不清理导致的「用户串号」问题，另见 `codes/javacore-in-web` 模块的 `ThreadLocalErrorDemo` 与其 `ThreadLocalErrorDemoTest`。
 
 ## 并发容器（container）
 
@@ -111,3 +122,51 @@
 
 - `example/ProducerConsumerDemo01`~`ProducerConsumerDemo03` — 用 wait/notify、BlockingQueue、Lock+Condition 三种方式实现生产者-消费者模型。
 - `leetcode/PrintInOrder` — 经典并发题：保证三个线程按序打印。
+
+---
+
+## 单元测试
+
+测试源码路径：`src/test/java/io/github/dunwu/javacore/concurrent/`
+
+```bash
+mvn test -pl codes/javacore-concurrent
+```
+
+现有 **26 个测试**，覆盖 `atomic`、`threadlocal`、`tool`、`tool.sync`、`error` 五个包共 26 个示例类。
+
+并发示例的输出天生混杂了「确定不变的部分」与「取决于线程调度的部分」，因此测试遵循下面几条约定：
+
+- **只断言由并发语义保证的性质**，不断言具体线程名或行顺序。例如 `CountDownLatchDemo` 断言「`await()` 之后的两行必然排在最后」，`CyclicBarrierDemo` 断言「barrierAction 必然排在最后一行」，`AtomicReferenceDemo2` 断言「自旋锁下 10 张票恰好各卖一次」。
+- **反例只做弱断言**。`NotThreadSafeCounter` / `WrongResult` 丢失多少次更新完全取决于调度，断言「必然小于预期值」在理论上也可能失败，所以只断言结果落在必然成立的区间内，具体量级写在注释里。
+- **正反例的断言强度差异本身就是结论**：`ThreadSafeCounter` 可以精确断言 `count = 200000`，而 `NotThreadSafeCounter` 不能 —— 这直观体现了同步措施是否生效。
+- 输出通过 `DemoOutputCapture.capture(...)` 捕获：临时把 `System.out` 换成内存流，执行完再还原。
+
+### 示例类的可测性约定
+
+被测试覆盖的示例类都遵循统一的入口形式：
+
+```java
+public static void demo() throws InterruptedException {
+    // 示例逻辑
+}
+
+public static void main(String[] args) throws InterruptedException {
+    demo();
+}
+```
+
+`demo()` 除了承载原有逻辑，还必须满足两个条件，否则测试会不稳定：
+
+1. **返回前等待自己创建的所有线程结束**（`join()` 或 `shutdown()` + `awaitTermination()`）。只调 `shutdown()` 是不够的 —— 它仅仅表示不再接受新任务，不会等已提交的任务跑完，方法一返回，`System.out` 就被还原了，子线程的输出会漏到捕获范围之外。
+2. **重置内部静态状态**，使方法可以重复调用。例如卖票示例需要在开头把 `ticket` 重置为 10，否则第二次调用时票已卖完，不会有任何输出。
+
+### 刻意未覆盖的示例
+
+以下示例执行后会留下永不结束的线程，或会耗尽内存，一旦在测试 JVM 中运行将挂起或拖垮整个测试进程，因此只能单独运行它们的 `main` 方法观察：
+
+- 死锁：`sync/ThreadDeadLockDemo`、`sync/synchronized死锁示例`、`lock/ReentrantLock死锁`
+- 活锁：`lock/LivelockDemo`、`lock/ReentrantLock活锁示例`
+- 饥饿：`lock/StarvationDemo`、`lock/StarvationFixDemo`
+- 内存溢出：`threadpool/ThreadPoolOOM`
+- 无限循环 / 长时运行：`example/ProducerConsumerDemo01`~`03`、`atomic/RateLimiter`、`container/VectorDemo` 系列、`thread/ThreadDaemonDemo`、`thread/ThreadStopDemo` 系列、`leetcode/PrintInOrder`（输出达 3000 行）

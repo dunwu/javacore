@@ -3,6 +3,8 @@ package io.github.dunwu.javacore.serialize;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.NotSerializableException;
@@ -39,8 +41,22 @@ public class SerializeDemoTest {
         return new String(buffer.toByteArray(), StandardCharsets.UTF_8).replace("\r\n", "\n");
     }
 
+    /**
+     * 删除示例在 {@code target/} 下生成的临时文件。
+     * <p>
+     * 路径必须与示例内部保持一致（同样通过 {@link DemoFiles} 解析），否则删的是另一个位置、真正的产物会残留。
+     * <p>
+     * 这里还断言删除必须成功：Windows 上若示例在异常路径没有关闭流，文件句柄未释放会让
+     * {@code File.delete()} <b>静默返回 false</b>，文件就留在磁盘上——断言能把这类问题直接暴露出来。
+     * （{@link UnSerializeDemo} 正是因为这个原因曾经残留过 {@code temp_unserialize.dat}。）
+     */
     private static void cleanup(String filename) {
-        new File(filename).delete();
+        File file = DemoFiles.temp(filename);
+        if (file.exists()) {
+            assertThat(file.delete())
+                .as("临时文件 %s 应能被删除（失败通常意味着示例在异常路径上没有关闭流，句柄未释放）", filename)
+                .isTrue();
+        }
     }
 
     @Test

@@ -82,7 +82,8 @@ public class BytesStreamDemoTest {
     @Test
     @DisplayName("打印流：将内容输出到文件")
     void testPrintStreamDemo() {
-        File file = new File("temp_print.txt");
+        // 路径必须取自示例自身的常量：示例已统一把临时文件写到 target/ 下
+        File file = new File(PrintStreamDemo.FILE_PATH);
         if (file.exists()) {
             assertThat(file.delete()).isTrue();
         }

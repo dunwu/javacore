@@ -1,8 +1,9 @@
 package io.github.dunwu.javacore.bio.bytes;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
@@ -10,16 +11,19 @@ import java.util.zip.ZipOutputStream;
 
 /**
  * 压缩流示例：用 ZipOutputStream/ZipInputStream/ZipFile 完成文件与目录的压缩、解压。
- * <p>demo 会在系统临时目录下自包含地准备素材并演示：压缩单文件、读取压缩实体、压缩目录、解压目录。
+ * <p>demo 会在 {@code target/zipdemo} 目录下自包含地准备素材并演示：压缩单文件、读取压缩实体、压缩目录、解压目录。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
 public class ZipStreamDemo {
 
-    /** 演示单文件与目录的压缩、解压全流程（素材在临时目录中自动准备）。 */
+    /** 演示单文件与目录的压缩、解压全流程（素材在 {@code target/zipdemo} 目录中自动准备）。 */
     public static void demo() throws Exception {
-        // 在系统临时目录中准备演示素材，避免污染其他目录
-        File workDir = Files.createTempDirectory("zipdemo").toFile();
+        // 在 target/ 下的专属子目录中准备演示素材，避免污染仓库工作目录，详见 DemoFiles
+        File workDir = new File(DemoFiles.tempDir(), "zipdemo");
+        if (!workDir.exists()) {
+            workDir.mkdirs();
+        }
         String filepath = new File(workDir, "demo.txt").getPath();
         String zipfilepath = new File(workDir, "demo.zip").getPath();
         String dirpath = new File(workDir, "demo2").getPath();
@@ -61,7 +65,7 @@ public class ZipStreamDemo {
         ZipEntry entry = zipFile.getEntry("mldn.txt");
         System.out.println("压缩文件的名称：" + zipFile.getName());
 
-        File outputFile = new File("mldn_unzip.txt");
+        File outputFile = DemoFiles.temp("mldn_unzip.txt");
         OutputStream out = new FileOutputStream(outputFile); // 实例化输出流
         InputStream input = zipFile.getInputStream(entry); // 得到一个压缩实体的输入流
         int temp = 0;

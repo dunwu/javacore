@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.nio.lock;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
@@ -16,12 +18,13 @@ public class FileLockDemo {
      * 演示文件锁定与释放：锁定 → 等待 5 秒 → 释放。
      */
     public static void demo() throws Exception {
-        File file = new File("temp_lock.txt");
+        // 临时文件统一写到 target/ 目录下，避免污染仓库工作目录，详见 DemoFiles
+        File file = DemoFiles.temp("temp_lock.txt");
         FileOutputStream output = new FileOutputStream(file, true);
         FileChannel fout = output.getChannel();// 得到通道
         FileLock lock = fout.tryLock(); // 进行独占锁的操作
         if (lock != null) {
-            System.out.println(file.getName() + "文件锁定300秒");
+            System.out.println(file.getName() + "文件锁定5秒");
             Thread.sleep(5000);
             lock.release(); // 释放
             System.out.println(file.getName() + "文件解除锁定。");

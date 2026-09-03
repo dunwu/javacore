@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.serialize;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 
 /**
@@ -18,7 +20,8 @@ public class SerializeDemo02 {
      * 演示 transient 关键字：age 字段被 transient 修饰，反序列化后为 null
      */
     public static void demo() throws IOException, ClassNotFoundException {
-        final String filename = "temp_serialize02.dat";
+        // 临时文件统一写到 target/ 目录下，避免污染仓库工作目录，详见 DemoFiles
+        final String filename = DemoFiles.tempPath("temp_serialize02.dat");
         serialize(filename);
         deserialize(filename);
     }

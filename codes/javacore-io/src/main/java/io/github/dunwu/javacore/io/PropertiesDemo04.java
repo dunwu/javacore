@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.io;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,9 +16,9 @@ import java.util.Properties;
 public class PropertiesDemo04 {
 
     /**
-     * XML 属性文件路径（相对路径，避免硬编码磁盘盘符）
+     * XML 属性文件路径。统一写到 {@code target/} 目录下，避免污染仓库工作目录，详见 {@link DemoFiles}
      */
-    public static final String FILE_PATH = "temp_area.xml";
+    public static final String FILE_PATH = DemoFiles.tempPath("temp_area.xml");
 
     /**
      * 演示 Properties 的 storeToXML 用法：设置若干属性后保存到 XML 文件。

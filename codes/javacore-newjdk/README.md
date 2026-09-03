@@ -2,7 +2,7 @@
 
 > 本模块按 **JDK 版本** 组织，逐个展示 JDK 8 到 JDK 21 引入的重要语言与 API 特性。
 >
-> 每个示例类的 `main` 逻辑抽取为独立的 `demo()` 方法，并在 `src/test` 下配套 JUnit 5 单元测试（`XxxDemoTest`）验证输出。
+> 每个示例类的 `main` 只做聚合调用，具体逻辑拆分为若干**具名静态方法**（如 `LambdaBasicDemo` 的 `runnableComparison()`、`singleParameterLambda()`、`sortAndForEach()`），一个方法对应一个独立用法；并在 `src/test` 下配套 JUnit 5 单元测试（`XxxDemoTest`）逐个验证输出。
 
 示例源码路径：`src/main/java/io/github/dunwu/javacore/<jdkNN>/<特性包>/`
 

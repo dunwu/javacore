@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.bio.bytes;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 
 /**
@@ -11,7 +13,8 @@ public class ObjectStreamDemo {
 
     /** 演示对象数组的序列化写入与反序列化读回。 */
     public static void demo() throws Exception {
-        final String filepath = "temp_object.txt";
+        // 临时文件统一写到 target/ 目录下，避免污染仓库工作目录，详见 DemoFiles
+        final String filepath = DemoFiles.tempPath("temp_object.txt");
         Person[] per = { new Person("张三", 30), new Person("李四", 31), new Person("王五", 32) };
         writeObject(filepath, per);
         Object[] o = readObject(filepath);

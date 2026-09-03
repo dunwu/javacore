@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.nio.channel;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,9 +14,9 @@ import java.nio.channels.FileChannel;
 public class FileChannelDemo02 {
 
     /**
-     * 复制生成的目标文件路径（相对路径）
+     * 复制生成的目标文件路径。统一写到 {@code target/} 目录下，避免污染仓库工作目录，详见 {@link DemoFiles}
      */
-    public static final String COPY_FILE_PATH = "temp_channel_outnote.txt";
+    public static final String COPY_FILE_PATH = DemoFiles.tempPath("temp_channel_outnote.txt");
 
     /**
      * 演示通道读写复制文件。

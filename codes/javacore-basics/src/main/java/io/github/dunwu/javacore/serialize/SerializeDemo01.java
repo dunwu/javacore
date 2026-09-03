@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.serialize;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 
 /**
@@ -15,7 +17,8 @@ public class SerializeDemo01 {
      * 演示普通序列化：Person 实现 Serializable 接口，所有字段都被完整序列化
      */
     public static void demo() throws IOException, ClassNotFoundException {
-        final String filename = "temp_serialize01.dat";
+        // 临时文件统一写到 target/ 目录下，避免污染仓库工作目录，详见 DemoFiles
+        final String filename = DemoFiles.tempPath("temp_serialize01.dat");
         serialize(filename);
         deserialize(filename);
     }

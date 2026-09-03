@@ -41,14 +41,18 @@ public class SerialDemoTest {
     @DisplayName("序列化/反序列化：transient 修饰的 SSN 字段反序列化后为默认值 0")
     void testSerializeDemo() {
         String output = captureOutput(SerializeDemo::demo);
-        assertThat(output).contains("Serialized data is saved in temp_serial.dat");
+        // 路径必须取自示例自身的常量：示例已统一把临时文件写到 target/ 下
+        assertThat(output).contains("Serialized data is saved in " + SerializeDemo.FILE_PATH);
         assertThat(output).contains("Deserialized Employee...");
         assertThat(output).contains("Name: Reyan Ali");
         assertThat(output).contains("Address: Phokka Kuan, Ambehta Peer");
         assertThat(output).contains("SSN: 0");
         assertThat(output).contains("Number: 101");
-        // 清理临时文件
-        new File("temp_serial.dat").delete();
+        // 清理示例在 target/ 下生成的临时文件
+        File file = new File(SerializeDemo.FILE_PATH);
+        if (file.exists()) {
+            assertThat(file.delete()).isTrue();
+        }
     }
 
 }

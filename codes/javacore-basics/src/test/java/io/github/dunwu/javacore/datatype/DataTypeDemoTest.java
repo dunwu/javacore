@@ -83,16 +83,20 @@ public class DataTypeDemoTest {
     }
 
     @Test
-    @DisplayName("包装类装箱拆箱：自动/非自动装箱拆箱写法")
+    @DisplayName("包装类装箱拆箱：自动/手动装箱拆箱写法，以及 == 与 equals 在缓存池内外的差异")
     void test包装类装箱拆箱() {
         String output = captureOutput(包装类装箱拆箱::demo);
-        assertThat(output).isEqualTo("i1 = [10]\n"
-            + "i2 = [10]\n"
-            + "i3 = [10]\n"
-            + "i4 = [10]\n"
-            + "i5 = [10]\n"
+        assertThat(output).isEqualTo("i1 = [10], i2 = [10]\n"
+            + "i3 = [128], i4 = [128]\n"
+            + "i5 = [10], i6 = [10]\n"
+            // 10 在缓存范围内，== 与 equals 都为 true
             + "i1 == i2 is [true]\n"
-            + "i1 == i4 is [true]\n");
+            + "i1.equals(i2) is [true]\n"
+            // 128 超出缓存范围，== 为 false，equals 为 true
+            + "i3 == i4 is [false]\n"
+            + "i3.equals(i4) is [true]\n"
+            // 与基本类型比较时自动拆箱，按数值比较
+            + "i3 == 128 is [true]\n");
     }
 
     @Test

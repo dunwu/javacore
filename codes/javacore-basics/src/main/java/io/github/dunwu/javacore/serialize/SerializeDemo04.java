@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.serialize;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 
 /**
@@ -18,7 +20,8 @@ public class SerializeDemo04 {
      * 演示序列化破坏单例：反序列化会创建新对象，与原单例实例不相等（输出 false）
      */
     public static void demo() throws IOException, ClassNotFoundException {
-        final String filename = "temp_serialize04.dat";
+        // 临时文件统一写到 target/ 目录下，避免污染仓库工作目录，详见 DemoFiles
+        final String filename = DemoFiles.tempPath("temp_serialize04.dat");
         serialize(filename);
         deserialize(filename);
     }

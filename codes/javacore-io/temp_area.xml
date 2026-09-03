@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<properties>
-<comment>Area Info</comment>
-<entry key="TJ">TianJin</entry>
-<entry key="BJ">BeiJing</entry>
-<entry key="NJ">NanJing</entry>
-</properties>

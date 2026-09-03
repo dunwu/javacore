@@ -8,9 +8,18 @@ package io.github.dunwu.javacore.annotation;
  */
 public class OverrideAnnotationDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 {@code @Override}：显式声明当前方法覆写了父类或接口的方法
+     * <p>
+     * 价值在于让编译器帮忙校验：如果方法名拼错或签名不一致，实际上并未构成覆写，编译会直接报错
+     */
+    public static void demo() {
         Person per = new Man();
         System.out.println(per.getName());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class Person {

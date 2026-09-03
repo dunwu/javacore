@@ -10,17 +10,35 @@ import java.util.List;
  */
 public class SafeVarargsAnnotationDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 {@code @SafeVarargs} 的局限：它只是<b>压制</b>了泛型可变参数（varargs）的「堆污染」告警，
+     * 并不能让方法真的安全
+     * <p>
+     * {@code wrongMethod} 内部把 {@code List<Integer>} 塞进了 {@code Object[]}（即 {@code List<String>[]}），
+     * 再按 {@code String} 取出时，运行期抛 {@code ClassCastException}
+     */
+    public static void demo() {
         List<String> list = new ArrayList<>();
         list.add("A");
         list.add("B");
 
         List<String> list2 = new ArrayList<>();
-        list.add("1");
-        list.add("2");
+        list2.add("1");
+        list2.add("2");
 
-        wrongMethod(list, list2);
+        try {
+            wrongMethod(list, list2);
+            System.out.println("wrongMethod 正常返回（未发生堆污染）");
+        } catch (ClassCastException e) {
+            System.out.println("捕获到 ClassCastException：@SafeVarargs 只压制告警，无法阻止堆污染导致的运行期异常");
+        }
     }
+
+    public static void main(String[] args) {
+        demo();
+    }
+    // Output:
+    // 捕获到 ClassCastException：@SafeVarargs 只压制告警，无法阻止堆污染导致的运行期异常
 
     /**
      * 此方法实际上并不安全，不使用此注解，编译时会告警

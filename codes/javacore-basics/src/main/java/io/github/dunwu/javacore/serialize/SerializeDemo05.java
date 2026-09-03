@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.serialize;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 
 /**
@@ -18,7 +20,8 @@ public class SerializeDemo05 {
      * 演示 readResolve 保护单例：反序列化时返回原单例实例（输出 true）
      */
     public static void demo() throws IOException, ClassNotFoundException {
-        final String filename = "temp_serialize05.dat";
+        // 临时文件统一写到 target/ 目录下，避免污染仓库工作目录，详见 DemoFiles
+        final String filename = DemoFiles.tempPath("temp_serialize05.dat");
         serialize(filename);
         deserialize(filename);
     }

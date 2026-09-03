@@ -1,5 +1,6 @@
 package io.github.dunwu.javacore.bio;
 
+import io.github.dunwu.javacore.DemoFiles;
 import io.github.dunwu.javacore.io.FileDemo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -18,9 +19,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class FileDemoTest {
 
-    private final String filename = "temp_test.log";
+    /**
+     * 测试用的临时文件与目录。统一放到 {@code target/} 下，避免污染仓库工作目录，详见 {@link DemoFiles}。
+     * <p>
+     * 这里用 {@link DemoFiles#tempPath} 而不是手写 {@code "target/..."}：它会在返回路径前确保 {@code target}
+     * 目录存在，而 {@link FileDemo#mkdir} 用的是 {@code File.mkdir()}（不会递归创建父目录），
+     * 父目录缺失时会直接返回 false 导致测试失败。
+     */
+    private final String filename = DemoFiles.tempPath("temp_test.log");
 
-    private final String dirname = "temp_test_dir";
+    private final String dirname = DemoFiles.tempPath("temp_test_dir");
 
     @Test
     @DisplayName("创建新文件")

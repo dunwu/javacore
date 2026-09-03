@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.io;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -16,9 +18,12 @@ import java.io.RandomAccessFile;
 public class RandomAccessFileWriteDemo {
 
     /**
-     * 示例使用的数据文件路径（相对路径）
+     * 示例使用的数据文件路径。统一写到 {@code target/} 目录下，避免污染仓库工作目录，详见 {@link DemoFiles}。
+     * <p>
+     * 文件名带上示例名作为前缀：本模块有多个示例都写临时文件，若共用同一名字（如旧代码里的 {@code temp.log}）
+     * 就会互相覆盖，导致 {@link RandomAccessFileReadDemo} 这类「文件已存在则直接读」的示例读到别的示例写的数据。
      */
-    public static final String FILE_PATH = "temp.log";
+    public static final String FILE_PATH = DemoFiles.tempPath("temp_randomaccess.log");
 
     /**
      * 演示 {@link RandomAccessFile} 写入：按固定长度（8 字节姓名 + 4 字节年龄）写入三组记录，

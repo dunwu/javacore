@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.serial;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 
 /**
@@ -10,7 +12,10 @@ import java.io.*;
  */
 public class SerializeDemo {
 
-    private final static String FILE_PATH = "temp_serial.dat";
+    /**
+     * 示例使用的数据文件路径。统一写到 {@code target/} 目录下，避免污染仓库工作目录，详见 {@link DemoFiles}
+     */
+    public final static String FILE_PATH = DemoFiles.tempPath("temp_serial.dat");
 
     /**
      * 演示序列化和反序列化：SSN 字段被 transient 修饰，反序列化后值为默认值 0

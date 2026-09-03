@@ -17,6 +17,16 @@ import java.util.concurrent.CountDownLatch;
 public class CountDownLatchDemo {
 
     public static void main(String[] args) {
+        demo();
+    }
+
+    /**
+     * 主线程在 {@code latch.await()} 上阻塞，直到两个子线程各调一次 {@code countDown()} 把计数减到 0。
+     * 因此输出共 7 行：第 1 行固定是「等待2个子线程执行完毕...」，最后两行固定是
+     * 「2个子线程已经执行完毕」和「继续执行主线程」；中间 4 行（两个子线程的「正在执行」与「执行完毕」）
+     * 顺序和线程名取决于调度
+     */
+    public static void demo() {
         final CountDownLatch latch = new CountDownLatch(2);
 
         new Thread(new MyThread(latch)).start();

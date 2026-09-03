@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.serialize;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 
 /**
@@ -18,7 +20,8 @@ public class ExternalizeDemo02 {
      * 演示 Externalizable：writeExternal 只写入 name 和 age，sex 字段不会被序列化
      */
     public static void demo() throws IOException, ClassNotFoundException {
-        final String filename = "temp_externalize02.dat";
+        // 临时文件统一写到 target/ 目录下，避免污染仓库工作目录，详见 DemoFiles
+        final String filename = DemoFiles.tempPath("temp_externalize02.dat");
         serialize(filename);
         deserialize(filename);
     }

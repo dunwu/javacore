@@ -13,7 +13,7 @@ import java.util.function.Function;
  */
 public class SemaphoreRateLimit {
 
-    public static void main(String[] args) {
+    public static void demo() {
         // 创建对象池，大小为 10
         ObjectPool<Long, String> pool = new ObjectPool<>(10, 2L);
         for (int i = 0; i < 20; i++) {
@@ -23,6 +23,10 @@ public class SemaphoreRateLimit {
                 return t.toString();
             });
         }
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class ObjectPool<T, R> {
@@ -41,18 +45,24 @@ public class SemaphoreRateLimit {
         }
 
         // 利用对象池的对象，调用 func
+        // 注意：不能在 finally 中写 return。finally 里的 return 会吞掉 try 块的返回值和未捕获的异常，
+        // 导致 exec 永远返回 null，这是一个隐蔽且危害很大的错误写法
         R exec(Function<T, R> func) {
-            T t = null;
             try {
                 sem.acquire();
-                t = pool.remove(0);
-                return func.apply(t);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
+                return null;
+            }
+            T t = null;
+            try {
+                t = pool.remove(0);
+                return func.apply(t);
             } finally {
+                // 归还对象并释放许可，无论 func 是否抛异常都必须执行
                 pool.add(t);
                 sem.release();
-                return null;
             }
         }
 

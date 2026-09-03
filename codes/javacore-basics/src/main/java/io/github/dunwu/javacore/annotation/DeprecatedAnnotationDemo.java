@@ -8,7 +8,12 @@ package io.github.dunwu.javacore.annotation;
  */
 public class DeprecatedAnnotationDemo {
 
-    public static void main(String[] args) {
+    /**
+     * 演示 {@code @Deprecated} 修饰字段、方法、类三种目标
+     * <p>
+     * 被标记的成员仍可在运行期正常使用，{@code @Deprecated} 只对编译期产生告警，提醒调用方不要再使用
+     */
+    public static void demo() {
         System.out.println(DeprecatedField.DEPRECATED_FIELD);
 
         DeprecatedMethod dm = new DeprecatedMethod();
@@ -16,6 +21,10 @@ public class DeprecatedAnnotationDemo {
 
         DeprecatedClass dc = new DeprecatedClass();
         System.out.println(dc.print());
+    }
+
+    public static void main(String[] args) {
+        demo();
     }
 
     static class DeprecatedField {

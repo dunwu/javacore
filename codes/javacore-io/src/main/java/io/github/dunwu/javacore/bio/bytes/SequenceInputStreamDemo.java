@@ -1,5 +1,7 @@
 package io.github.dunwu.javacore.bio.bytes;
 
+import io.github.dunwu.javacore.DemoFiles;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
@@ -12,22 +14,34 @@ import java.nio.charset.StandardCharsets;
  */
 public class SequenceInputStreamDemo {
 
+    /**
+     * 两个待合并的源文件路径。统一写到 {@code target/} 目录下，避免污染仓库工作目录，详见 {@link DemoFiles}
+     */
+    private static final String FILE_PATH_1 = DemoFiles.tempPath("temp_sequence1.log");
+
+    private static final String FILE_PATH_2 = DemoFiles.tempPath("temp_sequence2.log");
+
+    /**
+     * 合并结果的输出文件路径
+     */
+    private static final String FILE_PATH_3 = DemoFiles.tempPath("temp_sequence3.log");
+
     /** 演示把两个文件的输入流合并后一次性读出并写入新文件。 */
     public static void demo() throws Exception {
         // 准备两个待合并的源文件（真实场景中这两个文件通常已存在）
-        try (OutputStream os1 = new FileOutputStream("temp1.log");
-             OutputStream os2 = new FileOutputStream("temp2.log")) {
+        try (OutputStream os1 = new FileOutputStream(FILE_PATH_1);
+             OutputStream os2 = new FileOutputStream(FILE_PATH_2)) {
             os1.write("Hello ".getBytes(StandardCharsets.UTF_8));
             os2.write("World!".getBytes(StandardCharsets.UTF_8));
         }
 
-        InputStream is1 = new FileInputStream("temp1.log");
-        InputStream is2 = new FileInputStream("temp2.log");
+        InputStream is1 = new FileInputStream(FILE_PATH_1);
+        InputStream is2 = new FileInputStream(FILE_PATH_2);
         SequenceInputStream sis = new SequenceInputStream(is1, is2);
 
         int temp; // 接收内容
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        OutputStream os = new FileOutputStream("temp3.log");
+        OutputStream os = new FileOutputStream(FILE_PATH_3);
         while ((temp = sis.read()) != -1) { // 循环输出
             os.write(temp); // 保存内容
             bos.write(temp);
