@@ -8,7 +8,7 @@ import java.util.List;
  * <p>
  * 错误现象：java.lang.OutOfMemoryError: Java heap space
  * <p>
- * VM Args：-verbose:gc -Xms10M -Xmx10M -XX:+HeapDumpOnOutOfMemoryError
+ * VM Args: -verbose:gc -Xms10M -Xmx10M -XX:+HeapDumpOnOutOfMemoryError
  * <p>
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>

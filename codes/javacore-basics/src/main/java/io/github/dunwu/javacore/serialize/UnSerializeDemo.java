@@ -1,6 +1,6 @@
 package io.github.dunwu.javacore.serialize;
 
-import io.github.dunwu.javacore.DemoFiles;
+import io.github.dunwu.javacore.basics.DemoFiles;
 
 import java.io.*;
 
@@ -10,7 +10,7 @@ import java.io.*;
  * 没有实现 Serializable 接口，运行时会抛出 NotSerializableException 异常
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/6/4
+ * @since 2018-06-04
  */
 public class UnSerializeDemo {
 

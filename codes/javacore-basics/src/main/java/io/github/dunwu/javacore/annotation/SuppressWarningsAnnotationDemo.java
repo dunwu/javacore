@@ -25,8 +25,6 @@ public class SuppressWarningsAnnotationDemo {
     public static void main(String[] args) {
         demo();
     }
-    // Output:
-    // 地名：南京
 
     static class SuppressDemo<T> {
 
@@ -43,3 +41,5 @@ public class SuppressWarningsAnnotationDemo {
     }
 
 }
+// Output:
+// 地名：南京

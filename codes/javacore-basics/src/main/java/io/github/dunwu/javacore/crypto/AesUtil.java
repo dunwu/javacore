@@ -16,8 +16,8 @@ import javax.crypto.spec.SecretKeySpec;
 /**
  * AES 对称加密算法。DES的替代方案。
  *
- * @author Zhang Peng
- * @since 2016年7月14日
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2016-07-14
  */
 public class AesUtil {
 

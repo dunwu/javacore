@@ -9,10 +9,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 /**
- * {@link RsaUtil} 测试
+ * {@link AesUtil} 测试
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @date 2024-03-05
+ * @since 2024-03-05
  */
 public class AesUtilTest {
 
@@ -27,7 +27,7 @@ public class AesUtilTest {
     }
 
     @Test
-    @DisplayName("私钥加密，公钥解密")
+    @DisplayName("对称加密、解密")
     public void test1() throws Exception {
 
         String content = "Hello World";
@@ -41,7 +41,7 @@ public class AesUtilTest {
         byte[] plaintext = aes.decrypt(Base64.getDecoder().decode(ciphertextBase64));
         String plaintextStr = new String(plaintext);
 
-        System.out.println("============== 私钥加密，公钥解密 ==============");
+        System.out.println("============== 对称加密、解密 ==============");
         System.out.println("原文：" + content);
         System.out.println("加密：" + ciphertextBase64);
         System.out.println("解密：" + plaintextStr);

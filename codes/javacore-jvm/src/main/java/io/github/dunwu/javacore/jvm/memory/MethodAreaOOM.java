@@ -8,9 +8,12 @@ import java.lang.reflect.Method;
 
 /**
  * 方法区出现 OutOfMemoryError
+ * <p>
+ * VM Args:
+ * <ul>
  * <li>(JDK8 以前)-XX:PermSize=10m -XX:MaxPermSize=10m</li>
  * <li>(JDK8 及以后)-XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=10m</li>
- * <p>
+ * </ul>
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-26

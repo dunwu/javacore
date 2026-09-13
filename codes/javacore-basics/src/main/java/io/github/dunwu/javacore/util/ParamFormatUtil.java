@@ -11,7 +11,7 @@ import java.util.TreeMap;
  * 参数格式化工具
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @date 2024-03-05
+ * @since 2024-03-05
  */
 public class ParamFormatUtil {
 

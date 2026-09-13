@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
  * <p>本例先准备两个小文件，再合并读取并写入第三个文件，最后输出合并结果。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/4/26
+ * @since 2018-04-26
  */
 public class SequenceInputStreamDemo {
 

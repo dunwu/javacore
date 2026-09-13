@@ -1,0 +1,68 @@
+package io.github.dunwu.javacore.datatype;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+/**
+ * 演示 Lombok {@code @Data} 生成 equals 的两个陷阱：字段排除与继承时的 callSuper 配置。
+ *
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2020-08-06
+ */
+public class LombokEqualsPitfallDemo {
+
+    /**
+     * 演示 Lombok @Data 生成 equals 的陷阱：字段排除与继承 callSuper 配置
+     */
+    public static void demo() {
+        test1();
+        test2();
+    }
+
+    public static void main(String[] args) {
+        demo();
+    }
+
+    public static void test1() {
+        Person person1 = new Person("zhuye", "001");
+        Person person2 = new Person("Joseph", "001");
+        System.out.println("person1.equals(person2) ? " + person1.equals(person2));
+    }
+
+    public static void test2() {
+        Employee employee1 = new Employee("zhuye", "001", "bkjk.com");
+        Employee employee2 = new Employee("Joseph", "002", "bkjk.com");
+        System.out.println("employee1.equals(employee2) ? " + employee1.equals(employee2));
+    }
+
+    @Data
+    static class Person {
+
+        @EqualsAndHashCode.Exclude
+        private String name;
+        private String identity;
+
+        public Person(String name, String identity) {
+            this.name = name;
+            this.identity = identity;
+        }
+
+    }
+
+    @Data
+    @EqualsAndHashCode(callSuper = true)
+    static class Employee extends Person {
+
+        private String company;
+
+        public Employee(String name, String identity, String company) {
+            super(name, identity);
+            this.company = company;
+        }
+
+    }
+
+}
+// Output:
+// person1.equals(person2) ? true
+// employee1.equals(employee2) ? false

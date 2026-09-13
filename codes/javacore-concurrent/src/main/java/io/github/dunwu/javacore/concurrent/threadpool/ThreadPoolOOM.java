@@ -1,7 +1,6 @@
 package io.github.dunwu.javacore.concurrent.threadpool;
 
 import cn.hutool.core.thread.ThreadFactoryBuilder;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.UUID;
 import java.util.concurrent.*;
@@ -9,7 +8,34 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-@Slf4j
+/**
+ * 演示线程池使用不当引发的 OutOfMemoryError，以及手动指定各项参数的正确做法。
+ * <p>
+ * {@code oom1()} 用 {@code newFixedThreadPool}：其工作队列是无界的 {@code LinkedBlockingQueue}，
+ * 任务会无限堆积在队列中直至堆耗尽；
+ * {@code oom2()} 用 {@code newCachedThreadPool}：其最大线程数为 {@code Integer.MAX_VALUE}，
+ * 任务会无限创建线程直至内存耗尽。
+ * <p>
+ * {@code right()} 手动指定核心/最大线程数、有界队列与拒绝策略（{@code AbortPolicy}）；
+ * {@code better()} 在此基础上改写队列的 {@code offer} 语义（总是返回 false 制造队满假象），
+ * 让线程池优先扩容到最大线程数、扩不动了再入队。
+ * <p>
+ * 注：oom1/oom2 会真实耗尽内存，main 中默认已注释掉，仅调用 {@code right()}。
+ * <p>
+ * 注：{@code main} 返回后进程不会退出（JDK 21 实测：{@code right()} 的 main 约 80 秒返回，之后进程仍存活
+ * 并持续每秒打印线程池状态）。两处都指向非守护线程未终止：{@code printStats} 用
+ * {@code newSingleThreadScheduledExecutor} 注册了每秒重复的任务且从未 shutdown
+ * （{@code Executors.defaultThreadFactory} 创建的是非守护线程）；线程池自身的核心线程也默认不会因
+ * keepAliveTime 超时回收。需手动终止进程。
+ * <p>
+ * 注：{@code right()} 的线程池为 core=2 / max=5 / 队列容量 10 / AbortPolicy，而每个任务耗时 10 秒、
+ * 每秒提交一个，因此从第 16 个左右开始会被拒绝。JDK 21 实测一次：17 个任务正常 started/finished，
+ * 其余 3 次打印 {@code error submitting task ...RejectedExecutionException}（17 + 3 = 20）。
+ * 三次拒绝都报 {@code id=18}，是因为 catch 里的 {@code decrementAndGet()} 把编号回退后又被下一轮复用。
+ * <p>
+ * 注：hutool 的 {@code setNamePrefix} 并不做 {@code %d} 格式化（那是 Guava 的约定），
+ * 因此线程名会原样带上 {@code %d}。
+ */
 public class ThreadPoolOOM {
 
     public static void main(String[] args) throws InterruptedException {
@@ -20,13 +46,13 @@ public class ThreadPoolOOM {
 
     private static void printStats(ThreadPoolExecutor threadPool) {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
-            log.info("=========================");
-            log.info("Pool Size: {}", threadPool.getPoolSize());
-            log.info("Active Threads: {}", threadPool.getActiveCount());
-            log.info("Number of Tasks Completed: {}", threadPool.getCompletedTaskCount());
-            log.info("Number of Tasks in Queue: {}", threadPool.getQueue().size());
+            System.out.println("=========================");
+            System.out.println("Pool Size: " + threadPool.getPoolSize());
+            System.out.println("Active Threads: " + threadPool.getActiveCount());
+            System.out.println("Number of Tasks Completed: " + threadPool.getCompletedTaskCount());
+            System.out.println("Number of Tasks in Queue: " + threadPool.getQueue().size());
 
-            log.info("=========================");
+            System.out.println("=========================");
         }, 0, 1, TimeUnit.SECONDS);
     }
 
@@ -43,7 +69,7 @@ public class ThreadPoolOOM {
                     TimeUnit.HOURS.sleep(1);
                 } catch (InterruptedException e) {
                 }
-                log.info(payload);
+                System.out.println(payload);
             });
         }
 
@@ -62,7 +88,7 @@ public class ThreadPoolOOM {
                     TimeUnit.HOURS.sleep(1);
                 } catch (InterruptedException e) {
                 }
-                log.info(payload);
+                System.out.println(payload);
             });
         }
         threadPool.shutdown();
@@ -88,15 +114,16 @@ public class ThreadPoolOOM {
             int id = atomicInteger.incrementAndGet();
             try {
                 threadPool.submit(() -> {
-                    log.info("{} started", id);
+                    System.out.println(id + " started");
                     try {
                         TimeUnit.SECONDS.sleep(10);
                     } catch (InterruptedException e) {
                     }
-                    log.info("{} finished", id);
+                    System.out.println(id + " finished");
                 });
             } catch (Exception ex) {
-                log.error("error submitting task {}", id, ex);
+                // 保留异常信息：slf4j 原本会打印完整栈轨迹，这里至少输出异常类型与 message
+                System.out.println("error submitting task " + id + " " + ex);
                 atomicInteger.decrementAndGet();
             }
         });
@@ -146,15 +173,16 @@ public class ThreadPoolOOM {
             int id = atomicInteger.incrementAndGet();
             try {
                 threadPool.submit(() -> {
-                    log.info("{} started", id);
+                    System.out.println(id + " started");
                     try {
                         TimeUnit.SECONDS.sleep(10);
                     } catch (InterruptedException e) {
                     }
-                    log.info("{} finished", id);
+                    System.out.println(id + " finished");
                 });
             } catch (Exception ex) {
-                log.error("error submitting task {}", id, ex);
+                // 保留异常信息：slf4j 原本会打印完整栈轨迹，这里至少输出异常类型与 message
+                System.out.println("error submitting task " + id + " " + ex);
                 atomicInteger.decrementAndGet();
             }
         });

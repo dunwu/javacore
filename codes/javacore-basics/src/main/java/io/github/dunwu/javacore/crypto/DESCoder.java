@@ -9,8 +9,8 @@ import javax.crypto.spec.IvParameterSpec;
 /**
  * DES安全编码：是经典的对称加密算法。密钥仅56位，且迭代次数偏少。已被视为并不安全的加密算法。
  *
- * @author Zhang Peng
- * @since 2016年7月14日
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2016-07-14
  */
 public class DESCoder {
 
@@ -44,8 +44,6 @@ public class DESCoder {
      * @return Key
      * @throws NoSuchAlgorithmException
      * @throws NoSuchProviderException
-     * @author Zhang Peng
-     * @since 2016年7月14日
      */
     private Key initKey() throws NoSuchAlgorithmException, NoSuchProviderException {
         // 根据种子生成一个安全的随机数
@@ -73,8 +71,6 @@ public class DESCoder {
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
      * @throws InvalidAlgorithmParameterException
-     * @author Zhang Peng
-     * @since 2016年7月20日
      */
     public byte[] encrypt(byte[] input) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException,
         InvalidAlgorithmParameterException {
@@ -95,8 +91,6 @@ public class DESCoder {
      * @throws IllegalBlockSizeException
      * @throws BadPaddingException
      * @throws InvalidAlgorithmParameterException
-     * @author Zhang Peng
-     * @since 2016年7月20日
      */
     public byte[] decrypt(byte[] input) throws InvalidKeyException, IllegalBlockSizeException, BadPaddingException,
         InvalidAlgorithmParameterException {
@@ -115,16 +109,16 @@ public class DESCoder {
 
     /** 演示 DES 加密、Base64 传输、解密还原的完整流程。 */
     public static void demo() throws Exception {
-        DESCoder aes = new DESCoder(CIPHER_DES_CBC_PKCS5PADDING);
+        DESCoder des = new DESCoder(CIPHER_DES_CBC_PKCS5PADDING);
 
         String msg = "Hello World!";
         System.out.println("原文: " + msg);
-        byte[] encoded = aes.encrypt(msg.getBytes(StandardCharsets.UTF_8));
+        byte[] encoded = des.encrypt(msg.getBytes(StandardCharsets.UTF_8));
         String encodedBase64 = Base64.getUrlEncoder().encodeToString(encoded);
         System.out.println("密文: " + encodedBase64);
 
         byte[] decodedBase64 = Base64.getUrlDecoder().decode(encodedBase64);
-        byte[] decoded = aes.decrypt(decodedBase64);
+        byte[] decoded = des.decrypt(decodedBase64);
         System.out.println("明文: " + new String(decoded));
     }
 

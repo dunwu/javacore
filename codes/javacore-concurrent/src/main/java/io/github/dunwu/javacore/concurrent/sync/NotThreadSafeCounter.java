@@ -12,7 +12,7 @@ import io.github.dunwu.javacore.concurrent.annotation.NotThreadSafe;
  * 启动两个线程并行执行，期望最终值为 200000，但实际值为小于 200000 的随机数字。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/8/1
+ * @since 2018-08-01
  */
 @NotThreadSafe
 public class NotThreadSafeCounter {

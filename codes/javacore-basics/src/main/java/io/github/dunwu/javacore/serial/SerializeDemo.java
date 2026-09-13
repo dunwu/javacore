@@ -1,6 +1,6 @@
 package io.github.dunwu.javacore.serial;
 
-import io.github.dunwu.javacore.DemoFiles;
+import io.github.dunwu.javacore.basics.DemoFiles;
 
 import java.io.*;
 
@@ -8,7 +8,7 @@ import java.io.*;
  * 序列化、反序列化的范例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2016年8月5日
+ * @since 2016-08-05
  */
 public class SerializeDemo {
 

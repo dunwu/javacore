@@ -3,7 +3,7 @@ package io.github.dunwu.javacore.serialize;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import io.github.dunwu.javacore.DemoFiles;
+import io.github.dunwu.javacore.basics.DemoFiles;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;

@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see FileDemo
- * @since 2018/4/26
+ * @since 2018-04-26
  */
 @TestMethodOrder(MethodOrderer.MethodName.class)
 public class FileDemoTest {

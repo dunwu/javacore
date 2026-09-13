@@ -34,5 +34,5 @@ public class IfNestedDemo {
     }
 
 }
-// output:
+// Output:
 // X = 30 and Y = 10

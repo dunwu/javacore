@@ -31,5 +31,5 @@ public class IfElseDemo {
     }
 
 }
-// output:
+// Output:
 // x是奇数！

@@ -39,10 +39,6 @@ public class FunctionalInterfaceAnnotationDemo {
     public static void main(String[] args) {
         demo();
     }
-    // Output:
-    // Hello
-    // 100
-    // World
 
     /**
      * 函数式接口：有且仅有一个抽象方法
@@ -57,3 +53,7 @@ public class FunctionalInterfaceAnnotationDemo {
     }
 
 }
+// Output:
+// Hello
+// 100
+// World

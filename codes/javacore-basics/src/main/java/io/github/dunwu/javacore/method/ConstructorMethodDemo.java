@@ -37,3 +37,4 @@ public class ConstructorMethodDemo {
     }
 
 }
+// Output: person name is jack

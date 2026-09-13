@@ -27,7 +27,7 @@ public class ContinueDemo {
     }
 
 }
-// output:
+// Output:
 // i = 0
 // i = 1
 // i = 2

@@ -36,3 +36,4 @@ public class FinalMethodDemo {
     }
 
 }
+// Output: call Father print()

@@ -13,7 +13,7 @@ import java.io.RandomAccessFile;
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see RandomAccessFileReadDemo
- * @since 2018/4/26
+ * @since 2018-04-26
  */
 public class RandomAccessFileWriteDemo {
 

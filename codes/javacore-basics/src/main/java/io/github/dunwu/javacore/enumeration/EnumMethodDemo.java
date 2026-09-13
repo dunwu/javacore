@@ -4,7 +4,7 @@ package io.github.dunwu.javacore.enumeration;
  * 本例展示枚举各种方法的使用
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2016/11/24.
+ * @since 2016-11-24
  */
 public class EnumMethodDemo {
 

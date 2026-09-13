@@ -29,5 +29,5 @@ public class InstanceofOperatorDemo {
     }
 
 }
-// output:
+// Output:
 // true

@@ -44,5 +44,5 @@ public class SwitchDemo03 {
     }
 
 }
-// output:
+// Output:
 // 无效选项

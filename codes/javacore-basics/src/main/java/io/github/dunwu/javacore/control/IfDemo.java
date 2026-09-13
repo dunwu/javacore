@@ -33,5 +33,5 @@ public class IfDemo {
     }
 
 }
-// output;
+// Output:
 // x比y小！

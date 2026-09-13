@@ -1,10 +1,11 @@
 package io.github.dunwu.javacore.jvm.gc;
 
 /**
- * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:PretenureSizeThreshold=3145728
+ * VM Args: -verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8
+ * -XX:PretenureSizeThreshold=3145728
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/4/13
+ * @since 2018-04-13
  */
 public class PretenureSizeThresholdDemo {
 

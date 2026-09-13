@@ -26,7 +26,7 @@ public class RelationOperatorDemo {
     }
 
 }
-// output:
+// Output:
 // x == y = false
 // x != y = true
 // x > y = true

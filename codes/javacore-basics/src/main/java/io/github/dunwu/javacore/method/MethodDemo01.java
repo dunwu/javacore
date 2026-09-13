@@ -25,3 +25,8 @@ public class MethodDemo01 {
     }
 
 }
+// Output:
+// Hello,LXH
+// Hello,LXH
+// Hello,LXH
+// Hello World!!!

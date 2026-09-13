@@ -46,3 +46,4 @@ public class OverrideAnnotationDemo {
     }
 
 }
+// Output: override getName

@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicMarkableReference;
  * （之后引用已不再是 {@code abc}），正常情况下只会有一个线程打印「修改了对象」。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/24
+ * @since 2018-05-24
  * @see AtomicStampedReferenceDemo
  */
 public class AtomicMarkableReferenceDemo {

@@ -24,3 +24,7 @@ public class MethodDemo05 {
     }
 
 }
+// Output:
+// 1、调用fun()方法之前。
+// 3、进入fun()方法。
+// 2、调用fun()方法之后。

@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * Java 容器 fail-fast 机制示例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/6/29
+ * @since 2018-06-29
  */
 public class FailFastDemo {
 

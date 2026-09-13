@@ -22,3 +22,4 @@ public class MethodDemo06 {
     }
 
 }
+// Output: 计算结果：5050

@@ -7,7 +7,7 @@ import java.util.Locale;
  * NumberFormat 示例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @date 2022-12-23
+ * @since 2022-12-23
  */
 public class NumberFormatDemo {
 

@@ -12,7 +12,7 @@ import io.github.dunwu.javacore.concurrent.annotation.ThreadSafe;
  * 启动两个线程并行执行，期望最终值为 200000，实际值也为 200000。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/8/1
+ * @since 2018-08-01
  */
 @ThreadSafe
 public class ThreadSafeCounter2 {

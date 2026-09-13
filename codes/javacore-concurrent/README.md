@@ -32,18 +32,18 @@
 - `sync/VolatileDemo` — volatile 保证可见性与禁止指令重排（但不保证原子性）。
 - `sync/ThreadSafeCounter`、`ThreadSafeCounter2` — 线程安全计数器的正确实现。
 - `sync/NotThreadSafeCounter`、`NotThreadSafeCounter2`（反例） — 非线程安全计数器在并发下丢失更新。
-- `sync/ThreadDeadLockDemo`、`sync/synchronized死锁示例`（反例） 与 `sync/synchronized死锁示例修正` — 死锁的产生与修正。
-- `sync/synchronized保护对象不对`、`synchronized使用范围不当`、`synchronized锁粒度不当`（反例） — 锁对象错误、同步范围不当、锁粒度过粗/过细等问题。
+- `sync/ThreadDeadLockDemo`、`sync/SynchronizedDeadlockDemo`（反例） 与 `sync/SynchronizedDeadlockFixDemo` — 死锁的产生与修正。
+- `sync/SynchronizedWrongLockDemo`、`SynchronizedScopePitfallDemo`、`SynchronizedGranularityPitfallDemo`（反例） — 锁对象错误、同步范围不当、锁粒度过粗/过细等问题。
 
 ## 锁（lock）
 
 展示 `ReentrantLock`、`ReadWriteLock`、`Condition` 及死锁/活锁/饥饿。
 
 - `lock/ReentrantLockDemo`~`ReentrantLockDemo4` — ReentrantLock 的加解锁、可中断锁、超时锁、公平锁。
-- `lock/ReentrantLock可重入示例` — 锁的可重入特性。
+- `lock/ReentrantLockReentrantDemo` — 锁的可重入特性。
 - `lock/LockConditionDemo` — 使用 `Condition` 实现精准唤醒。
-- `lock/ReentrantReadWriteLock实现缓存`、`ReentrantReadWriteLock实现缓存2` — 读写锁实现线程安全缓存（读读并行、读写互斥）。
-- `lock/ReentrantLock死锁`、`lock/LivelockDemo`、`lock/ReentrantLock活锁示例`（反例） — 死锁与活锁的产生场景。
+- `lock/ReentrantReadWriteLockCacheDemo`、`ReentrantReadWriteLockCacheDemo2` — 读写锁实现线程安全缓存（读读并行、读写互斥）。
+- `lock/ReentrantLockDeadlockDemo`、`lock/LivelockDemo`、`lock/ReentrantLockLivelockDemo`（反例） — 死锁与活锁的产生场景。
 - `lock/StarvationDemo`（反例） 与 `lock/StarvationFixDemo` — 线程饥饿问题及其修正。
 
 ## 原子类（atomic）
@@ -97,8 +97,8 @@
 - `tool/sync/SemaphoreDemo`、`tool/SemaphoreRateLimit` — 信号量控制并发数、实现限流。
 - `tool/sync/ExchangerDemo` — 两个线程间交换数据。
 - `tool/FutureTaskDemo`、`FutureTaskDemo2`、`FutureTaskDemo3` — FutureTask 获取异步结果。
-- `tool/division/CompletableFuture_创建`、`CompletableFuture_组合`、`CompletableFuture_多任务组合`、`CompletableFuture_结果处理`、`CompletableFuture_结果转换`、`CompletableFuture异步处理`、`CompletableFuture_完成控制_超时结束`、`CompletableFuture_完成控制_快速结束` — CompletableFuture 的创建、编排、结果处理与完成控制。
-- `tool/division/ForkJoinPool_数组求和`、`ForkJoinPool_计算斐波那契数列`、`ForkJoinPool_统计词频` — Fork/Join 分治框架。
+- `tool/division/CompletableFutureCreateDemo`、`CompletableFutureCombineDemo`、`CompletableFutureMultiTaskDemo`、`CompletableFutureResultHandleDemo`、`CompletableFutureResultTransformDemo`、`CompletableFutureAsyncDemo`、`CompletableFutureCompleteTimeoutDemo`、`CompletableFutureCompleteFastDemo` — CompletableFuture 的创建、编排、结果处理与完成控制。
+- `tool/division/ForkJoinPoolArraySumDemo`、`ForkJoinPoolFibonacciDemo`、`ForkJoinPoolWordCountDemo` — Fork/Join 分治框架。
 - `tool/division/FutureDemo`、`FutureTaskDemo2`、`FutureTaskDemo3` — Future 相关补充示例。
 
 ## Java 内存模型（jmm）
@@ -125,6 +125,107 @@
 
 ---
 
+## 示例类的入口约定（全仓通用）
+
+这一节写在并发模块的 README 里，但约定适用于 `codes/` 下的**全部**示例模块，不只是本模块。
+
+### 核心不变式：main() 不放逻辑
+
+`main()` 只做一件事——按顺序调用本类中**具名的** `static` 方法，自身不承载示例逻辑：
+
+```java
+public static void main(String[] args) {
+    localVarInference();
+    varInLoops();
+    varInTryWithResources();
+}
+```
+
+三个理由：
+
+1. **可测**。测试要在测试 JVM 里捕获一个示例的输出，就必须能调用它。`main()` 不能被安全地重复调用（`System.exit`、静态状态、`args` 数组），具名方法可以。
+2. **可读**。方法名本身就是小标题，`varInTryWithResources()` 比「`main()` 里第 30 行那段」更能说明演示的是什么。
+3. **可引用**。`// Output:` 注释、测试断言、文档都能按方法名指向某一个侧面，而不是指向整个文件。
+
+### 两种派发形态
+
+调一个还是调多个，取决于这个类演示的是一个侧面还是多个侧面。两种形态仓库里都在用。
+
+**单一 `demo()`**——整个类只演示一件事，或者各步骤必须按固定顺序跑完才有意义：
+
+```java
+public static void demo() throws InterruptedException {
+    // 示例逻辑
+}
+
+public static void main(String[] args) throws InterruptedException {
+    demo();
+}
+```
+
+**多个具名子方法**——类里并列演示若干互不依赖的侧面，每个侧面配一段 `示例 N：...` 的 Javadoc。`javacore-newjdk` 全模块采用此形态：
+
+```java
+/**
+ * 示例 1：局部变量声明——编译器自动推断 String、集合等类型
+ */
+public static void localVarInference() {
+    // ...
+}
+```
+
+判断标准：**测试是否需要单独调用其中一部分**。需要，就拆成多个具名方法；不需要，就用单一 `demo()`。
+
+### 期望输出注释
+
+被测试精确断言过输出的类，在**类结束 `}` 之后、列 0** 追加 `// Output:` 块，逐行原样转录真实输出：
+
+```java
+}
+// Output:
+// Hello, Java 10
+// list 类型: ArrayList
+```
+
+三条硬性要求：
+
+- 位置固定在类外列 0：不缩进，与 `}` 之间不留空行。全仓 186 个带此标记的文件中，185 个是这一形态。
+- 内容必须是**实跑或测试断言验证过**的真实输出，不能凭读代码手写。
+- 唯一允许的例外是**语句级标注**：缩进跟随代码、紧跟单条 `println`，只标注那一条语句的输出（`javacore-basics` 的 `NumericCalculationDemo` 有 4 处）。同一个文件里不要混用类级块和语句级标注。
+
+### 当前符合度（实测）
+
+下表是一次性脚本扫描 `codes/` 下 899 个 `.java` 文件的结果（排除 `target/`），只作现状快照——脚本未纳入仓库，数字会随示例类增减而漂移，无需随之更新：
+
+| 模块 | 文件 | 有 main | 单次调用 | 多次调用 | 逻辑内联 | 带 `// Output:` |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| javacore-basics | 230 | 169 | 161 | 0 | 7 | 114 |
+| javacore-concurrent | 140 | 115 | 29 | 3 | 83 | 6 |
+| javacore-container | 69 | 57 | 53 | 0 | 4 | 13 |
+| javacore-effective | 130 | 72 | 0 | 0 | 72 | 0 |
+| javacore-io | 63 | 49 | 35 | 0 | 14 | 3 |
+| javacore-jvm | 45 | 37 | 1 | 0 | 36 | 1 |
+| javacore-newjdk | 110 | 55 | 2 | 51 | 2 | 49 |
+| javacore-oop | 39 | 28 | 27 | 0 | 1 | 0 |
+| javacore-utils | 52 | 44 | 44 | 0 | 0 | 0 |
+| javacore-in-web | 6 | 1 | 0 | 0 | 1 | 0 |
+| bytecode（5 个子模块） | 15 | 6 | 0 | 0 | 6 | 0 |
+| **合计** | **899** | **633** | **352** | **54** | **226** | **186** |
+
+- **单次调用** = `main()` 体内只有一条具名方法调用，其中 347 条调的是 `demo()`
+- **多次调用** = 两条以上具名方法调用，即 newjdk 形态
+- **逻辑内联** = `main()` 自己承载了逻辑
+- 633 个「有 main」中另有 1 个 `main()` 体为空，未计入后三列
+
+读这张表要注意四点：
+
+1. **存量不追溯**。226 个「逻辑内联」的类保持原样，不为统一风格而改动。本约定只约束**新增**的示例类，以及被大幅重写的类。
+2. **`javacore-effective` 的 72 个全部内联是刻意的**。那是《Effective Java》的书中示例，逐条对应 item，照抄原书结构比套用本仓约定更有价值。
+3. **`javacore-jvm` 的 36 个内联多属合理**。OOM / GC 示例的价值在于配合特定 VM 参数手动运行观察，逻辑本身就短，硬拆方法反而增加噪音；该模块的约定重点是类级 Javadoc 里的 `VM Args:` 模板。
+4. **本模块（concurrent）只有 29/115 采用单一 `demo()`**。大量并发示例一旦运行就会留下永不结束的线程或耗尽内存，无法进测试 JVM，也就没有必要为可测性改造入口；下面「刻意未覆盖的示例」列出了这批类。
+
+---
+
 ## 单元测试
 
 测试源码路径：`src/test/java/io/github/dunwu/javacore/concurrent/`
@@ -142,21 +243,9 @@ mvn test -pl codes/javacore-concurrent
 - **正反例的断言强度差异本身就是结论**：`ThreadSafeCounter` 可以精确断言 `count = 200000`，而 `NotThreadSafeCounter` 不能 —— 这直观体现了同步措施是否生效。
 - 输出通过 `DemoOutputCapture.capture(...)` 捕获：临时把 `System.out` 换成内存流，执行完再还原。
 
-### 示例类的可测性约定
+### 本模块对可测性的额外要求
 
-被测试覆盖的示例类都遵循统一的入口形式：
-
-```java
-public static void demo() throws InterruptedException {
-    // 示例逻辑
-}
-
-public static void main(String[] args) throws InterruptedException {
-    demo();
-}
-```
-
-`demo()` 除了承载原有逻辑，还必须满足两个条件，否则测试会不稳定：
+被测试覆盖的示例类都采用上文「单一 `demo()`」形态。在并发场景下，`demo()` 除了承载原有逻辑，还必须满足两个条件，否则测试会不稳定：
 
 1. **返回前等待自己创建的所有线程结束**（`join()` 或 `shutdown()` + `awaitTermination()`）。只调 `shutdown()` 是不够的 —— 它仅仅表示不再接受新任务，不会等已提交的任务跑完，方法一返回，`System.out` 就被还原了，子线程的输出会漏到捕获范围之外。
 2. **重置内部静态状态**，使方法可以重复调用。例如卖票示例需要在开头把 `ticket` 重置为 10，否则第二次调用时票已卖完，不会有任何输出。
@@ -165,8 +254,8 @@ public static void main(String[] args) throws InterruptedException {
 
 以下示例执行后会留下永不结束的线程，或会耗尽内存，一旦在测试 JVM 中运行将挂起或拖垮整个测试进程，因此只能单独运行它们的 `main` 方法观察：
 
-- 死锁：`sync/ThreadDeadLockDemo`、`sync/synchronized死锁示例`、`lock/ReentrantLock死锁`
-- 活锁：`lock/LivelockDemo`、`lock/ReentrantLock活锁示例`
+- 死锁：`sync/ThreadDeadLockDemo`、`sync/SynchronizedDeadlockDemo`、`lock/ReentrantLockDeadlockDemo`
+- 活锁：`lock/LivelockDemo`、`lock/ReentrantLockLivelockDemo`
 - 饥饿：`lock/StarvationDemo`、`lock/StarvationFixDemo`
 - 内存溢出：`threadpool/ThreadPoolOOM`
 - 无限循环 / 长时运行：`example/ProducerConsumerDemo01`~`03`、`atomic/RateLimiter`、`container/VectorDemo` 系列、`thread/ThreadDaemonDemo`、`thread/ThreadStopDemo` 系列、`leetcode/PrintInOrder`（输出达 3000 行）

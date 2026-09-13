@@ -10,7 +10,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see ThreadWaitNotifyDemo02
- * @since 2018/5/11
+ * @since 2018-05-11
  */
 public class ConditionDemo {
 

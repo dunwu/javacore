@@ -35,5 +35,5 @@ public class IfElseifElseDemo {
     }
 
 }
-// output:
+// Output:
 // x的值不是1、2、3中的一个！

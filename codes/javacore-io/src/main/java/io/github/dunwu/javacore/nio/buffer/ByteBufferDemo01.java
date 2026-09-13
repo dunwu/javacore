@@ -29,3 +29,4 @@ public class ByteBufferDemo01 {
     }
 
 }
+// Output: 主缓冲区中的内容：1、3、5、7、9、

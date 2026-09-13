@@ -13,22 +13,22 @@
 展示 Java 基本类型、包装类型的取值范围、判等陷阱与数值计算注意事项。
 
 - `variable/VariableDemo` — 各类局部变量的声明与初始化。
-- `datatype/值类型使用示例` — 通过反射依次演示整型溢出、字符、浮点、布尔等值类型用法。
-- `datatype/包装类型使用示例` — 打印各包装类的位数、最小值、最大值。
-- `datatype/包装类装箱拆箱` — 自动/手动装箱拆箱的写法，以及 `==` 与 `equals` 在 Integer 缓存池（-128~127）内外的差异。
-- `datatype/Integer判等` — Integer 缓存池（-128~127）对 `==` 判等结果的影响。
-- `datatype/String判等` — 字符串常量池、`intern()` 与 `==`/`equals` 的差异。
-- `datatype/String拼接` — 字符串常量拼接的编译期优化。
+- `datatype/PrimitiveTypeDemo` — 通过反射依次演示整型溢出、字符、浮点、布尔等值类型用法。
+- `datatype/WrapperTypeDemo` — 打印各包装类的位数、最小值、最大值。
+- `datatype/AutoboxingDemo` — 自动/手动装箱拆箱的写法，以及 `==` 与 `equals` 在 Integer 缓存池（-128~127）内外的差异。
+- `datatype/IntegerEqualityDemo` — Integer 缓存池（-128~127）对 `==` 判等结果的影响。
+- `datatype/StringEqualityDemo` — 字符串常量池、`intern()` 与 `==`/`equals` 的差异。
+- `datatype/StringConcatDemo` — 字符串常量拼接的编译期优化。
 - `datatype/StringBuilderDemo` — StringBuilder 常用 API（append/insert/delete/replace/reverse/setLength/capacity），以及与 `String +=` 循环拼接的性能对照（后者为 O(n^2)）。
-- `datatype/StringIntern性能测试` — 1000 万次 `intern()` 的性能基准（不纳入单测）。
-- `datatype/枚举判等` — 枚举常量字段为同一实例，`==` 判等为 true。
-- `datatype/BigDecimal判等` — `equals` 比较精度、`compareTo` 只比较数值大小的区别。
-- `datatype/浮点数舍入` — double/float 舍入结果不一致的坑与 BigDecimal 正确舍入。
-- `datatype/数值计算示例` — 浮点数精度丢失问题与 BigDecimal 字符串构造的正确用法。
-- `datatype/数值溢出` — long 溢出为最小值，及 `Math.addExact`、`BigInteger` 的应对方案。
-- `datatype/equals和CompareTo` — `equals` 与 `compareTo` 不一致导致 `indexOf`/`binarySearch` 结果矛盾。
-- `datatype/Lombok生成Equals的问题`（反例对比） — `@Data` 生成 equals 时字段排除与继承 `callSuper` 的陷阱。
-- `datatype/自定义equals` — 自定义 equals 的错误写法（未判空/判类型）与正确写法。
+- `datatype/StringInternBenchmarkDemo` — 1000 万次 `intern()` 的性能基准（不纳入单测）。
+- `datatype/EnumEqualityDemo` — 枚举常量字段为同一实例，`==` 判等为 true。
+- `datatype/BigDecimalEqualityDemo` — `equals` 比较精度、`compareTo` 只比较数值大小的区别。
+- `datatype/FloatRoundingDemo` — double/float 舍入结果不一致的坑与 BigDecimal 正确舍入。
+- `datatype/NumericCalculationDemo` — 浮点数精度丢失问题与 BigDecimal 字符串构造的正确用法。
+- `datatype/NumericOverflowDemo` — long 溢出为最小值，及 `Math.addExact`、`BigInteger` 的应对方案。
+- `datatype/EqualsCompareToDemo` — `equals` 与 `compareTo` 不一致导致 `indexOf`/`binarySearch` 结果矛盾。
+- `datatype/LombokEqualsPitfallDemo`（反例对比） — `@Data` 生成 equals 时字段排除与继承 `callSuper` 的陷阱。
+- `datatype/CustomEqualsDemo` — 自定义 equals 的错误写法（未判空/判类型）与正确写法。
 
 ## 运算符（operator）
 

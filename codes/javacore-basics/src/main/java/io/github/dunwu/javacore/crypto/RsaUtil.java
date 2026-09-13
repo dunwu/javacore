@@ -25,8 +25,8 @@ import javax.crypto.Cipher;
  * <p>
  * RSA 既可以用来加密、解密，也可以用来做数字签名
  *
- * @author Zhang Peng
- * @since 2016年7月20日
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2016-07-20
  */
 public class RsaUtil {
 

@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * 包装类的四类常见陷阱
  * <p>
- * {@link Integer判等} 与 {@link 包装类装箱拆箱} 讲的是装箱拆箱的基本写法和 Integer 缓存对 {@code ==} 的影响，
+ * {@link IntegerEqualityDemo} 与 {@link AutoboxingDemo} 讲的是装箱拆箱的基本写法和 Integer 缓存对 {@code ==} 的影响，
  * 本类补齐其余在生产中真正会出事的边界场景：
  * <ul>
  *     <li>{@link #cacheRange()} —— 各包装类的缓存范围并不相同，Float/Double 甚至完全不缓存</li>
@@ -179,23 +179,24 @@ public class WrapperPitfallDemo {
     public static void main(String[] args) {
         demo();
     }
-    // Output:
-    // Byte      127 == 127 : true（Byte 全部取值都在缓存内）
-    // Short     127 == 127 : true | 128 == 128 : false
-    // Integer   127 == 127 : true | 128 == 128 : false
-    // Long      127 == 127 : true | 128 == 128 : false
-    // Character 127 == 127 : true | 128 == 128 : false
-    // Boolean   true == true : true
-    // Float     1.0 == 1.0 : false
-    // Double    1.0 == 1.0 : false
-    // 场景一 int value = nullInteger 抛出 NullPointerException
-    // 场景二 nullInteger + 1 抛出 NullPointerException
-    // 场景三 scores.get("math") 返回 null，拆箱时抛出 NullPointerException
-    // 场景一 三目运算符选中 null 分支时拆箱抛出 NullPointerException
-    // 场景二 true ? Integer : Long 的结果类型是 Long，值为 1
-    // 场景三 显式判空后取值: -1
-    // 累加 0..99999 的结果: 4999950000
-    // 两种写法结果一致: true
-    // 包装类型 Long 累加耗时: （因机器而异）微秒
-    // 基本类型 long 累加耗时: （因机器而异）微秒
+
 }
+// Output:
+// Byte      127 == 127 : true（Byte 全部取值都在缓存内）
+// Short     127 == 127 : true | 128 == 128 : false
+// Integer   127 == 127 : true | 128 == 128 : false
+// Long      127 == 127 : true | 128 == 128 : false
+// Character 127 == 127 : true | 128 == 128 : false
+// Boolean   true == true : true
+// Float     1.0 == 1.0 : false
+// Double    1.0 == 1.0 : false
+// 场景一 int value = nullInteger 抛出 NullPointerException
+// 场景二 nullInteger + 1 抛出 NullPointerException
+// 场景三 scores.get("math") 返回 null，拆箱时抛出 NullPointerException
+// 场景一 三目运算符选中 null 分支时拆箱抛出 NullPointerException
+// 场景二 true ? Integer : Long 的结果类型是 Long，值为 1
+// 场景三 显式判空后取值: -1
+// 累加 0..99999 的结果: 4999950000
+// 两种写法结果一致: true
+// 包装类型 Long 累加耗时: （因机器而异）微秒
+// 基本类型 long 累加耗时: （因机器而异）微秒

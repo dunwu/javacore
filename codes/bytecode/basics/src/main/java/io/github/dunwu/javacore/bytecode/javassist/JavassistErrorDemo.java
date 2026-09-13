@@ -16,7 +16,7 @@ import java.io.IOException;
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see JavassistDemo
- * @since 2019/10/28
+ * @since 2019-10-28
  */
 public class JavassistErrorDemo {
 

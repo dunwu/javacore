@@ -11,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see java.util.concurrent.CountDownLatch
- * @since 2018/5/10
+ * @since 2018-05-10
  */
 @SuppressWarnings("all")
 public class CountDownLatchDemo {

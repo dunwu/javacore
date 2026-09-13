@@ -12,7 +12,7 @@ import java.util.Arrays;
  * 分工说明：
  * <ul>
  *     <li>不可变性、常量池、{@code ==} 与 {@code equals} 的差异 —— 见 {@link StringImmutabilityDemo} 与
- *     {@code String判等}</li>
+ *     {@link StringEqualityDemo}</li>
  *     <li>拼接性能与 String / StringBuilder / StringBuffer 三者选型 —— 见 {@link StringBuilderDemo}</li>
  *     <li>{@code String.join}、{@code StringJoiner} —— 属 JDK 8 新增，见 javacore-newjdk 的
  *     {@code jdk8/util/StringJoinerDemo}</li>

@@ -23,3 +23,6 @@ public class TryCatchFinallyDemo {
     }
 
 }
+// Output:
+// 出现异常了：java.lang.ArithmeticException: / by zero
+// 不管是否出现异常，都执行此代码

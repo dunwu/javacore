@@ -1,7 +1,7 @@
 package io.github.dunwu.javacore.jvm.error;
 
 /**
- * VM Args：-Xss2M （这时候不妨设大些，请在32位系统下运行）
+ * VM Args: -Xss2M （这时候不妨设大些，请在32位系统下运行）
  *
  * @author zzm
  */

@@ -36,5 +36,5 @@ public class AbstractMethodDemo {
     }
 
 }
-// Outpu:
+// Output:
 // call print()

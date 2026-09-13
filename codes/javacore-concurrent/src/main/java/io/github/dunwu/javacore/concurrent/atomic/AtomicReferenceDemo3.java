@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * 而 {@code getAndSet(new Person(...))} 换掉的是引用，旧的 {@code person} 变量仍指向原对象，于是两者开始不一致。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/24
+ * @since 2018-05-24
  */
 public class AtomicReferenceDemo3 {
 

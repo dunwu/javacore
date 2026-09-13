@@ -63,3 +63,10 @@ class Dog extends Animal {
     }
 
 }
+// Output:
+// 吃鱼
+// 抓老鼠
+// 吃骨头
+// 看家
+// 吃鱼
+// 抓老鼠

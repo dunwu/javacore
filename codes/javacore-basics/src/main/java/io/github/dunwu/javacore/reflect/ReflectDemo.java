@@ -3,6 +3,12 @@ package io.github.dunwu.javacore.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 
+/**
+ * Java 反射综合示例：演示获取 Class 对象的三种方式、通过 Class 反射实例化对象、打印类的声明信息。
+ *
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2016-08-05
+ */
 @SuppressWarnings("deprecation")
 public class ReflectDemo {
 
@@ -20,9 +26,7 @@ public class ReflectDemo {
     }
 
     /**
-     * @description 展示获取Class的不同方式
-     * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
-     * @since 2016年8月5日
+     * 展示获取 Class 对象的三种不同方式。
      */
     public static void testGetClassObject() throws Exception {
         // 方法一
@@ -43,11 +47,7 @@ public class ReflectDemo {
     }
 
     /**
-     * @return void
-     * @title testGetObjectByClass
-     * @description 通过Class实例化对象
-     * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
-     * @since 2016年8月5日
+     * 演示通过 Class 对象反射实例化对象。
      */
     public static void testGetObjectByClass() throws Exception {
         Class<?> clazz = Class.forName("io.github.dunwu.javacore.reflect.ReflectDemo$Person");
@@ -58,12 +58,7 @@ public class ReflectDemo {
     }
 
     /**
-     * @return void
-     * @throws Exception
-     * @title testGetFieldsByClass
-     * @description 获取类的所有的属性
-     * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
-     * @since 2016年8月5日
+     * 打印类的完整声明信息：注解、修饰符、域、构造方法、普通方法。
      */
     public static void testPrintClassInfo() throws Exception {
         StringBuffer sb = new StringBuffer();

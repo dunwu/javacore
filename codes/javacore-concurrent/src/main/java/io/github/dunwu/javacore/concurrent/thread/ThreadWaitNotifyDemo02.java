@@ -7,7 +7,7 @@ import java.util.PriorityQueue;
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see ConditionDemo
- * @since 2018/5/11
+ * @since 2018-05-11
  */
 public class ThreadWaitNotifyDemo02 {
 

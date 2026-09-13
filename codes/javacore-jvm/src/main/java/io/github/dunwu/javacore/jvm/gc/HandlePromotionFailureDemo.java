@@ -1,10 +1,23 @@
 package io.github.dunwu.javacore.jvm.gc;
 
 /**
- * VM参数：-Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:-HandlePromotionFailure
+ * 空间分配担保（Handle Promotion Failure）示例。
+ * <p>
+ * VM Args: -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:-HandlePromotionFailure
+ * <p>
+ * 注意：上述参数只能在 JDK 8 及以前运行。在本仓库的编译目标 JDK 21 下，
+ * -XX:-HandlePromotionFailure 已不存在，JVM 会直接启动失败（实测）：
+ *
+ * <pre>
+ * Unrecognized VM option 'HandlePromotionFailure'
+ * Did you mean '(+/-)PromotionFailureALot'?
+ * Error: Could not create the Java Virtual Machine.
+ * </pre>
+ *
+ * 另外 -XX:+PrintGCDetails 自 JDK 9 起已废弃，JDK 21 下仍可使用，但会提示改用 -Xlog:gc*。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/4/13
+ * @since 2018-04-13
  */
 public class HandlePromotionFailureDemo {
 

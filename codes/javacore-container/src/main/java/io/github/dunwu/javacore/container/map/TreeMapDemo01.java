@@ -30,3 +30,7 @@ public class TreeMapDemo01 {
     }
 
 }
+// Output:
+// A、mldn --> www.mldn.cn
+// B、mldnjava --> www.mldnjava.cn
+// C、zhinangtuan --> www.zhinangtuan.net.cn

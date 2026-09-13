@@ -6,7 +6,7 @@ import java.util.ServiceLoader;
  * Java SPI Demo
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @date 2022-04-26
+ * @since 2022-04-26
  */
 public class SpiDemo {
 

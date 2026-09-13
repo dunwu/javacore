@@ -71,3 +71,9 @@ public class RegexValidDemo {
     }
 
 }
+// Output:
+// User{name='Tom', date='1990-01-31', mail='xxx@163.com', phone='18612341234'} 正则校验通过
+// 正则校验失败，原因:
+// 2019-02-29 不是合法的 date ！
+// sadhgs 不是合法的 mail ！
+// 183xxxxxxxx 不是合法的 phone ！

@@ -28,3 +28,7 @@ public class RecursionMethodDemo {
     }
 
 }
+// Output: 1\t1\t2\t3\t5\t8\t13\t21\t34\t
+//
+// 实际输出是用制表符分隔的一行，末尾还有一个制表符、且没有换行（demo() 用的是 print 而非 println）。
+// 上面按字面写作 \t，否则真制表符会被 .editorconfig 的 trim_trailing_whitespace 规则删掉。

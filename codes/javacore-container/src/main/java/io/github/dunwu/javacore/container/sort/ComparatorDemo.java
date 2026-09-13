@@ -11,7 +11,7 @@ import java.util.List;
  * 适合不能修改类本身或需要多种排序规则的场景；与 {@link ComparableDemo}（内部比较器）对比。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @date 2024-09-19
+ * @since 2024-09-19
  */
 public class ComparatorDemo {
 
@@ -74,3 +74,7 @@ public class ComparatorDemo {
     }
 
 }
+// Output:
+// User{age=17, name='B'}
+// User{age=18, name='A'}
+// User{age=20, name='C'}

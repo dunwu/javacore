@@ -22,8 +22,6 @@ public class InternalAnnotationDemo {
     public static void main(String[] args) {
         demo();
     }
-    // Output:
-    // call method2
 
     /**
      * @SuppressWarnings 标记消除当前类的告警信息
@@ -61,3 +59,5 @@ public class InternalAnnotationDemo {
     }
 
 }
+// Output:
+// call method2

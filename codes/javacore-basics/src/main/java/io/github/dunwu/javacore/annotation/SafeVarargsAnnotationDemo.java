@@ -37,8 +37,6 @@ public class SafeVarargsAnnotationDemo {
     public static void main(String[] args) {
         demo();
     }
-    // Output:
-    // 捕获到 ClassCastException：@SafeVarargs 只压制告警，无法阻止堆污染导致的运行期异常
 
     /**
      * 此方法实际上并不安全，不使用此注解，编译时会告警
@@ -52,3 +50,5 @@ public class SafeVarargsAnnotationDemo {
     }
 
 }
+// Output:
+// 捕获到 ClassCastException：@SafeVarargs 只压制告警，无法阻止堆污染导致的运行期异常

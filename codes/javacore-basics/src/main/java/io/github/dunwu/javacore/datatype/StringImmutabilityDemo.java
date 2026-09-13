@@ -36,8 +36,8 @@ import java.util.Map;
  * 换来的是不再有泄漏风险。
  * <p>
  * 相关示例：{@link StringBuilderDemo}（拼接性能与 String / StringBuilder / StringBuffer 三者选型）、
- * {@code String判等}（{@code ==} 与 {@code equals} 的差异、{@code intern()}）、
- * {@code String拼接}（常量折叠的字节码证据）。
+ * {@link StringEqualityDemo}（{@code ==} 与 {@code equals} 的差异、{@code intern()}）、
+ * {@link StringConcatDemo}（常量折叠的字节码证据）。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  */
@@ -148,7 +148,7 @@ public class StringImmutabilityDemo {
     /**
      * ⑥ 常量池：正因为不可变，同一个字面量才能被安全地共享
      * <p>
-     * 判等的完整规则与 {@code intern()} 的更多用法见 {@code String判等}，这里只强调它与不可变性的因果关系。
+     * 判等的完整规则与 {@code intern()} 的更多用法见 {@link StringEqualityDemo}，这里只强调它与不可变性的因果关系。
      */
     public static void constantPool() {
         String literal = "shared";

@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see java.util.concurrent.Semaphore
  * @see io.github.dunwu.javacore.concurrent.tool.SemaphoreRateLimit
- * @since 2018/5/10
+ * @since 2018-05-10
  */
 public class SemaphoreDemo {
 

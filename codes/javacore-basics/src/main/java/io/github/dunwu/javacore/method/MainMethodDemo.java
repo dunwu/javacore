@@ -23,7 +23,7 @@ public class MainMethodDemo {
 // 依次执行
 // javac MainMethodDemo.java
 // java MainMethodDemo A B C
-// Output
+// Output:
 // arg = [A]
 // arg = [B]
 // arg = [C]

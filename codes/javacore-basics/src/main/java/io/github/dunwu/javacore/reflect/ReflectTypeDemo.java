@@ -22,3 +22,6 @@ public class ReflectTypeDemo {
     }
 
 }
+// Output:
+// double
+// void

@@ -6,8 +6,8 @@ import java.util.Base64;
 /**
  * 示例：Base64 编码、解码——标准编码与 URL 安全编码。
  *
- * @author Zhang Peng
- * @since 2016年7月21日
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2016-07-21
  */
 public class Base64Demo {
 

@@ -25,3 +25,4 @@ public class EnumerationDemo01 {
     }
 
 }
+// Output: hello、_、world、

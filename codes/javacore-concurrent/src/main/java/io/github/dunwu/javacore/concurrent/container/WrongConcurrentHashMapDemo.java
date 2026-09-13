@@ -12,7 +12,7 @@ import java.util.stream.LongStream;
  * ConcurrentHashMap 示例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/16
+ * @since 2018-05-16
  */
 public class WrongConcurrentHashMapDemo {
 
@@ -54,4 +54,11 @@ public class WrongConcurrentHashMapDemo {
 
 }
 // Expect: finish size:1000
-// Output: finish size:(> 1000)
+// Output: finish size:1900
+//
+// 竞态示例，输出不确定。10 个任务若在任何 putAll 生效前全部读到 size=900，则各自 gap=100，最终为
+// 1900；若恰好串行执行，第一个任务补足到 1000 后其余 gap=0，最终就是 1000。因此 finish size 只保证
+// >= 1000，取值范围是 [1000, 1900]，并不能保证严格大于 1000。gap 也可能为负（此时 rangeClosed
+// 产生空流，putAll 不改变大小）。完整输出还包含 init size:900 与 10 行 gap size。
+// 上面是 JDK 21 + ForkJoinPool(10) 下连续 40 次运行的一致结果（每次均为 10 行 gap size:100）。
+// 对照 WrongConcurrentHashMapDemo2：把读取与补足放进同一个 synchronized 块后，40 次实测恒为 1000。

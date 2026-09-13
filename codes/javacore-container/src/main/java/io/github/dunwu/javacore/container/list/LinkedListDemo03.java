@@ -24,3 +24,4 @@ public class LinkedListDemo03 {
     }
 
 }
+// Output: 以FIFO的方式输出：A、B、C、

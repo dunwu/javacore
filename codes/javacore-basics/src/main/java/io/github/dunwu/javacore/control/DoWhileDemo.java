@@ -31,5 +31,5 @@ public class DoWhileDemo {
     }
 
 }
-// output:
+// Output:
 // 1 --> 10 累加的结果为：55

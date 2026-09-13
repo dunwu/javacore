@@ -203,10 +203,24 @@ public class ListDemoTest {
     @DisplayName("Arrays.asList 的两个经典坑（wrong 演示问题，right 演示修复）")
     public void testArraysAsListDemo() {
         String output = captureOutput(() -> ArraysAsListDemo.main(new String[0]));
-        assertThat(output).contains("wrong1");
-        assertThat(output).contains("right1");
-        assertThat(output).contains("wrong2");
-        assertThat(output).contains("right2");
+        String[] lines = output.split("\n");
+        assertThat(lines).hasSize(10);
+        assertThat(lines[0]).isEqualTo("====================== wrong1 ======================");
+        // 坑一：基本类型数组被整个当作单个元素，size 为 1，元素类型是 int[]（即 [I）。
+        // [I@ 后面是数组的身份哈希，每次运行都不同，因此只能用正则匹配。
+        assertThat(lines[1]).matches("list:\\[\\[I@[0-9a-f]+\\] size:1 class:class \\[I");
+        assertThat(lines[2]).isEqualTo("====================== right1 ======================");
+        // 修复：Arrays.stream().boxed() 逐个装箱，或直接传入 Integer[]
+        assertThat(lines[3]).isEqualTo("list:[1, 2, 3] size:3 class:class java.lang.Integer");
+        assertThat(lines[4]).isEqualTo("list:[1, 2, 3] size:3 class:class java.lang.Integer");
+        assertThat(lines[5]).isEqualTo("====================== wrong2 ======================");
+        // 坑二：asList 返回的是数组视图，不支持 add
+        assertThat(lines[6]).isEqualTo("java.lang.UnsupportedOperationException");
+        // 且修改数组会同步影响列表：arr[1] 改成 "4" 后 list 也变了
+        assertThat(lines[7]).isEqualTo("arr:[1, 4, 3] list:[1, 4, 3]");
+        assertThat(lines[8]).isEqualTo("====================== right2 ======================");
+        // 修复：用 new ArrayList 包装成独立副本，既能 add，也不再受数组修改影响
+        assertThat(lines[9]).isEqualTo("arr:[1, 4, 3] list:[1, 2, 3, 5]");
     }
 
     private static String captureOutput(Runnable action) {

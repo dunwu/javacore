@@ -5,7 +5,7 @@ package io.github.dunwu.javacore.jvm.memory;
  * <p>
  * 错误现象：java.lang.OutOfMemoryError: Java heap space
  * <p>
- * VM Args：-verbose:gc -Xms10M -Xmx10M
+ * VM Args: -verbose:gc -Xms10M -Xmx10M
  * <p>
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>

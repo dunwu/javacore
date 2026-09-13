@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * ExecutorService 的正确关闭方法
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @date 2022-02-10
+ * @since 2022-02-10
  */
 public class ExecutorServiceShutdownDemo {
 

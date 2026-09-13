@@ -42,3 +42,7 @@ public class Programmer {
     }
 
 }
+// Output:
+// I am a programmer
+// My name is zp
+// My core skill is programming

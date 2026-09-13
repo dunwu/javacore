@@ -28,7 +28,7 @@ public class MathOperatorDemo {
     }
 
 }
-// output:
+// Output:
 // x + y = 30
 // x - y = 10
 // x * y = 200

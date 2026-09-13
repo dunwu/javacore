@@ -48,5 +48,5 @@ public class SwitchDemo02 {
     }
 
 }
-// output:
+// Output:
 // 分数范围：>= 60

@@ -9,7 +9,7 @@ import java.util.List;
  * {@link Comparable} 示例：对象自身实现比较规则（内部比较器），与 {@link ComparatorDemo}（外部比较器）对比。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @date 2024-09-19
+ * @since 2024-09-19
  */
 public class ComparableDemo {
 
@@ -72,3 +72,7 @@ public class ComparableDemo {
     }
 
 }
+// Output:
+// User{age=17, name='B'}
+// User{age=18, name='A'}
+// User{age=20, name='C'}

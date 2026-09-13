@@ -11,7 +11,7 @@ package io.github.dunwu.javacore.jvm.memory;
  * <p>
  * 如果没有一个新的栈帧所需空间，Java 就会抛出 StackOverflowError。
  * <p>
- * VM 参数：-Xss228k - 设置栈大小为 228k
+ * VM Args: -Xss228k - 设置栈大小为 228k
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25

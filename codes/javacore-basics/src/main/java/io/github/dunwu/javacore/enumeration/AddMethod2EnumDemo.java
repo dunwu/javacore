@@ -7,8 +7,8 @@ package io.github.dunwu.javacore.enumeration;
  * 本例展示在枚举类型中添加普通方法、静态方法、抽象方法、构造方法
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @see org.zp.javase.enumeration.ErrorCodeEn
- * @since 2016/11/24.
+ * @see io.github.dunwu.javacore.enumeration.ErrorCodeEn
+ * @since 2016-11-24
  */
 public enum AddMethod2EnumDemo {
 

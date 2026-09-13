@@ -12,7 +12,7 @@
 
 展示类的加载时机、双亲委派、主动/被动引用与解析规则。
 
-- `classloader/类加载过程` — 演示类加载「加载 → 验证 → 准备 → 解析 → 初始化」的过程。
+- `classloader/ClassLoaderProcessDemo` — 演示类加载「加载 → 验证 → 准备 → 解析 → 初始化」的过程。
 - `classloader/ClassLoaderDemo` — 打印类加载器层次结构（Bootstrap / Ext / App），验证双亲委派。
 - `classloader/PassiveRefDemo01`~`PassiveRefDemo03` — 被动引用不触发类初始化的场景（通过子类引用父类静态字段、定义类数组、引用编译期常量）。
 - `classloader/SuperClass`、`classloader/SubClass`、`classloader/ConstClass` — 配合被动引用示例的父类/子类/常量类。

@@ -10,8 +10,8 @@ import java.util.Map;
 
 /**
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @see org.zp.javase.enumeration.PayrollDay
- * @since 2016/11/24.
+ * @see io.github.dunwu.javacore.enumeration.PayrollDay
+ * @since 2016-11-24
  */
 public class App {
 

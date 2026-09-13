@@ -2,6 +2,23 @@ package io.github.dunwu.javacore.jvm.memory;
 
 /**
  * 虚拟机栈和本地方法栈测试
+ * <p>
+ * 每个栈帧声明 100 个局部变量以撑大栈帧体积，再递归调用自身直至栈溢出。
+ * 捕获 {@link StackOverflowError} 时打印已达到的递归深度 stackLength，
+ * 用于观察“栈帧越大、-Xss 越小，可容纳的递归深度越浅”。
+ * <p>
+ * VM Args: -Xss256k（可调整该值对比 stackLength 的变化）
+ * <p>
+ * 运行结果（JDK 21 / Windows x64 实测，具体数值随 JDK 版本、平台与 -Xss 而变）：
+ *
+ * <pre>
+ * -Xss256k      = stack length:124
+ * -Xss1m        = stack length:6731
+ * -Xss2m        = stack length:52911
+ * 默认（不加） = stack length:6318
+ * </pre>
+ *
+ * 打印 stackLength 之后，异常会被重新抛出。
  */
 public class StackOverflowErrorDemo3 {
 

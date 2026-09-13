@@ -8,7 +8,7 @@ package io.github.dunwu.javacore.concurrent.thread;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see ThreadSleepDemo
  * @see ThreadYieldDemo
- * @since 2018/1/18
+ * @since 2018-01-18
  */
 public class ThreadJoinDemo {
 

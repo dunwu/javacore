@@ -37,3 +37,8 @@ public class EnumMapDemo {
     }
 
 }
+// Output:
+// EnumMap展示
+// GREEN : 绿灯
+// YELLOW : 黄灯
+// RED : 红灯

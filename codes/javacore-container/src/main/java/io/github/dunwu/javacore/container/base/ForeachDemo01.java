@@ -24,3 +24,4 @@ public class ForeachDemo01 {
     }
 
 }
+// Output: hello、_、world、

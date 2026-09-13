@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 必须再调 {@code awaitTermination()} 阻塞到线程池真正结束，否则可能在任务跑完前就读取 {@code count}。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/24
+ * @since 2018-05-24
  * @see io.github.dunwu.javacore.concurrent.error.WrongResult
  */
 public class AtomicIntegerDemo {

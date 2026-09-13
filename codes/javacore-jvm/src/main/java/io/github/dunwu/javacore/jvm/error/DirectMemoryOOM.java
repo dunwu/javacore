@@ -5,7 +5,7 @@ import sun.misc.Unsafe;
 import java.lang.reflect.Field;
 
 /**
- * VM Args：-Xmx20M -XX:MaxDirectMemorySize=10M
+ * VM Args: -Xmx20M -XX:MaxDirectMemorySize=10M
  *
  * @author zzm
  */

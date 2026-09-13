@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentMap;
  * ConcurrentHashMap 示例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/16
+ * @since 2018-05-16
  */
 public class ConcurrentHashMapDemo2 {
 

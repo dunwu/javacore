@@ -5,7 +5,7 @@ import java.util.concurrent.*;
 /**
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see ExecutorCompletionService
- * @since 2022/2/10
+ * @since 2022-02-10
  */
 public class ExecutorCompletionServiceDemo {
 

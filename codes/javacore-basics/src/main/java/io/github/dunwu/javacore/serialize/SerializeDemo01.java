@@ -1,6 +1,6 @@
 package io.github.dunwu.javacore.serialize;
 
-import io.github.dunwu.javacore.DemoFiles;
+import io.github.dunwu.javacore.basics.DemoFiles;
 
 import java.io.*;
 
@@ -8,7 +8,7 @@ import java.io.*;
  * 序列化示例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/6/4
+ * @since 2018-06-04
  */
 @SuppressWarnings("all")
 public class SerializeDemo01 {

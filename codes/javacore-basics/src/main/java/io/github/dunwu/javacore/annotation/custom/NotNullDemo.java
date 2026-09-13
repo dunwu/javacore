@@ -64,3 +64,6 @@ public class NotNullDemo {
     }
 
 }
+// Output:
+// id 为 null：校验失败 -> io.github.dunwu.javacore.annotation.custom.NotNullDemo$MyBean 类中的 id 字段不能为空！
+// id 不为 null：校验通过

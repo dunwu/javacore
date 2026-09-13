@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * 正则工具类
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2016/10/27.
+ * @since 2016-10-27
  */
 public class RegexUtil {
 

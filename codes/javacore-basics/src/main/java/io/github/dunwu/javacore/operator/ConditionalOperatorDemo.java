@@ -23,5 +23,5 @@ public class ConditionalOperatorDemo {
     }
 
 }
-// output:
+// Output:
 // 最大值为：10

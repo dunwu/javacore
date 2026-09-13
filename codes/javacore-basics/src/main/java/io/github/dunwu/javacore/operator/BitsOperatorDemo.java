@@ -42,7 +42,7 @@ public class BitsOperatorDemo {
     }
 
 }
-// output:
+// Output:
 // a & b = 12
 // a | b = 61
 // a ^ b = 49

@@ -7,7 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * java.util.concurrent.locks.ReentrantLock#unlock()} 方法
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/11
+ * @since 2018-05-11
  */
 @SuppressWarnings("all")
 public class ReentrantLockDemo {

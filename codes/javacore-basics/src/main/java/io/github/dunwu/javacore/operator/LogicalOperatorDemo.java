@@ -24,7 +24,7 @@ public class LogicalOperatorDemo {
     }
 
 }
-// output:
+// Output:
 // a && b = false
 // a || b = true
 // !(a && b) = true

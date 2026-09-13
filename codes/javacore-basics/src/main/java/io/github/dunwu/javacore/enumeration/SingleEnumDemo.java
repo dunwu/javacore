@@ -36,3 +36,4 @@ public class SingleEnumDemo {
     }
 
 }
+// Output: zp

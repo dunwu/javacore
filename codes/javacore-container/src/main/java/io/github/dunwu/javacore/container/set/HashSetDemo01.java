@@ -26,3 +26,4 @@ public class HashSetDemo01 {
     }
 
 }
+// Output: [A, B, C, D, E]

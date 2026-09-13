@@ -13,7 +13,7 @@ package io.github.dunwu.javacore.concurrent.thread;
  * 线程优先级控制并不可靠。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/10
+ * @since 2018-05-10
  */
 public class ThreadPriorityDemo {
 

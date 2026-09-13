@@ -10,8 +10,8 @@ import javax.crypto.KeyGenerator;
 /**
  * DESede安全编码，DES的升级版，支持更长的密钥，基本算法不变。
  *
- * @author Zhang Peng
- * @since 2016年7月20日
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2016-07-20
  */
 public class DESedeCoder {
 

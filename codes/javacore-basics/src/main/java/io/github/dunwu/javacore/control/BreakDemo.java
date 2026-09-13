@@ -28,7 +28,7 @@ public class BreakDemo {
     }
 
 }
-// output:
+// Output:
 // 0
 // 1
 // 2

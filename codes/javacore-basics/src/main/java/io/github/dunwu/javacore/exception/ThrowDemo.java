@@ -22,3 +22,4 @@ public class ThrowDemo {
     }
 
 }
+// Output: java.lang.RuntimeException: 抛出一个异常

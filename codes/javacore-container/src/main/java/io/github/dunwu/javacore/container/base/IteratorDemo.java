@@ -30,3 +30,7 @@ public class IteratorDemo {
     }
 
 }
+// Output:
+// 1
+// 2
+// 3

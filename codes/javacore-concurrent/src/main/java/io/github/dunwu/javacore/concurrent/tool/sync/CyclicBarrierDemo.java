@@ -16,7 +16,7 @@ import java.util.concurrent.CyclicBarrier;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @see java.util.concurrent.CyclicBarrier
  * @see CountDownLatchDemo
- * @since 2018/5/10
+ * @since 2018-05-10
  */
 public class CyclicBarrierDemo {
 

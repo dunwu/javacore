@@ -7,7 +7,7 @@ import java.io.IOException;
  * File 类常用方法示例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/4/26
+ * @since 2018-04-26
  */
 public class FileDemo {
 

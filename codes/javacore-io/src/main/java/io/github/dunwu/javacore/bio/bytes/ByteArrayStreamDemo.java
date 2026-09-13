@@ -9,7 +9,7 @@ import java.io.IOException;
  * 本例把大写字母逐个读出转为小写后再取出，无需任何文件。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/4/26
+ * @since 2018-04-26
  */
 public class ByteArrayStreamDemo {
 

@@ -7,7 +7,7 @@ import java.io.InputStream;
  * 类加载器与instanceof关键字演示
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/4/16
+ * @since 2018-04-16
  */
 public class ClassLoaderDemo {
 
@@ -38,3 +38,6 @@ public class ClassLoaderDemo {
     }
 
 }
+// Output:
+// class io.github.dunwu.javacore.jvm.classloader.ClassLoaderDemo
+// false

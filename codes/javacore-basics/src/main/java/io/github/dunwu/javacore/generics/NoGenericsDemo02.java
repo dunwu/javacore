@@ -38,10 +38,8 @@ public class NoGenericsDemo02 {
     }
 
 }
-// Output:
-// obj1 = [abc]
-// obj2 = [18]
-// obj3 = [[D@47089e5f]
-// Exception in thread "main" java.lang.ClassCastException: java.lang.String cannot be
-// cast to java.lang.Integer
-// at io.github.dunwu.javacore.generics.NoGenericsDemo.main(NoGenericsDemo.java:23)
+// Output: str = [abc]
+//
+// 与 NoGenericsDemo 不同：这里存进去的本来就是 String，取出后强转不会失败，因此没有任何异常输出。
+// 本示例说明的是：不用泛型时类型安全完全依赖程序员自己保证，编译器无从检查。
+// （JDK 21 实测：stdout 一行，stderr 为空，退出码 0）

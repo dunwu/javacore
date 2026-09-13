@@ -13,8 +13,8 @@ import javax.crypto.spec.PBEParameterSpec;
  * 基于口令加密(Password Based Encryption, PBE)，是一种对称加密算法。 其特点是：口令由用户自己掌管，采用随机数（这里叫做盐）杂凑多重加密等方法保证数据的安全性。
  * PBE没有密钥概念，密钥在其他对称加密算法中是经过计算得出的，PBE则使用口令替代了密钥。
  *
- * @author Zhang Peng
- * @since 2016年7月20日
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2016-07-20
  */
 public class PBECoder {
 

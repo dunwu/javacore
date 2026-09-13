@@ -17,7 +17,7 @@ import java.util.concurrent.CountDownLatch;
  * 计时只包住「开闸 → 等全部结束」这一段，不包含创建和启动线程的开销，因此结果更准确。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/15
+ * @since 2018-05-15
  */
 public class CountDownLatchDemo02 {
 

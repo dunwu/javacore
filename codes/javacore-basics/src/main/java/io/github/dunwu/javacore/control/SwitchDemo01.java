@@ -50,5 +50,5 @@ public class SwitchDemo01 {
     }
 
 }
-// output:
+// Output:
 // x + y = 9

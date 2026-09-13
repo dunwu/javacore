@@ -109,8 +109,8 @@ public class ClassLoaderDemoTest {
 
     @Test
     @DisplayName("类加载过程：线程上下文类加载器的双亲链，顶层启动类加载器在 Java 侧表现为 null")
-    void test类加载过程() {
-        String output = captureOutput(() -> 类加载过程.main(new String[0]));
+    void testClassLoaderProcessDemo() {
+        String output = captureOutput(() -> ClassLoaderProcessDemo.main(new String[0]));
         String[] lines = output.split("\n");
         assertThat(lines).hasSize(3);
         assertThat(lines[0]).isNotBlank();

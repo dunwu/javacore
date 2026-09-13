@@ -1,7 +1,6 @@
 package io.github.dunwu.javacore.concurrent.threadpool;
 
 import cn.hutool.core.thread.ThreadFactoryBuilder;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +17,28 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
-@Slf4j
+/**
+ * 演示线程池混用导致的问题：同一个线程池既承载业务任务、又承载临时计算任务时，两者会互相争抢。
+ * <p>
+ * {@code wrong()} 把计算任务提交给 {@code threadPool}（核心与最大线程数都只有 2、队列容量 100、
+ * 拒绝策略 CallerRunsPolicy）；{@code right()} 改用独立的 {@code asyncCalcThreadPool}（200 线程），
+ * 使计算任务不受业务任务影响。
+ * <p>
+ * 注：{@code main} 只调用 {@code wrong()}，该方法仅返回计算结果、不打印任何内容，
+ * 因此直接运行本类看不到任何输出（JDK 21 实测：stdout 与 stderr 均为 0 字节）。
+ * <p>
+ * 注：{@code main} 返回后进程也不会退出（实测线程转储中仍有 {@code DestroyJavaVM} 与
+ * {@code batchfileprocess-threadpool-%d0}）。原因是 {@code wrong()} 提交任务时让 {@code threadPool} 创建了核心线程，
+ * 而 {@code ThreadPoolExecutor} 的核心线程默认不会因 keepAliveTime 超时回收（除非调用
+ * {@code allowCoreThreadTimeOut(true)}），该线程又是非守护线程，于是 JVM 一直等待它结束。
+ * 需要进程正常退出时应显式调用 {@code shutdown()}。
+ * <p>
+ * 注：{@code printStats} 与 {@code init} 都不会被 {@code main} 触发；{@code init()} 里那段
+ * 「无限循环提交写文件任务」的逻辑一旦执行就永不结束，切勿注册为 Spring bean。
+ * <p>
+ * 注：hutool 的 {@code setNamePrefix} 并不做 {@code %d} 格式化（那是 Guava {@code ThreadFactoryBuilder}
+ * 的约定），因此线程名会原样带上 {@code %d}，实测为 {@code batchfileprocess-threadpool-%d0}。
+ */
 public class ThreadPoolMixuseController {
 
     /**
@@ -51,13 +71,13 @@ public class ThreadPoolMixuseController {
 
     private static void printStats(ThreadPoolExecutor threadPool) {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(() -> {
-            log.info("=========================");
-            log.info("Pool Size: {}", threadPool.getPoolSize());
-            log.info("Active Threads: {}", threadPool.getActiveCount());
-            log.info("Number of Tasks Completed: {}", threadPool.getCompletedTaskCount());
-            log.info("Number of Tasks in Queue: {}", threadPool.getQueue().size());
+            System.out.println("=========================");
+            System.out.println("Pool Size: " + threadPool.getPoolSize());
+            System.out.println("Active Threads: " + threadPool.getActiveCount());
+            System.out.println("Number of Tasks Completed: " + threadPool.getCompletedTaskCount());
+            System.out.println("Number of Tasks in Queue: " + threadPool.getQueue().size());
 
-            log.info("=========================");
+            System.out.println("=========================");
         }, 0, 1, TimeUnit.SECONDS);
     }
 
@@ -93,7 +113,7 @@ public class ThreadPoolMixuseController {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    log.info("batch file processing done");
+                    System.out.println("batch file processing done");
                 });
             }
         }).start();

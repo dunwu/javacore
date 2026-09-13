@@ -4,8 +4,8 @@ import java.lang.reflect.Method;
 
 /**
  * 使用 -verbose:class 打印加载的类
- * @author peng.zhang
- * @date 2020/10/17
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2020-10-17
  */
 public class MethodPerformDemo01 {
 

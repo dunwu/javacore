@@ -7,7 +7,7 @@ import java.lang.reflect.Proxy;
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @title App
  * @description 动态代理范例
- * @since 2016年8月5日
+ * @since 2016-08-05
  */
 public class App {
 
@@ -34,3 +34,6 @@ public class App {
     }
 
 }
+// Output:
+// 亚马逊代购
+// 张三 购买 进口奶粉

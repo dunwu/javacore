@@ -8,7 +8,7 @@ import java.io.PipedOutputStream;
  * 管道流：两个线程通过 PipedOutputStream/PipedInputStream 连接，实现线程间直接通信。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/4/26
+ * @since 2018-04-26
  */
 public class PipedStreamDemo {
 

@@ -8,8 +8,8 @@ import java.lang.reflect.Method;
  *     <li>-Djava.lang.Integer.IntegerCache.high=128</li>
  *     <li>-Dsun.reflect.noInflation=true</li>
  * </ul>
- * @author peng.zhang
- * @date 2020/10/17
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2020-10-17
  */
 public class MethodPerformDemo03 {
 

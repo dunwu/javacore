@@ -2,10 +2,8 @@ package io.github.dunwu.javacore.jvm.memory;
 
 /**
  * 类成员循环依赖，导致 StackOverflowError
- *
- * VM 参数：
- *
- * -Xss228k - 设置栈大小为 228k
+ * <p>
+ * VM Args: -Xss228k（设置栈大小为 228k）
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
  * @since 2019-06-25

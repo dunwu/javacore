@@ -13,7 +13,7 @@ package io.github.dunwu.javacore.concurrent.thread;
  * 一个守护线程创建的子线程依然是守护线程。 不要认为所有的应用都可以分配给 Daemon 来进行服务，比如读写操作或者计算逻辑。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/1/18
+ * @since 2018-01-18
  */
 public class ThreadDaemonDemo {
 

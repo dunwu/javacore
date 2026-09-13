@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicIntegerArray;
  * 这正是 CAS 的典型语义：失败不报错，而是直接返回 false，由调用方决定要不要重试。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/24
+ * @since 2018-05-24
  */
 public class AtomicIntegerArrayDemo {
 

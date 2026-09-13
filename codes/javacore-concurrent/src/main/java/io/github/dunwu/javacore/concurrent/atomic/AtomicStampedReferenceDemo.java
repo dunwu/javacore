@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicStampedReference;
  * 对比 {@link AtomicMarkableReferenceDemo}：那里的标记是 boolean，只能区分「动过没动过」，无法区分动过几次。
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/24
+ * @since 2018-05-24
  * @see AtomicMarkableReferenceDemo
  */
 public class AtomicStampedReferenceDemo {

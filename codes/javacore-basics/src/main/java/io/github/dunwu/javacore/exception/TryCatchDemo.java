@@ -21,3 +21,4 @@ public class TryCatchDemo {
     }
 
 }
+// Output: 出现异常了：java.lang.ArithmeticException: / by zero

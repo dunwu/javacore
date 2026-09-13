@@ -200,31 +200,31 @@ public class FilesDemo {
         Files.write(file, LINES, StandardCharsets.UTF_8);
         return file;
     }
-    // Output:
-    // 演示目录已就绪: true
-    // 写入行数: 3
-    // 追加后行数: 4
-    // readAllLines 行数: 3
-    // 第一行: 第一行：NIO.2
-    // readString 含换行符: true
-    // lines 中以「第」开头的行数: 3
-    // exists(已存在的文件): true
-    // exists(不存在的路径): false
-    // notExists(不存在的路径): true
-    // isRegularFile(文件): true
-    // isRegularFile(目录): false
-    // isDirectory(目录): true
-    // 文件字节数大于 0: true
-    // 最后修改时间大于 0: true
-    // isReadable: true
-    // 复制后内容与源文件一致: true
-    // 移动后原路径已不存在: true
-    // 移动后新路径存在: true
-    // delete 后文件已删除: true
-    // deleteIfExists 对不存在的路径返回: false
-    // list 一层内的条目数: 3
-    // walk 递归遍历的条目数: 5
-    // walk(root, 1) 的条目数: 4
-    // 递归找到的 .txt 文件: [a.txt, c.txt]
-}
 
+}
+// Output:
+// 演示目录已就绪: true
+// 写入行数: 3
+// 追加后行数: 4
+// readAllLines 行数: 3
+// 第一行: 第一行：NIO.2
+// readString 含换行符: true
+// lines 中以「第」开头的行数: 3
+// exists(已存在的文件): true
+// exists(不存在的路径): false
+// notExists(不存在的路径): true
+// isRegularFile(文件): true
+// isRegularFile(目录): false
+// isDirectory(目录): true
+// 文件字节数大于 0: true
+// 最后修改时间大于 0: true
+// isReadable: true
+// 复制后内容与源文件一致: true
+// 移动后原路径已不存在: true
+// 移动后新路径存在: true
+// delete 后文件已删除: true
+// deleteIfExists 对不存在的路径返回: false
+// list 一层内的条目数: 3
+// walk 递归遍历的条目数: 5
+// walk(root, 1) 的条目数: 4
+// 递归找到的 .txt 文件: [a.txt, c.txt]

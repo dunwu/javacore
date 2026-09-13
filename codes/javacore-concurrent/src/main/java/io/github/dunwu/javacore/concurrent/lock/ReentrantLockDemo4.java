@@ -6,7 +6,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * ReentrantLock 可中断获取锁 {@link java.util.concurrent.locks.ReentrantLock#lockInterruptibly()} 示例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @since 2018/5/18
+ * @since 2018-05-18
  */
 @SuppressWarnings("all")
 public class ReentrantLockDemo4 {

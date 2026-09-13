@@ -7,7 +7,7 @@ import java.util.concurrent.BlockingQueue;
  * BlockingQueue 示例
  *
  * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
- * @date 2024-07-15
+ * @since 2024-07-15
  */
 public class ArrayBlockingQueueDemo {
 

@@ -17,8 +17,8 @@ import java.util.Base64;
  * <p>
  * DSA 是一种数字签名算法。 DSA仅支持SHA系列算法，而 JDK 仅支持 SHA1withDSA
  *
- * @author Zhang Peng
- * @since 2016年7月21日
+ * @author <a href="mailto:forbreak@163.com">Zhang Peng</a>
+ * @since 2016-07-21
  */
 public class DsaUtil {
 

@@ -24,3 +24,8 @@ public class EnumSetDemo {
     }
 
 }
+// Output:
+// EnumSet展示
+// OK : 0
+// ERROR_A : 1
+// ERROR_B : 2
