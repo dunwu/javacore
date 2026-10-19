@@ -260,7 +260,7 @@ public class DefaultMethodDemo {
 
 ### abstract
 
-**被 `abstract` 修饰的方法被称为抽象方法，方法不能有实体。抽象方法只能出现抽象类中。**
+**被 `abstract` 修饰的方法被称为抽象方法，不能有方法体。抽象方法可以声明在抽象类或接口中；接口中没有 `default`、`static` 或 `private` 修饰的方法隐式为 `abstract`。**
 
 抽象方法示例：
 

@@ -7,7 +7,7 @@ package io.github.dunwu.javacore.method;
 public class DefaultMethodDemo {
 
     /**
-     * 演示接口方法的实现：实现类必须实现接口中的抽象方法。
+     * 演示接口默认方法：实现类无需重写即可继承默认实现。
      */
     public static void demo() {
         MyInterface obj = new MyClass();
@@ -20,18 +20,13 @@ public class DefaultMethodDemo {
 
     interface MyInterface {
 
-        void print();
-
-    }
-
-    static class MyClass implements MyInterface {
-
-        @Override
-        public void print() {
+        default void print() {
             System.out.println("Hello World");
         }
 
     }
+
+    static class MyClass implements MyInterface {}
 
 }
 // Output:

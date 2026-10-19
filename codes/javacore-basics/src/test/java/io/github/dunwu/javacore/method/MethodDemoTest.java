@@ -42,8 +42,9 @@ public class MethodDemoTest {
     }
 
     @Test
-    @DisplayName("DefaultMethodDemo：接口方法实现")
-    public void testDefaultMethodDemo() {
+    @DisplayName("DefaultMethodDemo：继承接口默认方法")
+    public void testDefaultMethodDemo() throws NoSuchMethodException {
+        assertThat(DefaultMethodDemo.MyInterface.class.getDeclaredMethod("print").isDefault()).isTrue();
         String output = captureOutput(DefaultMethodDemo::demo);
         assertThat(output).isEqualTo("Hello World\n");
     }
